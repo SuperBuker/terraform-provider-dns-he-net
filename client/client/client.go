@@ -86,7 +86,7 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 		} else if !utils.IsNil(resp.Request.Result) {
 			switch resp.Request.Result.(type) {
 			case *[]models.Domain:
-				resp.Request.Result = parsers.GetDomains(resp.Body())
+				resp.Request.Result, err = parsers.GetDomains(resp.Body())
 			case *[]models.Record:
 				resp.Request.Result, err = parsers.GetRecords(resp.Body())
 			}
