@@ -1,6 +1,11 @@
 package status
 
-import "github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
+import (
+	"errors"
+	"strings"
+
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
+)
 
 func fromAuthStatus(status auth.Status) error {
 	switch status {
@@ -10,7 +15,9 @@ func fromAuthStatus(status auth.Status) error {
 		return nil
 	case auth.OTP:
 		return &ErrOTPAuth{}
-	case auth.Unknown, auth.Other:
+	case auth.Unknown:
+		return &ErrUnknownAuth{}
+	case auth.Other:
 		return &ErrAuth{}
 	}
 

@@ -32,6 +32,19 @@ func (e *ErrOTPAuth) Unwrap() []error {
 	}
 }
 
+type ErrUnknownAuth struct{}
+
+func (e *ErrUnknownAuth) Error() string {
+	return "unkown authentication status"
+}
+
+func (e *ErrUnknownAuth) Unwrap() []error {
+	return []error{
+		&ErrAuth{},
+		&ErrHeNet{e.Error()},
+	}
+}
+
 type ErrHeNet struct {
 	error string
 }
