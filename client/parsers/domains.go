@@ -2,7 +2,6 @@ package parsers
 
 import (
 	"bytes"
-	"log"
 	"strconv"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
@@ -22,17 +21,25 @@ func parseDomainNode(node *html.Node) (record models.Domain) {
 	return
 }
 
-func GetDomains(data []byte) []models.Domain {
+func GetDomains(data []byte) ([]models.Domain, error) {
 	doc, err := htmlquery.Parse(bytes.NewReader(data))
 
 	if err != nil {
-		log.Fatal(err)
-		return nil // err
+		return nil, err
 	}
 
-	q := `//table[@id="domains_table"]/tbody/tr`
+	q := `//table[@id="domains_table"]`
+
+	if table := htmlquery.FindOne(doc, q); table == nil {
+		return nil, &ErrNotFound{q}
+	}
+
+	q = `//table[@id="domains_table"]/tbody/tr`
 	nodes := htmlquery.Find(doc, q)
-	// TODO: Check if node is nil
+
+	if nodes == nil {
+		return []models.Domain{}, nil
+	}
 
 	records := make([]models.Domain, len(nodes))
 
@@ -41,5 +48,5 @@ func GetDomains(data []byte) []models.Domain {
 		records[i] = record
 	}
 
-	return records // nil
+	return records, nil
 }
