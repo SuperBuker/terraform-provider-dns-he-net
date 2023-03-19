@@ -1,0 +1,179 @@
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+
+<head>
+    <title>Hurricane Electric Hosted DNS</title>
+    <link rel="stylesheet" type="text/css" href="/include/css/edit_dns.css" />
+    <link rel="stylesheet" type="text/css" href="/include/css/style.css" media="screen, print" />
+    <!-- <link rel="stylesheet" type="text/css" href="/include/js/jqdt/media/css/jquery.dataTables.css" /> -->
+    <script src="/include/js/jquery-1.4.2.min.js" type="text/javascript"></script>
+    <script src="/include/js/jquery.jeditable.mini.js" type="text/javascript"></script>
+    <script src="/include/js/jquery.json-2.2.min.js" type="text/javascript"></script>
+    <script src="/include/js/admin_system.test.js?13009429509" type="text/javascript"></script>
+    <script src="/include/js/jquery-ui/js/jquery-ui-1.8.1.custom.min.js" type="text/javascript"></script>
+    <script src="/include/js/jqdt/media/js/jquery.dataTables.js" type="text/javascript"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="/include/js/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css" />
+    <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //if close button is clicked
+            $('.window .close').click(function (e) {
+                //Cancel the link behavior
+                e.preventDefault();
+                $('#mask, .window').hide();
+            });
+
+            //hide the all of the element with class msg_body
+            $(".toggle").hide();
+            //toggle the componenet with class msg_body
+            $(".toggle_head").click(function () {
+                $(this).next(".toggle").slideToggle(100);
+            });
+            // Set up the tabs. 
+
+            $(function () {
+                $("#tabs").tabs();
+            });
+            $('#tabs ul li a').click(function () { location.hash = $(this).attr('href'); });
+            //if mask is clicked
+            $('#mask').click(function () {
+                $(this).hide();
+                $('.window').hide();
+            });
+            $('#dialog_incomplete').dialog({ autoOpen: false, title: 'What is an incomplete prefix?' });
+            $('#dialog_imported').dialog({ autoOpen: false, title: 'What is an imported prefix?' });
+            $('#dialog_additional').dialog({ autoOpen: false, title: 'What is an additional prefix?' });
+            $('#dialog_inactive').dialog({ autoOpen: false, title: 'What is an inactive prefix?' });
+            $('#dialog_active_domains').dialog({ autoOpen: false, title: 'What is an active domain?' });
+            $('#dialog_slave_domains').dialog({ autoOpen: false, title: 'What is an slave domain?' });
+            $('input[title]').inputHints();
+            $("#raw_zone_toggle").toggle(
+                function () {
+                    $("#raw_zone").show("slow");
+                    $('#raw_zone_toggle').attr('src', '/include/images/collapse.gif');
+                }, function () {
+                    $("#raw_zone").hide("slow");
+                    $('#raw_zone_toggle').attr('src', '/include/images/expand.gif');
+                });
+
+            $('#domains_table').dataTable({ "bFilter": false, "bPaginate": false, "bInfo": false, "bStateSave": true });
+            $('#secondary_table').dataTable({ "bFilter": false, "bPaginate": false, "bInfo": false, "bStateSave": true });
+
+        });
+    </script>
+
+</head>
+
+<body>27502
+    <div id="mask"></div>
+    <div id="page_center">
+        <div id="header">
+            <a href="http://he.net/"><img src="/include/images/helogo.gif"
+                    alt="Hurricane Electric Internet Services" /></a><br />
+        </div>
+
+        <div class="sidebar" id="navigation">
+            <div class="block">
+                <div class="caption">Free DNS Login</div>
+                <form name="login" method="post" enctype="application/x-www-form-urlencoded" action="/">
+                    <ul class="menu">
+                        <li class="heavy">
+                            <label style="margin-bottom:0; padding-bottom:0;">Username</label><input
+                                style="width: 140px;" type="text" name="email" value="SuperBuker" /><br />
+                        </li>
+                        <li>
+                            <label style="margin-bottom:0; padding-bottom:0;">Password</label><input
+                                style="width: 140px;" type="password" name="pass" />
+                        </li>
+                        <li>&nbsp;</li>
+                        <li>
+                            <input id="_loginbutton" style="color: #fff; background: green;" type="submit" name="submit"
+                                value="Login!" />
+                            <input style="color: #fff; background: blue;"
+                                onclick="location.href='http://ipv6.he.net/certification/register.php'" type="button"
+                                value="Register!" />
+                        </li>
+                    </ul>
+                </form>
+            </div>
+
+
+
+            <div class="block">
+                <div class="caption">Quick Links</div>
+                <div class="content">
+                    <a href="http://ipv6.he.net/certification/">Certification</a><br />
+
+                    <a href="http://www.tunnelbroker.net/">Tunnelbroker</a><br />
+                    <a href="http://dns.he.net/">Free DNS</a><br />
+                    <a href="http://www.tunnelbroker.net/forums/">Forums</a><br />
+                    <a href="http://ipv6.he.net/certification/faq.php">FAQ</a><br />
+                    <a href="http://ipv6.he.net/presentations.php">Video Presentations</a><br />
+                    <a href="http://networktools.he.net">Mobile Network Apps</a><br />
+                    <!-- <a href="usage/index.php">Usage Statistics</a><br /> -->
+
+                    <!-- <a href="status.php">Tunnel Server Status</a> <br /> -->
+                    <a href="http://he.net/Hurricane_Electric_Geographic_Network_Map.jpg">Network Map</a><br />
+                    <a href="http://lg.he.net">Looking Glass</a> (v4/v6)<br />
+                    <a href="telnet://route-server.he.net">Route Server</a> (telnet)<br />
+
+                    <a href="http://bgp.he.net/ipv6-progress-report.cgi">Global IPv6 Report</a><br />
+                    <a href="http://ipv6.he.net/bgpview/bgp.html">IPv6 BGP View</a>
+                </div>
+            </div>
+            <div class="block">
+                <div class="caption">Services</div>
+                <div class="content">
+
+                    <a href="http://he.net/ip_transit.html">Transit</a><br />
+                    <a href="http://he.net/colocation.html">Colocation</a><br />
+                    <a href="http://he.net/dedicated_server.html">Dedicated Servers</a>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <div class="block">
+                <div class="caption">Hurricane Electric Free DNS Management</div>
+                <div id="dns_err" onclick="hideThis(this);" style="margin: 3px;">The token supplied is invalid.</div>
+                <div style="text-align: center">
+                    This account has two-factor security enabled.<br /><br />
+                    Please enter the code from your authentication app below.<br />
+                    <form method="post" action="/">
+                        <input type="text" name="tfacode" id="tfacode" placeholder="Auth Code" autocomplete="off"
+                            autofocus="autofocus" size="10" />
+                        <input type="submit" name="submit" value="Submit" /><br /><br />
+                        <small><a href="https://tunnelbroker.net/2fa_remove.php">I don't have access to my
+                                authenticator</a></small>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <address id="footer_left">Hurricane Electric<br />760 Mission Court<br />Fremont, CA 94539</address>
+            <span id="footer_right">Voice +1 (510) 580-4100<br />Fax +1 (510) 580-4151<br />Comments? <a
+                    href="mailto:info@he.net">info@he.net</a></span>
+
+            <span id="footer_center"><br />Copyright &copy; Hurricane Electric.<br />All Rights Reserved 0.000000</span>
+        </div>
+    </div>
+
+    <pre>   </pre>
+    <script type="text/javascript">
+        var _gaq = _gaq || [];
+        _gaq.push(['_setAccount', 'UA-12345678-1']);
+        _gaq.push(['_setDomainName', '.he.net']);
+        _gaq.push(['_trackPageview']);
+
+        (function () {
+            var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+            ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+            var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+        })();
+    </script>
+</body>
+
+</html>
