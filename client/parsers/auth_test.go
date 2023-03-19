@@ -1,7 +1,7 @@
 package parsers_test
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
@@ -12,7 +12,7 @@ import (
 
 func TestAuth(t *testing.T) {
 	t.Run("login", func(t *testing.T) {
-		data, err := ioutil.ReadFile("../testing_data/login.html")
+		data, err := os.ReadFile("../testing_data/login.html")
 		require.NoError(t, err)
 
 		status, err := parsers.LoginStatus(data)
@@ -21,7 +21,7 @@ func TestAuth(t *testing.T) {
 	})
 
 	t.Run("login_otp", func(t *testing.T) {
-		data, err := ioutil.ReadFile("../testing_data/login_totp.html")
+		data, err := os.ReadFile("../testing_data/login_totp.html")
 		require.NoError(t, err)
 
 		status, err := parsers.LoginStatus(data)
@@ -35,7 +35,7 @@ func TestAuth(t *testing.T) {
 		}
 
 		for _, file := range files {
-			data, err := ioutil.ReadFile(file)
+			data, err := os.ReadFile(file)
 			require.NoError(t, err)
 
 			status, err := parsers.LoginStatus(data)
@@ -45,7 +45,7 @@ func TestAuth(t *testing.T) {
 	})
 
 	t.Run("unkown", func(t *testing.T) {
-		data, err := ioutil.ReadFile("../testing_data/empty.html")
+		data, err := os.ReadFile("../testing_data/empty.html")
 		require.NoError(t, err)
 
 		status, err := parsers.LoginStatus(data)

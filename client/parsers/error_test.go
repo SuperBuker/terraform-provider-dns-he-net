@@ -1,7 +1,7 @@
 package parsers_test
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
@@ -10,7 +10,7 @@ import (
 
 func TestError(t *testing.T) {
 	t.Run("missing error", func(t *testing.T) {
-		data, err := ioutil.ReadFile("../testing_data/main.html")
+		data, err := os.ReadFile("../testing_data/main.html")
 		require.NoError(t, err)
 
 		errorString, err := parsers.ParseError(data)
@@ -19,7 +19,7 @@ func TestError(t *testing.T) {
 	})
 
 	t.Run("error present", func(t *testing.T) {
-		data, err := ioutil.ReadFile("../testing_data/login_totp_err.html")
+		data, err := os.ReadFile("../testing_data/login_totp_err.html")
 		require.NoError(t, err)
 
 		errorString, err := parsers.ParseError(data)

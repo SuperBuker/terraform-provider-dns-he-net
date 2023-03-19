@@ -1,7 +1,7 @@
 package parsers_test
 
 import (
-	"io/ioutil"
+	"os"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
@@ -16,7 +16,7 @@ var domains = []models.Domain{
 
 func TestDomains(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		data, err := ioutil.ReadFile("../testing_data/main.html")
+		data, err := os.ReadFile("../testing_data/main.html")
 		require.NoError(t, err)
 
 		_domains, err := parsers.GetDomains(data)
