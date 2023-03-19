@@ -26,7 +26,17 @@ func fromAuthStatus(status auth.Status) error {
 
 func fromIssue(issue string) error {
 	if len(issue) != 0 {
-		return &ErrHeNet{issue}
+		issues := strings.Split(issue, "  ") // Two spaces
+		if len(issues) == 1 {
+			return &ErrHeNet{issue}
+		}
+
+		errs := make([]error, len(issues))
+		for i, issue := range issues {
+			errs[i] = &ErrHeNet{issue}
+		}
+
+		return errors.Join(errs...)
 	}
 
 	return nil
