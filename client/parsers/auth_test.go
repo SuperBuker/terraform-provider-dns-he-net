@@ -1,11 +1,13 @@
 package parsers_test
 
 import (
+	"bytes"
 	"os"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
+	"github.com/antchfx/htmlquery"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -15,8 +17,10 @@ func TestAuth(t *testing.T) {
 		data, err := os.ReadFile("../testing_data/login.html")
 		require.NoError(t, err)
 
-		status, err := parsers.LoginStatus(data)
+		doc, err := htmlquery.Parse(bytes.NewReader(data))
 		require.NoError(t, err)
+
+		status := parsers.LoginStatus(doc)
 		assert.Equal(t, auth.NoAuth, status)
 	})
 
@@ -24,8 +28,10 @@ func TestAuth(t *testing.T) {
 		data, err := os.ReadFile("../testing_data/login_totp.html")
 		require.NoError(t, err)
 
-		status, err := parsers.LoginStatus(data)
+		doc, err := htmlquery.Parse(bytes.NewReader(data))
 		require.NoError(t, err)
+
+		status := parsers.LoginStatus(doc)
 		assert.Equal(t, auth.OTP, status)
 	})
 
@@ -38,8 +44,10 @@ func TestAuth(t *testing.T) {
 			data, err := os.ReadFile(file)
 			require.NoError(t, err)
 
-			status, err := parsers.LoginStatus(data)
+			doc, err := htmlquery.Parse(bytes.NewReader(data))
 			require.NoError(t, err)
+
+			status := parsers.LoginStatus(doc)
 			assert.Equal(t, auth.Ok, status)
 		}
 	})
@@ -48,8 +56,10 @@ func TestAuth(t *testing.T) {
 		data, err := os.ReadFile("../testing_data/empty.html")
 		require.NoError(t, err)
 
-		status, err := parsers.LoginStatus(data)
+		doc, err := htmlquery.Parse(bytes.NewReader(data))
 		require.NoError(t, err)
+
+		status := parsers.LoginStatus(doc)
 		assert.Equal(t, auth.Unknown, status)
 	})
 }

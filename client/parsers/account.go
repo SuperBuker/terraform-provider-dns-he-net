@@ -1,21 +1,17 @@
 package parsers
 
 import (
-	"bytes"
-
 	"github.com/antchfx/htmlquery"
+	"golang.org/x/net/html"
 )
 
-func GetAccount(data []byte) (string, error) {
-	doc, err := htmlquery.Parse(bytes.NewReader(data))
-
-	if err != nil {
-		return "", err
-	}
-
+func GetAccount(doc *html.Node) (string, error) {
 	q := `//form[@name="remove_domain"]/input[@name="account"]`
 	node := htmlquery.FindOne(doc, q)
-	// TODO: Check if node is nil
+
+	if table := htmlquery.FindOne(doc, q); table == nil {
+		return "", &ErrNotFound{q}
+	}
 
 	return htmlquery.SelectAttr(node, "value"), nil
 }

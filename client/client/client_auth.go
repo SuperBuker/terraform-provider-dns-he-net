@@ -7,6 +7,7 @@ import (
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/authx"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/result"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 
@@ -19,6 +20,13 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 
 	// To simplify handling
 	client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
+		if resp.StatusCode() == 200 {
+			err = result.Init(resp)
+		}
+		return
+	})
+
+	client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
 		// Set cookies
 		if cookies := resp.Cookies(); len(cookies) > 0 {
 			c.SetCookies(cookies)
@@ -26,7 +34,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 
 		// Parse errors
 		if resp.StatusCode() == 200 {
-			err = status.Check(resp.Body())
+			err = status.Check(result.Body(resp))
 		}
 		return
 	})
@@ -38,7 +46,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 	if err == nil {
 		c.status = auth.Ok
 
-		if accountTmp, err := parsers.GetAccount(resp.Body()); err == nil {
+		if accountTmp, err := parsers.GetAccount(result.Body(resp)); err == nil {
 			c.account = accountTmp
 		}
 		return resp.Cookies(), nil
@@ -62,7 +70,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 		return nil, err
 	}
 
-	if accountTmp, err := parsers.GetAccount(resp2.Body()); err == nil {
+	if accountTmp, err := parsers.GetAccount(result.Body(resp2)); err == nil {
 		c.account = accountTmp
 	}
 

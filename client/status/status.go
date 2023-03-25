@@ -4,21 +4,12 @@ import (
 	"errors"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
+	"golang.org/x/net/html"
 )
 
-func Check(data []byte) error {
-	status, err := parsers.LoginStatus(data)
-
-	if err != nil {
-		return err
-	}
-
-	var issue string
-	issue, err = parsers.ParseError(data)
-
-	if err != nil {
-		return err
-	}
+func Check(doc *html.Node) error {
+	status := parsers.LoginStatus(doc)
+	issue := parsers.ParseError(doc)
 
 	errS := fromAuthStatus(status)
 

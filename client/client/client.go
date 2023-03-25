@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/result"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
@@ -62,10 +63,18 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 		return nil
 	})
 
+	// Parse html
+	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
+		if resp.StatusCode() == 200 {
+			err = result.Init(resp)
+		}
+		return
+	})
+
 	// Parse body errors
 	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
 		if resp.StatusCode() == 200 {
-			err = status.Check(resp.Body())
+			err = status.Check(result.Body(resp))
 
 			// Update client status
 			if err == nil {
@@ -83,12 +92,14 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
 		if resp.StatusCode() != 200 {
 			//pass
-		} else if !utils.IsNil(resp.Request.Result) {
-			switch resp.Request.Result.(type) {
+		} else if res := result.Result(resp); !utils.IsNil(res) {
+			switch res.(type) {
 			case *[]models.Domain:
-				resp.Request.Result, err = parsers.GetDomains(resp.Body())
+				body := result.Body(resp)
+				resp.Request.Result, err = parsers.GetDomains(body)
 			case *[]models.Record:
-				resp.Request.Result, err = parsers.GetRecords(resp.Body())
+				body := result.Body(resp)
+				resp.Request.Result, err = parsers.GetRecords(body)
 			}
 		}
 		return

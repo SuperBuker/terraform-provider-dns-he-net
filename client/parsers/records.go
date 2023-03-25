@@ -1,7 +1,6 @@
 package parsers
 
 import (
-	"bytes"
 	"fmt"
 	"strconv"
 	"strings"
@@ -154,13 +153,7 @@ func parseRecordNode(node *html.Node) (record models.Record) { // missing error
 	return
 }
 
-func GetRecords(data []byte) ([]models.Record, error) {
-	doc, err := htmlquery.Parse(bytes.NewReader(data))
-
-	if err != nil {
-		return nil, err
-	}
-
+func GetRecords(doc *html.Node) ([]models.Record, error) {
 	q := `//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class]`
 	nodes := htmlquery.Find(doc, q)
 
