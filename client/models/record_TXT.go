@@ -29,7 +29,7 @@ func (r TXT) Serialise() map[string]string {
 		"hosted_dns_recordid": toString(r.Id),
 		//"Priority": "",
 		"Name":    r.Domain,
-		"Content": r.Data,
+		"Content": r.Data[1 : len(r.Data)-1],
 		"TTL":     fmt.Sprint(r.TTL),
 		"Dynamic": b2s[r.Dynamic],
 	}
