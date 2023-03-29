@@ -38,6 +38,7 @@ func TestAuth(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		files := []string{
 			"../testing_data/main.html",
+			"../testing_data/records.html",
 		}
 
 		for _, file := range files {
@@ -53,13 +54,7 @@ func TestAuth(t *testing.T) {
 	})
 
 	t.Run("unkown", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/empty.html")
-		require.NoError(t, err)
-
-		doc, err := htmlquery.Parse(bytes.NewReader(data))
-		require.NoError(t, err)
-
-		status := parsers.LoginStatus(doc)
+		status := parsers.LoginStatus(nil)
 		assert.Equal(t, auth.Unknown, status)
 	})
 }
