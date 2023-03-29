@@ -1,0 +1,356 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+
+<head>
+	<title>Hurricane Electric Hosted DNS</title>
+	<link rel="stylesheet" type="text/css" href="/include/css/edit_dns.css" />
+	<link rel="stylesheet" type="text/css" href="/include/css/style.css" media="screen, print" />
+	<!-- <link rel="stylesheet" type="text/css" href="/include/js/jqdt/media/css/jquery.dataTables.css" /> -->
+	<script src="/include/js/jquery-1.4.2.min.js" type="text/javascript"></script>
+	<script src="/include/js/jquery.jeditable.mini.js" type="text/javascript"></script>
+	<script src="/include/js/jquery.json-2.2.min.js" type="text/javascript"></script>
+	<script src="/include/js/admin_system.test.js?13009429509" type="text/javascript"></script>
+	<script src="/include/js/jquery-ui/js/jquery-ui-1.8.1.custom.min.js" type="text/javascript"></script>
+	<script src="/include/js/jqdt/media/js/jquery.dataTables.js" type="text/javascript"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="/include/js/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			//if close button is clicked
+			$('.window .close').click(function (e) {
+				//Cancel the link behavior
+				e.preventDefault();
+				$('#mask, .window').hide();
+			});
+
+			//hide the all of the element with class msg_body
+			$(".toggle").hide();
+			//toggle the componenet with class msg_body
+			$(".toggle_head").click(function () {
+				$(this).next(".toggle").slideToggle(100);
+			});
+			// Set up the tabs. 
+
+			$(function () {
+				$("#tabs").tabs();
+			});
+			$('#tabs ul li a').click(function () { location.hash = $(this).attr('href'); });
+			//if mask is clicked
+			$('#mask').click(function () {
+				$(this).hide();
+				$('.window').hide();
+			});
+			$('#dialog_incomplete').dialog({ autoOpen: false, title: 'What is an incomplete prefix?' });
+			$('#dialog_imported').dialog({ autoOpen: false, title: 'What is an imported prefix?' });
+			$('#dialog_additional').dialog({ autoOpen: false, title: 'What is an additional prefix?' });
+			$('#dialog_inactive').dialog({ autoOpen: false, title: 'What is an inactive prefix?' });
+			$('#dialog_active_domains').dialog({ autoOpen: false, title: 'What is an active domain?' });
+			$('#dialog_slave_domains').dialog({ autoOpen: false, title: 'What is an slave domain?' });
+			$('input[title]').inputHints();
+			$("#raw_zone_toggle").toggle(
+				function () {
+					$("#raw_zone").show("slow");
+					$('#raw_zone_toggle').attr('src', '/include/images/collapse.gif');
+				}, function () {
+					$("#raw_zone").hide("slow");
+					$('#raw_zone_toggle').attr('src', '/include/images/expand.gif');
+				});
+
+			$('#domains_table').dataTable({ "bFilter": false, "bPaginate": false, "bInfo": false, "bStateSave": true });
+			$('#secondary_table').dataTable({ "bFilter": false, "bPaginate": false, "bInfo": false, "bStateSave": true });
+
+		});
+	</script>
+
+</head>
+
+<body>
+	<div id="mask"></div>
+	<div id="page_center">
+		<div id="header">
+			<a href="http://he.net/"><img src="/include/images/helogo.gif"
+					alt="Hurricane Electric Internet Services" /></a><br />
+		</div>
+
+		<div class="sidebar" id="navigation">
+			<div class="block">
+				<div class="caption">Account Menu</div>
+				<ul class="menu">
+					<li class="heavy">Welcome<br />Username</li>
+					<li>Origin <a href="http://ipv6.he.net/">ipv6.he.net</a></li>
+					<li><a id="_tlogout" href="/?action=logout" class="heavy">Logout</a></li>
+				</ul>
+			</div>
+
+			<div class="block">
+				<div class="caption">System Menu</div>
+				<ul class="menu">
+					<li><a href="/">Return to main</a></li>
+				</ul>
+			</div>
+
+			<div class="block">
+				<div class="caption">Quick Links</div>
+				<div class="content">
+					<a href="http://ipv6.he.net/certification/">Certification</a><br />
+
+					<a href="http://www.tunnelbroker.net/">Tunnelbroker</a><br />
+					<a href="http://dns.he.net/">Free DNS</a><br />
+					<a href="http://www.tunnelbroker.net/forums/">Forums</a><br />
+					<a href="http://ipv6.he.net/certification/faq.php">FAQ</a><br />
+					<a href="http://ipv6.he.net/presentations.php">Video Presentations</a><br />
+					<a href="http://networktools.he.net">Mobile Network Apps</a><br />
+					<!-- <a href="usage/index.php">Usage Statistics</a><br /> -->
+
+					<!-- <a href="status.php">Tunnel Server Status</a> <br /> -->
+					<a href="http://he.net/Hurricane_Electric_Geographic_Network_Map.jpg">Network Map</a><br />
+					<a href="http://lg.he.net">Looking Glass</a> (v4/v6)<br />
+					<a href="telnet://route-server.he.net">Route Server</a> (telnet)<br />
+
+					<a href="http://bgp.he.net/ipv6-progress-report.cgi">Global IPv6 Report</a><br />
+					<a href="http://ipv6.he.net/bgpview/bgp.html">IPv6 BGP View</a>
+				</div>
+			</div>
+			<div class="block">
+				<div class="caption">Services</div>
+				<div class="content">
+
+					<a href="http://he.net/ip_transit.html">Transit</a><br />
+					<a href="http://he.net/colocation.html">Colocation</a><br />
+					<a href="http://he.net/dedicated_server.html">Dedicated Servers</a>
+				</div>
+			</div>
+		</div>
+		<div id="content">
+			<div class="block">
+				<div class="caption">Hurricane Electric Free DNS Management</div>
+				<style>
+					.warn a {
+						background-color: #ffeeee;
+					}
+
+					#jsddm {
+						margin: 0;
+						padding: 0 font-weight: normal;
+						margin-top: 3px;
+					}
+
+					#jsddm a {
+						font-weight: normal;
+					}
+
+					#jsddm li {
+						float: left;
+						list-style: none;
+						margin-left: 2px;
+						font: 14px Tahoma, Arial
+					}
+
+					#jsddm ul {
+						margin-top: 3px;
+					}
+
+					#jsddm li a {
+						display: block;
+						padding: 1px 3px;
+						text-decoration: none;
+						border-top: 1px solid black;
+						border-right: 1px solid black;
+						border-left: 1px solid black;
+						white-space: nowrap
+					}
+
+					#jsddm li a:hover {
+						background: #D7D7D7;
+						color: blue;
+						/*	background: #1A4473 */
+					}
+
+					#jsddm li ul {
+						margin: 0;
+						padding: 0;
+						position: absolute;
+						visibility: hidden;
+						border-top: 1px solid white
+					}
+
+					#jsddm li ul li {
+						float: none;
+						display: inline
+					}
+
+					#jsddm li ul li a {
+						width: auto;
+						background: #eee;
+						border-top: 1px solid black;
+						border-right: 1px solid black;
+						border-left: 1px solid black;
+					}
+
+					#jsddm li ul li a:hover {
+						background: #D7D7D7;
+						color: blue;
+					}
+
+					.dns_form input[type=text] {
+						font-size: 14px;
+						text-align: left;
+						width: 99%;
+					}
+
+					.dns_form label {
+						font-size: 14px;
+						text-align: left;
+						width: 99%;
+					}
+
+
+					.hidden {
+						display: none;
+					}
+				</style>
+				<script>
+					var timeout = 500;
+					var closetimer = 0;
+					var ddmenuitem = 0;
+					var my_ipv4 = "0.0.0.0";
+					var my_ipv6 = "";
+
+					function jsddm_open() {
+						jsddm_canceltimer();
+						jsddm_close();
+						ddmenuitem = $(this).find('ul').css('visibility', 'visible');
+					}
+
+					function jsddm_close() { if (ddmenuitem) ddmenuitem.css('visibility', 'hidden'); }
+
+					function jsddm_timer() { closetimer = window.setTimeout(jsddm_close, timeout); }
+
+					function jsddm_canceltimer() {
+						if (closetimer) {
+							window.clearTimeout(closetimer);
+							closetimer = null;
+						}
+					}
+
+					$(document).ready(function () {
+						$('#jsddm > li').bind('mouseover', jsddm_open)
+						$('#jsddm > li').bind('mouseout', jsddm_timer)
+					});
+
+					/* document.onclick = jsddm_close; */
+				</script>
+				<form name="del_record" action="/index.cgi" method="post" id="record_delete">
+					<input id="hosted_dns_zoneid" name="hosted_dns_zoneid" type="hidden" value="1234567" />
+					<input id="hosted_dns_recordid" name="hosted_dns_recordid" type="hidden" value="" />
+					<input type="hidden" name="menu" value="edit_zone" />
+					<input id="hosted_dns_delconfirm" name="hosted_dns_delconfirm" type="hidden" value="" />
+					<input id="hosted_dns_editzone" name="hosted_dns_editzone" type="hidden" value="1" />
+					<input name="hosted_dns_delrecord" type="hidden" value="1" />
+				</form>
+				<div class="caption">Managing zone: example.com</div>
+				<span id="domain_id" style="display: none;" value="1234567"></span>
+
+
+
+				<!-- <div id=""> -->
+				<ul id="jsddm"> <!-- <li style="margin-left: 0px;"><a href="#">Back</a></li> -->
+					<li><a href="#" onclick="editFormHandler('A')">New A</a></li>
+					<li><a href="#" onclick="editFormHandler('AAAA')">New AAAA</a></li>
+					<li><a href="#" onclick="editFormHandler('CNAME')">New CNAME</a></li>
+					<li><a href="#" onclick="editFormHandler('ALIAS')">New ALIAS</a></li>
+					<li><a href="#" onclick="editFormHandler('MX')">New MX</a></li>
+					<li><a href="#" onclick="editFormHandler('NS')">New NS</a></li>
+					<li><a href="#" onclick="editFormHandler('TXT')">New TXT</a></li>
+					<li><a href="#">Additional</a>
+						<ul style="border-bottom: 1px solid black;">
+							<li><a href="#" onclick="editFormHandler('CAA')">New CAA</a></li>
+							<li><a href="#" onclick="editFormHandler('AFSDB')">New AFSDB</a></li>
+							<li><a href="#" onclick="editFormHandler('HINFO')">New HINFO</a></li>
+							<li><a href="#" onclick="editFormHandler('RP')">New RP</a></li>
+							<li><a href="#" onclick="editFormHandler('LOC')">New LOC</a></li>
+							<li><a href="#" onclick="editFormHandler('NAPTR')">New NAPTR</a></li>
+							<li><a href="#" onclick="editFormHandler('PTR')">New PTR</a></li>
+							<li><a href="#" onclick="editFormHandler('SSHFP')">New SSHFP</a></li>
+							<li><a href="#" onclick="editFormHandler('SPF')">New SPF</a></li>
+							<li><a href="#" onclick="editFormHandler('SRV')">New SRV</a></li>
+						</ul>
+					</li>
+					<li style="margin-left: 3em; background-color: #ffeeee;"><a href="#">Set TTL</a>
+						<ul style="border-bottom: 1px solid black;">
+							<li><a href="#" onclick="set_ttl('TTL',300)">300 - 5m</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',900)">900 - 15m</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',1800)">1800 - 30m</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',3600)">3600 - 1h</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',7200)">7200 - 2h</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',14400)">14400 - 4h </a></li>
+							<li><a href="#" onclick="set_ttl('TTL',28800)">28800 - 8h</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',43200)">43200 - 12h</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',86400)">86400 - 24h</a></li>
+						</ul>
+					</li>
+				</ul>
+				<br clear="left" />
+
+				<div id="dns_main_content">
+					<table class="generictable" width="100%" border="1" cellpadding="0" cellspacing="0">
+						<tr>
+							<th class="hidden">Zone Id</th>
+							<th class="hidden">Record Id</th>
+							<th style="width: 25px;">Name</th>
+							<th style="width: 25px;">Type</th>
+							<th style="width: 25px;">TTL</th>
+							<th style="width: 25px;">Priority</th>
+							<th style="width: 25px;">Data</th>
+							<th style="width: 25px;">DDNS</th>
+							<th style="width: 25px;">Delete</th>
+
+						</tr>
+					</table> <br />
+				</div>
+				<div id="test_panel" class="window"></div>
+				<img id="raw_zone_toggle" src="/include/images/expand.gif" alt="Expand"><span
+					style="font-size: 10px; color: #00f;"> Raw Zone</span>
+				<br />
+				<br />
+				<div id="raw_zone" style="display: none;">
+					<div style="border: 1px solid black; padding: 3px; font-size: 10px;">
+						<span style="color: blue; font-weight: bold; font-size: 12px;">Raw AXFR output</span><br />
+						<pre>; example.com Dumped Sat Jan 01 00:00:00 2000
+    </pre><br />
+						<span style="color: blue; font-weight: bold; font-size: 12px;">DNS Trace looking for NS records
+							(starting at .)</span><br />
+						<pre>Temporarily disabled.    </pre>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<address id="footer_left">Hurricane Electric<br />760 Mission Court<br />Fremont, CA 94539</address>
+			<span id="footer_right">Voice +1 (510) 580-4100<br />Fax +1 (510) 580-4151<br />Comments? <a
+					href="mailto:info@he.net">info@he.net</a></span>
+
+			<span id="footer_center"><br />Copyright &copy; Hurricane Electric.<br />All Rights Reserved 0.000000</span>
+		</div>
+	</div>
+
+	<pre>	</pre>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-12345678-1']);
+		_gaq.push(['_setDomainName', '.he.net']);
+		_gaq.push(['_trackPageview']);
+
+		(function () {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</body>
+
+</html>
