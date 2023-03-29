@@ -43,4 +43,17 @@ func TestDomains(t *testing.T) {
 		assert.Nil(t, _domains)
 		assert.Equal(t, "element \"//table[@id=\"domains_table\"]\" not found in document", err.Error())
 	})
+
+	t.Run("empty table", func(t *testing.T) {
+		data, err := os.ReadFile("../testing_data/main_empty.html")
+		require.NoError(t, err)
+
+		doc, err := htmlquery.Parse(bytes.NewReader(data))
+		require.NoError(t, err)
+
+		_domains, err := parsers.GetDomains(doc)
+		require.NoError(t, err)
+
+		assert.Equal(t, []models.Domain{}, _domains)
+	})
 }
