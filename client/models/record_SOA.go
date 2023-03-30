@@ -57,6 +57,7 @@ func ToSOA(r Record) (SOA, error) {
 		MName:    soa.MName,
 		RName:    soa.RName,
 		Serial:   soa.Serial,
+		Refresh:  soa.Refresh,
 		Retry:    soa.Retry,
 		Expire:   soa.Expire,
 	}, nil
