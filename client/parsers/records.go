@@ -11,7 +11,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func parseRecordNode(node *html.Node) (record models.Record) { // missing error
+func parseRecordNode(node *html.Node) (record models.Record, err error) { // missing error
 	var c *html.Node
 
 	for c = node.FirstChild; ; c = c.NextSibling {
@@ -20,7 +20,17 @@ func parseRecordNode(node *html.Node) (record models.Record) { // missing error
 		} else if c.Type != html.ElementNode || c.Data != "td" {
 			// pass
 		} else if htmlquery.SelectAttr(c, "class") == "hidden" {
-			parentId, _ := strconv.Atoi(htmlquery.InnerText(c)) // To improve
+			var parentId int
+			parentId, err = strconv.Atoi(htmlquery.InnerText(c))
+
+			if err != nil {
+				err = &ErrParsing{
+					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // parentId`,
+					err,
+				}
+				return
+			}
+
 			record.ParentId = uint(parentId)
 			break
 		}
@@ -32,7 +42,17 @@ func parseRecordNode(node *html.Node) (record models.Record) { // missing error
 		} else if c.Type != html.ElementNode || c.Data != "td" {
 			// pass
 		} else if htmlquery.SelectAttr(c, "class") == "hidden" {
-			recordId, _ := strconv.Atoi(htmlquery.InnerText(c)) // To improve
+			var recordId int
+			recordId, err = strconv.Atoi(htmlquery.InnerText(c))
+
+			if err != nil {
+				err = &ErrParsing{
+					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // recordId`,
+					err,
+				}
+				return
+			}
+
 			rId := uint(recordId)
 			record.Id = &rId
 			break
@@ -80,7 +100,17 @@ func parseRecordNode(node *html.Node) (record models.Record) { // missing error
 		} else if c.Type != html.ElementNode || c.Data != "td" {
 			// pass
 		} else if htmlquery.SelectAttr(c, "align") == "left" {
-			recordTTL, _ := strconv.Atoi(htmlquery.InnerText(c)) // To improve
+			var recordTTL int
+			recordTTL, err = strconv.Atoi(htmlquery.InnerText(c)) // To improve
+
+			if err != nil {
+				err = &ErrParsing{
+					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // recordTTL`,
+					err,
+				}
+				return
+			}
+
 			record.TTL = uint(recordTTL)
 			break
 		}
@@ -93,12 +123,16 @@ func parseRecordNode(node *html.Node) (record models.Record) { // missing error
 			// pass
 		} else if htmlquery.SelectAttr(c, "align") == "center" {
 			p := htmlquery.InnerText(c)
-			if priority, err := strconv.Atoi(p); err == nil {
+			var priority int
+			if priority, err = strconv.Atoi(p); err == nil {
 				p := uint16(priority)
 				record.Priority = &p
 			} else if p != "-" {
-				// this is an error
-				fmt.Println(err)
+				err = &ErrParsing{
+					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // priority`,
+					fmt.Errorf(`unknown priority value "%s"`, p),
+				}
+				return
 			}
 			break
 		}
@@ -123,7 +157,16 @@ func parseRecordNode(node *html.Node) (record models.Record) { // missing error
 		} else if c.Type != html.ElementNode || c.Data != "td" {
 			// pass
 		} else if htmlquery.SelectAttr(c, "class") == "hidden" {
-			record.Dynamic, _ = strconv.ParseBool(htmlquery.InnerText(c)) // To improve
+			record.Dynamic, err = strconv.ParseBool(htmlquery.InnerText(c))
+
+			if err != nil {
+				err = &ErrParsing{
+					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // dynamic`,
+					err,
+				}
+				return
+			}
+
 			break
 		}
 	}
@@ -144,8 +187,11 @@ func GetRecords(doc *html.Node) ([]models.Record, error) {
 	records := make([]models.Record, len(nodes))
 
 	for i, node := range nodes {
-		record := parseRecordNode(node)
-		records[i] = record
+		if record, err := parseRecordNode(node); err == nil {
+			records[i] = record
+		} else {
+			return nil, err
+		}
 	}
 
 	return records, nil
