@@ -5,4 +5,5 @@ type RecordX interface {
 	GetParentId() uint
 	Refs() map[string]string
 	Serialise() map[string]string
+	Type() string
 }
