@@ -1,7 +1,6 @@
 package models
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -24,7 +23,7 @@ func parseSOAData(data string) (SOA, error) {
 	s := strings.Fields(data)
 
 	if len(s) != 7 {
-		return SOA{}, errors.New("unparseable SOA payload")
+		return SOA{}, &ErrFormat{"", "unparseable SOA payload"}
 	}
 
 	soa := SOA{

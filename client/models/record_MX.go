@@ -1,7 +1,6 @@
 package models
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -16,7 +15,7 @@ type MX struct {
 
 func ToMX(r Record) (MX, error) {
 	if r.Priority == nil {
-		return MX{}, errors.New("invalid priority, must be a positive integer")
+		return MX{}, &ErrFormat{"Priority", "must be a positive integer"}
 	}
 
 	return MX{

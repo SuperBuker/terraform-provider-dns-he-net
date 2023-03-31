@@ -1,7 +1,6 @@
 package models
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 	"strings"
@@ -22,7 +21,7 @@ func parseSRVData(data string) (SRV, error) {
 	s := strings.Fields(data)
 
 	if len(s) != 3 {
-		return SRV{}, errors.New("unparseable SRV payload")
+		return SRV{}, &ErrFormat{"", "unparseable SRV payload"}
 	}
 
 	srv := SRV{
@@ -42,7 +41,7 @@ func parseSRVData(data string) (SRV, error) {
 
 func ToSRV(r Record) (SRV, error) {
 	if r.Priority == nil {
-		return SRV{}, errors.New("invalid priority, must be a positive integer")
+		return SRV{}, &ErrFormat{"Priority", "must be a positive integer"}
 	}
 
 	srv, err := parseSRVData(r.Data)
