@@ -25,7 +25,7 @@ type ErrParsing struct {
 }
 
 func (e *ErrParsing) Error() string {
-	return fmt.Sprintf("an error happend when parsing \"%s\" ", e.XPath)
+	return fmt.Sprintf("an error happened when parsing \"%s\" ", e.XPath)
 }
 
 func (e *ErrParsing) Unwrap() []error {

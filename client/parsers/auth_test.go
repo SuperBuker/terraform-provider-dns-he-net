@@ -53,7 +53,7 @@ func TestAuth(t *testing.T) {
 		}
 	})
 
-	t.Run("unkown", func(t *testing.T) {
+	t.Run("unknown", func(t *testing.T) {
 		status := parsers.LoginStatus(nil)
 		assert.Equal(t, auth.Unknown, status)
 	})

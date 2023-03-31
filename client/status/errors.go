@@ -35,7 +35,7 @@ func (e *ErrOTPAuth) Unwrap() []error {
 type ErrUnknownAuth struct{}
 
 func (e *ErrUnknownAuth) Error() string {
-	return "unkown authentication status"
+	return "unknown authentication status"
 }
 
 func (e *ErrUnknownAuth) Unwrap() []error {
