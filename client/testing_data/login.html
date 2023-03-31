@@ -1,0 +1,386 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+
+<head>
+	<title>Hurricane Electric Hosted DNS</title>
+	<link rel="stylesheet" type="text/css" href="/include/css/edit_dns.css" />
+	<link rel="stylesheet" type="text/css" href="/include/css/style.css" media="screen, print" />
+	<!-- <link rel="stylesheet" type="text/css" href="/include/js/jqdt/media/css/jquery.dataTables.css" /> -->
+	<script src="/include/js/jquery-1.4.2.min.js" type="text/javascript"></script>
+	<script src="/include/js/jquery.jeditable.mini.js" type="text/javascript"></script>
+	<script src="/include/js/jquery.json-2.2.min.js" type="text/javascript"></script>
+	<script src="/include/js/admin_system.test.js?13009429509" type="text/javascript"></script>
+	<script src="/include/js/jquery-ui/js/jquery-ui-1.8.1.custom.min.js" type="text/javascript"></script>
+	<script src="/include/js/jqdt/media/js/jquery.dataTables.js" type="text/javascript"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="/include/js/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			//if close button is clicked
+			$('.window .close').click(function (e) {
+				//Cancel the link behavior
+				e.preventDefault();
+				$('#mask, .window').hide();
+			});
+
+			//hide the all of the element with class msg_body
+			$(".toggle").hide();
+			//toggle the componenet with class msg_body
+			$(".toggle_head").click(function () {
+				$(this).next(".toggle").slideToggle(100);
+			});
+			// Set up the tabs. 
+
+			$(function () {
+				$("#tabs").tabs();
+			});
+			$('#tabs ul li a').click(function () { location.hash = $(this).attr('href'); });
+			//if mask is clicked
+			$('#mask').click(function () {
+				$(this).hide();
+				$('.window').hide();
+			});
+			$('#dialog_incomplete').dialog({ autoOpen: false, title: 'What is an incomplete prefix?' });
+			$('#dialog_imported').dialog({ autoOpen: false, title: 'What is an imported prefix?' });
+			$('#dialog_additional').dialog({ autoOpen: false, title: 'What is an additional prefix?' });
+			$('#dialog_inactive').dialog({ autoOpen: false, title: 'What is an inactive prefix?' });
+			$('#dialog_active_domains').dialog({ autoOpen: false, title: 'What is an active domain?' });
+			$('#dialog_slave_domains').dialog({ autoOpen: false, title: 'What is an slave domain?' });
+			$('input[title]').inputHints();
+			$("#raw_zone_toggle").toggle(
+				function () {
+					$("#raw_zone").show("slow");
+					$('#raw_zone_toggle').attr('src', '/include/images/collapse.gif');
+				}, function () {
+					$("#raw_zone").hide("slow");
+					$('#raw_zone_toggle').attr('src', '/include/images/expand.gif');
+				});
+
+			$('#domains_table').dataTable({ "bFilter": false, "bPaginate": false, "bInfo": false, "bStateSave": true });
+			$('#secondary_table').dataTable({ "bFilter": false, "bPaginate": false, "bInfo": false, "bStateSave": true });
+
+		});
+	</script>
+
+</head>
+
+<body>
+	<div id="mask"></div>
+	<div id="page_center">
+		<div id="header">
+			<a href="http://he.net/"><img src="/include/images/helogo.gif"
+					alt="Hurricane Electric Internet Services" /></a><br />
+		</div>
+
+		<div class="sidebar" id="navigation">
+			<div class="block">
+				<div class="caption">Free DNS Login</div>
+				<form name="login" method="post" enctype="application/x-www-form-urlencoded" action="/">
+					<ul class="menu">
+						<li class="heavy">
+							<label style="margin-bottom:0; padding-bottom:0;">Username</label><input
+								style="width: 140px;" type="text" name="email" /><br />
+						</li>
+						<li>
+							<label style="margin-bottom:0; padding-bottom:0;">Password</label><input
+								style="width: 140px;" type="password" name="pass" />
+						</li>
+						<li>&nbsp;</li>
+						<li>
+							<input id="_loginbutton" style="color: #fff; background: green;" type="submit" name="submit"
+								value="Login!" />
+							<input style="color: #fff; background: blue;"
+								onclick="location.href='http://ipv6.he.net/certification/register.php'" type="button"
+								value="Register!" />
+						</li>
+					</ul>
+				</form>
+			</div>
+
+
+
+			<div class="block">
+				<div class="caption">Quick Links</div>
+				<div class="content">
+					<a href="http://ipv6.he.net/certification/">Certification</a><br />
+
+					<a href="http://www.tunnelbroker.net/">Tunnelbroker</a><br />
+					<a href="http://dns.he.net/">Free DNS</a><br />
+					<a href="http://www.tunnelbroker.net/forums/">Forums</a><br />
+					<a href="http://ipv6.he.net/certification/faq.php">FAQ</a><br />
+					<a href="http://ipv6.he.net/presentations.php">Video Presentations</a><br />
+					<a href="http://networktools.he.net">Mobile Network Apps</a><br />
+					<!-- <a href="usage/index.php">Usage Statistics</a><br /> -->
+
+					<!-- <a href="status.php">Tunnel Server Status</a> <br /> -->
+					<a href="http://he.net/Hurricane_Electric_Geographic_Network_Map.jpg">Network Map</a><br />
+					<a href="http://lg.he.net">Looking Glass</a> (v4/v6)<br />
+					<a href="telnet://route-server.he.net">Route Server</a> (telnet)<br />
+
+					<a href="http://bgp.he.net/ipv6-progress-report.cgi">Global IPv6 Report</a><br />
+					<a href="http://ipv6.he.net/bgpview/bgp.html">IPv6 BGP View</a>
+				</div>
+			</div>
+			<div class="block">
+				<div class="caption">Services</div>
+				<div class="content">
+
+					<a href="http://he.net/ip_transit.html">Transit</a><br />
+					<a href="http://he.net/colocation.html">Colocation</a><br />
+					<a href="http://he.net/dedicated_server.html">Dedicated Servers</a>
+				</div>
+			</div>
+		</div>
+		<div id="content">
+			<div class="block">
+				<div class="caption">Hurricane Electric Free DNS Management</div>
+				<div style="margin-left: 1em;">
+					<h1>
+						Free DNS service
+					</h1>
+					<p>
+						Welcome to the Hurricane Electric Free DNS Hosting portal.
+						This tool will allow you to easily manage and maintain your<br /> forward and reverse DNS.
+					</p>
+					<p>
+						The <span style="color: red;">Open Beta</span> has been expanded and now includes our<a
+							href="http://ipv6.he.net"> IPv6 certification or tunnelbroker account holders</a>,
+						<a href="http://he.net/colocation.html">Colocation customers</a> and those with <a
+							href="http://he.net/ip_transit.html">Transit</a> services from us.
+						If you do not have an account, you can sign up for a free one <a
+							href="http://IPv6.he.net/certification/register.php">here</a> or by clicking on the
+						<input style="color: #fff; background: blue;"
+							onclick="location.href='http://ipv6.he.net/certification/register.php'" type="button"
+							value="Register!" />
+						button to the left. For those with existing admin.he.net accounts, please contact Support <a
+							href="mailto:support@he.net">&lt;support@he.net&gt;</a> and
+						request a password.
+					</p>
+					<p>
+					<h4>Features</h4>
+					<ul>
+						<li>Dualstack: Supports queries via both IPv4 and native IPv6.</li>
+						<li>Support for A, AAAA, ALIAS, CNAME, CAA, MX, NS, TXT, SRV, SSHFP, SPF, RP, NAPTR, HINFO, LOC
+							and PTR records.</li>
+						<li>Smart mode IPv4 and IPv6 reverse zones simplifies reverse zones.</li>
+						<li>Slave support</li>
+						<li>Multiple reverse zone formats: Standard, RFC 4183, RFC 2317, DeGroot.</li>
+						<li>Geographically diverse servers.</li>
+						<li>Sanity checking for delegation for both forward and reverse zones.</li>
+						<li>Basic syntax checking for fields.</li>
+						<li>Multiple domains per account.</li>
+					</ul>
+					</p>
+					<p>
+					<h4>Recent Additions</h4><br />
+
+					ALIAS Record Support
+					<ul>
+						<li><span style="font-weight: bold;">We've added the ALIAS record type!</span><br />
+							After many requests, we have added this much requested feature..
+						</li>
+					</ul><br />
+
+
+					CAA Record Support
+					<ul>
+						<li><span style="font-weight: bold;">We've added the CAA record type!</span><br />
+							After many requests, we have completed the backend upgrades required to enable the
+							CAA record type.
+						</li>
+					</ul><br />
+
+					<h4>Dynamic DNS Additions</h4><br />
+
+					Dynamic TXT Records
+					<ul>
+						<li><span style="font-weight: bold;">Dynamic TXT records have been added!</span><br />
+							We've received requests for dynamic TXT records for use with Let's Encrypt Certificates.
+							We've added them in using the same basic ddns syntax that we already provide with the
+							difference being
+							the use of 'txt=' in place of 'myip='. You will need to create the dynamic TXT record from
+							within the
+							dns.he.net interface before you will be able to make updates. You will not be able to
+							dynamically create and
+							delete these TXT records as doing so would subsequently remove your ddns key associated with
+							the record.
+							<br /><br />
+							<span style="color: red; font-weight: bold;">NOTE: A propagation delay of up to 5 minutes
+								may be experienced as the TTL of the record will need to expire and refresh. You should
+								wait before requesting DNS01 validation once you have updated the record.</span>
+							<br />
+						</li>
+					</ul><br />
+
+					Here is a couple of quick examples to get you started. Dynamic IP examples below may provide
+					additional information should you need it.<br /><br />
+					<div
+						style="border: 1px solid black; background: #def; padding: 3px; margin-right: 1em; font-size: 10px;">
+						<pre>
+Authentication being passed in the URL
+% curl -4 "http://_acme-challenge.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com&txt=evaGxfADs6pSRb..."
+
+Authentication and Updating using GET
+% curl "https://dyn.dns.he.net/nic/update?hostname=_acme-challenge.example.com&password=password&txt=evaGxfADs6pSRb..."
+
+Authentication and Updating using a POST
+% curl "https://dyn.dns.he.net/nic/update" -d "hostname=_acme-challenge.example.com" -d "password=password" -d "txt=evaGxfADs6pSRb..."
+
+</pre>
+					</div><br />
+
+					Dynamic DNS 'Checkip' Service
+					<ul>
+						<li><span style="font-weight: bold;">We've added the Dynamic DNS 'Checkip' service!</span><br />
+							We've received requests for a checkip service. To bring us in line with some of the other
+							dyndns services, we've added
+							this to the dns.he.net family of services. To access the service just point your web browser
+							or other web client to<br />
+							<a href="http://checkip.dns.he.net" target="_new">http://checkip.dns.he.net</a>
+						</li>
+					</ul><br />
+
+
+					Dynamic DNS Support
+					<ul>
+						<li><span style="font-weight: bold;">We've added Dynamic DNS support!</span><br />
+							We're working on smoothing out how it's represented in the UI and writing something that
+							resembles documentation, but thought we'd
+							push out what we have so it can get a little use. It's a pretty basic implementation and
+							should work well for most applications.
+							It works with 'ddclient' (or dyndns compatible clients), and with any of the command line
+							examples.
+							We'll update this page when the documentation is ready. (we're hoping to have it written
+							soon...). If you have any feedback on this
+							new feature, please send them along to <a href="mailto:dnsadmin@he.net"
+								style="font-size: 12px; font-style: italic">&lt;dnsadmin@he.net&gt;</a>
+						</li>
+					</ul>
+					<br />
+					Here are a few examples to get you started (manual testing)<br />
+					<br />
+					<div
+						style="border: 1px solid black; background: #def; padding: 3px; margin-right: 1em; font-size: 10px;">
+						<pre>
+http://[your domain name]:[your password]@dyn.dns.he.net/nic/update?hostname=[your domain name]
+
+Autodetect my IPv4/IPv6 address:
+% curl -4 "http://dyn.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com"					
+% curl -6 "http://dyn.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com"					
+
+Specify my IPv4/IPv6 address:
+% curl "http://dyn.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com&myip=192.168.0.1"					
+% curl "http://dyn.example.com:password@dyn.dns.he.net/nic/update?hostname=dyn.example.com&myip=2001:db8:beef:cafe::1"
+</pre>
+					</div>
+					<br />
+					Here are a couple more examples that allow sending the password in the URL<br /><br />
+					<div
+						style="border: 1px solid black; background: #def; padding: 3px; margin-right: 1em; font-size: 10px;">
+						<span style="font-weight: bold;">Note: The username is also the hostname. The password is sent
+							using 'password='. This skips HTTP basic auth.</span><br />
+						<pre>
+Authentication and Updating using GET
+% curl "https://dyn.dns.he.net/nic/update?hostname=dyn.example.com&password=password&myip=192.168.0.1"
+% curl "https://dyn.dns.he.net/nic/update?hostname=dyn.example.com&password=password&myip=2001:db8:beef:cafe::1"
+
+Authentication and Updating using a POST
+% curl "https://dyn.dns.he.net/nic/update" -d "hostname=dyn.example.com" -d "password=password" -d "myip=192.168.0.1"
+% curl "https://dyn.dns.he.net/nic/update" -d "hostname=dyn.example.com" -d "password=password" -d "myip=2001:db8:beef:cafe::1"
+</pre>
+					</div>
+					<br />
+					<span style="font-weight: bold;">Things to note about the dynamic DNS support:</span><br />
+					<ul>
+						<li>Your "username" is going to be the name of the record that has been tagged dynamic. ie You
+							marked the A record for dyn.example.com as
+							dynamic. Your username will be "dyn.example.com"</li>
+						<li>You can tag an A or AAAA record by editing it once you have selected the zone. (check the
+							box).</li>
+						<li>Once you have "activated" the record to be dynamic, you will need to generate a key (or
+							password if you prefer) for it.
+							(click on the <img src="/include/images/generate.gif" alt="generate" /> icon) to generate
+							the key for the dynamic record.</li>
+						<li>If you have tagged both an A and AAAA record to be dynamic, you will see the icon twice, it
+							is only necessary to generate one key as it is
+							bound to the name of the record and not the name/type. (see the part up above where we
+							mention that we're still working on the UI part... :) .)</li>
+						<li>When making updates, you will need to make a separate update for ipv4 and ipv6. We may add
+							an additional "myipv6=" option in the future.</li>
+					</ul>
+					<br />
+					<br />
+					Additional Troubleshooting Tools:
+					<ul>
+						<li><span style="font-weight: bold;">Secondary domains that disallow AXFR's will be deactivated
+								until they have been validated.</span><br />
+							You can validate the domain by selecting it from the "Slave domains for this account."
+							(click on the (i)nformation icon)
+							This will attempt to pull the zone from the specified nameserver(s). If it is successful, it
+							will validate the domain and will start listening to your nameservers
+							NOTIFY packets as well as making periodic checks (depending on your TTL).
+						</li>
+						<li>
+							<span style="font-weight: bold;">We've added a small collapsable panel on each of the domain
+								specific pages.</span> (edit zone, slave information, etc)<br />
+							Click on the "[+] Raw Zone" to expand the panel. This will give you the raw AXFR output for
+							the domain.
+						</li><br />
+						<li>
+							<span style="font-weight: bold;">Do you have some tools that you'd like to see? Send us your
+								suggestions!</span>
+						</li>
+					</ul>
+					<br />
+					</p>
+					<p>
+
+					<h4>Upcoming Features!</h4>
+					We've received some fantastic suggestions from our Open Beta users. We're looking into implementing:
+					<ul>
+						<li>Expanding our DDNS service to support TXT records</li>
+						<li>Bind Zone Import/Export</li>
+						<li>DNSSEC - We are exploring this now</li>
+					</ul>
+					<br />
+					Keep the feedback coming in!<br /><br />
+
+					Thanks!<br />
+					DNS Administrator<br />
+					<a href="mailto:dnsadmin@he.net"
+						style="font-size: 12px; font-style: italic">&lt;dnsadmin@he.net&gt;</a>
+					</p><br />
+					<small style="color: #999;">Updated 07.07.2020 - dnsadmin@he.net</small>
+				</div>
+				<br />
+			</div>
+		</div>
+		<div id="footer">
+			<address id="footer_left">Hurricane Electric<br />760 Mission Court<br />Fremont, CA 94539</address>
+			<span id="footer_right">Voice +1 (510) 580-4100<br />Fax +1 (510) 580-4151<br />Comments? <a
+					href="mailto:info@he.net">info@he.net</a></span>
+
+			<span id="footer_center"><br />Copyright &copy; Hurricane Electric.<br />All Rights Reserved 0.000000</span>
+		</div>
+	</div>
+
+    <pre>   </pre>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-12345678-1']);
+		_gaq.push(['_setDomainName', '.he.net']);
+		_gaq.push(['_trackPageview']);
+
+		(function () {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</body>
+
+</html>
