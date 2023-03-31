@@ -9,6 +9,27 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
+var records_serial = map[string]int{
+	"SOA":   5,
+	"NS":    6,
+	"A":     7,
+	"AAAA":  7,
+	"MX":    7,
+	"CNAME": 6,
+	"ALIAS": 6,
+	"CAA":   6,
+	"SRV":   9,
+	"TXT":   7,
+	"AFSDB": 7,
+	"HINFO": 6,
+	"RP":    6,
+	"LOC":   6,
+	"NAPTR": 6,
+	"PTR":   6,
+	"SSHFP": 6,
+	"SPF":   6,
+}
+
 var records_in = []models.Record{
 	{Id: nil, ParentId: 1234567, Domain: "example.com", RecordType: "SOA", TTL: 172800, Priority: nil, Data: "ns1.he.net. hostmaster.he.net. 2023031805 10800 1800 604800 86400", Dynamic: false, Locked: true},
 	{Id: nil, ParentId: 1234567, Domain: "example.com", RecordType: "NS", TTL: 86400, Priority: nil, Data: "ns2.he.net", Dynamic: false, Locked: false},
@@ -58,21 +79,27 @@ func getUint16(i uint16) *uint16 {
 func TestRecord(t *testing.T) {
 	for i, record_in := range records_in {
 		record_out, err := record_in.ToX()
-		require.NoError(t, err)
-		assert.Equal(t, records_out[i], record_out)
+		require.NoError(t, err, record_in.RecordType)
+		assert.Equal(t, records_out[i], record_out, record_in.RecordType)
 
 		id, ok := record_out.GetId()
-		assert.False(t, ok)
-		assert.Equal(t, uint(0), id)
+		assert.False(t, ok, record_in.RecordType)
+		assert.Equal(t, uint(0), id, record_in.RecordType)
 
-		assert.Equal(t, record_in.ParentId, record_out.GetParentId())
+		assert.Equal(t, record_in.ParentId, record_out.GetParentId(), record_in.RecordType)
 
-		assert.Equal(t, record_in.RecordType, record_out.Type())
+		assert.Equal(t, record_in.RecordType, record_out.Type(), record_in.RecordType)
 
 		assert.Equal(t, map[string]string{
 			"hosted_dns_zoneid":   fmt.Sprint(record_in.ParentId),
 			"hosted_dns_recordid": "",
-		}, record_out.Refs())
+		}, record_out.Refs(), record_in.RecordType)
+
+		assert.Equal(t, record_out.Refs(), record_in.Refs(), record_in.RecordType)
+
+		assert.Equal(t, records_serial[record_in.RecordType], len(record_out.Serialise()), record_in.RecordType)
+
+		assert.Equal(t, record_out.Serialise(), record_in.Serialise(), record_in.RecordType)
 
 	}
 }
