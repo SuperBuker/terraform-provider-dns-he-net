@@ -25,7 +25,7 @@ func TestDummyStore(t *testing.T) {
 }
 
 func TestSimpleStore(t *testing.T) {
-	auth, err := NewAuth("test_user", "", "", 1)
+	auth, err := NewAuth("test_user", "", "", 2)
 	require.NoError(t, err)
 
 	store := auth.store // Simple Store
@@ -55,7 +55,7 @@ func TestEncryptStore(t *testing.T) {
 
 	require.NoError(t, err)
 
-	auth, err := NewAuth("test_user", "password", key.Secret(), 2)
+	auth, err := NewAuth("test_user", "password", key.Secret(), 1)
 	require.NoError(t, err)
 
 	store := auth.store // Encrypted Store
