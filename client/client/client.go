@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"errors"
+	"log"
 	"time"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
@@ -33,7 +34,11 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 	} else if cookies, err = client.autheticate(ctx); err == nil {
 		// Manually trigger authentication
 		client.client.SetCookies(cookies)
-		client.auth.SaveCookies(cookies)
+
+		if err := client.auth.SaveCookies(cookies); err != nil {
+			log.Printf("error happened when saving cookies: %v", err)
+		}
+
 		return client, nil
 	} else {
 		return nil, err
@@ -62,7 +67,10 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 			// pass
 		} else if cookies, err := client.autheticate(req.Context()); err == nil {
 			c.SetCookies(cookies)
-			client.auth.SaveCookies(cookies)
+
+			if err := client.auth.SaveCookies(cookies); err != nil {
+				log.Printf("error happened when saving cookies: %v", err)
+			}
 		} else {
 			return err
 		}
