@@ -6,6 +6,7 @@ require (
 	github.com/antchfx/htmlquery v1.3.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/jarcoal/httpmock v1.3.0
+	github.com/kirsle/configdir v0.0.0-20170128060238-e45d2f54772f
 	github.com/pquerna/otp v1.4.0
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/net v0.8.0
