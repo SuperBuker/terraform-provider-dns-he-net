@@ -3,8 +3,8 @@ package auth
 import (
 	"encoding/json"
 	"errors"
-	"io/ioutil"
 	"net/http"
+	"os"
 
 	"github.com/kirsle/configdir"
 )
@@ -39,7 +39,7 @@ func dummyStore() cookieStore {
 func simpleStore() cookieStore {
 	return cookieStore{
 		Load: func(a *Auth) ([]*http.Cookie, error) {
-			data, err := ioutil.ReadFile(configFilePath(a))
+			data, err := os.ReadFile(configFilePath(a))
 			if err != nil {
 				return nil, err
 			}
@@ -64,7 +64,7 @@ func simpleStore() cookieStore {
 				return err
 			}
 
-			return ioutil.WriteFile(configFilePath(a), data, 0644)
+			return os.WriteFile(configFilePath(a), data, 0644)
 		},
 	}
 }
@@ -72,7 +72,7 @@ func simpleStore() cookieStore {
 func encryptedStore() cookieStore {
 	return cookieStore{
 		Load: func(a *Auth) ([]*http.Cookie, error) {
-			cipherData, err := ioutil.ReadFile(configFilePath(a))
+			cipherData, err := os.ReadFile(configFilePath(a))
 			if err != nil {
 				return nil, err
 			}
@@ -114,7 +114,7 @@ func encryptedStore() cookieStore {
 				return err
 			}
 
-			return ioutil.WriteFile(configFilePath(a), cipherData, 0644)
+			return os.WriteFile(configFilePath(a), cipherData, 0644)
 		},
 	}
 }
