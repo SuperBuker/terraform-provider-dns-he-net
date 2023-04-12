@@ -53,7 +53,24 @@ func (a *Auth) GetCode() (string, error) {
 }
 
 func (a *Auth) LoadCookies() ([]*http.Cookie, error) {
-	return a.store.Load(a)
+	cookies, err := a.store.Load(a)
+	if err != nil {
+		return nil, err
+	}
+
+	now := time.Now().Add(time.Hour) // One hour margin
+
+	// Zero allocation filtering
+	filtered := cookies[:0]
+	for _, cookie := range cookies {
+		// Remove expiring cookies
+		if cookie.Expires.After(now) {
+			filtered = append(filtered, cookie)
+		}
+	}
+
+	// Realloc slice to shrink capacity
+	return append([]*http.Cookie(nil), filtered...), nil
 }
 
 func (a *Auth) SaveCookies(cookies []*http.Cookie) error {
