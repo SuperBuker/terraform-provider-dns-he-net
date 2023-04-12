@@ -22,7 +22,7 @@ type Auth struct {
 	store    cookieStore
 }
 
-func NewAuth(user, pass, otpSecret string, storeMode int) (Auth, error) {
+func NewAuth(user, pass, otpSecret string, storeMode CookieStore) (Auth, error) {
 	k := fmt.Sprintf(otpUrl, user, otpSecret)
 
 	key, err := otp.NewKeyFromURL(k)

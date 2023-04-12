@@ -9,12 +9,20 @@ import (
 	"github.com/kirsle/configdir"
 )
 
-func storeSelector(i int) cookieStore {
-	switch i {
-	case 1:
-		return encryptedStore()
-	case 2:
+type CookieStore int8
+
+const (
+	Dummy CookieStore = iota
+	Simple
+	Encrypted
+)
+
+func storeSelector(cs CookieStore) cookieStore {
+	switch cs {
+	case Simple:
 		return simpleStore()
+	case Encrypted:
+		return encryptedStore()
 	default:
 		return dummyStore()
 	}
