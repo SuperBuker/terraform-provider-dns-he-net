@@ -33,7 +33,7 @@ func TestSimpleStore(t *testing.T) {
 	// Remove testing file
 	t.Cleanup(
 		func() {
-			os.Remove(configFilePath(&auth))
+			os.Remove(configFilePath(&auth, Simple))
 		},
 	)
 
@@ -46,7 +46,7 @@ func TestSimpleStore(t *testing.T) {
 	assert.Equal(t, cookies, cookies2)
 }
 
-func TestEncryptStore(t *testing.T) {
+func TestEncryptedStore(t *testing.T) {
 	key, err := totp.Generate(
 		totp.GenerateOpts{
 			Issuer:      "issuer",
@@ -63,7 +63,7 @@ func TestEncryptStore(t *testing.T) {
 	// Remove testing file
 	t.Cleanup(
 		func() {
-			os.Remove(configFilePath(&auth))
+			os.Remove(configFilePath(&auth, Encrypted))
 		},
 	)
 

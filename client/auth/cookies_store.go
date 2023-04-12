@@ -36,7 +36,7 @@ type cookieStore struct {
 func dummyStore() cookieStore {
 	return cookieStore{
 		Load: func(a *Auth) ([]*http.Cookie, error) {
-			return nil, errors.New("Not implemented")
+			return nil, errors.New("not implemented")
 		},
 		Save: func(a *Auth, cookies []*http.Cookie) error {
 			return nil
@@ -47,7 +47,7 @@ func dummyStore() cookieStore {
 func simpleStore() cookieStore {
 	return cookieStore{
 		Load: func(a *Auth) ([]*http.Cookie, error) {
-			data, err := os.ReadFile(configFilePath(a))
+			data, err := os.ReadFile(configFilePath(a, Simple))
 			if err != nil {
 				return nil, err
 			}
@@ -72,7 +72,7 @@ func simpleStore() cookieStore {
 				return err
 			}
 
-			return os.WriteFile(configFilePath(a), data, 0644)
+			return os.WriteFile(configFilePath(a, Simple), data, 0644)
 		},
 	}
 }
@@ -80,7 +80,7 @@ func simpleStore() cookieStore {
 func encryptedStore() cookieStore {
 	return cookieStore{
 		Load: func(a *Auth) ([]*http.Cookie, error) {
-			cipherData, err := os.ReadFile(configFilePath(a))
+			cipherData, err := os.ReadFile(configFilePath(a, Encrypted))
 			if err != nil {
 				return nil, err
 			}
@@ -122,7 +122,7 @@ func encryptedStore() cookieStore {
 				return err
 			}
 
-			return os.WriteFile(configFilePath(a), cipherData, 0644)
+			return os.WriteFile(configFilePath(a, Encrypted), cipherData, 0644)
 		},
 	}
 }

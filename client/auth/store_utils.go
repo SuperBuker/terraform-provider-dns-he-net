@@ -13,8 +13,19 @@ import (
 	"strings"
 )
 
-func configFilePath(a *Auth) string {
-	return filepath.Join(configPath, fmt.Sprintf("cookies-%s.json.enc", a.User))
+func configFilePath(a *Auth, cs CookieStore) string {
+	var filename string
+
+	switch cs {
+	case Simple:
+		filename = fmt.Sprintf("cookies-%s.json", a.User)
+	case Encrypted:
+		filename = fmt.Sprintf("cookies-%s.json.enc", a.User)
+	default:
+		return ""
+	}
+
+	return filepath.Join(configPath, filename)
 }
 
 func initIV(iv []byte) error {
