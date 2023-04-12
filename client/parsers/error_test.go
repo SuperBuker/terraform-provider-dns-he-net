@@ -12,7 +12,7 @@ import (
 
 func TestError(t *testing.T) {
 	t.Run("missing error", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/main.html")
+		data, err := os.ReadFile("../testing_data/html/main.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
@@ -23,7 +23,7 @@ func TestError(t *testing.T) {
 	})
 
 	t.Run("error present", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/login_totp_err.html")
+		data, err := os.ReadFile("../testing_data/html/login_totp_err.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))

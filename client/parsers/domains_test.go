@@ -18,7 +18,7 @@ var domains = []models.Domain{
 
 func TestDomains(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/main.html")
+		data, err := os.ReadFile("../testing_data/html/main.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
@@ -45,7 +45,7 @@ func TestDomains(t *testing.T) {
 	})
 
 	t.Run("empty table", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/main_empty.html")
+		data, err := os.ReadFile("../testing_data/html/main_empty.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))

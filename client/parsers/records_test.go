@@ -56,7 +56,7 @@ var records = []models.Record{
 
 func TestRecords(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/records.html")
+		data, err := os.ReadFile("../testing_data/html/records.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
@@ -83,7 +83,7 @@ func TestRecords(t *testing.T) {
 	})
 
 	t.Run("empty table", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/records_empty.html")
+		data, err := os.ReadFile("../testing_data/html/records_empty.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))

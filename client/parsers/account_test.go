@@ -13,7 +13,7 @@ import (
 
 func TestAccount(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/main.html")
+		data, err := os.ReadFile("../testing_data/html/main.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
