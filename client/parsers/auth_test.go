@@ -14,7 +14,7 @@ import (
 
 func TestAuth(t *testing.T) {
 	t.Run("login", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/login.html")
+		data, err := os.ReadFile("../testing_data/html/login.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
@@ -25,7 +25,7 @@ func TestAuth(t *testing.T) {
 	})
 
 	t.Run("login_otp", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/login_totp.html")
+		data, err := os.ReadFile("../testing_data/html/login_totp.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
@@ -37,8 +37,8 @@ func TestAuth(t *testing.T) {
 
 	t.Run("ok", func(t *testing.T) {
 		files := []string{
-			"../testing_data/main.html",
-			"../testing_data/records.html",
+			"../testing_data/html/main.html",
+			"../testing_data/html/records.html",
 		}
 
 		for _, file := range files {
