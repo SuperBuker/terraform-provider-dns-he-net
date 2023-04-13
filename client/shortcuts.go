@@ -8,3 +8,13 @@ import (
 var NewClient = client.NewClient
 
 var NewAuth = auth.NewAuth
+
+var CookieStore = struct {
+	Dummy     auth.CookieStore
+	Simple    auth.CookieStore
+	Encrypted auth.CookieStore
+}{
+	auth.Dummy,
+	auth.Simple,
+	auth.Encrypted,
+}
