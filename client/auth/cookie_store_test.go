@@ -5,6 +5,7 @@ import (
 	"os"
 	"testing"
 
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 	"github.com/pquerna/otp/totp"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -21,6 +22,7 @@ func TestDummyStore(t *testing.T) {
 
 	cookies, err := store.Load(&auth)
 	require.Error(t, err)
+	assert.ErrorIs(t, err, &utils.ErrNotImplemented{})
 	assert.Nil(t, cookies)
 }
 

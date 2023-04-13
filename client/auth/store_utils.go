@@ -55,11 +55,11 @@ func decrypt(a *Auth, cipherData []byte) ([]byte, error) {
 	secret := buildSecret(a)
 	block, err := aes.NewCipher(secret)
 	if err != nil {
-		return nil, err
+		return nil, &ErrFileEncrypt{err}
 	}
 
 	if len(cipherData) < aes.BlockSize {
-		return nil, errors.New("ciphertext too short")
+		return nil, &ErrFileEncrypt{errors.New("ciphertext too short")}
 	}
 
 	iv := cipherData[:aes.BlockSize]
@@ -76,14 +76,14 @@ func encrypt(a *Auth, data []byte) ([]byte, error) {
 
 	block, err := aes.NewCipher(secret)
 	if err != nil {
-		return nil, err
+		return nil, &ErrFileEncrypt{err}
 	}
 
 	cipherData := make([]byte, aes.BlockSize+len(data))
 
 	iv := cipherData[:aes.BlockSize]
 	if err := initIV(iv); err != nil {
-		return nil, err
+		return nil, &ErrFileEncrypt{err}
 	}
 
 	stream := cipher.NewCFBEncrypter(block, iv)
@@ -106,7 +106,7 @@ func extractChecksum(data []byte) ([]byte, error) {
 	sum := sha256.Sum256(data[sha256.Size:])
 
 	if !bytes.Equal(sum[:], data[:sha256.Size]) {
-		return nil, errors.New("checksum doesn't match")
+		return nil, &ErrFileChecksum{}
 	}
 
 	copy(out, data[sha256.Size:])
