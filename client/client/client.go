@@ -3,6 +3,7 @@ package client
 import (
 	"context"
 	"errors"
+	"log"
 	"time"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
@@ -25,9 +26,19 @@ type Client struct {
 func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 	client := newClient(ctx, authAuth)
 
-	// Manually trigger authentication
-	if cookies, err := client.autheticate(ctx); err == nil {
+	if cookies, err := authAuth.LoadCookies(); err == nil {
+		// Load cookies from filestore
 		client.client.SetCookies(cookies)
+		client.status = auth.Ok
+		return client, nil
+	} else if cookies, err = client.autheticate(ctx); err == nil {
+		// Manually trigger authentication
+		client.client.SetCookies(cookies)
+
+		if err := client.auth.SaveCookies(cookies); err != nil {
+			log.Printf("error happened when saving cookies: %v", err)
+		}
+
 		return client, nil
 	} else {
 		return nil, err
@@ -56,6 +67,10 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 			// pass
 		} else if cookies, err := client.autheticate(req.Context()); err == nil {
 			c.SetCookies(cookies)
+
+			if err := client.auth.SaveCookies(cookies); err != nil {
+				log.Printf("error happened when saving cookies: %v", err)
+			}
 		} else {
 			return err
 		}

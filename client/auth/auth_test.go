@@ -19,7 +19,7 @@ func TestAuth(t *testing.T) {
 
 	require.NoError(t, err)
 
-	auth, err := auth.NewAuth("user", "pass", key.Secret())
+	auth, err := auth.NewAuth("user", "pass", key.Secret(), -1)
 	require.NoError(t, err)
 
 	passcode, err := auth.GetCode()

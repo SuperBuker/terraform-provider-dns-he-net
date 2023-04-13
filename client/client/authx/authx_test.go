@@ -19,7 +19,7 @@ func TestAuthx(t *testing.T) {
 
 	require.NoError(t, err)
 
-	_auth, err := auth.NewAuth("Superbuker", "pass", key.Secret())
+	_auth, err := auth.NewAuth("Superbuker", "pass", key.Secret(), -1)
 	require.NoError(t, err)
 
 	require.Equal(t, map[string]string{
@@ -44,7 +44,7 @@ func TestAuthx(t *testing.T) {
 		"submit":  "Submit",
 	}, m)
 
-	_auth, err = auth.NewAuth("Superbuker", "pass", "this is not a valid secret")
+	_auth, err = auth.NewAuth("Superbuker", "pass", "this is not a valid secret", -1)
 	require.NoError(t, err)
 
 	_, err = authx.Totp(_auth)
