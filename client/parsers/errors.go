@@ -5,6 +5,7 @@ import (
 	"fmt"
 )
 
+// ErrNotFound is returned when the element is not found in the document.
 type ErrNotFound struct {
 	XPath string
 }
@@ -19,6 +20,7 @@ func (e *ErrNotFound) Unwrap() []error {
 	}
 }
 
+// ErrParsing is returned when an error happens when parsing the document.
 type ErrParsing struct {
 	XPath string
 	Err   error

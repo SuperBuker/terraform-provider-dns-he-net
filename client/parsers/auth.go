@@ -7,6 +7,7 @@ import (
 	"github.com/antchfx/htmlquery"
 )
 
+// LoginStatus returns the login status from the HTML body.
 func LoginStatus(doc *html.Node) auth.Status {
 	if doc == nil {
 		return auth.Unknown

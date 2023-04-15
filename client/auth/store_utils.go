@@ -13,6 +13,8 @@ import (
 	"strings"
 )
 
+// configFilePath returns the path to the cookie file for the given user.
+// The cookie file is named depending on the aht username and cookie store type.
 func configFilePath(a *Auth, cs CookieStore) string {
 	var filename string
 
@@ -28,11 +30,13 @@ func configFilePath(a *Auth, cs CookieStore) string {
 	return filepath.Join(configPath, filename)
 }
 
+// initIV creates a new nonce, returns error.
 func initIV(iv []byte) error {
 	_, err := io.ReadFull(rand.Reader, iv)
 	return err
 }
 
+// buildSecret generates secret from Auth.
 func buildSecret(a *Auth) []byte {
 	input := []string{
 		a.User,
@@ -51,6 +55,8 @@ func buildSecret(a *Auth) []byte {
 	return sum[:24]
 }
 
+// decrypt the given data using the given Auth, returns new slice and custom
+// error.
 func decrypt(a *Auth, cipherData []byte) ([]byte, error) {
 	secret := buildSecret(a)
 	block, err := aes.NewCipher(secret)
@@ -71,6 +77,8 @@ func decrypt(a *Auth, cipherData []byte) ([]byte, error) {
 	return data, nil
 }
 
+// encrypt the given data using the given Auth, returns new slice and custom
+// error.
 func encrypt(a *Auth, data []byte) ([]byte, error) {
 	secret := buildSecret(a)
 
@@ -92,6 +100,7 @@ func encrypt(a *Auth, data []byte) ([]byte, error) {
 	return cipherData, nil
 }
 
+// addChecksum prepends a checksum to the given data.
 func addChecksum(data []byte) []byte {
 	out := make([]byte, sha256.Size+len(data))
 	sum := sha256.Sum256(data)
@@ -101,6 +110,7 @@ func addChecksum(data []byte) []byte {
 	return out
 }
 
+// extractChecksum given data, returns new slice and error.
 func extractChecksum(data []byte) ([]byte, error) {
 	out := make([]byte, len(data)-sha256.Size)
 	sum := sha256.Sum256(data[sha256.Size:])

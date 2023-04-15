@@ -11,6 +11,7 @@ import (
 	"golang.org/x/net/html"
 )
 
+// parseRecordNode parses a record node.
 func parseRecordNode(node *html.Node) (record models.Record, err error) { // missing error
 	var c *html.Node
 
@@ -174,6 +175,7 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) { // mis
 	return
 }
 
+// GetRecords returns the records from the HTML body.
 func GetRecords(doc *html.Node) ([]models.Record, error) {
 	q := `//div[@id="dns_main_content"]/table[@class="generictable"]`
 

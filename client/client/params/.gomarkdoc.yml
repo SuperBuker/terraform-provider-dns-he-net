@@ -1,0 +1,7 @@
+output: "{{.Dir}}/README.md"
+format: github
+repository:
+  url: https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params
+  defaultBranch: master
+  directory: .
+includeUnexported: true

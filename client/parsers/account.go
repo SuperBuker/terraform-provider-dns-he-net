@@ -5,6 +5,7 @@ import (
 	"golang.org/x/net/html"
 )
 
+// GetAccount returns the account name from the HTML body.
 func GetAccount(doc *html.Node) (string, error) {
 	q := `//form[@name="remove_domain"]/input[@name="account"]`
 	node := htmlquery.FindOne(doc, q)

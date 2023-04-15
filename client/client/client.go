@@ -16,6 +16,7 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+// Client is a client for the dns.he.net API.
 type Client struct {
 	auth    auth.Auth
 	client  *resty.Client
@@ -23,6 +24,8 @@ type Client struct {
 	status  auth.Status
 }
 
+// NewClient returns a new client, requires a context and an auth.Auth.
+// Autehticates the client against the API
 func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 	client := newClient(ctx, authAuth)
 
@@ -45,6 +48,7 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 	}
 }
 
+// newClient returns a new client, handles the go-resty client configuration.
 func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 	client := &Client{
 		auth:   authAuth,

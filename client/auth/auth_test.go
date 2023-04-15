@@ -6,28 +6,33 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 
 	"github.com/pquerna/otp/totp"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 // TestAuth
 func TestAuth(t *testing.T) {
+	// Generate a new TOTP key.
 	key, err := totp.Generate(
 		totp.GenerateOpts{
 			Issuer:      "issuer",
 			AccountName: "account_name",
 		})
-
 	require.NoError(t, err)
 
-	auth, err := auth.NewAuth("user", "pass", key.Secret(), -1)
+	// Create a new Auth object with disabled cookie store.
+	auth, err := auth.NewAuth("user", "pass", key.Secret(), auth.Dummy)
 	require.NoError(t, err)
 
+	// Generate a TOTP code.
 	passcode, err := auth.GetCode()
 	require.NoError(t, err)
 
-	require.True(t, totp.Validate(passcode, key.Secret()))
+	// Validate the TOTP code.
+	assert.True(t, totp.Validate(passcode, key.Secret()))
 
-	require.Equal(t, map[string]string{
+	// Validate the generated auth form.
+	assert.Equal(t, map[string]string{
 		"email": auth.User,
 		"pass":  auth.Password,
 	}, auth.GetAuthForm())

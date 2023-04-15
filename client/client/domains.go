@@ -9,9 +9,8 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 )
 
+// GetDomains retrieves all domains from the API and returns them in a slice
 func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error) {
-	// TODO: validate authentication
-
 	resp, err := c.client.R().
 		SetContext(ctx).
 		SetResult([]models.Domain{}).
@@ -26,6 +25,7 @@ func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error) {
 	return domains, nil
 }
 
+// CreateDomain creates a new domain, then returns it, or an error.
 func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain, error) {
 	form := map[string]string{
 		"add_domain": domain,
@@ -49,6 +49,7 @@ func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain
 	return _domain, nil
 }
 
+// DeleteDomain deletes a domain, returns an error.
 func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error {
 	form := map[string]string{
 		"account":   c.account,

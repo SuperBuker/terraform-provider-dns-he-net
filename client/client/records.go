@@ -9,6 +9,8 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 )
 
+// getRecordsParams returns the genericquery parameters for the record
+// operations.
 func getRecordsParams(domainId uint) map[string]string {
 	return map[string]string{
 		"hosted_dns_zoneid":   fmt.Sprint(domainId),
@@ -17,6 +19,7 @@ func getRecordsParams(domainId uint) map[string]string {
 	}
 }
 
+// GetRecords retrieves all records from the API and returns them in a slice.
 func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record, error) {
 	resp, err := c.client.R().
 		SetQueryParams(getRecordsParams(domainId)).
@@ -33,6 +36,7 @@ func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record
 	return records, nil
 }
 
+// SetRecord creates or updates a record, then returns it, or an error.
 func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error) {
 	id, idIsSet := record.GetId()
 	form := record.Serialise()
@@ -66,6 +70,7 @@ func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.R
 	}
 }
 
+// DeleteRecord deletes a record, returns an error.
 func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error {
 	form := record.Refs()
 	params.RecordDelete(form)

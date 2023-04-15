@@ -7,6 +7,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 )
 
+// fromAuthStatus returns an error asssociated to the auth status.
 func fromAuthStatus(status auth.Status) error {
 	switch status {
 	case auth.NoAuth:
@@ -24,6 +25,7 @@ func fromAuthStatus(status auth.Status) error {
 	return nil // Dead code
 }
 
+// fromIssue parses the errors in the response and returns them as &ErrHeNet{}.
 func fromIssue(issue string) error {
 	if len(issue) != 0 {
 		issues := strings.Split(issue, "  ") // Two spaces
