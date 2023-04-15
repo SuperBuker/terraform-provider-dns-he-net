@@ -14,6 +14,8 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
+// autheticate authenticates the client against the API on a separated go-resty
+// client, then returns the cookies.
 func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 	// New client to not to mess with the regular one
 	client := resty.New()

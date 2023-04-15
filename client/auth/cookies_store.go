@@ -33,6 +33,8 @@ type cookieStore struct {
 	Save func(a *Auth, cookies []*http.Cookie) error
 }
 
+// Load and Save functions for a dummy cookie store.
+// Load() returns a not implemented error, Save() skips the operation.
 func dummyStore() cookieStore {
 	return cookieStore{
 		Load: func(a *Auth) ([]*http.Cookie, error) {
@@ -44,6 +46,7 @@ func dummyStore() cookieStore {
 	}
 }
 
+// Load and Save functions for a simple file-based cookie store.
 func simpleStore() cookieStore {
 	return cookieStore{
 		Load: func(a *Auth) ([]*http.Cookie, error) {
@@ -55,7 +58,7 @@ func simpleStore() cookieStore {
 			var cookies []*http.Cookie
 
 			if err = json.Unmarshal(data, &cookies); err != nil {
-				return nil, &ErrFileEncodng{err}
+				return nil, &ErrFileEncoding{err}
 			} else {
 				return cookies, nil
 			}
@@ -68,7 +71,7 @@ func simpleStore() cookieStore {
 
 			data, err := json.Marshal(cookies)
 			if err != nil {
-				return &ErrFileEncodng{err}
+				return &ErrFileEncoding{err}
 			}
 
 			if err = os.WriteFile(configFilePath(a, Simple), data, 0644); err != nil {
@@ -80,6 +83,7 @@ func simpleStore() cookieStore {
 	}
 }
 
+// Load and Save functions for a encrypted and checksum validated cookie store.
 func encryptedStore() cookieStore {
 	return cookieStore{
 		Load: func(a *Auth) ([]*http.Cookie, error) {
@@ -101,7 +105,7 @@ func encryptedStore() cookieStore {
 			var cookies []*http.Cookie
 
 			if err = json.Unmarshal(data, &cookies); err != nil {
-				return nil, &ErrFileEncodng{err}
+				return nil, &ErrFileEncoding{err}
 			} else {
 				return cookies, nil
 			}
@@ -114,7 +118,7 @@ func encryptedStore() cookieStore {
 
 			data, err := json.Marshal(cookies)
 			if err != nil {
-				return &ErrFileEncodng{err}
+				return &ErrFileEncoding{err}
 			}
 
 			sumData := addChecksum(data)

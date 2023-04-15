@@ -9,6 +9,7 @@ import (
 	"golang.org/x/net/html"
 )
 
+// parseDomainNode parses a domain node.
 func parseDomainNode(node *html.Node) (record models.Domain) {
 	q := `//td[@style]/img[@name][@value]`
 
@@ -20,6 +21,7 @@ func parseDomainNode(node *html.Node) (record models.Domain) {
 	return
 }
 
+// GetDomains returns the domains from the HTML body.
 func GetDomains(doc *html.Node) ([]models.Domain, error) {
 	q := `//table[@id="domains_table"]`
 

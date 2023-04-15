@@ -17,6 +17,9 @@ type ResultX struct {
 	Result interface{}
 }
 
+// Init initialises the go-resty Request.Result with a ResultX contaning the
+// parsed HTML body and the expected result, if any. Returns an error if the
+// parsing fails
 func Init(resp *resty.Response) (err error) {
 	body := resp.Body()
 	res := resp.Result()
@@ -38,6 +41,9 @@ func Init(resp *resty.Response) (err error) {
 	return
 }
 
+// Returns the parsed HTML body from the go-resty Response.
+// If the Request.Result contains a ResultX, it returns the HTML body from it,
+// otherwise it parses the body and returns the result.
 func Body(resp *resty.Response) *html.Node {
 	res, ok := resp.Result().(ResultX)
 
@@ -50,6 +56,8 @@ func Body(resp *resty.Response) *html.Node {
 	return res.HTML
 }
 
+// Returns the Result() the go-resty Response.
+// If the Request.Result contains a ResultX, it returns the inner Result.
 func Result(resp *resty.Response) interface{} {
 	res, ok := resp.Result().(ResultX)
 
