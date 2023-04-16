@@ -12,7 +12,7 @@ import (
 )
 
 // parseRecordNode parses a record node.
-func parseRecordNode(node *html.Node) (record models.Record, err error) { // missing error
+func parseRecordNode(node *html.Node) (record models.Record, err error) {
 	var c *html.Node
 
 	for c = node.FirstChild; ; c = c.NextSibling {
