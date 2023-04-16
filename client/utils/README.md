@@ -9,6 +9,10 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 ## Index
 
 - [func IsNil(i interface{}) bool](<#func-isnil>)
+- [type ErrCasting](<#type-errcasting>)
+  - [func NewErrCasting(expected, actual interface{}) *ErrCasting](<#func-newerrcasting>)
+  - [func (e *ErrCasting) Error() string](<#func-errcasting-error>)
+  - [func (e *ErrCasting) Unwrap() []error](<#func-errcasting-unwrap>)
 - [type ErrNotImplemented](<#type-errnotimplemented>)
   - [func (e *ErrNotImplemented) Error() string](<#func-errnotimplemented-error>)
   - [func (e *ErrNotImplemented) Unwrap() []error](<#func-errnotimplemented-unwrap>)
@@ -22,7 +26,36 @@ func IsNil(i interface{}) bool
 
 IsNil returns true if the interface is nil or is a nil pointer, map, array, channel, or slice.
 
-## type [ErrNotImplemented](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L4>)
+## type [ErrCasting](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L17-L20>)
+
+ErrCasting is an error that indicates a type casting failed.
+
+```go
+type ErrCasting struct {
+    ExpectedType string
+    ActualType   string
+}
+```
+
+### func [NewErrCasting](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L30>)
+
+```go
+func NewErrCasting(expected, actual interface{}) *ErrCasting
+```
+
+### func \(\*ErrCasting\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L22>)
+
+```go
+func (e *ErrCasting) Error() string
+```
+
+### func \(\*ErrCasting\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L26>)
+
+```go
+func (e *ErrCasting) Unwrap() []error
+```
+
+## type [ErrNotImplemented](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L6>)
 
 ErrNotImplemented is an error that indicates a feature is not implemented.
 
@@ -30,13 +63,13 @@ ErrNotImplemented is an error that indicates a feature is not implemented.
 type ErrNotImplemented struct{}
 ```
 
-### func \(\*ErrNotImplemented\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L6>)
+### func \(\*ErrNotImplemented\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L8>)
 
 ```go
 func (e *ErrNotImplemented) Error() string
 ```
 
-### func \(\*ErrNotImplemented\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L10>)
+### func \(\*ErrNotImplemented\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L12>)
 
 ```go
 func (e *ErrNotImplemented) Unwrap() []error

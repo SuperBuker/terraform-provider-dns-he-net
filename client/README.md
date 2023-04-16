@@ -9,7 +9,6 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client"
 ## Index
 
 - [Variables](<#variables>)
-- [func NewClientWithCreds(username, password, secret string, cs auth.CookieStore) (func(context.Context) (*client.Client, error), error)](<#func-newclientwithcreds>)
 
 
 ## Variables
@@ -32,12 +31,6 @@ var NewAuth = auth.NewAuth
 
 ```go
 var NewClient = client.NewClient
-```
-
-## func [NewClientWithCreds](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/blob/master/client/shortcuts.go#L26>)
-
-```go
-func NewClientWithCreds(username, password, secret string, cs auth.CookieStore) (func(context.Context) (*client.Client, error), error)
 ```
 
 

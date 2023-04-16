@@ -20,6 +20,9 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
   - [func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record, error)](<#func-client-getrecords>)
   - [func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error)](<#func-client-setrecord>)
   - [func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error)](<#func-client-autheticate>)
+- [type ErrItemNotFound](<#type-erritemnotfound>)
+  - [func (e *ErrItemNotFound) Error() string](<#func-erritemnotfound-error>)
+  - [func (e *ErrItemNotFound) Unwrap() []error](<#func-erritemnotfound-unwrap>)
 
 
 ## Constants
@@ -28,7 +31,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 const endpoint = "https://dns.he.net"
 ```
 
-## func [getRecordsParams](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L14>)
+## func [getRecordsParams](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L15>)
 
 ```go
 func getRecordsParams(domainId uint) map[string]string
@@ -65,7 +68,7 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client
 
 newClient returns a new client, handles the go\-resty client configuration.
 
-### func \(\*Client\) [CreateDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L29>)
+### func \(\*Client\) [CreateDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L33>)
 
 ```go
 func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain, error)
@@ -73,7 +76,7 @@ func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain
 
 CreateDomain creates a new domain, then returns it, or an error.
 
-### func \(\*Client\) [DeleteDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L53>)
+### func \(\*Client\) [DeleteDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L63>)
 
 ```go
 func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error
@@ -81,7 +84,7 @@ func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error
 
 DeleteDomain deletes a domain, returns an error.
 
-### func \(\*Client\) [DeleteRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L74>)
+### func \(\*Client\) [DeleteRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L86>)
 
 ```go
 func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error
@@ -89,7 +92,7 @@ func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error
 
 DeleteRecord deletes a record, returns an error.
 
-### func \(\*Client\) [GetDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L13>)
+### func \(\*Client\) [GetDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L14>)
 
 ```go
 func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error)
@@ -97,7 +100,7 @@ func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error)
 
 GetDomains retrieves all domains from the API and returns them in a slice
 
-### func \(\*Client\) [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L23>)
+### func \(\*Client\) [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L24>)
 
 ```go
 func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record, error)
@@ -105,7 +108,7 @@ func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record
 
 GetRecords retrieves all records from the API and returns them in a slice.
 
-### func \(\*Client\) [SetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L40>)
+### func \(\*Client\) [SetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L44>)
 
 ```go
 func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error)
@@ -120,6 +123,28 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error)
 ```
 
 autheticate authenticates the client against the API on a separated go\-resty client, then returns the cookies.
+
+## type [ErrItemNotFound](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/errors.go#L6-L8>)
+
+ErrItemNotFound is an error that indicates a resource was not found.
+
+```go
+type ErrItemNotFound struct {
+    Resource string
+}
+```
+
+### func \(\*ErrItemNotFound\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/errors.go#L10>)
+
+```go
+func (e *ErrItemNotFound) Error() string
+```
+
+### func \(\*ErrItemNotFound\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/errors.go#L14>)
+
+```go
+func (e *ErrItemNotFound) Unwrap() []error
+```
 
 
 
