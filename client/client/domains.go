@@ -51,7 +51,10 @@ func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain
 		return models.Domain{}, utils.NewErrCasting([]models.Domain{}, resp.Result())
 	}
 
-	_domain, _ := filters.LatestDomain(domains)
+	_domain, ok := filters.LatestDomain(domains)
+	if !ok {
+		return models.Domain{}, &ErrItemNotFound{Resource: "domain"} // TODO: to improve
+	}
 
 	return _domain, nil
 }

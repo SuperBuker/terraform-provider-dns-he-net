@@ -68,12 +68,17 @@ func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.R
 	}
 
 	if !idIsSet {
-		_record, _ := filters.LatestRecord(records)
-		return _record.ToX() // err
+		_record, ok := filters.LatestRecord(records)
+
+		if !ok {
+			return nil, &ErrItemNotFound{Resource: "record"} // TODO: to improve
+		}
+
+		return _record.ToX() // returns models.RecordX, err
 	} else if _record, ok := filters.RecordById(records, id); ok {
-		return _record.ToX() // err
+		return _record.ToX() // returns models.RecordX, err
 	} else {
-		return nil, nil // missing err not found
+		return nil, &ErrItemNotFound{Resource: "record"} // TODO: to improve
 	}
 }
 
