@@ -39,6 +39,8 @@ func TestDomains(t *testing.T) {
 
 		_domains, err := parsers.GetDomains(doc)
 		require.Error(t, err)
+		targetErr := &parsers.ErrNotFound{}
+		assert.ErrorAs(t, err, &targetErr)
 
 		assert.Nil(t, _domains)
 		assert.Equal(t, "element \"//table[@id=\"domains_table\"]\" not found in document", err.Error())
