@@ -32,6 +32,8 @@ func TestAccount(t *testing.T) {
 
 		account, err := parsers.GetAccount(doc)
 		require.Error(t, err)
+		targetErr := &parsers.ErrNotFound{}
+		assert.ErrorAs(t, err, &targetErr)
 
 		assert.Equal(t, "", account)
 		assert.Equal(t, "element \"//form[@name=\"remove_domain\"]/input[@name=\"account\"]\" not found in document", err.Error())

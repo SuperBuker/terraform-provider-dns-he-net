@@ -7,6 +7,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filters"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/params"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 )
 
 // GetDomains retrieves all domains from the API and returns them in a slice
@@ -20,7 +21,10 @@ func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error) {
 		return nil, err
 	}
 
-	domains, _ := resp.Result().([]models.Domain)
+	domains, ok := resp.Result().([]models.Domain)
+	if !ok {
+		return nil, utils.NewErrCasting([]models.Domain{}, resp.Result())
+	}
 
 	return domains, nil
 }
@@ -42,9 +46,15 @@ func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain
 		return models.Domain{}, err
 	}
 
-	domains, _ := resp.Result().([]models.Domain) // TODO: validate
+	domains, ok := resp.Result().([]models.Domain)
+	if !ok {
+		return models.Domain{}, utils.NewErrCasting([]models.Domain{}, resp.Result())
+	}
 
-	_domain, _ := filters.LatestDomain(domains)
+	_domain, ok := filters.LatestDomain(domains)
+	if !ok {
+		return models.Domain{}, &ErrItemNotFound{Resource: "domain"} // TODO: to improve
+	}
 
 	return _domain, nil
 }

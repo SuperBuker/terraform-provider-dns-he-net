@@ -10,15 +10,20 @@ import (
 )
 
 // parseDomainNode parses a domain node.
-func parseDomainNode(node *html.Node) (record models.Domain) {
+func parseDomainNode(node *html.Node) (models.Domain, error) {
 	q := `//td[@style]/img[@name][@value]`
 
 	c := htmlquery.FindOne(node, q)
-	recordId, _ := strconv.Atoi(htmlquery.SelectAttr(c, "value")) // WIP
-	record.Id = uint(recordId)
-	record.Domain = htmlquery.SelectAttr(c, "name")
+	recordId, err := strconv.Atoi(htmlquery.SelectAttr(c, "value"))
 
-	return
+	if err != nil {
+		return models.Domain{}, err
+	}
+
+	return models.Domain{
+		Id:     uint(recordId),
+		Domain: htmlquery.SelectAttr(c, "name"),
+	}, nil
 }
 
 // GetDomains returns the domains from the HTML body.
@@ -33,13 +38,21 @@ func GetDomains(doc *html.Node) ([]models.Domain, error) {
 	nodes := htmlquery.Find(doc, q)
 
 	if nodes == nil {
-		return []models.Domain{}, nil
+		return []models.Domain{}, nil // empty table
 	}
 
 	records := make([]models.Domain, len(nodes))
 
 	for i, node := range nodes {
-		record := parseDomainNode(node)
+		record, err := parseDomainNode(node)
+
+		if err != nil {
+			return nil, &ErrParsing{
+				`//table[@id="domains_table"]/tbody/tr // recordId`,
+				err,
+			}
+		}
+
 		records[i] = record
 	}
 

@@ -77,6 +77,8 @@ func TestRecords(t *testing.T) {
 
 		_records, err := parsers.GetRecords(doc)
 		require.Error(t, err)
+		targetErr := &parsers.ErrNotFound{}
+		assert.ErrorAs(t, err, &targetErr)
 
 		assert.Nil(t, _records)
 		assert.Equal(t, "element \"//div[@id=\"dns_main_content\"]/table[@class=\"generictable\"]\" not found in document", err.Error())

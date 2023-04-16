@@ -7,6 +7,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filters"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/params"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 )
 
 // getRecordsParams returns the genericquery parameters for the record
@@ -31,7 +32,10 @@ func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record
 		return nil, err
 	}
 
-	records, _ := resp.Result().([]models.Record) // TODO: validate
+	records, ok := resp.Result().([]models.Record)
+	if !ok {
+		return nil, utils.NewErrCasting([]models.Record{}, resp.Result())
+	}
 
 	return records, nil
 }
@@ -58,15 +62,23 @@ func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.R
 		return nil, err
 	}
 
-	records, _ := resp.Result().([]models.Record) // Doubt
+	records, ok := resp.Result().([]models.Record)
+	if !ok {
+		return nil, utils.NewErrCasting([]models.Record{}, resp.Result())
+	}
 
 	if !idIsSet {
-		_record, _ := filters.LatestRecord(records)
-		return _record.ToX() // err
+		_record, ok := filters.LatestRecord(records)
+
+		if !ok {
+			return nil, &ErrItemNotFound{Resource: "record"} // TODO: to improve
+		}
+
+		return _record.ToX() // returns models.RecordX, err
 	} else if _record, ok := filters.RecordById(records, id); ok {
-		return _record.ToX() // err
+		return _record.ToX() // returns models.RecordX, err
 	} else {
-		return nil, nil // missing err not found
+		return nil, &ErrItemNotFound{Resource: "record"} // TODO: to improve
 	}
 }
 
