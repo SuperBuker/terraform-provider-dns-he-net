@@ -17,12 +17,13 @@ func TestDummyStore(t *testing.T) {
 
 	store := auth.store // Dummy Store
 
-	err = store.Save(&auth, nil)
+	err = store.Save(&auth, "", nil)
 	require.NoError(t, err)
 
-	cookies, err := store.Load(&auth)
+	account, cookies, err := store.Load(&auth)
 	require.Error(t, err)
 	assert.ErrorIs(t, err, &utils.ErrNotImplemented{})
+	assert.Empty(t, account)
 	assert.Nil(t, cookies)
 }
 
@@ -40,11 +41,12 @@ func TestSimpleStore(t *testing.T) {
 	)
 
 	cookies := []*http.Cookie{}
-	err = store.Save(&auth, cookies)
+	err = store.Save(&auth, "", cookies)
 	require.NoError(t, err)
 
-	cookies2, err := store.Load(&auth)
+	account, cookies2, err := store.Load(&auth)
 	require.NoError(t, err)
+	assert.Equal(t, "", account)
 	assert.Equal(t, cookies, cookies2)
 }
 
@@ -70,10 +72,11 @@ func TestEncryptedStore(t *testing.T) {
 	)
 
 	cookies := []*http.Cookie{}
-	err = store.Save(&auth, cookies)
+	err = store.Save(&auth, "", cookies)
 	require.NoError(t, err)
 
-	cookies2, err := store.Load(&auth)
+	account, cookies2, err := store.Load(&auth)
 	require.NoError(t, err)
+	assert.Equal(t, "", account)
 	assert.Equal(t, cookies, cookies2)
 }

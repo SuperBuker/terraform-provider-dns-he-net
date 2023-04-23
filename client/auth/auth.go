@@ -19,13 +19,13 @@ type Auth struct {
 	User     string
 	Password string
 	OTPKey   *otp.Key
-	store    cookieStore
+	store    authStore
 }
 
 // NewAuth returns an Auth struct with the given user, password and otpSecret.
 // The OTPKey is generated from the otpSecret.
 // The cookieStore is selected by the storeMode.
-func NewAuth(user, pass, otpSecret string, storeMode CookieStore) (Auth, error) {
+func NewAuth(user, pass, otpSecret string, storeMode AuthStore) (Auth, error) {
 	k := fmt.Sprintf(otpUrl, user, otpSecret)
 
 	key, err := otp.NewKeyFromURL(k)
@@ -57,11 +57,11 @@ func (a *Auth) GetCode() (string, error) {
 	return totp.GenerateCode(a.OTPKey.Secret(), time.Now())
 }
 
-// LoadCookies returns the cookies stored in the cookieStore if they are not expired.
-func (a *Auth) LoadCookies() ([]*http.Cookie, error) {
-	cookies, err := a.store.Load(a)
+// Load returns the cookies stored in the cookieStore if they are not expired.
+func (a *Auth) Load() (string, []*http.Cookie, error) {
+	account, cookies, err := a.store.Load(a)
 	if err != nil {
-		return nil, err
+		return "", nil, err
 	}
 
 	now := time.Now().Add(time.Hour) // One hour margin
@@ -76,10 +76,10 @@ func (a *Auth) LoadCookies() ([]*http.Cookie, error) {
 	}
 
 	// Realloc slice to shrink capacity
-	return append([]*http.Cookie(nil), filtered...), nil
+	return account, append([]*http.Cookie(nil), filtered...), nil
 }
 
-// SaveCookies saves the cookies in the cookieStore.
-func (a *Auth) SaveCookies(cookies []*http.Cookie) error {
-	return a.store.Save(a, cookies)
+// Save saves the cookies in the cookieStore.
+func (a *Auth) Save(account string, cookies []*http.Cookie) error {
+	return a.store.Save(a, account, cookies)
 }

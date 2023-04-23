@@ -25,20 +25,22 @@ type Client struct {
 }
 
 // NewClient returns a new client, requires a context and an auth.Auth.
-// Autehticates the client against the API
+// Autehticates the client against the API.
 func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 	client := newClient(ctx, authAuth)
 
-	if cookies, err := authAuth.LoadCookies(); err == nil {
+	if account, cookies, err := authAuth.Load(); err == nil {
 		// Load cookies from filestore
 		client.client.SetCookies(cookies)
 		client.status = auth.Ok
+		client.account = account
 		return client, nil
 	} else if cookies, err = client.autheticate(ctx); err == nil {
 		// Manually trigger authentication
 		client.client.SetCookies(cookies)
 
-		if err := client.auth.SaveCookies(cookies); err != nil {
+		// TODO: Add account
+		if err := client.auth.Save(client.account, cookies); err != nil {
 			log.Printf("error happened when saving cookies: %v", err)
 		}
 
@@ -72,7 +74,7 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 		} else if cookies, err := client.autheticate(req.Context()); err == nil {
 			c.SetCookies(cookies)
 
-			if err := client.auth.SaveCookies(cookies); err != nil {
+			if err := client.auth.Save(client.account, cookies); err != nil {
 				log.Printf("error happened when saving cookies: %v", err)
 			}
 		} else {
@@ -125,4 +127,9 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 	})
 
 	return client
+}
+
+// GetAccount returns the account ID.
+func (c *Client) GetAccount() string {
+	return c.account
 }

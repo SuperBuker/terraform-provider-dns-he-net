@@ -1,7 +1,6 @@
 package auth
 
 import (
-	"encoding/json"
 	"net/http"
 	"os"
 
@@ -9,15 +8,15 @@ import (
 	"github.com/kirsle/configdir"
 )
 
-type CookieStore int8
+type AuthStore int8
 
 const (
-	Dummy CookieStore = iota
+	Dummy AuthStore = iota
 	Simple
 	Encrypted
 )
 
-func storeSelector(cs CookieStore) cookieStore {
+func storeSelector(cs AuthStore) authStore {
 	switch cs {
 	case Simple:
 		return simpleStore()
@@ -28,50 +27,44 @@ func storeSelector(cs CookieStore) cookieStore {
 	}
 }
 
-type cookieStore struct {
-	Load func(a *Auth) ([]*http.Cookie, error)
-	Save func(a *Auth, cookies []*http.Cookie) error
+type authStore struct {
+	Load func(a *Auth) (string, []*http.Cookie, error)
+	Save func(a *Auth, account string, cookies []*http.Cookie) error
 }
 
 // Load and Save functions for a dummy cookie store.
 // Load() returns a not implemented error, Save() skips the operation.
-func dummyStore() cookieStore {
-	return cookieStore{
-		Load: func(a *Auth) ([]*http.Cookie, error) {
-			return nil, &utils.ErrNotImplemented{}
+func dummyStore() authStore {
+	return authStore{
+		Load: func(a *Auth) (string, []*http.Cookie, error) {
+			return "", nil, &utils.ErrNotImplemented{}
 		},
-		Save: func(a *Auth, cookies []*http.Cookie) error {
+		Save: func(a *Auth, account string, cookies []*http.Cookie) error {
 			return nil
 		},
 	}
 }
 
 // Load and Save functions for a simple file-based cookie store.
-func simpleStore() cookieStore {
-	return cookieStore{
-		Load: func(a *Auth) ([]*http.Cookie, error) {
-			data, err := os.ReadFile(configFilePath(a, Simple))
+func simpleStore() authStore {
+	return authStore{
+		Load: func(a *Auth) (string, []*http.Cookie, error) {
+			bytes, err := os.ReadFile(configFilePath(a, Simple))
 			if err != nil {
-				return nil, &ErrFileIO{err}
+				return "", nil, &ErrFileIO{err}
 			}
 
-			var cookies []*http.Cookie
-
-			if err = json.Unmarshal(data, &cookies); err != nil {
-				return nil, &ErrFileEncoding{err}
-			} else {
-				return cookies, nil
-			}
+			return deserialise(bytes)
 		},
-		Save: func(a *Auth, cookies []*http.Cookie) error {
+		Save: func(a *Auth, account string, cookies []*http.Cookie) error {
 			// Ensure it exists.
 			if err := configdir.MakePath(configPath); err != nil {
 				return &ErrFileIO{err}
 			}
 
-			data, err := json.Marshal(cookies)
+			data, err := serialise(account, cookies)
 			if err != nil {
-				return &ErrFileEncoding{err}
+				return err // Returns custom error
 			}
 
 			if err = os.WriteFile(configFilePath(a, Simple), data, 0644); err != nil {
@@ -84,41 +77,35 @@ func simpleStore() cookieStore {
 }
 
 // Load and Save functions for a encrypted and checksum validated cookie store.
-func encryptedStore() cookieStore {
-	return cookieStore{
-		Load: func(a *Auth) ([]*http.Cookie, error) {
+func encryptedStore() authStore {
+	return authStore{
+		Load: func(a *Auth) (string, []*http.Cookie, error) {
 			cipherData, err := os.ReadFile(configFilePath(a, Encrypted))
 			if err != nil {
-				return nil, &ErrFileIO{err}
+				return "", nil, &ErrFileIO{err}
 			}
 
 			sumData, err := decrypt(a, cipherData)
 			if err != nil {
-				return nil, err // Returns custom error
+				return "", nil, err // Returns custom error
 			}
 
-			data, err := extractChecksum(sumData)
+			bytes, err := extractChecksum(sumData)
 			if err != nil {
-				return nil, err // Returns custom error
+				return "", nil, err // Returns custom error
 			}
 
-			var cookies []*http.Cookie
-
-			if err = json.Unmarshal(data, &cookies); err != nil {
-				return nil, &ErrFileEncoding{err}
-			} else {
-				return cookies, nil
-			}
+			return deserialise(bytes)
 		},
-		Save: func(a *Auth, cookies []*http.Cookie) error {
+		Save: func(a *Auth, account string, cookies []*http.Cookie) error {
 			// Ensure it exists.
 			if err := configdir.MakePath(configPath); err != nil {
 				return &ErrFileIO{err}
 			}
 
-			data, err := json.Marshal(cookies)
+			data, err := serialise(account, cookies)
 			if err != nil {
-				return &ErrFileEncoding{err}
+				return err // Returns custom error
 			}
 
 			sumData := addChecksum(data)
