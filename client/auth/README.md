@@ -12,18 +12,20 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 - [Variables](<#variables>)
 - [func addChecksum(data []byte) []byte](<#func-addchecksum>)
 - [func buildSecret(a *Auth) []byte](<#func-buildsecret>)
-- [func configFilePath(a *Auth, cs CookieStore) string](<#func-configfilepath>)
+- [func configFilePath(a *Auth, cs AuthStore) string](<#func-configfilepath>)
 - [func decrypt(a *Auth, cipherData []byte) ([]byte, error)](<#func-decrypt>)
+- [func deserialise(bytes []byte) (string, []*http.Cookie, error)](<#func-deserialise>)
 - [func encrypt(a *Auth, data []byte) ([]byte, error)](<#func-encrypt>)
 - [func extractChecksum(data []byte) ([]byte, error)](<#func-extractchecksum>)
 - [func initIV(iv []byte) error](<#func-initiv>)
+- [func serialise(account string, cookies []*http.Cookie) ([]byte, error)](<#func-serialise>)
 - [type Auth](<#type-auth>)
-  - [func NewAuth(user, pass, otpSecret string, storeMode CookieStore) (Auth, error)](<#func-newauth>)
+  - [func NewAuth(user, pass, otpSecret string, storeMode AuthStore) (Auth, error)](<#func-newauth>)
   - [func (a *Auth) GetAuthForm() map[string]string](<#func-auth-getauthform>)
   - [func (a *Auth) GetCode() (string, error)](<#func-auth-getcode>)
-  - [func (a *Auth) LoadCookies() ([]*http.Cookie, error)](<#func-auth-loadcookies>)
-  - [func (a *Auth) SaveCookies(cookies []*http.Cookie) error](<#func-auth-savecookies>)
-- [type CookieStore](<#type-cookiestore>)
+  - [func (a *Auth) Load() (string, []*http.Cookie, error)](<#func-auth-load>)
+  - [func (a *Auth) Save(account string, cookies []*http.Cookie) error](<#func-auth-save>)
+- [type AuthStore](<#type-authstore>)
 - [type ErrFileChecksum](<#type-errfilechecksum>)
   - [func (e *ErrFileChecksum) Error() string](<#func-errfilechecksum-error>)
   - [func (e *ErrFileChecksum) Unwrap() []error](<#func-errfilechecksum-unwrap>)
@@ -37,11 +39,12 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
   - [func (e *ErrFileIO) Error() string](<#func-errfileio-error>)
   - [func (e *ErrFileIO) Unwrap() []error](<#func-errfileio-unwrap>)
 - [type Status](<#type-status>)
-- [type cookieStore](<#type-cookiestore>)
-  - [func dummyStore() cookieStore](<#func-dummystore>)
-  - [func encryptedStore() cookieStore](<#func-encryptedstore>)
-  - [func simpleStore() cookieStore](<#func-simplestore>)
-  - [func storeSelector(cs CookieStore) cookieStore](<#func-storeselector>)
+- [type authStore](<#type-authstore>)
+  - [func dummyStore() authStore](<#func-dummystore>)
+  - [func encryptedStore() authStore](<#func-encryptedstore>)
+  - [func simpleStore() authStore](<#func-simplestore>)
+  - [func storeSelector(cs AuthStore) authStore](<#func-storeselector>)
+- [type serialisedStore](<#type-serialisedstore>)
 
 
 ## Constants
@@ -56,7 +59,7 @@ const otpUrl = "otpauth://totp/dns.he.net:%s?secret=%s&issuer=dns.he.net"
 var configPath = configdir.LocalConfig("terraform-provider-dns-he-net")
 ```
 
-## func [addChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L104>)
+## func [addChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L136>)
 
 ```go
 func addChecksum(data []byte) []byte
@@ -64,7 +67,7 @@ func addChecksum(data []byte) []byte
 
 addChecksum prepends a checksum to the given data.
 
-## func [buildSecret](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L40>)
+## func [buildSecret](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L48>)
 
 ```go
 func buildSecret(a *Auth) []byte
@@ -72,15 +75,15 @@ func buildSecret(a *Auth) []byte
 
 buildSecret generates secret from Auth.
 
-## func [configFilePath](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L18>)
+## func [configFilePath](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L26>)
 
 ```go
-func configFilePath(a *Auth, cs CookieStore) string
+func configFilePath(a *Auth, cs AuthStore) string
 ```
 
 configFilePath returns the path to the cookie file for the given user. The cookie file is named depending on the aht username and cookie store type.
 
-## func [decrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L60>)
+## func [decrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L92>)
 
 ```go
 func decrypt(a *Auth, cipherData []byte) ([]byte, error)
@@ -88,7 +91,13 @@ func decrypt(a *Auth, cipherData []byte) ([]byte, error)
 
 decrypt the given data using the given Auth, returns new slice and custom error.
 
-## func [encrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L82>)
+## func [deserialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L80>)
+
+```go
+func deserialise(bytes []byte) (string, []*http.Cookie, error)
+```
+
+## func [encrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L114>)
 
 ```go
 func encrypt(a *Auth, data []byte) ([]byte, error)
@@ -96,7 +105,7 @@ func encrypt(a *Auth, data []byte) ([]byte, error)
 
 encrypt the given data using the given Auth, returns new slice and custom error.
 
-## func [extractChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L114>)
+## func [extractChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L146>)
 
 ```go
 func extractChecksum(data []byte) ([]byte, error)
@@ -104,13 +113,19 @@ func extractChecksum(data []byte) ([]byte, error)
 
 extractChecksum given data, returns new slice and error.
 
-## func [initIV](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L34>)
+## func [initIV](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L42>)
 
 ```go
 func initIV(iv []byte) error
 ```
 
 initIV creates a new nonce, returns error.
+
+## func [serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L66>)
+
+```go
+func serialise(account string, cookies []*http.Cookie) ([]byte, error)
+```
 
 ## type [Auth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/auth.go#L18-L23>)
 
@@ -119,14 +134,14 @@ type Auth struct {
     User     string
     Password string
     OTPKey   *otp.Key
-    store    cookieStore
+    store    authStore
 }
 ```
 
 ### func [NewAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/auth.go#L28>)
 
 ```go
-func NewAuth(user, pass, otpSecret string, storeMode CookieStore) (Auth, error)
+func NewAuth(user, pass, otpSecret string, storeMode AuthStore) (Auth, error)
 ```
 
 NewAuth returns an Auth struct with the given user, password and otpSecret. The OTPKey is generated from the otpSecret. The cookieStore is selected by the storeMode.
@@ -147,31 +162,31 @@ func (a *Auth) GetCode() (string, error)
 
 GetCode returns the OTP code generated by the OTPKey.
 
-### func \(\*Auth\) [LoadCookies](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/auth.go#L61>)
+### func \(\*Auth\) [Load](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/auth.go#L61>)
 
 ```go
-func (a *Auth) LoadCookies() ([]*http.Cookie, error)
+func (a *Auth) Load() (string, []*http.Cookie, error)
 ```
 
-LoadCookies returns the cookies stored in the cookieStore if they are not expired.
+Load returns the cookies stored in the cookieStore if they are not expired.
 
-### func \(\*Auth\) [SaveCookies](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/auth.go#L83>)
+### func \(\*Auth\) [Save](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/auth.go#L83>)
 
 ```go
-func (a *Auth) SaveCookies(cookies []*http.Cookie) error
+func (a *Auth) Save(account string, cookies []*http.Cookie) error
 ```
 
-SaveCookies saves the cookies in the cookieStore.
+Save saves the cookies in the cookieStore.
 
-## type [CookieStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/cookies_store.go#L12>)
+## type [AuthStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/data_store.go#L11>)
 
 ```go
-type CookieStore int8
+type AuthStore int8
 ```
 
 ```go
 const (
-    Dummy CookieStore = iota
+    Dummy AuthStore = iota
     Simple
     Encrypted
 )
@@ -298,43 +313,52 @@ const (
 )
 ```
 
-## type [cookieStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/cookies_store.go#L31-L34>)
+## type [authStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/data_store.go#L30-L33>)
 
 ```go
-type cookieStore struct {
-    Load func(a *Auth) ([]*http.Cookie, error)
-    Save func(a *Auth, cookies []*http.Cookie) error
+type authStore struct {
+    Load func(a *Auth) (string, []*http.Cookie, error)
+    Save func(a *Auth, account string, cookies []*http.Cookie) error
 }
 ```
 
-### func [dummyStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/cookies_store.go#L38>)
+### func [dummyStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/data_store.go#L37>)
 
 ```go
-func dummyStore() cookieStore
+func dummyStore() authStore
 ```
 
 Load and Save functions for a dummy cookie store. Load\(\) returns a not implemented error, Save\(\) skips the operation.
 
-### func [encryptedStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/cookies_store.go#L87>)
+### func [encryptedStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/data_store.go#L80>)
 
 ```go
-func encryptedStore() cookieStore
+func encryptedStore() authStore
 ```
 
 Load and Save functions for a encrypted and checksum validated cookie store.
 
-### func [simpleStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/cookies_store.go#L50>)
+### func [simpleStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/data_store.go#L49>)
 
 ```go
-func simpleStore() cookieStore
+func simpleStore() authStore
 ```
 
 Load and Save functions for a simple file\-based cookie store.
 
-### func [storeSelector](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/cookies_store.go#L20>)
+### func [storeSelector](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/data_store.go#L19>)
 
 ```go
-func storeSelector(cs CookieStore) cookieStore
+func storeSelector(cs AuthStore) authStore
+```
+
+## type [serialisedStore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L18-L21>)
+
+```go
+type serialisedStore struct {
+    Account string         `json:"account"`
+    Cookies []*http.Cookie `json:"cookies"`
+}
 ```
 
 
