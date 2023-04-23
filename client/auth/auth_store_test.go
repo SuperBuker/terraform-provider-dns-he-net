@@ -2,7 +2,6 @@ package auth
 
 import (
 	"encoding/json"
-	"net/http"
 	"os"
 	"testing"
 
@@ -13,12 +12,12 @@ import (
 // TestAuthStore tests the SaveCookies and LoadCookies methods.
 func TestAuthStore(t *testing.T) {
 	// Read test data from file.
-	data, err := os.ReadFile("../testing_data/json/cookies.json")
+	bytes, err := os.ReadFile("../testing_data/json/cookies.json")
 	require.NoError(t, err)
 
-	var cookies []*http.Cookie
+	var data serialisedStore
 
-	require.NoError(t, json.Unmarshal(data, &cookies))
+	require.NoError(t, json.Unmarshal(bytes, &data))
 
 	// Create a new Auth object using the Simple cookie store.
 	auth, err := NewAuth("test_user", "", "", Simple)
@@ -32,13 +31,16 @@ func TestAuthStore(t *testing.T) {
 	)
 
 	// Save the cookies to the file.
-	err = auth.SaveCookies(cookies)
+	err = auth.Save(data.Account, data.Cookies)
 	require.NoError(t, err)
 
 	// Load the cookies from the file.
-	cookies2, err := auth.LoadCookies()
+	account, cookies, err := auth.Load()
 	require.NoError(t, err)
 
+	// Verify the account id was loaded correctly.
+	assert.Equal(t, data.Account, account)
+
 	// Verify only first cookie was loaded after filtering.
-	assert.Equal(t, cookies[:1], cookies2)
+	assert.Equal(t, data.Cookies[:1], cookies)
 }

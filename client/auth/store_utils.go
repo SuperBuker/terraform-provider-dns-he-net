@@ -6,16 +6,24 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"crypto/sha256"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"io"
+	"net/http"
 	"path/filepath"
 	"strings"
 )
 
+type serialisedStore struct {
+	Account string         `json:"account"`
+	Cookies []*http.Cookie `json:"cookies"`
+}
+
+
 // configFilePath returns the path to the cookie file for the given user.
 // The cookie file is named depending on the aht username and cookie store type.
-func configFilePath(a *Auth, cs CookieStore) string {
+func configFilePath(a *Auth, cs AuthStore) string {
 	var filename string
 
 	switch cs {
@@ -53,6 +61,30 @@ func buildSecret(a *Auth) []byte {
 	// Generetates a checksum from the input
 	sum := sha256.Sum256([]byte(strings.Join(output, ":")))
 	return sum[:24]
+}
+
+func serialise(account string, cookies []*http.Cookie) ([]byte, error) {
+	data := serialisedStore{
+		Account: account,
+		Cookies: cookies,
+	}
+
+	bytes, err := json.Marshal(data)
+	if err != nil {
+		return nil, &ErrFileEncoding{err}
+	}
+
+	return bytes, nil
+}
+
+func deserialise(bytes []byte) (string, []*http.Cookie, error) {
+	var data serialisedStore
+
+	if err := json.Unmarshal(bytes, &data); err != nil {
+		return "", nil, &ErrFileEncoding{err}
+	} else {
+		return data.Account, data.Cookies, nil
+	}
 }
 
 // decrypt the given data using the given Auth, returns new slice and custom

@@ -1,30 +1,33 @@
-[
-    {
-        "Name": "1234567890abcdef",
-        "Value": "1234567890abcdef",
-        "Path": "/",
-        "Domain": "",
-        "Expires": "2050-01-01T00:00:00Z",
-        "RawExpires": "Sat, 1-Jan-2050 00:00:00 GMT",
-        "MaxAge": 0,
-        "Secure": false,
-        "HttpOnly": false,
-        "SameSite": 0,
-        "Raw": "1234567890abcdef=1234567890abcdef; path=/; expires=Sat, 1-Jan-2050 00:00:00 GMT",
-        "Unparsed": null
-    },
-    {
-        "Name": "1234567890abcdef",
-        "Value": "1234567890abcdef",
-        "Path": "/",
-        "Domain": "",
-        "Expires": "2000-01-01T00:00:00Z",
-        "RawExpires": "Sat, 1-Jan-2000 00:00:00 GMT",
-        "MaxAge": 0,
-        "Secure": false,
-        "HttpOnly": false,
-        "SameSite": 0,
-        "Raw": "1234567890abcdef=1234567890abcdef; path=/; expires=Sat, 1-Jan-2000 00:00:00 GMT",
-        "Unparsed": null
-    }
-]
+{
+    "account": "tb12d34de5678901.23456789",
+    "cookies": [
+        {
+            "Name": "1234567890abcdef",
+            "Value": "1234567890abcdef",
+            "Path": "/",
+            "Domain": "",
+            "Expires": "2050-01-01T00:00:00Z",
+            "RawExpires": "Sat, 1-Jan-2050 00:00:00 GMT",
+            "MaxAge": 0,
+            "Secure": false,
+            "HttpOnly": false,
+            "SameSite": 0,
+            "Raw": "1234567890abcdef=1234567890abcdef; path=/; expires=Sat, 1-Jan-2050 00:00:00 GMT",
+            "Unparsed": null
+        },
+        {
+            "Name": "1234567890abcdef",
+            "Value": "1234567890abcdef",
+            "Path": "/",
+            "Domain": "",
+            "Expires": "2000-01-01T00:00:00Z",
+            "RawExpires": "Sat, 1-Jan-2000 00:00:00 GMT",
+            "MaxAge": 0,
+            "Secure": false,
+            "HttpOnly": false,
+            "SameSite": 0,
+            "Raw": "1234567890abcdef=1234567890abcdef; path=/; expires=Sat, 1-Jan-2000 00:00:00 GMT",
+            "Unparsed": null
+        }
+    ]
+}

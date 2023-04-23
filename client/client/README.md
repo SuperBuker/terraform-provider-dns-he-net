@@ -16,6 +16,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
   - [func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain, error)](<#func-client-createdomain>)
   - [func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error](<#func-client-deletedomain>)
   - [func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error](<#func-client-deleterecord>)
+  - [func (c *Client) GetAccount() string](<#func-client-getaccount>)
   - [func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error)](<#func-client-getdomains>)
   - [func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record, error)](<#func-client-getrecords>)
   - [func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error)](<#func-client-setrecord>)
@@ -58,9 +59,9 @@ type Client struct {
 func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error)
 ```
 
-NewClient returns a new client, requires a context and an auth.Auth. Autehticates the client against the API
+NewClient returns a new client, requires a context and an auth.Auth. Autehticates the client against the API.
 
-### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L52>)
+### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L54>)
 
 ```go
 func newClient(ctx context.Context, authAuth auth.Auth) *Client
@@ -91,6 +92,14 @@ func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error
 ```
 
 DeleteRecord deletes a record, returns an error.
+
+### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L133>)
+
+```go
+func (c *Client) GetAccount() string
+```
+
+GetAccount returns the account ID.
 
 ### func \(\*Client\) [GetDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L14>)
 
