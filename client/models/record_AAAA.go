@@ -31,7 +31,7 @@ func (r AAAA) Serialise() map[string]string {
 		"Name":    r.Domain,
 		"Content": r.Data,
 		"TTL":     fmt.Sprint(r.TTL),
-		"Dynamic": b2s[r.Dynamic],
+		"dynamic": b2s[r.Dynamic],
 	}
 }
 
