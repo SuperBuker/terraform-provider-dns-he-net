@@ -29,15 +29,15 @@ func TestDomainById(t *testing.T) {
 	assert.False(t, ok)
 }
 
-func TestDomainByTLD(t *testing.T) {
+func TestDomainByName(t *testing.T) {
 	for i := uint(0); i < 5; i++ {
 		d := domains[i]
-		domain, ok := filters.DomainByTLD(domains, d.Domain)
+		domain, ok := filters.DomainByName(domains, d.Domain)
 		assert.Equal(t, d, domain)
 		assert.True(t, ok)
 	}
 
-	domain, ok := filters.DomainByTLD(domains, "")
+	domain, ok := filters.DomainByName(domains, "")
 	assert.Equal(t, models.Domain{}, domain)
 	assert.False(t, ok)
 }

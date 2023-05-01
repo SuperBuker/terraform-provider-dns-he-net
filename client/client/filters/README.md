@@ -9,7 +9,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filter
 ## Index
 
 - [func DomainById(domains []models.Domain, id uint) (models.Domain, bool)](<#func-domainbyid>)
-- [func DomainByTLD(domains []models.Domain, tld string) (models.Domain, bool)](<#func-domainbytld>)
+- [func DomainByName(domains []models.Domain, name string) (models.Domain, bool)](<#func-domainbyname>)
 - [func LatestDomain(domains []models.Domain) (d models.Domain, ok bool)](<#func-latestdomain>)
 - [func LatestRecord(records []models.Record) (r models.Record, ok bool)](<#func-latestrecord>)
 - [func Record(records []models.Record, domain *string, typ *string) []models.Record](<#func-record>)
@@ -24,13 +24,13 @@ func DomainById(domains []models.Domain, id uint) (models.Domain, bool)
 
 DomainById returns a domain by its ID. If the domain is not found, it returns an empty string and false.
 
-## func [DomainByTLD](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/domains.go#L21>)
+## func [DomainByName](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/domains.go#L21>)
 
 ```go
-func DomainByTLD(domains []models.Domain, tld string) (models.Domain, bool)
+func DomainByName(domains []models.Domain, name string) (models.Domain, bool)
 ```
 
-DomainByTLD returns a domain by its top\-level domain. If the domain is not found, it returns an empty string and false.
+DomainByName returns a domain by its second\-level domain. If the domain is not found, it returns an empty string and false.
 
 ## func [LatestDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/domains.go#L33>)
 
