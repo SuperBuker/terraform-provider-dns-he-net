@@ -16,11 +16,11 @@ func DomainById(domains []models.Domain, id uint) (models.Domain, bool) {
 	return models.Domain{}, false
 }
 
-// DomainByTLD returns a domain by its top-level domain.
+// DomainByName returns a domain by its second-level domain.
 // If the domain is not found, it returns an empty string and false.
-func DomainByTLD(domains []models.Domain, tld string) (models.Domain, bool) {
+func DomainByName(domains []models.Domain, name string) (models.Domain, bool) {
 	for _, domain := range domains {
-		if domain.Domain == tld {
+		if domain.Domain == name {
 			return domain, true
 		}
 	}

@@ -22,7 +22,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/params
 func DomainCreate(m map[string]string) map[string]string
 ```
 
-DomainCreate returnes the parameters necessary to create a tld domain.
+DomainCreate returnes the parameters necessary to create a root domain.
 
 ## func [DomainDelete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/domains.go#L13>)
 
@@ -30,7 +30,7 @@ DomainCreate returnes the parameters necessary to create a tld domain.
 func DomainDelete(m map[string]string) map[string]string
 ```
 
-DomainDelete returnes the parameters necessary to delete a tld domain.
+DomainDelete returnes the parameters necessary to delete a root domain.
 
 ## func [RecordCreate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/records.go#L12>)
 
