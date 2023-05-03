@@ -51,3 +51,24 @@ func TestAccProviderStoreErr(t *testing.T) {
 		},
 	})
 }
+
+func TestAccProviderAuthErr(t *testing.T) {
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			// Provider auth error
+			{
+				Config: `
+				provider "dns-he-net" {
+					username = "username"
+					password = "password"
+				}
+				
+				data "dns-he-net_account" "test" {}
+				`,
+
+				ExpectError: regexp.MustCompile("Unable to Create dns.he.net API Client"),
+			},
+		},
+	})
+}

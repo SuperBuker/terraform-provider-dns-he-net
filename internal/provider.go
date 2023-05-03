@@ -8,6 +8,7 @@ import (
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -250,7 +251,30 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 
 // DataSources defines the data sources implemented in the provider.
 func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSource {
-	return []func() datasource.DataSource{}
+	return []func() datasource.DataSource{
+		datasources.NewAccount,
+		datasources.NewDomainIndex,
+		datasources.NewDomain,
+		datasources.NewRecordIndex,
+		datasources.NewA,
+		datasources.NewAAAA,
+		datasources.NewAFSDB,
+		datasources.NewALIAS,
+		datasources.NewCAA,
+		datasources.NewCNAME,
+		datasources.NewHINFO,
+		datasources.NewLOC,
+		datasources.NewMX,
+		datasources.NewNAPTR,
+		datasources.NewNS,
+		datasources.NewPTR,
+		datasources.NewRP,
+		datasources.NewSOA,
+		datasources.NewSPF,
+		datasources.NewSRV,
+		datasources.NewSSHFP,
+		datasources.NewTXT,
+	}
 }
 
 // Resources defines the resources implemented in the provider.
