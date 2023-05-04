@@ -39,7 +39,6 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 		// Manually trigger authentication
 		client.client.SetCookies(cookies)
 
-		// TODO: Add account
 		if err := client.auth.Save(client.account, cookies); err != nil {
 			log.Printf("error happened when saving cookies: %v", err)
 		}
@@ -72,6 +71,11 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 		if hasCookies && client.status == auth.Ok {
 			// pass
 		} else if cookies, err := client.autheticate(req.Context()); err == nil {
+			if len(c.Cookies) != 0 {
+				c.Cookies = nil
+				log.Printf("clearing cookies")
+			}
+
 			c.SetCookies(cookies)
 
 			if err := client.auth.Save(client.account, cookies); err != nil {
