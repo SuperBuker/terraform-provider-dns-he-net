@@ -53,7 +53,7 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 	client := &Client{
 		auth:   authAuth,
-		client: resty.New(),
+		client: resty.New().SetRetryCount(3),
 	}
 
 	// Handle authentication
@@ -129,6 +129,15 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 		}
 		return
 	})
+
+	// Set retry condition
+	client.client.AddRetryCondition(
+		// RetryConditionFunc type is for retry condition function
+		// input: non-nil Response OR request execution error
+		func(r *resty.Response, err error) bool {
+			return errors.Is(err, &status.ErrNoAuth{})
+		},
+	)
 
 	return client
 }
