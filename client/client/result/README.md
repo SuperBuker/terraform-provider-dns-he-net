@@ -14,7 +14,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/result
 - [type ResultX](<#type-resultx>)
 
 
-## func [Body](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/result/blob/master/client/client/result/result.go#L47>)
+## func [Body](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/result/blob/master/client/client/result/result.go#L50>)
 
 ```go
 func Body(resp *resty.Response) *html.Node
@@ -30,7 +30,7 @@ func Init(resp *resty.Response) (err error)
 
 Init initialises the go\-resty Request.Result with a ResultX contaning the parsed HTML body and the expected result, if any. Returns an error if the parsing fails
 
-## func [Result](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/result/blob/master/client/client/result/result.go#L61>)
+## func [Result](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/result/blob/master/client/client/result/result.go#L64>)
 
 ```go
 func Result(resp *resty.Response) interface{}
