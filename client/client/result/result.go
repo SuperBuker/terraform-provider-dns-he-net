@@ -33,6 +33,9 @@ func Init(resp *resty.Response) (err error) {
 
 	if utils.IsNil(res) {
 		res = ResultX{HTML: doc}
+	} else if resX, ok := resp.Request.Result.(ResultX); ok {
+		// Case of request retrial
+		res = ResultX{HTML: doc, Result: resX.Result}
 	} else {
 		res = ResultX{HTML: doc, Result: res}
 	}
