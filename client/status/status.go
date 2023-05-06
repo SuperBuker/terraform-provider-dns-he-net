@@ -10,23 +10,24 @@ import (
 // Check checks all possible errors in the response.
 //   - If the user is not fully logged in.
 //   - If there are other contained errors.
-func Check(doc *html.Node) (string, error) {
-	// Parse status message
-	status := parsers.ParseStatus(doc)
+//   - If there are error messges in the response.
+func Check(doc *html.Node) (string, []string, error) {
+	// Parse statusMsg message
+	statusMsg := parsers.ParseStatus(doc)
 
 	// Parse login status & error message
 	authStatus := parsers.LoginStatus(doc)
-	issue := parsers.ParseError(doc)
+	issues := parsers.ParseError(doc)
 
 	// Parse to error
 	errS := fromAuthStatus(authStatus)
-	errI := fromIssue(issue)
+	errI := fromIssue(issues)
 
 	if errS != nil && errI != nil {
-		return status, errors.Join(errS, errI)
+		return statusMsg, issues, errors.Join(errS, errI)
 	} else if errS != nil {
-		return status, errS
+		return statusMsg, issues, errS
 	}
 
-	return status, errI
+	return statusMsg, issues, errI
 }

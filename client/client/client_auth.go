@@ -8,7 +8,6 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/authx"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/result"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 
@@ -22,12 +21,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 	client := resty.New()
 
 	// To simplify handling
-	client.OnAfterResponse(func(_ *resty.Client, resp *resty.Response) (err error) {
-		if resp.StatusCode() == 200 {
-			err = result.Init(resp)
-		}
-		return
-	})
+	client.OnAfterResponse(initResult)
 
 	client.OnAfterResponse(func(rc *resty.Client, resp *resty.Response) (err error) {
 		// Set cookies
@@ -38,13 +32,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 
 		// Parse errors
 		if resp.StatusCode() == 200 {
-			var msg string
-			msg, err = status.Check(result.Body(resp))
-
-			if len(msg) != 0 {
-				fields := logging.Fields{"status": msg}
-				c.log.Info(resp.Request.Context(), "api message", fields)
-			}
+			err = c.statusCheckLog(resp)
 		}
 		return
 	})
