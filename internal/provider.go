@@ -8,6 +8,7 @@ import (
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
@@ -230,7 +231,7 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 		return
 	}
 
-	c, err := client.NewClient(ctx, auth)
+	c, err := client.NewClient(ctx, auth, logging.NewTlog())
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Create dns.he.net API Client",
