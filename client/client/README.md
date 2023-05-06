@@ -11,8 +11,8 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 - [Constants](<#constants>)
 - [func getRecordsParams(domainId uint) map[string]string](<#func-getrecordsparams>)
 - [type Client](<#type-client>)
-  - [func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error)](<#func-newclient>)
-  - [func newClient(ctx context.Context, authAuth auth.Auth) *Client](<#func-newclient>)
+  - [func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) (*Client, error)](<#func-newclient>)
+  - [func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) *Client](<#func-newclient>)
   - [func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain, error)](<#func-client-createdomain>)
   - [func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error](<#func-client-deletedomain>)
   - [func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error](<#func-client-deleterecord>)
@@ -40,7 +40,7 @@ func getRecordsParams(domainId uint) map[string]string
 
 getRecordsParams returns the genericquery parameters for the record operations.
 
-## type [Client](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L20-L25>)
+## type [Client](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L20-L26>)
 
 Client is a client for the dns.he.net API.
 
@@ -50,21 +50,22 @@ type Client struct {
     client  *resty.Client
     account string
     status  auth.Status
+    log     logging.Logger
 }
 ```
 
-### func [NewClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L29>)
+### func [NewClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L30>)
 
 ```go
-func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error)
+func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) (*Client, error)
 ```
 
 NewClient returns a new client, requires a context and an auth.Auth. Autehticates the client against the API.
 
-### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L53>)
+### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L55>)
 
 ```go
-func newClient(ctx context.Context, authAuth auth.Auth) *Client
+func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) *Client
 ```
 
 newClient returns a new client, handles the go\-resty client configuration.
@@ -93,7 +94,7 @@ func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error
 
 DeleteRecord deletes a record, returns an error.
 
-### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L146>)
+### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L161>)
 
 ```go
 func (c *Client) GetAccount() string
@@ -125,7 +126,7 @@ func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.R
 
 SetRecord creates or updates a record, then returns it, or an error.
 
-### func \(\*Client\) [autheticate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L19>)
+### func \(\*Client\) [autheticate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L20>)
 
 ```go
 func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error)

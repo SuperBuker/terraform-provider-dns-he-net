@@ -1,0 +1,1133 @@
+<!DOCTYPE html
+	PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-US" xml:lang="en-US">
+
+<head>
+	<title>Hurricane Electric Hosted DNS</title>
+	<link rel="stylesheet" type="text/css" href="/include/css/edit_dns.css" />
+	<link rel="stylesheet" type="text/css" href="/include/css/style.css" media="screen, print" />
+	<!-- <link rel="stylesheet" type="text/css" href="/include/js/jqdt/media/css/jquery.dataTables.css" /> -->
+	<script src="/include/js/jquery-1.4.2.min.js" type="text/javascript"></script>
+	<script src="/include/js/jquery.jeditable.mini.js" type="text/javascript"></script>
+	<script src="/include/js/jquery.json-2.2.min.js" type="text/javascript"></script>
+	<script src="/include/js/admin_system.test.js?13009429509" type="text/javascript"></script>
+	<script src="/include/js/jquery-ui/js/jquery-ui-1.8.1.custom.min.js" type="text/javascript"></script>
+	<script src="/include/js/jqdt/media/js/jquery.dataTables.js" type="text/javascript"></script>
+
+
+	<link rel="stylesheet" type="text/css" href="/include/js/jquery-ui/css/smoothness/jquery-ui-1.8.1.custom.css" />
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+	<script type="text/javascript">
+
+		$(document).ready(function () {
+			//if close button is clicked
+			$('.window .close').click(function (e) {
+				//Cancel the link behavior
+				e.preventDefault();
+				$('#mask, .window').hide();
+			});
+
+			//hide the all of the element with class msg_body
+			$(".toggle").hide();
+			//toggle the componenet with class msg_body
+			$(".toggle_head").click(function () {
+				$(this).next(".toggle").slideToggle(100);
+			});
+			// Set up the tabs. 
+
+			$(function () {
+				$("#tabs").tabs();
+			});
+			$('#tabs ul li a').click(function () { location.hash = $(this).attr('href'); });
+			//if mask is clicked
+			$('#mask').click(function () {
+				$(this).hide();
+				$('.window').hide();
+			});
+			$('#dialog_incomplete').dialog({ autoOpen: false, title: 'What is an incomplete prefix?' });
+			$('#dialog_imported').dialog({ autoOpen: false, title: 'What is an imported prefix?' });
+			$('#dialog_additional').dialog({ autoOpen: false, title: 'What is an additional prefix?' });
+			$('#dialog_inactive').dialog({ autoOpen: false, title: 'What is an inactive prefix?' });
+			$('#dialog_active_domains').dialog({ autoOpen: false, title: 'What is an active domain?' });
+			$('#dialog_slave_domains').dialog({ autoOpen: false, title: 'What is an slave domain?' });
+			$('input[title]').inputHints();
+			$("#raw_zone_toggle").toggle(
+				function () {
+					$("#raw_zone").show("slow");
+					$('#raw_zone_toggle').attr('src', '/include/images/collapse.gif');
+				}, function () {
+					$("#raw_zone").hide("slow");
+					$('#raw_zone_toggle').attr('src', '/include/images/expand.gif');
+				});
+
+			$('#domains_table').dataTable({ "bFilter": false, "bPaginate": false, "bInfo": false, "bStateSave": true });
+			$('#secondary_table').dataTable({ "bFilter": false, "bPaginate": false, "bInfo": false, "bStateSave": true });
+
+		});
+	</script>
+
+</head>
+
+<body>
+	<div id="mask"></div>
+	<div id="page_center">
+		<div id="header">
+			<a href="http://he.net/"><img src="/include/images/helogo.gif"
+					alt="Hurricane Electric Internet Services" /></a><br />
+		</div>
+
+		<div class="sidebar" id="navigation">
+			<div class="block">
+				<div class="caption">Account Menu</div>
+				<ul class="menu">
+					<li class="heavy">Welcome<br />Username</li>
+					<li>Origin <a href="http://ipv6.he.net/">ipv6.he.net</a></li>
+					<li><a id="_tlogout" href="/?action=logout" class="heavy">Logout</a></li>
+				</ul>
+			</div>
+
+			<div class="block">
+				<div class="caption">System Menu</div>
+				<ul class="menu">
+					<li><a href="/">Return to main</a></li>
+				</ul>
+			</div>
+
+			<div class="block">
+				<div class="caption">Quick Links</div>
+				<div class="content">
+					<a href="http://ipv6.he.net/certification/">Certification</a><br />
+
+					<a href="http://www.tunnelbroker.net/">Tunnelbroker</a><br />
+					<a href="http://dns.he.net/">Free DNS</a><br />
+					<a href="http://www.tunnelbroker.net/forums/">Forums</a><br />
+					<a href="http://ipv6.he.net/certification/faq.php">FAQ</a><br />
+					<a href="http://ipv6.he.net/presentations.php">Video Presentations</a><br />
+					<a href="http://networktools.he.net">Mobile Network Apps</a><br />
+					<!-- <a href="usage/index.php">Usage Statistics</a><br /> -->
+
+					<!-- <a href="status.php">Tunnel Server Status</a> <br /> -->
+					<a href="http://he.net/Hurricane_Electric_Geographic_Network_Map.jpg">Network Map</a><br />
+					<a href="http://lg.he.net">Looking Glass</a> (v4/v6)<br />
+					<a href="telnet://route-server.he.net">Route Server</a> (telnet)<br />
+
+					<a href="http://bgp.he.net/ipv6-progress-report.cgi">Global IPv6 Report</a><br />
+					<a href="http://ipv6.he.net/bgpview/bgp.html">IPv6 BGP View</a>
+				</div>
+			</div>
+			<div class="block">
+				<div class="caption">Services</div>
+				<div class="content">
+
+					<a href="http://he.net/ip_transit.html">Transit</a><br />
+					<a href="http://he.net/colocation.html">Colocation</a><br />
+					<a href="http://he.net/dedicated_server.html">Dedicated Servers</a>
+				</div>
+			</div>
+		</div>
+		<div id="content">
+			<div class="block">
+				<div class="caption">Hurricane Electric Free DNS Management</div>
+				<style>
+					.warn a {
+						background-color: #ffeeee;
+					}
+
+					#jsddm {
+						margin: 0;
+						padding: 0 font-weight: normal;
+						margin-top: 3px;
+					}
+
+					#jsddm a {
+						font-weight: normal;
+					}
+
+					#jsddm li {
+						float: left;
+						list-style: none;
+						margin-left: 2px;
+						font: 14px Tahoma, Arial
+					}
+
+					#jsddm ul {
+						margin-top: 3px;
+					}
+
+					#jsddm li a {
+						display: block;
+						padding: 1px 3px;
+						text-decoration: none;
+						border-top: 1px solid black;
+						border-right: 1px solid black;
+						border-left: 1px solid black;
+						white-space: nowrap
+					}
+
+					#jsddm li a:hover {
+						background: #D7D7D7;
+						color: blue;
+						/*	background: #1A4473 */
+					}
+
+					#jsddm li ul {
+						margin: 0;
+						padding: 0;
+						position: absolute;
+						visibility: hidden;
+						border-top: 1px solid white
+					}
+
+					#jsddm li ul li {
+						float: none;
+						display: inline
+					}
+
+					#jsddm li ul li a {
+						width: auto;
+						background: #eee;
+						border-top: 1px solid black;
+						border-right: 1px solid black;
+						border-left: 1px solid black;
+					}
+
+					#jsddm li ul li a:hover {
+						background: #D7D7D7;
+						color: blue;
+					}
+
+					.dns_form input[type=text] {
+						font-size: 14px;
+						text-align: left;
+						width: 99%;
+					}
+
+					.dns_form label {
+						font-size: 14px;
+						text-align: left;
+						width: 99%;
+					}
+
+
+					.hidden {
+						display: none;
+					}
+				</style>
+				<script>
+					var timeout = 500;
+					var closetimer = 0;
+					var ddmenuitem = 0;
+					var my_ipv4 = "0.0.0.0";
+					var my_ipv6 = "";
+
+					function jsddm_open() {
+						jsddm_canceltimer();
+						jsddm_close();
+						ddmenuitem = $(this).find('ul').css('visibility', 'visible');
+					}
+
+					function jsddm_close() { if (ddmenuitem) ddmenuitem.css('visibility', 'hidden'); }
+
+					function jsddm_timer() { closetimer = window.setTimeout(jsddm_close, timeout); }
+
+					function jsddm_canceltimer() {
+						if (closetimer) {
+							window.clearTimeout(closetimer);
+							closetimer = null;
+						}
+					}
+
+					$(document).ready(function () {
+						$('#jsddm > li').bind('mouseover', jsddm_open)
+						$('#jsddm > li').bind('mouseout', jsddm_timer)
+					});
+
+					/* document.onclick = jsddm_close; */
+				</script>
+				<form name="del_record" action="/index.cgi" method="post" id="record_delete">
+					<input id="hosted_dns_zoneid" name="hosted_dns_zoneid" type="hidden" value="1234567" />
+					<input id="hosted_dns_recordid" name="hosted_dns_recordid" type="hidden" value="" />
+					<input type="hidden" name="menu" value="edit_zone" />
+					<input id="hosted_dns_delconfirm" name="hosted_dns_delconfirm" type="hidden" value="" />
+					<input id="hosted_dns_editzone" name="hosted_dns_editzone" type="hidden" value="1" />
+					<input name="hosted_dns_delrecord" type="hidden" value="1" />
+				</form>
+				<div class="caption">Managing zone: example.com</div>
+				<span id="domain_id" style="display: none;" value="1234567"></span>
+
+
+				<div id="dns_status" onClick="hideThis(this);">Successfully updated record. </div>
+
+				
+				<!-- <div id=""> -->
+				<ul id="jsddm"> <!-- <li style="margin-left: 0px;"><a href="#">Back</a></li> -->
+					<li><a href="#" onclick="editFormHandler('A')">New A</a></li>
+					<li><a href="#" onclick="editFormHandler('AAAA')">New AAAA</a></li>
+					<li><a href="#" onclick="editFormHandler('CNAME')">New CNAME</a></li>
+					<li><a href="#" onclick="editFormHandler('ALIAS')">New ALIAS</a></li>
+					<li><a href="#" onclick="editFormHandler('MX')">New MX</a></li>
+					<li><a href="#" onclick="editFormHandler('NS')">New NS</a></li>
+					<li><a href="#" onclick="editFormHandler('TXT')">New TXT</a></li>
+					<li><a href="#">Additional</a>
+						<ul style="border-bottom: 1px solid black;">
+							<li><a href="#" onclick="editFormHandler('CAA')">New CAA</a></li>
+							<li><a href="#" onclick="editFormHandler('AFSDB')">New AFSDB</a></li>
+							<li><a href="#" onclick="editFormHandler('HINFO')">New HINFO</a></li>
+							<li><a href="#" onclick="editFormHandler('RP')">New RP</a></li>
+							<li><a href="#" onclick="editFormHandler('LOC')">New LOC</a></li>
+							<li><a href="#" onclick="editFormHandler('NAPTR')">New NAPTR</a></li>
+							<li><a href="#" onclick="editFormHandler('PTR')">New PTR</a></li>
+							<li><a href="#" onclick="editFormHandler('SSHFP')">New SSHFP</a></li>
+							<li><a href="#" onclick="editFormHandler('SPF')">New SPF</a></li>
+							<li><a href="#" onclick="editFormHandler('SRV')">New SRV</a></li>
+						</ul>
+					</li>
+					<li style="margin-left: 3em; background-color: #ffeeee;"><a href="#">Set TTL</a>
+						<ul style="border-bottom: 1px solid black;">
+							<li><a href="#" onclick="set_ttl('TTL',300)">300 - 5m</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',900)">900 - 15m</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',1800)">1800 - 30m</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',3600)">3600 - 1h</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',7200)">7200 - 2h</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',14400)">14400 - 4h </a></li>
+							<li><a href="#" onclick="set_ttl('TTL',28800)">28800 - 8h</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',43200)">43200 - 12h</a></li>
+							<li><a href="#" onclick="set_ttl('TTL',86400)">86400 - 24h</a></li>
+						</ul>
+					</li>
+				</ul>
+				<br clear="left" />
+
+				<div id="dns_main_content">
+					<table class="generictable" width="100%" border="1" cellpadding="0" cellspacing="0">
+						<tr>
+							<th class="hidden">Zone Id</th>
+							<th class="hidden">Record Id</th>
+							<th style="width: 25px;">Name</th>
+							<th style="width: 25px;">Type</th>
+							<th style="width: 25px;">TTL</th>
+							<th style="width: 25px;">Priority</th>
+							<th style="width: 25px;">Data</th>
+							<th style="width: 25px;">DDNS</th>
+							<th style="width: 25px;">Delete</th>
+
+						</tr>
+
+						<tr class="dns_tr_locked" id="123456789" title="These items are not editable."
+							onclick="lockedElement('tb12d34de5678901.23456789')">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456789</td>
+							<td width="95%" class="dns_view_locked">example.com</td>
+
+
+							<!-- <td align="center" ><img src="/include/images/types/soa.gif" data="SOA" alt="SOA"/></td> -->
+							<td align="center"><span class="rrlabel SOA" data="SOA" alt="SOA">SOA</span></td>
+							<td align="left">172800</td>
+							<td align="center">-</td>
+							<td align="left" data="ns1.he.net. hostmaster.he.net. 2023031805 10800 1800 604800 86400">
+								ns1.he.net. hostmaster.he.net. 2023031805 10800 1800 604800 86400</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete_locked"><img src="/include/images/lock.png"
+									alt="locked" title="This element is locked and may not be deleted." /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456790" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456790</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/ns.gif" data="NS" alt="NS"/></td> -->
+							<td align="center"><span class="rrlabel NS" data="NS" alt="NS">NS</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="ns2.he.net">ns2.he.net</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456790','example.com','NS')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456791" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456791</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/ns.gif" data="NS" alt="NS"/></td> -->
+							<td align="center"><span class="rrlabel NS" data="NS" alt="NS">NS</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="ns3.he.net">ns3.he.net</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456791','example.com','NS')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456792" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456792</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/ns.gif" data="NS" alt="NS"/></td> -->
+							<td align="center"><span class="rrlabel NS" data="NS" alt="NS">NS</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="ns5.he.net">ns5.he.net</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456792','example.com','NS')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456793" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456793</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/ns.gif" data="NS" alt="NS"/></td> -->
+							<td align="center"><span class="rrlabel NS" data="NS" alt="NS">NS</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="ns4.he.net">ns4.he.net</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456793','example.com','NS')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456794" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456794</td>
+							<td width="95%" class="dns_view">a.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/a.gif" data="A" alt="A"/></td> -->
+							<td align="center"><span class="rrlabel A" data="A" alt="A">A</span></td>
+							<td align="left">300</td>
+							<td align="center">-</td>
+							<td align="left" data="1.2.3.4">1.2.3.4</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456794','a.example.com','A')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr_dynamic" id="123456795" title="Click to edit this item."
+							onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456795</td>
+							<td width="95%" class="dns_view">b.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/a.gif" data="A" alt="A"/></td> -->
+							<td align="center"><span class="rrlabel A" data="A" alt="A">A</span></td>
+							<td align="left">300</td>
+							<td align="center">-</td>
+							<td align="left" data="1.2.3.4">1.2.3.4</td>
+							<td class="hidden">1</td>
+							<td align="center" class=""
+								onclick="event.cancelBubble=true;dynamicKeys('1234567','b.example.com')">
+								<img src="/include/images/generate.gif" alt="generate" title="Generate a DDNS key." />
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456795','b.example.com','A')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456796" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456796</td>
+							<td width="95%" class="dns_view">c.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/a.gif" data="A" alt="A"/></td> -->
+							<td align="center"><span class="rrlabel A" data="A" alt="A">A</span></td>
+							<td align="left">300</td>
+							<td align="center">-</td>
+							<td align="left" data="1.2.3.4">1.2.3.4</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456796','c.example.com','A')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr_dynamic" id="123456797" title="Click to edit this item."
+							onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456797</td>
+							<td width="95%" class="dns_view">d.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/a.gif" data="A" alt="A"/></td> -->
+							<td align="center"><span class="rrlabel A" data="A" alt="A">A</span></td>
+							<td align="left">300</td>
+							<td align="center">-</td>
+							<td align="left" data="1.2.3.4">1.2.3.4</td>
+							<td class="hidden">1</td>
+							<td align="center" class=""
+								onclick="event.cancelBubble=true;dynamicKeys('1234567','d.example.com')"><img
+									src="/include/images/generate.gif" alt="generate" title="Generate a DDNS key." />
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456797','d.example.com','A')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456798" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456798</td>
+							<td width="95%" class="dns_view">e.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/a.gif" data="A" alt="A"/></td> -->
+							<td align="center"><span class="rrlabel A" data="A" alt="A">A</span></td>
+							<td align="left">300</td>
+							<td align="center">-</td>
+							<td align="left" data="1.2.3.4">1.2.3.4</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456798','e.example.com','A')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr_dynamic" id="123456799" title="Click to edit this item."
+							onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456799</td>
+							<td width="95%" class="dns_view">f.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/a.gif" data="A" alt="A"/></td> -->
+							<td align="center"><span class="rrlabel A" data="A" alt="A">A</span></td>
+							<td align="left">300</td>
+							<td align="center">-</td>
+							<td align="left" data="1.2.3.4">1.2.3.4</td>
+							<td class="hidden">1</td>
+							<td align="center" class=""
+								onclick="event.cancelBubble=true;dynamicKeys('1234567','f.example.com')"><img
+									src="/include/images/generate.gif" alt="generate" title="Generate a DDNS key." />
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456799','f.example.com','A')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr_dynamic" id="123456800" title="Click to edit this item."
+							onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456800</td>
+							<td width="95%" class="dns_view">g.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/a.gif" data="A" alt="A"/></td> -->
+							<td align="center"><span class="rrlabel A" data="A" alt="A">A</span></td>
+							<td align="left">300</td>
+							<td align="center">-</td>
+							<td align="left" data="1.2.3.4">1.2.3.4</td>
+							<td class="hidden">1</td>
+							<td align="center" class=""
+								onclick="event.cancelBubble=true;dynamicKeys('1234567','g.example.com')"><img
+									src="/include/images/generate.gif" alt="generate" title="Generate a DDNS key." />
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456800','g.example.com','A')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456801" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456801</td>
+							<td width="95%" class="dns_view">h.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/a.gif" data="A" alt="A"/></td> -->
+							<td align="center"><span class="rrlabel A" data="A" alt="A">A</span></td>
+							<td align="left">300</td>
+							<td align="center">-</td>
+							<td align="left" data="1.2.3.4">1.2.3.4</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456801','h.example.com','A')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456802" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456802</td>
+							<td width="95%" class="dns_view">a.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/aaaa.gif" data="AAAA" alt="AAAA"/></td> -->
+							<td align="center"><span class="rrlabel AAAA" data="AAAA" alt="AAAA">AAAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="2001:1234:5678::1">2001:1234:5678::1</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456802','a.example.com','AAAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456803" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456803</td>
+							<td width="95%" class="dns_view">b.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/aaaa.gif" data="AAAA" alt="AAAA"/></td> -->
+							<td align="center"><span class="rrlabel AAAA" data="AAAA" alt="AAAA">AAAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="2001:1234:5678::1">
+								2001:1234:5678::1</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456803','b.example.com','AAAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456804" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456804</td>
+							<td width="95%" class="dns_view">c.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/aaaa.gif" data="AAAA" alt="AAAA"/></td> -->
+							<td align="center"><span class="rrlabel AAAA" data="AAAA" alt="AAAA">AAAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="2001:1234:5678::1">
+								2001:1234:5678::1</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456804','c.example.com','AAAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456805" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456805</td>
+							<td width="95%" class="dns_view">d.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/aaaa.gif" data="AAAA" alt="AAAA"/></td> -->
+							<td align="center"><span class="rrlabel AAAA" data="AAAA" alt="AAAA">AAAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="2001:1234:5678::1">2001:1234:5678::1
+							</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456805','d.example.com','AAAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456806" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456806</td>
+							<td width="95%" class="dns_view">e.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/aaaa.gif" data="AAAA" alt="AAAA"/></td> -->
+							<td align="center"><span class="rrlabel AAAA" data="AAAA" alt="AAAA">AAAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="2001:1234:5678::1">2001:1234:5678::1</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456806','e.example.com','AAAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456807" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456807</td>
+							<td width="95%" class="dns_view">f.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/aaaa.gif" data="AAAA" alt="AAAA"/></td> -->
+							<td align="center"><span class="rrlabel AAAA" data="AAAA" alt="AAAA">AAAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="2001:1234:5678::1">2001:1234:5678::1</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456807','f.example.com','AAAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456808" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456808</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/mx.gif" data="MX" alt="MX"/></td> -->
+							<td align="center"><span class="rrlabel MX" data="MX" alt="MX">MX</span></td>
+							<td align="left">3600</td>
+							<td align="center">1</td>
+							<td align="left" data="mx.email.com">mx.email.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456808','example.com','MX')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456809" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456809</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/mx.gif" data="MX" alt="MX"/></td> -->
+							<td align="center"><span class="rrlabel MX" data="MX" alt="MX">MX</span></td>
+							<td align="left">3600</td>
+							<td align="center">5</td>
+							<td align="left" data="alt1.mx.email.com">alt1.mx.email.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456809','example.com','MX')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456810" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456810</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/mx.gif" data="MX" alt="MX"/></td> -->
+							<td align="center"><span class="rrlabel MX" data="MX" alt="MX">MX</span></td>
+							<td align="left">3600</td>
+							<td align="center">5</td>
+							<td align="left" data="alt2.mx.email.com">alt2.mx.email.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456810','example.com','MX')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456811" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456811</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/mx.gif" data="MX" alt="MX"/></td> -->
+							<td align="center"><span class="rrlabel MX" data="MX" alt="MX">MX</span></td>
+							<td align="left">3600</td>
+							<td align="center">10</td>
+							<td align="left" data="alt3.mx.email.com">alt3.mx.email.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456811','example.com','MX')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456812" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456812</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/mx.gif" data="MX" alt="MX"/></td> -->
+							<td align="center"><span class="rrlabel MX" data="MX" alt="MX">MX</span></td>
+							<td align="left">3600</td>
+							<td align="center">10</td>
+							<td align="left" data="alt4.mx.email.com">alt4.mx.email.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456812','example.com','MX')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456813" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456813</td>
+							<td width="95%" class="dns_view">aa.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/cname.gif" data="CNAME" alt="CNAME"/></td> -->
+							<td align="center"><span class="rrlabel CNAME" data="CNAME" alt="CNAME">CNAME</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="example.com">example.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456813','aa.example.com','CNAME')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456814" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456814</td>
+							<td width="95%" class="dns_view">bb.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/cname.gif" data="CNAME" alt="CNAME"/></td> -->
+							<td align="center"><span class="rrlabel CNAME" data="CNAME" alt="CNAME">CNAME</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="example.com">example.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456814','bb.example.com','CNAME')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456815" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456815</td>
+							<td width="95%" class="dns_view">cc.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/cname.gif" data="CNAME" alt="CNAME"/></td> -->
+							<td align="center"><span class="rrlabel CNAME" data="CNAME" alt="CNAME">CNAME</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="example.com">example.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456815','cc.example.com','CNAME')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456816" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456816</td>
+							<td width="95%" class="dns_view">dd.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/cname.gif" data="CNAME" alt="CNAME"/></td> -->
+							<td align="center"><span class="rrlabel CNAME" data="CNAME" alt="CNAME">CNAME</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="example.com">example.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456816','dd.example.com','CNAME')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456817" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456817</td>
+							<td width="95%" class="dns_view">ee.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/cname.gif" data="CNAME" alt="CNAME"/></td> -->
+							<td align="center"><span class="rrlabel CNAME" data="CNAME" alt="CNAME">CNAME</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="e.service.com">e.service.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456817','ee.example.com','CNAME')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456818" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456818</td>
+							<td width="95%" class="dns_view">ff.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/cname.gif" data="CNAME" alt="CNAME"/></td> -->
+							<td align="center"><span class="rrlabel CNAME" data="CNAME" alt="CNAME">CNAME</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="example.com">example.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456818','ff.example.com','CNAME')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456819" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456819</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/caa.gif" data="CAA" alt="CAA"/></td> -->
+							<td align="center"><span class="rrlabel CAA" data="CAA" alt="CAA">CAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="0 iodef &quot;webmaster@example.com&quot;">0 iodef
+								&quot;webmaster@example.com&quot;</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456819','example.com','CAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456820" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456820</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/caa.gif" data="CAA" alt="CAA"/></td> -->
+							<td align="center"><span class="rrlabel CAA" data="CAA" alt="CAA">CAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="0 issue &quot;letsencrypt.org&quot;">0 issue
+								&quot;letsencrypt.org&quot;</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456820','example.com','CAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456821" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456821</td>
+							<td width="95%" class="dns_view">example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/caa.gif" data="CAA" alt="CAA"/></td> -->
+							<td align="center"><span class="rrlabel CAA" data="CAA" alt="CAA">CAA</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="0 issuewild &quot;;&quot;">0 issuewild &quot;;&quot;</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456821','example.com','CAA')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456822" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456822</td>
+							<td width="95%" class="dns_view">_https._tcp.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/srv.gif" data="SRV" alt="SRV"/></td> -->
+							<td align="center"><span class="rrlabel SRV" data="SRV" alt="SRV">SRV</span></td>
+							<td align="left">300</td>
+							<td align="center">0</td>
+							<td align="left" data="0 443 ff.example.com">0 443 ff.example.com</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456822','_https._tcp.example.com','SRV')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456823" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456823</td>
+							<td width="95%" class="dns_view">txt.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/txt.gif" data="TXT" alt="TXT"/></td> -->
+							<td align="center"><span class="rrlabel TXT" data="TXT" alt="TXT">TXT</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="&quot;Some data 0&quot;"
+								onclick="event.cancelBubble=true; alert($(this).attr('data'));"
+								title="Click to view entire contents.">&quot;Some data 0&quot;</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456823','txt.example.com','TXT')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456824" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456824</td>
+							<td width="95%" class="dns_view">txt.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/txt.gif" data="TXT" alt="TXT"/></td> -->
+							<td align="center"><span class="rrlabel TXT" data="TXT" alt="TXT">TXT</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="&quot;Some data 1&quot;"
+								onclick="event.cancelBubble=true; alert($(this).attr('data'));"
+								title="Click to view entire contents.">&quot;Some data 1&quot;</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456824','txt.example.com','TXT')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456825" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456825</td>
+							<td width="95%" class="dns_view">txt.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/txt.gif" data="TXT" alt="TXT"/></td> -->
+							<td align="center"><span class="rrlabel TXT" data="TXT" alt="TXT">TXT</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="&quot;Some data 2&quot;"
+								onclick="event.cancelBubble=true; alert($(this).attr('data'));"
+								title="Click to view entire contents.">&quot;Some data 2&quot;</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456825','txt.example.com','TXT')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456826" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456826</td>
+							<td width="95%" class="dns_view">txt.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/txt.gif" data="TXT" alt="TXT"/></td> -->
+							<td align="center"><span class="rrlabel TXT" data="TXT" alt="TXT">TXT</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="&quot;Some data 3&quot;"
+								onclick="event.cancelBubble=true; alert($(this).attr('data'));"
+								title="Click to view entire contents.">&quot;Some data 3&quot;</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456826','txt.example.com','TXT')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+
+						<tr class="dns_tr" id="123456827" title="Click to edit this item." onclick="editRow(this)">
+							<td class="hidden">1234567</td>
+							<td class="hidden">123456827</td>
+							<td width="95%" class="dns_view">txt.example.com</td>
+
+							<!-- <td align="center" ><img src="/include/images/types/txt.gif" data="TXT" alt="TXT"/></td> -->
+							<td align="center"><span class="rrlabel TXT" data="TXT" alt="TXT">TXT</span></td>
+							<td align="left">86400</td>
+							<td align="center">-</td>
+							<td align="left" data="&quot;Some data 4&quot;"
+								onclick="event.cancelBubble=true; alert($(this).attr('data'));"
+								title="Click to view entire contents.">&quot;Some data 4&quot;</td>
+							<td class="hidden">0</td>
+							<td></td>
+							<td align="center" class="dns_delete"
+								onclick="event.cancelBubble=true;deleteRecord('123456827','txt.example.com','TXT')"
+								title="Click to delete this record."><img src="/include/images/delete.png"
+									alt="delete" /></td>
+						</tr>
+					</table> <br />
+				</div>
+				<div id="test_panel" class="window"></div>
+				<img id="raw_zone_toggle" src="/include/images/expand.gif" alt="Expand"><span
+					style="font-size: 10px; color: #00f;"> Raw Zone</span>
+				<br />
+				<br />
+				<div id="raw_zone" style="display: none;">
+					<div style="border: 1px solid black; padding: 3px; font-size: 10px;">
+						<span style="color: blue; font-weight: bold; font-size: 12px;">Raw AXFR output</span><br />
+						<pre>; example.com Dumped Sat Jan 01 00:00:00 2000
+;
+example.com.	172800	IN	SOA	ns1.he.net. hostmaster.he.net. (
+					2023031805	;serial
+					10800		;refresh
+					1800		;retry
+					604800		;expire
+					86400	)	;minimum
+txt.example.com.	86400	IN	TXT	&quot;Some data 0&quot;
+txt.example.com.	86400	IN	TXT	&quot;Some data 1&quot;
+txt.example.com.	86400	IN	TXT	&quot;Some data 2&quot;
+txt.example.com.	86400	IN	TXT	&quot;Some data 3&quot;
+txt.example.com.	86400	IN	TXT	&quot;Some data 4&quot;
+aa.example.com.	86400	IN	CNAME	example.com.
+bb.example.com.	86400	IN	CNAME	example.com.
+cc.example.com.	86400	IN	CNAME	example.com.
+dd.example.com.	86400	IN	CNAME	example.com.
+ee.example.com.	86400	IN	CNAME	e.service.com.
+ff.example.com.	86400	IN	CNAME	example.com.
+a.example.com.	300	IN	A	1.2.3.4
+b.example.com.	300	IN	A	1.2.3.4
+c.example.com.	300	IN	A	1.2.3.4
+d.example.com.	300	IN	A	1.2.3.4
+e.example.com.	300	IN	A	1.2.3.4
+f.example.com.	300	IN	A	1.2.3.4
+g.example.com.	300	IN	A	1.2.3.4
+h.example.com.	300	IN	A	1.2.3.4
+a.example.com.	86400	IN	AAAA	2001:1234:5678::1
+b.example.com.	86400	IN	AAAA	2001:1234:5678::1
+c.example.com.	86400	IN	AAAA	2001:1234:5678::1
+d.example.com.	86400	IN	AAAA	2001:1234:5678::1
+e.example.com.	86400	IN	AAAA	2001:1234:5678::1
+f.example.com.	86400	IN	AAAA	2001:1234:5678::1
+example.com.	86400	IN	CAA	0 iodef webmaster@example.com
+example.com.	86400	IN	CAA	0 issue letsencrypt.org
+example.com.	86400	IN	CAA	0 issuewild ;
+example.com.	3600	IN	MX	1 mx.email.com.
+example.com.	3600	IN	MX	10 alt3.mx.email.com.
+example.com.	3600	IN	MX	10 alt4.mx.email.com.
+example.com.	3600	IN	MX	5 alt1.mx.email.com.
+example.com.	3600	IN	MX	5 alt2.mx.email.com.
+example.com.	86400	IN	NS	ns2.he.net.
+example.com.	86400	IN	NS	ns3.he.net.
+example.com.	86400	IN	NS	ns4.he.net.
+example.com.	86400	IN	NS	ns5.he.net.
+_https._tcp.example.com.	300	IN	SRV	0 0 443 nas.example.com.
+    </pre><br />
+						<span style="color: blue; font-weight: bold; font-size: 12px;">DNS Trace looking for NS records
+							(starting at .)</span><br />
+						<pre>Temporarily disabled.    </pre>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div id="footer">
+			<address id="footer_left">Hurricane Electric<br />760 Mission Court<br />Fremont, CA 94539</address>
+			<span id="footer_right">Voice +1 (510) 580-4100<br />Fax +1 (510) 580-4151<br />Comments? <a
+					href="mailto:info@he.net">info@he.net</a></span>
+
+			<span id="footer_center"><br />Copyright &copy; Hurricane Electric.<br />All Rights Reserved 0.000000</span>
+		</div>
+	</div>
+
+	<pre>	</pre>
+	<script type="text/javascript">
+		var _gaq = _gaq || [];
+		_gaq.push(['_setAccount', 'UA-12345678-1']);
+		_gaq.push(['_setDomainName', '.he.net']);
+		_gaq.push(['_trackPageview']);
+
+		(function () {
+			var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+			ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+			var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+		})();
+	</script>
+</body>
+
+</html>

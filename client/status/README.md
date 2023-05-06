@@ -8,7 +8,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 
 ## Index
 
-- [func Check(doc *html.Node) error](<#func-check>)
+- [func Check(doc *html.Node) (string, error)](<#func-check>)
 - [func fromAuthStatus(status auth.Status) error](<#func-fromauthstatus>)
 - [func fromIssue(issue string) error](<#func-fromissue>)
 - [type ErrAuth](<#type-errauth>)
@@ -29,7 +29,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 ## func [Check](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/status.go#L13>)
 
 ```go
-func Check(doc *html.Node) error
+func Check(doc *html.Node) (string, error)
 ```
 
 Check checks all possible errors in the response. \- If the user is not fully logged in. \- If there are other contained errors.

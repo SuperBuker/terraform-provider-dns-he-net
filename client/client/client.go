@@ -103,7 +103,13 @@ func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) *Cli
 	// Parse body errors
 	client.client.OnAfterResponse(func(_ *resty.Client, resp *resty.Response) (err error) {
 		if resp.StatusCode() == 200 {
-			err = status.Check(result.Body(resp))
+			var msg string
+			msg, err = status.Check(result.Body(resp))
+
+			if len(msg) != 0 {
+				fields := logging.Fields{"status": msg}
+				client.log.Info(resp.Request.Context(), "api message", fields)
+			}
 
 			// Update client status
 			if err == nil {
