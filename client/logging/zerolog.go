@@ -20,7 +20,7 @@ type zerologLogger struct {
 	logger zerolog.Logger
 }
 
-func (l *zerologLogger) withField(e *zerolog.Event, key string, value interface{}) *zerolog.Event {
+func (zerologLogger) withField(e *zerolog.Event, key string, value interface{}) *zerolog.Event {
 	switch v := value.(type) {
 	case string:
 		return e.Str(key, v)
@@ -57,7 +57,7 @@ func (l *zerologLogger) withField(e *zerolog.Event, key string, value interface{
 	}
 }
 
-func (l *zerologLogger) proc(e *zerolog.Event, msg string, additionalFields ...map[string]interface{}) {
+func (l zerologLogger) proc(e *zerolog.Event, msg string, additionalFields ...map[string]interface{}) {
 	for _, fields := range additionalFields {
 		for key, value := range fields {
 			e = l.withField(e, key, value)
@@ -71,11 +71,7 @@ func (l *zerologLogger) proc(e *zerolog.Event, msg string, additionalFields ...m
 	}
 }
 
-func (l *zerologLogger) SetLevel() {
-	l.logger = l.logger.Level(zerolog.DebugLevel) // WIP
-}
-
-func (l *zerologLogger) Debug(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
+func (l zerologLogger) Debug(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
 	e := l.logger.Debug()
 
 	if e.Enabled() {
@@ -83,7 +79,7 @@ func (l *zerologLogger) Debug(_ context.Context, msg string, additionalFields ..
 	}
 }
 
-func (l *zerologLogger) Error(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
+func (l zerologLogger) Error(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
 	e := l.logger.Error()
 
 	if e.Enabled() {
@@ -91,7 +87,7 @@ func (l *zerologLogger) Error(_ context.Context, msg string, additionalFields ..
 	}
 }
 
-func (l *zerologLogger) Fatal(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
+func (l zerologLogger) Fatal(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
 	e := l.logger.Fatal()
 
 	if e.Enabled() {
@@ -99,7 +95,7 @@ func (l *zerologLogger) Fatal(_ context.Context, msg string, additionalFields ..
 	}
 }
 
-func (l *zerologLogger) Info(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
+func (l zerologLogger) Info(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
 	e := l.logger.Info()
 
 	if e.Enabled() {
@@ -107,7 +103,7 @@ func (l *zerologLogger) Info(_ context.Context, msg string, additionalFields ...
 	}
 }
 
-func (l *zerologLogger) Panic(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
+func (l zerologLogger) Panic(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
 	e := l.logger.Panic()
 
 	if e.Enabled() {
@@ -115,7 +111,7 @@ func (l *zerologLogger) Panic(_ context.Context, msg string, additionalFields ..
 	}
 }
 
-func (l *zerologLogger) Trace(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
+func (l zerologLogger) Trace(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
 	e := l.logger.Trace()
 
 	if e.Enabled() {
@@ -123,7 +119,7 @@ func (l *zerologLogger) Trace(_ context.Context, msg string, additionalFields ..
 	}
 }
 
-func (l *zerologLogger) Warn(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
+func (l zerologLogger) Warn(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
 	e := l.logger.Warn()
 
 	if e.Enabled() {
