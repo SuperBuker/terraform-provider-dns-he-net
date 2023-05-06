@@ -7,6 +7,7 @@ import (
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
 	"github.com/antchfx/htmlquery"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -18,8 +19,8 @@ func TestError(t *testing.T) {
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
 		require.NoError(t, err)
 
-		errorString := parsers.ParseError(doc)
-		require.Equal(t, "", errorString)
+		errorSlice := parsers.ParseError(doc)
+		assert.Nil(t, errorSlice)
 	})
 
 	t.Run("error present", func(t *testing.T) {
@@ -29,7 +30,8 @@ func TestError(t *testing.T) {
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
 		require.NoError(t, err)
 
-		errorString := parsers.ParseError(doc)
-		require.Equal(t, "The token supplied is invalid.", errorString)
+		errorSlice := parsers.ParseError(doc)
+		assert.Equal(t, 1, len(errorSlice))
+		assert.Equal(t, "The token supplied is invalid.", errorSlice[0])
 	})
 }

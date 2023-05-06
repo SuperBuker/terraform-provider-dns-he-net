@@ -7,6 +7,7 @@ import (
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
 	"github.com/antchfx/htmlquery"
+	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
@@ -19,7 +20,7 @@ func TestStatus(t *testing.T) {
 		require.NoError(t, err)
 
 		status := parsers.ParseStatus(doc)
-		require.Equal(t, "", status)
+		assert.Equal(t, "", status)
 	})
 
 	t.Run("status present", func(t *testing.T) {
@@ -30,6 +31,6 @@ func TestStatus(t *testing.T) {
 		require.NoError(t, err)
 
 		status := parsers.ParseStatus(doc)
-		require.Equal(t, "Successfully updated record.", status)
+		assert.Equal(t, "Successfully updated record.", status)
 	})
 }

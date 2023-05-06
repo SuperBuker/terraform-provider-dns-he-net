@@ -98,6 +98,10 @@ func TestRecords(t *testing.T) {
 	})
 }
 
+func getUint16(i uint16) *uint16 {
+	return &i
+}
+
 func init() {
 	// Add if to the records.
 	for i, x := range records {
@@ -105,8 +109,4 @@ func init() {
 		x.Id = &id
 		records[i] = x
 	}
-}
-
-func getUint16(i uint16) *uint16 {
-	return &i
 }
