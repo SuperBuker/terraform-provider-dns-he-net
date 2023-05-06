@@ -15,7 +15,7 @@ func TestModelSRV(t *testing.T) {
 		Id:       &id,
 		ParentId: 1,
 		Domain:   "_bofher._tcp.example.com",
-		TTL:      86400,
+		TTL:      28800,
 		Priority: 0,
 		Weight:   0,
 		Port:     22,
