@@ -3,11 +3,11 @@ package client
 import (
 	"context"
 	"errors"
-	"log"
 	"time"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/result"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
@@ -22,12 +22,13 @@ type Client struct {
 	client  *resty.Client
 	account string
 	status  auth.Status
+	log     logging.Logger
 }
 
 // NewClient returns a new client, requires a context and an auth.Auth.
 // Autehticates the client against the API.
-func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
-	client := newClient(ctx, authAuth)
+func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) (*Client, error) {
+	client := newClient(ctx, authAuth, log)
 
 	if account, cookies, err := authAuth.Load(); err == nil {
 		// Load cookies from filestore
@@ -40,7 +41,8 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 		client.client.SetCookies(cookies)
 
 		if err := client.auth.Save(client.account, cookies); err != nil {
-			log.Printf("error happened when saving cookies: %v", err)
+			fields := logging.Fields{"error": err}
+			log.Error(ctx, "error happened when saving cookies", fields)
 		}
 
 		return client, nil
@@ -50,17 +52,18 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 }
 
 // newClient returns a new client, handles the go-resty client configuration.
-func newClient(ctx context.Context, authAuth auth.Auth) *Client {
+func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) *Client {
 	client := &Client{
 		auth:   authAuth,
 		client: resty.New().SetRetryCount(3),
+		log:    log,
 	}
 
 	// Handle authentication
-	client.client.OnBeforeRequest(func(c *resty.Client, req *resty.Request) error {
+	client.client.OnBeforeRequest(func(rc *resty.Client, req *resty.Request) error {
 		var hasCookies bool
 
-		for _, cookie := range c.Cookies {
+		for _, cookie := range rc.Cookies {
 			if cookie.Expires.Before(time.Now()) {
 				cookie.MaxAge = 0
 			} else if !hasCookies {
@@ -71,15 +74,16 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 		if hasCookies && client.status == auth.Ok {
 			// pass
 		} else if cookies, err := client.autheticate(req.Context()); err == nil {
-			if len(c.Cookies) != 0 {
-				c.Cookies = nil
-				log.Printf("clearing cookies")
+			if len(rc.Cookies) != 0 {
+				rc.Cookies = nil
+				client.log.Info(req.Context(), "clearing cookies")
 			}
 
-			c.SetCookies(cookies)
+			rc.SetCookies(cookies)
 
 			if err := client.auth.Save(client.account, cookies); err != nil {
-				log.Printf("error happened when saving cookies: %v", err)
+				fields := logging.Fields{"error": err}
+				log.Error(ctx, "error happened when saving cookies", fields)
 			}
 		} else {
 			return err
@@ -89,7 +93,7 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 	})
 
 	// Parse html
-	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
+	client.client.OnAfterResponse(func(_ *resty.Client, resp *resty.Response) (err error) {
 		if resp.StatusCode() == 200 {
 			err = result.Init(resp)
 		}
@@ -97,7 +101,7 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 	})
 
 	// Parse body errors
-	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
+	client.client.OnAfterResponse(func(_ *resty.Client, resp *resty.Response) (err error) {
 		if resp.StatusCode() == 200 {
 			err = status.Check(result.Body(resp))
 
@@ -114,7 +118,7 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 	})
 
 	// Parse responses
-	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
+	client.client.OnAfterResponse(func(_ *resty.Client, resp *resty.Response) (err error) {
 		if resp.StatusCode() != 200 {
 			//pass
 		} else if res := result.Result(resp); !utils.IsNil(res) {
@@ -134,7 +138,7 @@ func newClient(ctx context.Context, authAuth auth.Auth) *Client {
 	client.client.AddRetryCondition(
 		// RetryConditionFunc type is for retry condition function
 		// input: non-nil Response OR request execution error
-		func(r *resty.Response, err error) bool {
+		func(_ *resty.Response, err error) bool {
 			return errors.Is(err, &status.ErrNoAuth{})
 		},
 	)

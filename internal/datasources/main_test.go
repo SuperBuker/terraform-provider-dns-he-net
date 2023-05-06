@@ -7,6 +7,8 @@ import (
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
+	"github.com/rs/zerolog"
 )
 
 func TestMain(m *testing.M) {
@@ -22,7 +24,8 @@ func TestMain(m *testing.M) {
 		return
 	}
 
-	client, err := client.NewClient(context.TODO(), auth)
+	client, err := client.NewClient(context.TODO(), auth,
+		logging.NewZerolog(zerolog.DebugLevel))
 
 	if err != nil {
 		log.Printf("Client init failed : %s", err.Error())

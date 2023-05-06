@@ -29,7 +29,7 @@ var (
 )
 ```
 
-## func [New](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L30>)
+## func [New](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L31>)
 
 ```go
 func New() provider.Provider
@@ -37,7 +37,7 @@ func New() provider.Provider
 
 New is a helper function to simplify provider server and testing implementation.
 
-## type [dnsProvider](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L35>)
+## type [dnsProvider](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L36>)
 
 dnsProvider is the provider implementation.
 
@@ -45,7 +45,7 @@ dnsProvider is the provider implementation.
 type dnsProvider struct{}
 ```
 
-### func \(\*dnsProvider\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L84>)
+### func \(\*dnsProvider\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L85>)
 
 ```go
 func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse)
@@ -53,7 +53,7 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 
 Configure prepares a dns.he.net "API" client for data sources and resources.
 
-### func \(\*dnsProvider\) [DataSources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L253>)
+### func \(\*dnsProvider\) [DataSources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L254>)
 
 ```go
 func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSource
@@ -61,7 +61,7 @@ func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSou
 
 DataSources defines the data sources implemented in the provider.
 
-### func \(\*dnsProvider\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L46>)
+### func \(\*dnsProvider\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L47>)
 
 ```go
 func (p *dnsProvider) Metadata(_ context.Context, _ provider.MetadataRequest, resp *provider.MetadataResponse)
@@ -69,7 +69,7 @@ func (p *dnsProvider) Metadata(_ context.Context, _ provider.MetadataRequest, re
 
 Metadata returns the provider type name.
 
-### func \(\*dnsProvider\) [Resources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L281>)
+### func \(\*dnsProvider\) [Resources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L282>)
 
 ```go
 func (p *dnsProvider) Resources(_ context.Context) []func() resource.Resource
@@ -77,7 +77,7 @@ func (p *dnsProvider) Resources(_ context.Context) []func() resource.Resource
 
 Resources defines the resources implemented in the provider.
 
-### func \(\*dnsProvider\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L51>)
+### func \(\*dnsProvider\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L52>)
 
 ```go
 func (p *dnsProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse)
@@ -85,7 +85,7 @@ func (p *dnsProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *
 
 Schema defines the provider\-level schema for configuration data.
 
-## type [dnsProviderModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L38-L43>)
+## type [dnsProviderModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L39-L44>)
 
 dnsProviderModel maps provider schema data to a Go type.
 

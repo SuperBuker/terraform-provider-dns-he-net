@@ -6,7 +6,6 @@ require (
 	github.com/antchfx/htmlquery v1.3.0
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/hashicorp/terraform-plugin-framework v1.2.0
-	github.com/hashicorp/terraform-plugin-framework-timeouts v0.3.1
 	github.com/hashicorp/terraform-plugin-framework-validators v0.10.0
 	github.com/hashicorp/terraform-plugin-go v0.14.3
 	github.com/hashicorp/terraform-plugin-log v0.8.0
@@ -14,6 +13,7 @@ require (
 	github.com/jarcoal/httpmock v1.3.0
 	github.com/kirsle/configdir v0.0.0-20170128060238-e45d2f54772f
 	github.com/pquerna/otp v1.4.0
+	github.com/rs/zerolog v1.29.1
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/net v0.8.0
 )
