@@ -38,7 +38,13 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 
 		// Parse errors
 		if resp.StatusCode() == 200 {
-			err = status.Check(result.Body(resp))
+			var msg string
+			msg, err = status.Check(result.Body(resp))
+
+			if len(msg) != 0 {
+				fields := logging.Fields{"status": msg}
+				c.log.Info(resp.Request.Context(), "api message", fields)
+			}
 		}
 		return
 	})
