@@ -13,24 +13,23 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
   - [func NewTlog() Logger](<#func-newtlog>)
   - [func NewZerolog(level zerolog.Level) Logger](<#func-newzerolog>)
 - [type tlogLogger](<#type-tloglogger>)
-  - [func (_ tlogLogger) Debug(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-debug>)
-  - [func (_ tlogLogger) Error(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-error>)
-  - [func (_ tlogLogger) Fatal(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-fatal>)
-  - [func (_ tlogLogger) Info(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-info>)
-  - [func (_ tlogLogger) Panic(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-panic>)
-  - [func (_ tlogLogger) Trace(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-trace>)
-  - [func (_ tlogLogger) Warn(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-warn>)
+  - [func (tlogLogger) Debug(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-debug>)
+  - [func (tlogLogger) Error(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-error>)
+  - [func (tlogLogger) Fatal(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-fatal>)
+  - [func (tlogLogger) Info(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-info>)
+  - [func (tlogLogger) Panic(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-panic>)
+  - [func (tlogLogger) Trace(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-trace>)
+  - [func (tlogLogger) Warn(ctx context.Context, msg string, additionalFields ...map[string]interface{})](<#func-tloglogger-warn>)
 - [type zerologLogger](<#type-zerologlogger>)
-  - [func (l *zerologLogger) Debug(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-debug>)
-  - [func (l *zerologLogger) Error(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-error>)
-  - [func (l *zerologLogger) Fatal(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-fatal>)
-  - [func (l *zerologLogger) Info(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-info>)
-  - [func (l *zerologLogger) Panic(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-panic>)
-  - [func (l *zerologLogger) SetLevel()](<#func-zerologlogger-setlevel>)
-  - [func (l *zerologLogger) Trace(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-trace>)
-  - [func (l *zerologLogger) Warn(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-warn>)
-  - [func (l *zerologLogger) proc(e *zerolog.Event, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-proc>)
-  - [func (l *zerologLogger) withField(e *zerolog.Event, key string, value interface{}) *zerolog.Event](<#func-zerologlogger-withfield>)
+  - [func (l zerologLogger) Debug(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-debug>)
+  - [func (l zerologLogger) Error(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-error>)
+  - [func (l zerologLogger) Fatal(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-fatal>)
+  - [func (l zerologLogger) Info(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-info>)
+  - [func (l zerologLogger) Panic(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-panic>)
+  - [func (l zerologLogger) Trace(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-trace>)
+  - [func (l zerologLogger) Warn(_ context.Context, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-warn>)
+  - [func (l zerologLogger) proc(e *zerolog.Event, msg string, additionalFields ...map[string]interface{})](<#func-zerologlogger-proc>)
+  - [func (zerologLogger) withField(e *zerolog.Event, key string, value interface{}) *zerolog.Event](<#func-zerologlogger-withfield>)
 
 
 ## type [Fields](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/type.go#L17>)
@@ -69,53 +68,52 @@ func NewTlog() Logger
 func NewZerolog(level zerolog.Level) Logger
 ```
 
-## type [tlogLogger](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L16-L18>)
+## type [tlogLogger](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L13>)
 
 ```go
-type tlogLogger struct {
-}
+type tlogLogger struct{}
 ```
 
-### func \(tlogLogger\) [Debug](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L20>)
+### func \(tlogLogger\) [Debug](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L15>)
 
 ```go
-func (_ tlogLogger) Debug(ctx context.Context, msg string, additionalFields ...map[string]interface{})
+func (tlogLogger) Debug(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(tlogLogger\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L24>)
+### func \(tlogLogger\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L19>)
 
 ```go
-func (_ tlogLogger) Error(ctx context.Context, msg string, additionalFields ...map[string]interface{})
+func (tlogLogger) Error(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(tlogLogger\) [Fatal](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L28>)
+### func \(tlogLogger\) [Fatal](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L23>)
 
 ```go
-func (_ tlogLogger) Fatal(ctx context.Context, msg string, additionalFields ...map[string]interface{})
+func (tlogLogger) Fatal(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(tlogLogger\) [Info](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L32>)
+### func \(tlogLogger\) [Info](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L27>)
 
 ```go
-func (_ tlogLogger) Info(ctx context.Context, msg string, additionalFields ...map[string]interface{})
+func (tlogLogger) Info(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(tlogLogger\) [Panic](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L36>)
+### func \(tlogLogger\) [Panic](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L31>)
 
 ```go
-func (_ tlogLogger) Panic(ctx context.Context, msg string, additionalFields ...map[string]interface{})
+func (tlogLogger) Panic(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(tlogLogger\) [Trace](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L40>)
+### func \(tlogLogger\) [Trace](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L35>)
 
 ```go
-func (_ tlogLogger) Trace(ctx context.Context, msg string, additionalFields ...map[string]interface{})
+func (tlogLogger) Trace(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(tlogLogger\) [Warn](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L44>)
+### func \(tlogLogger\) [Warn](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/tlog.go#L39>)
 
 ```go
-func (_ tlogLogger) Warn(ctx context.Context, msg string, additionalFields ...map[string]interface{})
+func (tlogLogger) Warn(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
 ## type [zerologLogger](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L19-L21>)
@@ -126,64 +124,58 @@ type zerologLogger struct {
 }
 ```
 
-### func \(\*zerologLogger\) [Debug](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L78>)
+### func \(zerologLogger\) [Debug](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L74>)
 
 ```go
-func (l *zerologLogger) Debug(_ context.Context, msg string, additionalFields ...map[string]interface{})
+func (l zerologLogger) Debug(_ context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(\*zerologLogger\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L86>)
+### func \(zerologLogger\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L82>)
 
 ```go
-func (l *zerologLogger) Error(_ context.Context, msg string, additionalFields ...map[string]interface{})
+func (l zerologLogger) Error(_ context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(\*zerologLogger\) [Fatal](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L94>)
+### func \(zerologLogger\) [Fatal](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L90>)
 
 ```go
-func (l *zerologLogger) Fatal(_ context.Context, msg string, additionalFields ...map[string]interface{})
+func (l zerologLogger) Fatal(_ context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(\*zerologLogger\) [Info](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L102>)
+### func \(zerologLogger\) [Info](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L98>)
 
 ```go
-func (l *zerologLogger) Info(_ context.Context, msg string, additionalFields ...map[string]interface{})
+func (l zerologLogger) Info(_ context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(\*zerologLogger\) [Panic](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L110>)
+### func \(zerologLogger\) [Panic](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L106>)
 
 ```go
-func (l *zerologLogger) Panic(_ context.Context, msg string, additionalFields ...map[string]interface{})
+func (l zerologLogger) Panic(_ context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(\*zerologLogger\) [SetLevel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L74>)
+### func \(zerologLogger\) [Trace](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L114>)
 
 ```go
-func (l *zerologLogger) SetLevel()
+func (l zerologLogger) Trace(_ context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(\*zerologLogger\) [Trace](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L118>)
+### func \(zerologLogger\) [Warn](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L122>)
 
 ```go
-func (l *zerologLogger) Trace(_ context.Context, msg string, additionalFields ...map[string]interface{})
+func (l zerologLogger) Warn(_ context.Context, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(\*zerologLogger\) [Warn](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L126>)
+### func \(zerologLogger\) [proc](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L60>)
 
 ```go
-func (l *zerologLogger) Warn(_ context.Context, msg string, additionalFields ...map[string]interface{})
+func (l zerologLogger) proc(e *zerolog.Event, msg string, additionalFields ...map[string]interface{})
 ```
 
-### func \(\*zerologLogger\) [proc](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L60>)
+### func \(zerologLogger\) [withField](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L23>)
 
 ```go
-func (l *zerologLogger) proc(e *zerolog.Event, msg string, additionalFields ...map[string]interface{})
-```
-
-### func \(\*zerologLogger\) [withField](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/logging/blob/master/client/logging/zerolog.go#L23>)
-
-```go
-func (l *zerologLogger) withField(e *zerolog.Event, key string, value interface{}) *zerolog.Event
+func (zerologLogger) withField(e *zerolog.Event, key string, value interface{}) *zerolog.Event
 ```
 
 
