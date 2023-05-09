@@ -12,6 +12,7 @@ func NewZerolog(level zerolog.Level) Logger {
 		zerolog.New(zerolog.ConsoleWriter{
 			Out:        os.Stdout,
 			TimeFormat: "2006-01-02T15:04:05.999Z",
+			NoColor:    true,
 		}).Level(level).With().Timestamp().Logger(),
 	}
 }

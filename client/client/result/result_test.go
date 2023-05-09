@@ -36,7 +36,7 @@ func TestResultX(t *testing.T) {
 	url := "https://example.com"
 	httpmock.RegisterResponder("GET", url, responder)
 
-	// Parse html
+	// Parse html, client.initResult()
 	client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
 		if resp.StatusCode() == 200 {
 			err = result.Init(resp)
@@ -143,7 +143,7 @@ func TestResultXRetry(t *testing.T) {
 	url := "https://example.com"
 	httpmock.RegisterResponder("GET", url, responder)
 
-	// Parse html
+	// Parse html, client.initResult()
 	client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
 		if resp.StatusCode() == 200 {
 			err = errors.Join(result.Init(resp), result.Init(resp))
