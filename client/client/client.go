@@ -35,7 +35,7 @@ func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) (*Cl
 
 		if err := client.auth.Save(client.account, cookies); err != nil {
 			fields := logging.Fields{"error": err}
-			log.Error(ctx, "error happened when saving cookies", fields)
+			client.log.Error(ctx, "error happened when saving cookies", fields)
 		}
 
 		return client, nil
@@ -48,14 +48,20 @@ func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) (*Cl
 func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) *Client {
 	client := &Client{
 		auth:   authAuth,
-		client: resty.New().SetRetryCount(3),
+		client: resty.New().SetRetryCount(1), // Ensures auth retrial
 		log:    log,
 	}
 
 	// Handle authentication
-	client.client.OnBeforeRequest(client.authValidation(ctx))
+	client.client.OnBeforeRequest(client.authValidation)
 
-	// Parse html
+	// Debug
+	client.client.OnBeforeRequest(client.debugReqStatus)
+
+	// Debug
+	client.client.OnAfterResponse(client.debugRespStatus)
+
+	// Initialise ResultX
 	client.client.OnAfterResponse(initResult)
 
 	// Parse body errors
@@ -64,7 +70,8 @@ func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) *Cli
 	// Parse responses
 	client.client.OnAfterResponse(unwrapResult)
 
-	// Set retry condition
+	// Set retry condition on auth error
+	// authentication retrials are handled by c.authenticate()
 	client.client.AddRetryCondition(client.retryIfAuth)
 
 	return client
