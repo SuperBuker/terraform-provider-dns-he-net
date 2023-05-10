@@ -7,12 +7,12 @@ import (
 	"github.com/rs/zerolog"
 )
 
-func NewZerolog(level zerolog.Level) Logger {
+func NewZerolog(level zerolog.Level, color bool) Logger {
 	return &zerologLogger{
 		zerolog.New(zerolog.ConsoleWriter{
 			Out:        os.Stdout,
 			TimeFormat: "2006-01-02T15:04:05.999Z",
-			NoColor:    true,
+			NoColor:    !color,
 		}).Level(level).With().Timestamp().Logger(),
 	}
 }

@@ -22,6 +22,8 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 	// New client to not to mess with the regular one
 	client := resty.New()
 
+	client = c.options.ApplyAuthClient(client)
+
 	// Debug
 	//client.OnBeforeRequest(c.debugReqStatus)
 

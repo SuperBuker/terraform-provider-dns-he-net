@@ -25,7 +25,7 @@ func TestMain(m *testing.M) {
 	}
 
 	client, err := client.NewClient(context.TODO(), auth,
-		logging.NewZerolog(zerolog.DebugLevel))
+		logging.NewZerolog(zerolog.DebugLevel, false))
 
 	if err != nil {
 		log.Printf("Client init failed : %s", err.Error())

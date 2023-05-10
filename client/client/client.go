@@ -11,17 +11,21 @@ import (
 
 // Client is a client for the dns.he.net API.
 type Client struct {
-	auth    auth.Auth
-	client  *resty.Client
-	account string
+	// SubObjts
+	auth   auth.Auth
+	client *resty.Client
+	log    logging.Logger
+	// State
 	status  auth.Status
-	log     logging.Logger
+	account string
+	// Options
+	options Options
 }
 
 // NewClient returns a new client, requires a context and an auth.Auth.
 // Autehticates the client against the API.
-func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) (*Client, error) {
-	client := newClient(ctx, authAuth, log)
+func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options ...Option) (*Client, error) {
+	client := newClient(ctx, authAuth, log, options)
 
 	if account, cookies, err := authAuth.Load(); err == nil {
 		// Load cookies from filestore
@@ -45,12 +49,17 @@ func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) (*Cl
 }
 
 // newClient returns a new client, handles the go-resty client configuration.
-func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger) *Client {
+func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options Options) *Client {
 	client := &Client{
-		auth:   authAuth,
-		client: resty.New().SetRetryCount(1), // Ensures auth retrial
-		log:    log,
+		auth:    authAuth,
+		client:  resty.New().SetRetryCount(1), // Ensures auth retrial
+		log:     log,
+		options: options,
 	}
+
+	client.client = client.options.ApplyClient(client.client)
+
+	client.log = client.options.ApplyLogger(client.log)
 
 	// Handle authentication
 	client.client.OnBeforeRequest(client.authValidation)
