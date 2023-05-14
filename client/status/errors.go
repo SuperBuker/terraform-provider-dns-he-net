@@ -1,10 +1,10 @@
 package status
 
-// ErrAuth is an error that is returned when authentication fails.
-type ErrAuth struct{}
+// ErrAuthFailed is an error that is returned when authentication fails.
+type ErrAuthFailed struct{}
 
-func (e *ErrAuth) Error() string {
-	return "authentication error"
+func (e *ErrAuthFailed) Error() string {
+	return "authentication failed"
 }
 
 // ErrNoAuth is an error returned when the user is not authenticated.
@@ -18,7 +18,7 @@ func (e *ErrNoAuth) Error() string {
 
 func (e *ErrNoAuth) Unwrap() []error {
 	return []error{
-		&ErrAuth{},
+		&ErrAuthFailed{},
 		&ErrHeNet{e.Error()},
 	}
 }
@@ -34,7 +34,7 @@ func (e *ErrOTPAuth) Error() string {
 
 func (e *ErrOTPAuth) Unwrap() []error {
 	return []error{
-		&ErrAuth{},
+		&ErrAuthFailed{},
 		&ErrHeNet{e.Error()},
 	}
 }
@@ -50,7 +50,7 @@ func (e *ErrUnknownAuth) Error() string {
 
 func (e *ErrUnknownAuth) Unwrap() []error {
 	return []error{
-		&ErrAuth{},
+		&ErrAuthFailed{},
 		&ErrHeNet{e.Error()},
 	}
 }

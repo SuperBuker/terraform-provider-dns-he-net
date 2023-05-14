@@ -19,7 +19,7 @@ func fromAuthStatus(status auth.Status) error {
 	case auth.Unknown:
 		return &ErrUnknownAuth{}
 	case auth.Other:
-		return &ErrAuth{}
+		return &ErrAuthFailed{}
 	}
 
 	return nil // Dead code

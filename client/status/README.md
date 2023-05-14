@@ -9,10 +9,10 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 ## Index
 
 - [func Check(doc *html.Node) error](<#func-check>)
-- [func fromAuthStatus(status auth.Status) error](<#func-fromauthstatus>)
-- [func fromIssue(issue string) error](<#func-fromissue>)
-- [type ErrAuth](<#type-errauth>)
-  - [func (e *ErrAuth) Error() string](<#func-errauth-error>)
+- [func fromAuthStatus(status auth.Status) (err error)](<#func-fromauthstatus>)
+- [func fromIssue(issues []string) (err error)](<#func-fromissue>)
+- [type ErrAuthFailed](<#type-errauthfailed>)
+  - [func (e *ErrAuthFailed) Error() string](<#func-errauthfailed-error>)
 - [type ErrHeNet](<#type-errhenet>)
   - [func (e *ErrHeNet) Error() string](<#func-errhenet-error>)
 - [type ErrNoAuth](<#type-errnoauth>)
@@ -34,34 +34,34 @@ func Check(doc *html.Node) error
 
 Check checks all possible errors in the response. \- If the user is not fully logged in. \- If there are other contained errors.
 
-## func [fromAuthStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L11>)
+## func [fromAuthStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L10>)
 
 ```go
-func fromAuthStatus(status auth.Status) error
+func fromAuthStatus(status auth.Status) (err error)
 ```
 
 fromAuthStatus returns an error asssociated to the auth status.
 
-## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L29>)
+## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L28>)
 
 ```go
-func fromIssue(issue string) error
+func fromIssue(issues []string) (err error)
 ```
 
 fromIssue parses the errors in the response and returns them as &ErrHeNet\{\}.
 
-## type [ErrAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L4>)
+## type [ErrAuthFailed](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L4>)
 
-ErrAuth is an error that is returned when authentication fails.
+ErrAuthFailed is an error that is returned when authentication fails.
 
 ```go
-type ErrAuth struct{}
+type ErrAuthFailed struct{}
 ```
 
-### func \(\*ErrAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L6>)
+### func \(\*ErrAuthFailed\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L6>)
 
 ```go
-func (e *ErrAuth) Error() string
+func (e *ErrAuthFailed) Error() string
 ```
 
 ## type [ErrHeNet](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L60-L62>)
