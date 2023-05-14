@@ -62,7 +62,7 @@ const otpUrl = "otpauth://totp/dns.he.net:%s?secret=%s&issuer=dns.he.net"
 var configPath = configdir.LocalConfig("terraform-provider-dns-he-net")
 ```
 
-## func [addChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L136>)
+## func [addChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L135>)
 
 ```go
 func addChecksum(data []byte) []byte
@@ -70,7 +70,7 @@ func addChecksum(data []byte) []byte
 
 addChecksum prepends a checksum to the given data.
 
-## func [buildSecret](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L48>)
+## func [buildSecret](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L47>)
 
 ```go
 func buildSecret(a *Auth) []byte
@@ -78,7 +78,7 @@ func buildSecret(a *Auth) []byte
 
 buildSecret generates secret from Auth.
 
-## func [configFilePath](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L26>)
+## func [configFilePath](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L25>)
 
 ```go
 func configFilePath(a *Auth, cs AuthStore) string
@@ -86,7 +86,7 @@ func configFilePath(a *Auth, cs AuthStore) string
 
 configFilePath returns the path to the cookie file for the given user. The cookie file is named depending on the aht username and cookie store type.
 
-## func [decrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L92>)
+## func [decrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L91>)
 
 ```go
 func decrypt(a *Auth, cipherData []byte) ([]byte, error)
@@ -94,13 +94,13 @@ func decrypt(a *Auth, cipherData []byte) ([]byte, error)
 
 decrypt the given data using the given Auth, returns new slice and custom error.
 
-## func [deserialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L80>)
+## func [deserialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L79>)
 
 ```go
 func deserialise(bytes []byte) (string, []*http.Cookie, error)
 ```
 
-## func [encrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L114>)
+## func [encrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L113>)
 
 ```go
 func encrypt(a *Auth, data []byte) ([]byte, error)
@@ -108,7 +108,7 @@ func encrypt(a *Auth, data []byte) ([]byte, error)
 
 encrypt the given data using the given Auth, returns new slice and custom error.
 
-## func [extractChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L146>)
+## func [extractChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L145>)
 
 ```go
 func extractChecksum(data []byte) ([]byte, error)
@@ -116,7 +116,7 @@ func extractChecksum(data []byte) ([]byte, error)
 
 extractChecksum given data, returns new slice and error.
 
-## func [initIV](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L42>)
+## func [initIV](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L41>)
 
 ```go
 func initIV(iv []byte) error
@@ -124,7 +124,7 @@ func initIV(iv []byte) error
 
 initIV creates a new nonce, returns error.
 
-## func [serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L66>)
+## func [serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L65>)
 
 ```go
 func serialise(account string, cookies []*http.Cookie) ([]byte, error)

@@ -9,8 +9,8 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 ## Index
 
 - [func Check(doc *html.Node) error](<#func-check>)
-- [func fromAuthStatus(status auth.Status) (err error)](<#func-fromauthstatus>)
-- [func fromIssue(issues []string) (err error)](<#func-fromissue>)
+- [func fromAuthStatus(status auth.Status) error](<#func-fromauthstatus>)
+- [func fromIssue(issue string) error](<#func-fromissue>)
 - [type ErrAuthFailed](<#type-errauthfailed>)
   - [func (e *ErrAuthFailed) Error() string](<#func-errauthfailed-error>)
 - [type ErrHeNet](<#type-errhenet>)
@@ -34,18 +34,18 @@ func Check(doc *html.Node) error
 
 Check checks all possible errors in the response. \- If the user is not fully logged in. \- If there are other contained errors.
 
-## func [fromAuthStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L10>)
+## func [fromAuthStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L11>)
 
 ```go
-func fromAuthStatus(status auth.Status) (err error)
+func fromAuthStatus(status auth.Status) error
 ```
 
 fromAuthStatus returns an error asssociated to the auth status.
 
-## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L28>)
+## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L29>)
 
 ```go
-func fromIssue(issues []string) (err error)
+func fromIssue(issue string) error
 ```
 
 fromIssue parses the errors in the response and returns them as &ErrHeNet\{\}.

@@ -61,7 +61,7 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error)
 
 NewClient returns a new client, requires a context and an auth.Auth. Autehticates the client against the API.
 
-### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L54>)
+### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L53>)
 
 ```go
 func newClient(ctx context.Context, authAuth auth.Auth) *Client
@@ -93,7 +93,7 @@ func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error
 
 DeleteRecord deletes a record, returns an error.
 
-### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L133>)
+### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L137>)
 
 ```go
 func (c *Client) GetAccount() string
