@@ -12,11 +12,11 @@ func TestModelNAPTR(t *testing.T) {
 	id := uint(1)
 
 	expected := models.NAPTR{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      86400,
-		Data:     `100 10 "S" "SIP+D2U" "!^.*$!sip:example.com!" _sip._udp.example.com.`,
+		ID:     &id,
+		ZoneID: 1,
+		Domain: "example.com",
+		TTL:    86400,
+		Data:   `100 10 "S" "SIP+D2U" "!^.*$!sip:example.com!" _sip._udp.example.com.`,
 	}
 
 	naptr := NAPTR{}

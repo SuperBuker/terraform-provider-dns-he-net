@@ -3,8 +3,8 @@ package models
 import "strings"
 
 type Record struct {
-	Id         *uint
-	ParentId   uint
+	ID         *uint
+	ZoneID     uint
 	Domain     string
 	RecordType string // to improve
 	TTL        uint   // seconds

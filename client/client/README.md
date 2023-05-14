@@ -9,19 +9,19 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 ## Index
 
 - [Constants](<#constants>)
-- [func getRecordsParams(domainId uint) map[string]string](<#func-getrecordsparams>)
+- [func getRecordsParams(zoneID uint) map[string]string](<#func-getrecordsparams>)
 - [func initResult(_ *resty.Client, resp *resty.Response) (err error)](<#func-initresult>)
 - [func retryCondition(resp *resty.Response, err error) (retry bool)](<#func-retrycondition>)
 - [func unwrapResult(_ *resty.Client, resp *resty.Response) (err error)](<#func-unwrapresult>)
 - [type Client](<#type-client>)
   - [func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options ...Option) (*Client, error)](<#func-newclient>)
   - [func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options Options) *Client](<#func-newclient>)
-  - [func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain, error)](<#func-client-createdomain>)
-  - [func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error](<#func-client-deletedomain>)
+  - [func (c *Client) CreateZone(ctx context.Context, name string) (models.Zone, error)](<#func-client-createzone>)
   - [func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error](<#func-client-deleterecord>)
+  - [func (c *Client) DeleteZone(ctx context.Context, zone models.Zone) error](<#func-client-deletezone>)
   - [func (c *Client) GetAccount() string](<#func-client-getaccount>)
-  - [func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error)](<#func-client-getdomains>)
-  - [func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record, error)](<#func-client-getrecords>)
+  - [func (c *Client) GetRecords(ctx context.Context, zoneID uint) ([]models.Record, error)](<#func-client-getrecords>)
+  - [func (c *Client) GetZones(ctx context.Context) ([]models.Zone, error)](<#func-client-getzones>)
   - [func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error)](<#func-client-setrecord>)
   - [func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.Cookie, error)](<#func-client-authbasic>)
   - [func (c *Client) authOTP(ctx context.Context, client *resty.Client) error](<#func-client-authotp>)
@@ -60,10 +60,10 @@ const retryDelay = 30 * time.Second
 ## func [getRecordsParams](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L15>)
 
 ```go
-func getRecordsParams(domainId uint) map[string]string
+func getRecordsParams(zoneID uint) map[string]string
 ```
 
-getRecordsParams returns the genericquery parameters for the record operations.
+getRecordsParams returns the generic query parameters for the record operations.
 
 ## func [initResult](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/middlewares.go#L96>)
 
@@ -123,21 +123,13 @@ func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, opti
 
 newClient returns a new client, handles the go\-resty client configuration.
 
-### func \(\*Client\) [CreateDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L33>)
+### func \(\*Client\) [CreateZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/zones.go#L33>)
 
 ```go
-func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain, error)
+func (c *Client) CreateZone(ctx context.Context, name string) (models.Zone, error)
 ```
 
-CreateDomain creates a new domain, then returns it, or an error.
-
-### func \(\*Client\) [DeleteDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L63>)
-
-```go
-func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error
-```
-
-DeleteDomain deletes a domain, returns an error.
+CreateZone creates a new zone, then returns it, or an error.
 
 ### func \(\*Client\) [DeleteRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L86>)
 
@@ -147,6 +139,14 @@ func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error
 
 DeleteRecord deletes a record, returns an error.
 
+### func \(\*Client\) [DeleteZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/zones.go#L63>)
+
+```go
+func (c *Client) DeleteZone(ctx context.Context, zone models.Zone) error
+```
+
+DeleteZone deletes a zone, returns an error.
+
 ### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L84>)
 
 ```go
@@ -155,21 +155,21 @@ func (c *Client) GetAccount() string
 
 GetAccount returns the account ID.
 
-### func \(\*Client\) [GetDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domains.go#L14>)
-
-```go
-func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error)
-```
-
-GetDomains retrieves all domains from the API and returns them in a slice
-
 ### func \(\*Client\) [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L24>)
 
 ```go
-func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record, error)
+func (c *Client) GetRecords(ctx context.Context, zoneID uint) ([]models.Record, error)
 ```
 
 GetRecords retrieves all records from the API and returns them in a slice.
+
+### func \(\*Client\) [GetZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/zones.go#L14>)
+
+```go
+func (c *Client) GetZones(ctx context.Context) ([]models.Zone, error)
+```
+
+GetZones retrieves all zones from the API and returns them in a slice
 
 ### func \(\*Client\) [SetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L44>)
 

@@ -9,7 +9,7 @@ import (
 // SRV maps the data source schema data.
 type SRV struct {
 	ID       types.Int64  `tfsdk:"id"`
-	ParentID types.Int64  `tfsdk:"parent_id"`
+	ZoneID   types.Int64  `tfsdk:"zone_id"`
 	Domain   types.String `tfsdk:"domain"`
 	TTL      types.Int64  `tfsdk:"ttl"`
 	Priority types.Int64  `tfsdk:"priority"`
@@ -19,8 +19,8 @@ type SRV struct {
 }
 
 func (srv *SRV) SetRecord(recordSRV models.SRV) error {
-	srv.ID = utils.TypeInt(recordSRV.Id)
-	srv.ParentID = types.Int64Value(int64(recordSRV.ParentId))
+	srv.ID = utils.TypeInt(recordSRV.ID)
+	srv.ZoneID = types.Int64Value(int64(recordSRV.ZoneID))
 	srv.Domain = types.StringValue(recordSRV.Domain)
 	srv.TTL = types.Int64Value(int64(recordSRV.TTL))
 	srv.Priority = types.Int64Value(int64(recordSRV.Priority))
@@ -33,8 +33,8 @@ func (srv *SRV) SetRecord(recordSRV models.SRV) error {
 
 func (srv SRV) GetRecord() (models.SRV, error) {
 	return models.SRV{
-		Id:       utils.NativeUInt(srv.ID),
-		ParentId: uint(srv.ParentID.ValueInt64()),
+		ID:       utils.NativeUInt(srv.ID),
+		ZoneID:   uint(srv.ZoneID.ValueInt64()),
 		Domain:   srv.Domain.ValueString(),
 		TTL:      uint(srv.TTL.ValueInt64()),
 		Priority: uint16(srv.Priority.ValueInt64()),

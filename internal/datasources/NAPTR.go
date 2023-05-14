@@ -44,7 +44,7 @@ func (naptr) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 				MarkdownDescription: "dns.he.net record id",
 				Required:            true,
 			},
-			"parent_id": schema.Int64Attribute{
+			"zone_id": schema.Int64Attribute{
 				Description:         "dns.he.net zone id",
 				MarkdownDescription: "dns.he.net zone id",
 				Required:            true,
@@ -98,10 +98,10 @@ func (d naptr) Read(ctx context.Context, req datasource.ReadRequest, resp *datas
 	}
 
 	// Terraform log
-	ctxLog := tflog.SetField(ctx, "zone_id", state.ParentID.String())
+	ctxLog := tflog.SetField(ctx, "zone_id", state.ZoneID.String())
 	tflog.Debug(ctxLog, "Retrieving DNS records")
 
-	records, err := d.client.GetRecords(ctx, uint(state.ParentID.ValueInt64())) //GetOne(state.ID.ValueString())
+	records, err := d.client.GetRecords(ctx, uint(state.ZoneID.ValueInt64())) //GetOne(state.ID.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to fetch DNS records",
@@ -118,7 +118,7 @@ func (d naptr) Read(ctx context.Context, req datasource.ReadRequest, resp *datas
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to find NAPTR record",
-			fmt.Sprintf(`record "%s" in domain "%s" doesn't exist`, state.ID.String(), state.ParentID.String()),
+			fmt.Sprintf(`record "%s" in zone "%s" doesn't exist`, state.ID.String(), state.ZoneID.String()),
 		)
 		return
 	}

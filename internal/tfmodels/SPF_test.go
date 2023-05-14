@@ -12,11 +12,11 @@ func TestModelSPF(t *testing.T) {
 	id := uint(1)
 
 	expected := models.SPF{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      86400,
-		Data:     `"v=spf1 include:_spf.example.com ~all"`,
+		ID:     &id,
+		ZoneID: 1,
+		Domain: "example.com",
+		TTL:    86400,
+		Data:   `"v=spf1 include:_spf.example.com ~all"`,
 	}
 
 	spf := SPF{}

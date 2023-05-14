@@ -254,8 +254,8 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		datasources.NewAccount,
-		datasources.NewDomainIndex,
-		datasources.NewDomain,
+		datasources.NewZoneIndex,
+		datasources.NewZone,
 		datasources.NewRecordIndex,
 		datasources.NewA,
 		datasources.NewAAAA,

@@ -8,17 +8,17 @@ import (
 
 // TXT maps the data source schema data.
 type TXT struct {
-	ID       types.Int64  `tfsdk:"id"`
-	ParentID types.Int64  `tfsdk:"parent_id"`
-	Domain   types.String `tfsdk:"domain"`
-	TTL      types.Int64  `tfsdk:"ttl"`
-	Data     types.String `tfsdk:"data"`
-	Dynamic  types.Bool   `tfsdk:"dynamic"`
+	ID      types.Int64  `tfsdk:"id"`
+	ZoneID  types.Int64  `tfsdk:"zone_id"`
+	Domain  types.String `tfsdk:"domain"`
+	TTL     types.Int64  `tfsdk:"ttl"`
+	Data    types.String `tfsdk:"data"`
+	Dynamic types.Bool   `tfsdk:"dynamic"`
 }
 
 func (txt *TXT) SetRecord(recordTXT models.TXT) error {
-	txt.ID = utils.TypeInt(recordTXT.Id)
-	txt.ParentID = types.Int64Value(int64(recordTXT.ParentId))
+	txt.ID = utils.TypeInt(recordTXT.ID)
+	txt.ZoneID = types.Int64Value(int64(recordTXT.ZoneID))
 	txt.Domain = types.StringValue(recordTXT.Domain)
 	txt.TTL = types.Int64Value(int64(recordTXT.TTL))
 	txt.Data = types.StringValue(recordTXT.Data)
@@ -29,11 +29,11 @@ func (txt *TXT) SetRecord(recordTXT models.TXT) error {
 
 func (txt TXT) GetRecord() (models.TXT, error) {
 	return models.TXT{
-		Id:       utils.NativeUInt(txt.ID),
-		ParentId: uint(txt.ParentID.ValueInt64()),
-		Domain:   txt.Domain.ValueString(),
-		TTL:      uint(txt.TTL.ValueInt64()),
-		Data:     txt.Data.ValueString(),
-		Dynamic:  txt.Dynamic.ValueBool(),
+		ID:      utils.NativeUInt(txt.ID),
+		ZoneID:  uint(txt.ZoneID.ValueInt64()),
+		Domain:  txt.Domain.ValueString(),
+		TTL:     uint(txt.TTL.ValueInt64()),
+		Data:    txt.Data.ValueString(),
+		Dynamic: txt.Dynamic.ValueBool(),
 	}, nil
 }

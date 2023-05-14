@@ -12,12 +12,12 @@ func TestModelTXT(t *testing.T) {
 	id := uint(1)
 
 	exapected := models.TXT{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      300,
-		Data:     "Just for the record",
-		Dynamic:  true,
+		ID:      &id,
+		ZoneID:  1,
+		Domain:  "example.com",
+		TTL:     300,
+		Data:    "Just for the record",
+		Dynamic: true,
 	}
 
 	txt := TXT{}

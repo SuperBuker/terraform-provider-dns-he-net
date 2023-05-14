@@ -21,18 +21,18 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 		} else if c.Type != html.ElementNode || c.Data != "td" {
 			// pass
 		} else if htmlquery.SelectAttr(c, "class") == "hidden" {
-			var parentId int
-			parentId, err = strconv.Atoi(htmlquery.InnerText(c))
+			var zoneID int
+			zoneID, err = strconv.Atoi(htmlquery.InnerText(c))
 
 			if err != nil {
 				err = &ErrParsing{
-					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // parentId`,
+					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // zoneID`,
 					err,
 				}
 				return
 			}
 
-			record.ParentId = uint(parentId)
+			record.ZoneID = uint(zoneID)
 			break
 		}
 	}
@@ -43,19 +43,19 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 		} else if c.Type != html.ElementNode || c.Data != "td" {
 			// pass
 		} else if htmlquery.SelectAttr(c, "class") == "hidden" {
-			var recordId int
-			recordId, err = strconv.Atoi(htmlquery.InnerText(c))
+			var recordID int
+			recordID, err = strconv.Atoi(htmlquery.InnerText(c))
 
 			if err != nil {
 				err = &ErrParsing{
-					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // recordId`,
+					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // recordID`,
 					err,
 				}
 				return
 			}
 
-			rId := uint(recordId)
-			record.Id = &rId
+			rID := uint(recordID)
+			record.ID = &rID
 			break
 		}
 	}

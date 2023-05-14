@@ -3,28 +3,28 @@ package models
 import "fmt"
 
 type LOC struct {
-	Id       *uint
-	ParentId uint
-	Domain   string
-	TTL      uint // seconds
-	Data     string
+	ID     *uint
+	ZoneID uint
+	Domain string
+	TTL    uint // seconds
+	Data   string
 }
 
 func ToLOC(r Record) LOC {
 	return LOC{
-		Id:       r.Id,
-		ParentId: r.ParentId,
-		Domain:   r.Domain,
-		TTL:      r.TTL,
-		Data:     r.Data,
+		ID:     r.ID,
+		ZoneID: r.ZoneID,
+		Domain: r.Domain,
+		TTL:    r.TTL,
+		Data:   r.Data,
 	}
 }
 
 func (r LOC) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "LOC",
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 		//"Priority": "",
 		"Name":    r.Domain,
 		"Content": r.Data,
@@ -34,21 +34,21 @@ func (r LOC) Serialise() map[string]string {
 
 func (r LOC) Refs() map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 	}
 }
 
-func (r LOC) GetId() (uint, bool) {
-	if r.Id == nil {
+func (r LOC) GetID() (uint, bool) {
+	if r.ID == nil {
 		return 0, false
 	}
 
-	return *r.Id, true
+	return *r.ID, true
 }
 
-func (r LOC) GetParentId() uint {
-	return r.ParentId
+func (r LOC) GetZoneID() uint {
+	return r.ZoneID
 }
 
 func (r LOC) Type() string {

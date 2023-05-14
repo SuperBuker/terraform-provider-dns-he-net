@@ -12,12 +12,12 @@ func TestModelAAAA(t *testing.T) {
 	id := uint(1)
 
 	expected := models.AAAA{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      300,
-		Data:     "::",
-		Dynamic:  true,
+		ID:      &id,
+		ZoneID:  1,
+		Domain:  "example.com",
+		TTL:     300,
+		Data:    "::",
+		Dynamic: true,
 	}
 
 	aaaa := AAAA{}

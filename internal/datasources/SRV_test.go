@@ -19,7 +19,7 @@ func TestAccSRV(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_srv" "record-srv" {
 					id = 5195753926
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -32,14 +32,14 @@ func TestAccSRV(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "id", "5195753926"),
-					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccSRVMissingDomain(t *testing.T) {
+func TestAccSRVMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -49,7 +49,7 @@ func TestAccSRVMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_srv" "record-srv" {
 					id = 5195753926
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -67,7 +67,7 @@ func TestAccSRVMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_srv" "record-srv" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find SRV record"),
 			},

@@ -7,16 +7,16 @@ import (
 )
 
 type SOA struct {
-	Id       *uint
-	ParentId uint
-	Domain   string
-	TTL      uint // seconds
-	MName    string
-	RName    string
-	Serial   uint
-	Refresh  uint
-	Retry    uint
-	Expire   uint
+	ID      *uint
+	ZoneID  uint
+	Domain  string
+	TTL     uint // seconds
+	MName   string
+	RName   string
+	Serial  uint
+	Refresh uint
+	Retry   uint
+	Expire  uint
 }
 
 func parseSOAData(data string) (SOA, error) {
@@ -49,24 +49,24 @@ func ToSOA(r Record) (SOA, error) {
 	}
 
 	return SOA{
-		Id:       r.Id,
-		ParentId: r.ParentId,
-		Domain:   r.Domain,
-		TTL:      r.TTL,
-		MName:    soa.MName,
-		RName:    soa.RName,
-		Serial:   soa.Serial,
-		Refresh:  soa.Refresh,
-		Retry:    soa.Retry,
-		Expire:   soa.Expire,
+		ID:      r.ID,
+		ZoneID:  r.ZoneID,
+		Domain:  r.Domain,
+		TTL:     r.TTL,
+		MName:   soa.MName,
+		RName:   soa.RName,
+		Serial:  soa.Serial,
+		Refresh: soa.Refresh,
+		Retry:   soa.Retry,
+		Expire:  soa.Expire,
 	}, nil
 }
 
 func (r SOA) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "SOA",
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 		//"Priority": "",
 		"Name": r.Domain,
 		//"Content": r.Data, No need to serialise
@@ -76,21 +76,21 @@ func (r SOA) Serialise() map[string]string {
 
 func (r SOA) Refs() map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 	}
 }
 
-func (r SOA) GetId() (uint, bool) {
-	if r.Id == nil {
+func (r SOA) GetID() (uint, bool) {
+	if r.ID == nil {
 		return 0, false
 	}
 
-	return *r.Id, true
+	return *r.ID, true
 }
 
-func (r SOA) GetParentId() uint {
-	return r.ParentId
+func (r SOA) GetZoneID() uint {
+	return r.ZoneID
 }
 
 func (r SOA) Type() string {

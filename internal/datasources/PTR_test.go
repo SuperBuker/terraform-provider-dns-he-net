@@ -19,7 +19,7 @@ func TestAccPTR(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_ptr" "record-ptr" {
 					id = 5195612976
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -29,14 +29,14 @@ func TestAccPTR(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "id", "5195612976"),
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccPTRMissingDomain(t *testing.T) {
+func TestAccPTRMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccPTRMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_ptr" "record-ptr" {
 					id = 5195612976
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -64,7 +64,7 @@ func TestAccPTRMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_ptr" "record-ptr" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find PTR record"),
 			},

@@ -19,7 +19,7 @@ func TestAccAAAARecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_aaaa" "record-aaaa" {
 					id = 5195455723
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -30,14 +30,14 @@ func TestAccAAAARecord(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "id", "5195455723"),
-					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccAAAAMissingDomain(t *testing.T) {
+func TestAccAAAAMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -47,7 +47,7 @@ func TestAccAAAAMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_aaaa" "record-aaaa" {
 					id = 5195455723
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -65,7 +65,7 @@ func TestAccAAAAMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_aaaa" "record-aaaa" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find AAAA record"),
 			},

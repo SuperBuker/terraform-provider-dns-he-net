@@ -8,37 +8,13 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filter
 
 ## Index
 
-- [func DomainById(domains []models.Domain, id uint) (models.Domain, bool)](<#func-domainbyid>)
-- [func DomainByName(domains []models.Domain, name string) (models.Domain, bool)](<#func-domainbyname>)
-- [func LatestDomain(domains []models.Domain) (d models.Domain, ok bool)](<#func-latestdomain>)
 - [func LatestRecord(records []models.Record) (r models.Record, ok bool)](<#func-latestrecord>)
+- [func LatestZone(zones []models.Zone) (d models.Zone, ok bool)](<#func-latestzone>)
 - [func Record(records []models.Record, domain *string, typ *string) []models.Record](<#func-record>)
 - [func RecordById(records []models.Record, id uint) (models.Record, bool)](<#func-recordbyid>)
+- [func ZoneById(zones []models.Zone, id uint) (models.Zone, bool)](<#func-zonebyid>)
+- [func ZoneByName(zones []models.Zone, name string) (models.Zone, bool)](<#func-zonebyname>)
 
-
-## func [DomainById](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/domains.go#L9>)
-
-```go
-func DomainById(domains []models.Domain, id uint) (models.Domain, bool)
-```
-
-DomainById returns a domain by its ID. If the domain is not found, it returns an empty string and false.
-
-## func [DomainByName](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/domains.go#L21>)
-
-```go
-func DomainByName(domains []models.Domain, name string) (models.Domain, bool)
-```
-
-DomainByName returns a domain by its second\-level domain. If the domain is not found, it returns an empty string and false.
-
-## func [LatestDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/domains.go#L33>)
-
-```go
-func LatestDomain(domains []models.Domain) (d models.Domain, ok bool)
-```
-
-LatestDomain returns the latest domain \(highest ID\) in a slice of domains. If the slice is empty, it returns an empty string and false.
 
 ## func [LatestRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/records.go#L24>)
 
@@ -46,7 +22,15 @@ LatestDomain returns the latest domain \(highest ID\) in a slice of domains. If 
 func LatestRecord(records []models.Record) (r models.Record, ok bool)
 ```
 
-LatestRecord returns the latest domain \(highest ID\) in a slice of domains. If the slice doesn't contain any record with ID, it returns an empty record and false.
+LatestRecord returns the latest record \(highest ID\) in a slice of records. If the slice doesn't contain any record with ID, it returns an empty record and false.
+
+## func [LatestZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/zones.go#L33>)
+
+```go
+func LatestZone(zones []models.Zone) (d models.Zone, ok bool)
+```
+
+LatestZone returns the latest zone \(highest ID\) in a slice of zones. If the slice is empty, it returns an empty string and false.
 
 ## func [Record](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/records.go#L44>)
 
@@ -63,6 +47,22 @@ func RecordById(records []models.Record, id uint) (models.Record, bool)
 ```
 
 RecordById returns a record by its ID. If the record is not found, it returns an empty record and false.
+
+## func [ZoneById](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/zones.go#L9>)
+
+```go
+func ZoneById(zones []models.Zone, id uint) (models.Zone, bool)
+```
+
+ZoneById returns a zone by its ID. If the zone is not found, it returns an empty string and false.
+
+## func [ZoneByName](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/zones.go#L21>)
+
+```go
+func ZoneByName(zones []models.Zone, name string) (models.Zone, bool)
+```
+
+ZoneByName returns a zone by its second\-level zone. If the zone is not found, it returns an empty string and false.
 
 
 

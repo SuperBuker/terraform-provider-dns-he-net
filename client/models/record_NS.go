@@ -3,28 +3,28 @@ package models
 import "fmt"
 
 type NS struct {
-	Id       *uint
-	ParentId uint
-	Domain   string
-	TTL      uint // seconds
-	Data     string
+	ID     *uint
+	ZoneID uint
+	Domain string
+	TTL    uint // seconds
+	Data   string
 }
 
 func ToNS(r Record) NS {
 	return NS{
-		Id:       r.Id,
-		ParentId: r.ParentId,
-		Domain:   r.Domain,
-		TTL:      r.TTL,
-		Data:     r.Data,
+		ID:     r.ID,
+		ZoneID: r.ZoneID,
+		Domain: r.Domain,
+		TTL:    r.TTL,
+		Data:   r.Data,
 	}
 }
 
 func (r NS) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "NS",
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 		//"Priority": "",
 		"Name":    r.Domain,
 		"Content": r.Data,
@@ -34,21 +34,21 @@ func (r NS) Serialise() map[string]string {
 
 func (r NS) Refs() map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 	}
 }
 
-func (r NS) GetId() (uint, bool) {
-	if r.Id == nil {
+func (r NS) GetID() (uint, bool) {
+	if r.ID == nil {
 		return 0, false
 	}
 
-	return *r.Id, true
+	return *r.ID, true
 }
 
-func (r NS) GetParentId() uint {
-	return r.ParentId
+func (r NS) GetZoneID() uint {
+	return r.ZoneID
 }
 func (r NS) Type() string {
 	return "NS"

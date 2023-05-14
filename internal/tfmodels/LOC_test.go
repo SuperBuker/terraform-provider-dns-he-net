@@ -12,11 +12,11 @@ func TestModelLOC(t *testing.T) {
 	id := uint(1)
 
 	expected := models.LOC{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      86400,
-		Data:     "40 27 53.86104 N 3 39 2.59092 W 712.8m 0.00m 0.00m 0.00m",
+		ID:     &id,
+		ZoneID: 1,
+		Domain: "example.com",
+		TTL:    86400,
+		Data:   "40 27 53.86104 N 3 39 2.59092 W 712.8m 0.00m 0.00m 0.00m",
 	}
 
 	loc := LOC{}

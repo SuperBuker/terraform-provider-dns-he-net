@@ -12,8 +12,8 @@ func TestModelSRV(t *testing.T) {
 	id := uint(1)
 
 	expected := models.SRV{
-		Id:       &id,
-		ParentId: 1,
+		ID:       &id,
+		ZoneID:   1,
 		Domain:   "_bofher._tcp.example.com",
 		TTL:      28800,
 		Priority: 0,

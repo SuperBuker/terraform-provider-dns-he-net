@@ -19,7 +19,7 @@ func TestAccCAA(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_caa" "record-caa" {
 					id = 5195537735
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -29,14 +29,14 @@ func TestAccCAA(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "id", "5195537735"),
-					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccCAAMissingDomain(t *testing.T) {
+func TestAccCAAMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccCAAMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_caa" "record-caa" {
 					id = 5195537735
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -64,7 +64,7 @@ func TestAccCAAMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_caa" "record-caa" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find CAA record"),
 			},

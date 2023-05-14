@@ -12,11 +12,11 @@ func TestModelCAA(t *testing.T) {
 	id := uint(1)
 
 	expected := models.CAA{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      86400,
-		Data:     `0 issuewild ";"`,
+		ID:     &id,
+		ZoneID: 1,
+		Domain: "example.com",
+		TTL:    86400,
+		Data:   `0 issuewild ";"`,
 	}
 
 	caa := CAA{}

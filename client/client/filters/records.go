@@ -8,9 +8,9 @@ import (
 // If the record is not found, it returns an empty record and false.
 func RecordById(records []models.Record, id uint) (models.Record, bool) {
 	for _, record := range records {
-		if record.Id == nil {
+		if record.ID == nil {
 			//pass
-		} else if *record.Id == id {
+		} else if *record.ID == id {
 			return record, true
 		}
 	}
@@ -18,18 +18,18 @@ func RecordById(records []models.Record, id uint) (models.Record, bool) {
 	return models.Record{}, false
 }
 
-// LatestRecord returns the latest domain (highest ID) in a slice of domains.
+// LatestRecord returns the latest record (highest ID) in a slice of records.
 // If the slice doesn't contain any record with ID, it returns an empty record
 // and false.
 func LatestRecord(records []models.Record) (r models.Record, ok bool) {
 	var id uint
 
 	for _, record := range records {
-		if record.Id == nil {
+		if record.ID == nil {
 			//pass
-		} else if *record.Id >= id { // record may have id == zero
+		} else if *record.ID >= id { // record may have id == zero
 			r = record
-			id = *record.Id
+			id = *record.ID
 
 			if !ok {
 				ok = true

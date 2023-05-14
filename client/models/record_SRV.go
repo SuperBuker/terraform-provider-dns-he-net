@@ -7,8 +7,8 @@ import (
 )
 
 type SRV struct {
-	Id       *uint
-	ParentId uint
+	ID       *uint
+	ZoneID   uint
 	Domain   string
 	TTL      uint // seconds
 	Priority uint16
@@ -50,8 +50,8 @@ func ToSRV(r Record) (SRV, error) {
 	}
 
 	return SRV{
-		Id:       r.Id,
-		ParentId: r.ParentId,
+		ID:       r.ID,
+		ZoneID:   r.ZoneID,
 		Domain:   r.Domain,
 		TTL:      r.TTL,
 		Priority: *r.Priority,
@@ -64,8 +64,8 @@ func ToSRV(r Record) (SRV, error) {
 func (r SRV) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "SRV",
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 		"Priority":            fmt.Sprint(r.Priority),
 		"Name":                r.Domain,
 		"Weight":              fmt.Sprint(r.Weight),
@@ -77,21 +77,21 @@ func (r SRV) Serialise() map[string]string {
 
 func (r SRV) Refs() map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 	}
 }
 
-func (r SRV) GetId() (uint, bool) {
-	if r.Id == nil {
+func (r SRV) GetID() (uint, bool) {
+	if r.ID == nil {
 		return 0, false
 	}
 
-	return *r.Id, true
+	return *r.ID, true
 }
 
-func (r SRV) GetParentId() uint {
-	return r.ParentId
+func (r SRV) GetZoneID() uint {
+	return r.ZoneID
 }
 
 func (r SRV) Type() string {

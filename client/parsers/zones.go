@@ -9,25 +9,25 @@ import (
 	"golang.org/x/net/html"
 )
 
-// parseDomainNode parses a domain node.
-func parseDomainNode(node *html.Node) (models.Domain, error) {
+// parseZoneNode parses a zone node.
+func parseZoneNode(node *html.Node) (models.Zone, error) {
 	q := `//td[@style]/img[@name][@value]`
 
 	c := htmlquery.FindOne(node, q)
 	recordId, err := strconv.Atoi(htmlquery.SelectAttr(c, "value"))
 
 	if err != nil {
-		return models.Domain{}, err
+		return models.Zone{}, err
 	}
 
-	return models.Domain{
-		Id:     uint(recordId),
-		Domain: htmlquery.SelectAttr(c, "name"),
+	return models.Zone{
+		ID:   uint(recordId),
+		Name: htmlquery.SelectAttr(c, "name"),
 	}, nil
 }
 
-// GetDomains returns the domains from the HTML body.
-func GetDomains(doc *html.Node) ([]models.Domain, error) {
+// GetZones returns the zones from the HTML body.
+func GetZones(doc *html.Node) ([]models.Zone, error) {
 	q := `//table[@id="domains_table"]`
 
 	if table := htmlquery.FindOne(doc, q); table == nil {
@@ -38,13 +38,13 @@ func GetDomains(doc *html.Node) ([]models.Domain, error) {
 	nodes := htmlquery.Find(doc, q)
 
 	if nodes == nil {
-		return []models.Domain{}, nil // empty table
+		return []models.Zone{}, nil // empty table
 	}
 
-	records := make([]models.Domain, len(nodes))
+	records := make([]models.Zone, len(nodes))
 
 	for i, node := range nodes {
-		record, err := parseDomainNode(node)
+		record, err := parseZoneNode(node)
 
 		if err != nil {
 			return nil, &ErrParsing{

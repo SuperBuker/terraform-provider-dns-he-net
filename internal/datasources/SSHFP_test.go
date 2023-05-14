@@ -19,7 +19,7 @@ func TestAccSSHFP(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_sshfp" "record-sshfp" {
 					id = 5195770791
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -29,14 +29,14 @@ func TestAccSSHFP(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "id", "5195770791"),
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccSSHFPMissingDomain(t *testing.T) {
+func TestAccSSHFPMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccSSHFPMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_sshfp" "record-sshfp" {
 					id = 5195770791
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -64,7 +64,7 @@ func TestAccSSHFPMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_sshfp" "record-sshfp" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find SSHFP record"),
 			},

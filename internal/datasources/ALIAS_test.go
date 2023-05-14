@@ -19,7 +19,7 @@ func TestAccALIAS(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_alias" "record-alias" {
 					id = 5195504740
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -29,14 +29,14 @@ func TestAccALIAS(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "id", "5195504740"),
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccALIASMissingDomain(t *testing.T) {
+func TestAccALIASMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccALIASMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_alias" "record-alias" {
 					id = 5195504740
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -64,7 +64,7 @@ func TestAccALIASMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_alias" "record-alias" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find ALIAS record"),
 			},

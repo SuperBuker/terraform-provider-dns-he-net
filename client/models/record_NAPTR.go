@@ -3,28 +3,28 @@ package models
 import "fmt"
 
 type NAPTR struct {
-	Id       *uint
-	ParentId uint
-	Domain   string
-	TTL      uint // seconds
-	Data     string
+	ID     *uint
+	ZoneID uint
+	Domain string
+	TTL    uint // seconds
+	Data   string
 }
 
 func ToNAPTR(r Record) NAPTR {
 	return NAPTR{
-		Id:       r.Id,
-		ParentId: r.ParentId,
-		Domain:   r.Domain,
-		TTL:      r.TTL,
-		Data:     r.Data,
+		ID:     r.ID,
+		ZoneID: r.ZoneID,
+		Domain: r.Domain,
+		TTL:    r.TTL,
+		Data:   r.Data,
 	}
 }
 
 func (r NAPTR) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "NAPTR",
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 		//"Priority": "",
 		"Name":    r.Domain,
 		"Content": r.Data,
@@ -34,21 +34,21 @@ func (r NAPTR) Serialise() map[string]string {
 
 func (r NAPTR) Refs() map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 	}
 }
 
-func (r NAPTR) GetId() (uint, bool) {
-	if r.Id == nil {
+func (r NAPTR) GetID() (uint, bool) {
+	if r.ID == nil {
 		return 0, false
 	}
 
-	return *r.Id, true
+	return *r.ID, true
 }
 
-func (r NAPTR) GetParentId() uint {
-	return r.ParentId
+func (r NAPTR) GetZoneID() uint {
+	return r.ZoneID
 }
 
 func (r NAPTR) Type() string {

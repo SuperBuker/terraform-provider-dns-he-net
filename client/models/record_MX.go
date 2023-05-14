@@ -5,8 +5,8 @@ import (
 )
 
 type MX struct {
-	Id       *uint
-	ParentId uint
+	ID       *uint
+	ZoneID   uint
 	Domain   string
 	TTL      uint // seconds
 	Priority uint16
@@ -19,8 +19,8 @@ func ToMX(r Record) (MX, error) {
 	}
 
 	return MX{
-		Id:       r.Id,
-		ParentId: r.ParentId,
+		ID:       r.ID,
+		ZoneID:   r.ZoneID,
 		Domain:   r.Domain,
 		TTL:      r.TTL,
 		Priority: *r.Priority,
@@ -31,8 +31,8 @@ func ToMX(r Record) (MX, error) {
 func (r MX) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "MX",
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 		"Priority":            fmt.Sprint(r.Priority),
 		"Name":                r.Domain,
 		"Content":             r.Data,
@@ -42,21 +42,21 @@ func (r MX) Serialise() map[string]string {
 
 func (r MX) Refs() map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 	}
 }
 
-func (r MX) GetId() (uint, bool) {
-	if r.Id == nil {
+func (r MX) GetID() (uint, bool) {
+	if r.ID == nil {
 		return 0, false
 	}
 
-	return *r.Id, true
+	return *r.ID, true
 }
 
-func (r MX) GetParentId() uint {
-	return r.ParentId
+func (r MX) GetZoneID() uint {
+	return r.ZoneID
 }
 
 func (r MX) Type() string {

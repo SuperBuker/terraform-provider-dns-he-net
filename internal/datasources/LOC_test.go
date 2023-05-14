@@ -19,7 +19,7 @@ func TestAccLOC(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_loc" "record-loc" {
 					id = 5195584706
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -29,14 +29,14 @@ func TestAccLOC(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "id", "5195584706"),
-					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccLOCMissingDomain(t *testing.T) {
+func TestAccLOCMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccLOCMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_loc" "record-loc" {
 					id = 5195584706
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -64,7 +64,7 @@ func TestAccLOCMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_loc" "record-loc" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find LOC record"),
 			},

@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-func TestAccDomains(t *testing.T) {
+func TestAccZones(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -16,14 +16,14 @@ func TestAccDomains(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_domains" "example" {
+				Config: test_utils.ProviderConfig + `data "dns-he-net_zones" "example" {
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_domains.example", "domains.#", "2"),
+					resource.TestCheckResourceAttr("data.dns-he-net_zones.example", "zones.#", "2"),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_domains.example", "id", "v6643873d8c41428.97783691"),
+					resource.TestCheckResourceAttr("data.dns-he-net_zones.example", "id", "v6643873d8c41428.97783691"),
 				),
 			},
 		},

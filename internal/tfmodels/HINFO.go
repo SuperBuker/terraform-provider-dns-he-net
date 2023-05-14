@@ -8,16 +8,16 @@ import (
 
 // HINFO maps the data source schema data.
 type HINFO struct {
-	ID       types.Int64  `tfsdk:"id"`
-	ParentID types.Int64  `tfsdk:"parent_id"`
-	Domain   types.String `tfsdk:"domain"`
-	TTL      types.Int64  `tfsdk:"ttl"`
-	Data     types.String `tfsdk:"data"`
+	ID     types.Int64  `tfsdk:"id"`
+	ZoneID types.Int64  `tfsdk:"zone_id"`
+	Domain types.String `tfsdk:"domain"`
+	TTL    types.Int64  `tfsdk:"ttl"`
+	Data   types.String `tfsdk:"data"`
 }
 
 func (hinfo *HINFO) SetRecord(recordHINFO models.HINFO) error {
-	hinfo.ID = utils.TypeInt(recordHINFO.Id)
-	hinfo.ParentID = types.Int64Value(int64(recordHINFO.ParentId))
+	hinfo.ID = utils.TypeInt(recordHINFO.ID)
+	hinfo.ZoneID = types.Int64Value(int64(recordHINFO.ZoneID))
 	hinfo.Domain = types.StringValue(recordHINFO.Domain)
 	hinfo.TTL = types.Int64Value(int64(recordHINFO.TTL))
 	hinfo.Data = types.StringValue(recordHINFO.Data)
@@ -27,10 +27,10 @@ func (hinfo *HINFO) SetRecord(recordHINFO models.HINFO) error {
 
 func (hinfo HINFO) GetRecord() (models.HINFO, error) {
 	return models.HINFO{
-		Id:       utils.NativeUInt(hinfo.ID),
-		ParentId: uint(hinfo.ParentID.ValueInt64()),
-		Domain:   hinfo.Domain.ValueString(),
-		TTL:      uint(hinfo.TTL.ValueInt64()),
-		Data:     hinfo.Data.ValueString(),
+		ID:     utils.NativeUInt(hinfo.ID),
+		ZoneID: uint(hinfo.ZoneID.ValueInt64()),
+		Domain: hinfo.Domain.ValueString(),
+		TTL:    uint(hinfo.TTL.ValueInt64()),
+		Data:   hinfo.Data.ValueString(),
 	}, nil
 }

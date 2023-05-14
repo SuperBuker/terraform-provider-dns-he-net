@@ -8,16 +8,16 @@ import (
 
 // NAPTR maps the data source schema data.
 type NAPTR struct {
-	ID       types.Int64  `tfsdk:"id"`
-	ParentID types.Int64  `tfsdk:"parent_id"`
-	Domain   types.String `tfsdk:"domain"`
-	TTL      types.Int64  `tfsdk:"ttl"`
-	Data     types.String `tfsdk:"data"`
+	ID     types.Int64  `tfsdk:"id"`
+	ZoneID types.Int64  `tfsdk:"zone_id"`
+	Domain types.String `tfsdk:"domain"`
+	TTL    types.Int64  `tfsdk:"ttl"`
+	Data   types.String `tfsdk:"data"`
 }
 
 func (naptr *NAPTR) SetRecord(recordNAPTR models.NAPTR) error {
-	naptr.ID = utils.TypeInt(recordNAPTR.Id)
-	naptr.ParentID = types.Int64Value(int64(recordNAPTR.ParentId))
+	naptr.ID = utils.TypeInt(recordNAPTR.ID)
+	naptr.ZoneID = types.Int64Value(int64(recordNAPTR.ZoneID))
 	naptr.Domain = types.StringValue(recordNAPTR.Domain)
 	naptr.TTL = types.Int64Value(int64(recordNAPTR.TTL))
 	naptr.Data = types.StringValue(recordNAPTR.Data)
@@ -27,10 +27,10 @@ func (naptr *NAPTR) SetRecord(recordNAPTR models.NAPTR) error {
 
 func (naptr NAPTR) GetRecord() (models.NAPTR, error) {
 	return models.NAPTR{
-		Id:       utils.NativeUInt(naptr.ID),
-		ParentId: uint(naptr.ParentID.ValueInt64()),
-		Domain:   naptr.Domain.ValueString(),
-		TTL:      uint(naptr.TTL.ValueInt64()),
-		Data:     naptr.Data.ValueString(),
+		ID:     utils.NativeUInt(naptr.ID),
+		ZoneID: uint(naptr.ZoneID.ValueInt64()),
+		Domain: naptr.Domain.ValueString(),
+		TTL:    uint(naptr.TTL.ValueInt64()),
+		Data:   naptr.Data.ValueString(),
 	}, nil
 }

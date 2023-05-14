@@ -12,11 +12,11 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-var domains = []models.Domain{
-	{Id: 1234567, Domain: "example.com"},
+var zones = []models.Zone{
+	{ID: 1234567, Name: "example.com"},
 }
 
-func TestDomains(t *testing.T) {
+func TestZones(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		data, err := os.ReadFile("../testing_data/html/main.html")
 		require.NoError(t, err)
@@ -24,11 +24,11 @@ func TestDomains(t *testing.T) {
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
 		require.NoError(t, err)
 
-		_domains, err := parsers.GetDomains(doc)
+		zones_, err := parsers.GetZones(doc)
 		require.NoError(t, err)
 
-		for i, domain := range _domains {
-			assert.Equal(t, domains[i], domain)
+		for i, zone := range zones_ {
+			assert.Equal(t, zones[i], zone)
 		}
 	})
 
@@ -37,12 +37,12 @@ func TestDomains(t *testing.T) {
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
 		require.NoError(t, err)
 
-		_domains, err := parsers.GetDomains(doc)
+		zones_, err := parsers.GetZones(doc)
 		require.Error(t, err)
 		targetErr := &parsers.ErrNotFound{}
 		assert.ErrorAs(t, err, &targetErr)
 
-		assert.Nil(t, _domains)
+		assert.Nil(t, zones_)
 		assert.Equal(t, "element \"//table[@id=\"domains_table\"]\" not found in document", err.Error())
 	})
 
@@ -53,9 +53,9 @@ func TestDomains(t *testing.T) {
 		doc, err := htmlquery.Parse(bytes.NewReader(data))
 		require.NoError(t, err)
 
-		_domains, err := parsers.GetDomains(doc)
+		zones_, err := parsers.GetZones(doc)
 		require.NoError(t, err)
 
-		assert.Equal(t, []models.Domain{}, _domains)
+		assert.Equal(t, []models.Zone{}, zones_)
 	})
 }

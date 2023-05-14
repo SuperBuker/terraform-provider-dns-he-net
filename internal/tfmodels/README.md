@@ -70,12 +70,12 @@ A maps the record schema data.
 
 ```go
 type A struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
-    Dynamic  types.Bool   `tfsdk:"dynamic"`
+    ID      types.Int64  `tfsdk:"id"`
+    ZoneID  types.Int64  `tfsdk:"zone_id"`
+    Domain  types.String `tfsdk:"domain"`
+    TTL     types.Int64  `tfsdk:"ttl"`
+    Data    types.String `tfsdk:"data"`
+    Dynamic types.Bool   `tfsdk:"dynamic"`
 }
 ```
 
@@ -97,12 +97,12 @@ AAAA maps the record schema data.
 
 ```go
 type AAAA struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
-    Dynamic  types.Bool   `tfsdk:"dynamic"`
+    ID      types.Int64  `tfsdk:"id"`
+    ZoneID  types.Int64  `tfsdk:"zone_id"`
+    Domain  types.String `tfsdk:"domain"`
+    TTL     types.Int64  `tfsdk:"ttl"`
+    Data    types.String `tfsdk:"data"`
+    Dynamic types.Bool   `tfsdk:"dynamic"`
 }
 ```
 
@@ -124,12 +124,12 @@ AFSDB maps the record schema data.
 
 ```go
 type AFSDB struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
-    Dynamic  types.Bool   `tfsdk:"dynamic"`
+    ID      types.Int64  `tfsdk:"id"`
+    ZoneID  types.Int64  `tfsdk:"zone_id"`
+    Domain  types.String `tfsdk:"domain"`
+    TTL     types.Int64  `tfsdk:"ttl"`
+    Data    types.String `tfsdk:"data"`
+    Dynamic types.Bool   `tfsdk:"dynamic"`
 }
 ```
 
@@ -151,11 +151,11 @@ ALIAS maps the data source schema data.
 
 ```go
 type ALIAS struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -177,11 +177,11 @@ CAA maps the record schema data.
 
 ```go
 type CAA struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -203,11 +203,11 @@ CNAME maps the record schema data.
 
 ```go
 type CNAME struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -229,11 +229,11 @@ HINFO maps the data source schema data.
 
 ```go
 type HINFO struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -255,11 +255,11 @@ LOC maps the data source schema data.
 
 ```go
 type LOC struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -282,7 +282,7 @@ MX maps the data source schema data.
 ```go
 type MX struct {
     ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
+    ZoneID   types.Int64  `tfsdk:"zone_id"`
     Domain   types.String `tfsdk:"domain"`
     TTL      types.Int64  `tfsdk:"ttl"`
     Priority types.Int64  `tfsdk:"priority"`
@@ -308,11 +308,11 @@ NAPTR maps the data source schema data.
 
 ```go
 type NAPTR struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -334,11 +334,11 @@ NS maps the data source schema data.
 
 ```go
 type NS struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -360,11 +360,11 @@ PTR maps the data source schema data.
 
 ```go
 type PTR struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -386,11 +386,11 @@ RP maps the data source schema data.
 
 ```go
 type RP struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -412,16 +412,16 @@ SOA maps the data source schema data.
 
 ```go
 type SOA struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    MName    types.String `tfsdk:"mname"`
-    RName    types.String `tfsdk:"rname"`
-    Serial   types.Int64  `tfsdk:"serial"`
-    Refresh  types.Int64  `tfsdk:"refresh"`
-    Retry    types.Int64  `tfsdk:"retry"`
-    Expire   types.Int64  `tfsdk:"expire"`
+    ID      types.Int64  `tfsdk:"id"`
+    ZoneID  types.Int64  `tfsdk:"zone_id"`
+    Domain  types.String `tfsdk:"domain"`
+    TTL     types.Int64  `tfsdk:"ttl"`
+    MName   types.String `tfsdk:"mname"`
+    RName   types.String `tfsdk:"rname"`
+    Serial  types.Int64  `tfsdk:"serial"`
+    Refresh types.Int64  `tfsdk:"refresh"`
+    Retry   types.Int64  `tfsdk:"retry"`
+    Expire  types.Int64  `tfsdk:"expire"`
 }
 ```
 
@@ -443,11 +443,11 @@ SPF maps the data source schema data.
 
 ```go
 type SPF struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -470,7 +470,7 @@ SRV maps the data source schema data.
 ```go
 type SRV struct {
     ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
+    ZoneID   types.Int64  `tfsdk:"zone_id"`
     Domain   types.String `tfsdk:"domain"`
     TTL      types.Int64  `tfsdk:"ttl"`
     Priority types.Int64  `tfsdk:"priority"`
@@ -498,11 +498,11 @@ SSHFP maps the data source schema data.
 
 ```go
 type SSHFP struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
@@ -524,12 +524,12 @@ TXT maps the data source schema data.
 
 ```go
 type TXT struct {
-    ID       types.Int64  `tfsdk:"id"`
-    ParentID types.Int64  `tfsdk:"parent_id"`
-    Domain   types.String `tfsdk:"domain"`
-    TTL      types.Int64  `tfsdk:"ttl"`
-    Data     types.String `tfsdk:"data"`
-    Dynamic  types.Bool   `tfsdk:"dynamic"`
+    ID      types.Int64  `tfsdk:"id"`
+    ZoneID  types.Int64  `tfsdk:"zone_id"`
+    Domain  types.String `tfsdk:"domain"`
+    TTL     types.Int64  `tfsdk:"ttl"`
+    Data    types.String `tfsdk:"data"`
+    Dynamic types.Bool   `tfsdk:"dynamic"`
 }
 ```
 
