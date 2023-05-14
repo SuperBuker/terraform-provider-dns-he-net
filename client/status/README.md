@@ -11,8 +11,8 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 - [func Check(doc *html.Node) error](<#func-check>)
 - [func fromAuthStatus(status auth.Status) error](<#func-fromauthstatus>)
 - [func fromIssue(issue string) error](<#func-fromissue>)
-- [type ErrAuth](<#type-errauth>)
-  - [func (e *ErrAuth) Error() string](<#func-errauth-error>)
+- [type ErrAuthFailed](<#type-errauthfailed>)
+  - [func (e *ErrAuthFailed) Error() string](<#func-errauthfailed-error>)
 - [type ErrHeNet](<#type-errhenet>)
   - [func (e *ErrHeNet) Error() string](<#func-errhenet-error>)
 - [type ErrNoAuth](<#type-errnoauth>)
@@ -50,18 +50,18 @@ func fromIssue(issue string) error
 
 fromIssue parses the errors in the response and returns them as &ErrHeNet\{\}.
 
-## type [ErrAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L4>)
+## type [ErrAuthFailed](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L4>)
 
-ErrAuth is an error that is returned when authentication fails.
+ErrAuthFailed is an error that is returned when authentication fails.
 
 ```go
-type ErrAuth struct{}
+type ErrAuthFailed struct{}
 ```
 
-### func \(\*ErrAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L6>)
+### func \(\*ErrAuthFailed\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L6>)
 
 ```go
-func (e *ErrAuth) Error() string
+func (e *ErrAuthFailed) Error() string
 ```
 
 ## type [ErrHeNet](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L60-L62>)
