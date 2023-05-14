@@ -1,7 +1,6 @@
 package client
 
 import (
-	"context"
 	"errors"
 	"net/http"
 	"time"
@@ -117,62 +116,4 @@ func unwrapResult(_ *resty.Client, resp *resty.Response) (err error) {
 		}
 	}
 	return
-}
-
-// Debug middlewares //
-
-// debugReqStatus logs the request status
-func (c *Client) debugReqStatus(rc *resty.Client, req *resty.Request) error {
-	fields := logging.Fields{"status": c.status}
-	c.log.Debug(context.Background(), "request client status", fields)
-
-	fields = logging.Fields{"cookies": rc.Cookies}
-	c.log.Debug(context.Background(), "request client cookies", fields)
-
-	fields = logging.Fields{"cookies": rc.Header}
-	c.log.Debug(context.Background(), "request client headers", fields)
-
-	fields = logging.Fields{"cookies": req.Cookies}
-	c.log.Debug(context.Background(), "request cookies", fields)
-
-	fields = logging.Fields{"headers": req.Header}
-	c.log.Debug(context.Background(), "request headers", fields)
-
-	if req.RawRequest != nil {
-		fields = logging.Fields{"cookies": req.RawRequest.Cookies()}
-		c.log.Debug(context.Background(), "raw request cookies", fields)
-
-		fields = logging.Fields{"headers": req.RawRequest.Header}
-		c.log.Debug(context.Background(), "raw request headers", fields)
-	}
-
-	return nil
-}
-
-// debugRespStatus logs the response status
-func (c *Client) debugRespStatus(rc *resty.Client, resp *resty.Response) error {
-	fields := logging.Fields{"status": c.status}
-	c.log.Debug(context.Background(), "response client status", fields)
-
-	fields = logging.Fields{"cookies": rc.Cookies}
-	c.log.Debug(context.Background(), "response client cookies", fields)
-
-	fields = logging.Fields{"cookies": rc.Header}
-	c.log.Debug(context.Background(), "response client headers", fields)
-
-	fields = logging.Fields{"cookies": resp.Request.Cookies}
-	c.log.Debug(context.Background(), "response cookies", fields)
-
-	fields = logging.Fields{"headers": resp.Request.Header}
-	c.log.Debug(context.Background(), "response headers", fields)
-
-	if resp.Request.RawRequest != nil {
-		fields = logging.Fields{"cookies": resp.Request.RawRequest.Cookies()}
-		c.log.Debug(context.Background(), "raw response cookies", fields)
-
-		fields = logging.Fields{"headers": resp.Request.RawRequest.Header}
-		c.log.Debug(context.Background(), "raw response headers", fields)
-	}
-
-	return nil
 }

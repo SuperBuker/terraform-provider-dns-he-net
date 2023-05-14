@@ -24,12 +24,6 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 
 	client = c.options.ApplyAuthClient(client)
 
-	// Debug
-	//client.OnBeforeRequest(c.debugReqStatus)
-
-	// Debug
-	//client.OnAfterResponse(c.debugRespStatus)
-
 	// To simplify handling
 	client.OnAfterResponse(initResult)
 

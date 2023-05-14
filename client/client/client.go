@@ -64,12 +64,6 @@ func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, opti
 	// Handle authentication
 	client.client.OnBeforeRequest(client.authValidation)
 
-	// Debug
-	//client.client.OnBeforeRequest(client.debugReqStatus)
-
-	// Debug
-	//client.client.OnAfterResponse(client.debugRespStatus)
-
 	// Initialise ResultX
 	client.client.OnAfterResponse(initResult)
 
