@@ -8,6 +8,7 @@ import (
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
@@ -73,5 +74,25 @@ func TestClientAuth(t *testing.T) {
 		records, err := cli.GetRecords(context.TODO(), 1091256)
 		require.Error(t, err)
 		assert.Nil(t, records)
+	})
+
+	t.Run("Client auth.Dummy failed", func(t *testing.T) {
+
+		authObj, err := auth.NewAuth("user", "password", "", auth.Dummy)
+		require.NoError(t, err)
+
+		// Forces regular authentication with totp retrials
+		_, err = NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithDebug())
+		require.ErrorIs(t, err, &status.ErrNoAuth{}) // Current status is not autheticated
+	})
+
+	t.Run("Client auth.Dummy otp failed", func(t *testing.T) {
+
+		authObj, err := auth.NewAuth(user, password, "", auth.Dummy)
+		require.NoError(t, err)
+
+		// Forces regular authentication with totp retrials
+		_, err = NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+		require.ErrorIs(t, err, &status.ErrOTPAuth{}) // Current status is missing OTP auth
 	})
 }

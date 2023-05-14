@@ -64,3 +64,15 @@ func WithUserAgent(ua string) Option {
 		AuthClientFn: fn,
 	}
 }
+
+// WithDebug sets the debug mode for the client
+func WithDebug() Option {
+	fn := func(c *resty.Client) *resty.Client {
+		return c.SetDebug(true)
+	}
+
+	return Option{
+		ClientFn:     fn,
+		AuthClientFn: fn,
+	}
+}
