@@ -20,7 +20,6 @@ type serialisedStore struct {
 	Cookies []*http.Cookie `json:"cookies"`
 }
 
-
 // configFilePath returns the path to the cookie file for the given user.
 // The cookie file is named depending on the aht username and cookie store type.
 func configFilePath(a *Auth, cs AuthStore) string {
