@@ -11,13 +11,13 @@ Parsers contains functions to parse the response from the server.
 ## Index
 
 - [func GetAccount(doc *html.Node) (string, error)](<#func-getaccount>)
-- [func GetDomains(doc *html.Node) ([]models.Domain, error)](<#func-getdomains>)
 - [func GetRecords(doc *html.Node) ([]models.Record, error)](<#func-getrecords>)
+- [func GetZones(doc *html.Node) ([]models.Zone, error)](<#func-getzones>)
 - [func LoginStatus(doc *html.Node) auth.Status](<#func-loginstatus>)
 - [func ParseError(doc *html.Node) (issues []string)](<#func-parseerror>)
 - [func ParseStatus(doc *html.Node) string](<#func-parsestatus>)
-- [func parseDomainNode(node *html.Node) (models.Domain, error)](<#func-parsedomainnode>)
 - [func parseRecordNode(node *html.Node) (record models.Record, err error)](<#func-parserecordnode>)
+- [func parseZoneNode(node *html.Node) (models.Zone, error)](<#func-parsezonenode>)
 - [type ErrNotFound](<#type-errnotfound>)
   - [func (e *ErrNotFound) Error() string](<#func-errnotfound-error>)
   - [func (e *ErrNotFound) Unwrap() []error](<#func-errnotfound-unwrap>)
@@ -34,14 +34,6 @@ func GetAccount(doc *html.Node) (string, error)
 
 GetAccount returns the account name from the HTML body.
 
-## func [GetDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/domains.go#L30>)
-
-```go
-func GetDomains(doc *html.Node) ([]models.Domain, error)
-```
-
-GetDomains returns the domains from the HTML body.
-
 ## func [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L179>)
 
 ```go
@@ -49,6 +41,14 @@ func GetRecords(doc *html.Node) ([]models.Record, error)
 ```
 
 GetRecords returns the records from the HTML body.
+
+## func [GetZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/zones.go#L30>)
+
+```go
+func GetZones(doc *html.Node) ([]models.Zone, error)
+```
+
+GetZones returns the zones from the HTML body.
 
 ## func [LoginStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/auth.go#L11>)
 
@@ -74,14 +74,6 @@ func ParseStatus(doc *html.Node) string
 
 ParseStatus returns the status message from the HTML body.
 
-## func [parseDomainNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/domains.go#L13>)
-
-```go
-func parseDomainNode(node *html.Node) (models.Domain, error)
-```
-
-parseDomainNode parses a domain node.
-
 ## func [parseRecordNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L15>)
 
 ```go
@@ -89,6 +81,14 @@ func parseRecordNode(node *html.Node) (record models.Record, err error)
 ```
 
 parseRecordNode parses a record node.
+
+## func [parseZoneNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/zones.go#L13>)
+
+```go
+func parseZoneNode(node *html.Node) (models.Zone, error)
+```
+
+parseZoneNode parses a zone node.
 
 ## type [ErrNotFound](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/errors.go#L9-L11>)
 

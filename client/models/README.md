@@ -12,95 +12,94 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 - [func toString(n interface{}) string](<#func-tostring>)
 - [type A](<#type-a>)
   - [func ToA(r Record) A](<#func-toa>)
-  - [func (r A) GetId() (uint, bool)](<#func-a-getid>)
-  - [func (r A) GetParentId() uint](<#func-a-getparentid>)
+  - [func (r A) GetID() (uint, bool)](<#func-a-getid>)
+  - [func (r A) GetZoneID() uint](<#func-a-getzoneid>)
   - [func (r A) Refs() map[string]string](<#func-a-refs>)
   - [func (r A) Serialise() map[string]string](<#func-a-serialise>)
   - [func (r A) Type() string](<#func-a-type>)
 - [type AAAA](<#type-aaaa>)
   - [func ToAAAA(r Record) AAAA](<#func-toaaaa>)
-  - [func (r AAAA) GetId() (uint, bool)](<#func-aaaa-getid>)
-  - [func (r AAAA) GetParentId() uint](<#func-aaaa-getparentid>)
+  - [func (r AAAA) GetID() (uint, bool)](<#func-aaaa-getid>)
+  - [func (r AAAA) GetZoneID() uint](<#func-aaaa-getzoneid>)
   - [func (r AAAA) Refs() map[string]string](<#func-aaaa-refs>)
   - [func (r AAAA) Serialise() map[string]string](<#func-aaaa-serialise>)
   - [func (r AAAA) Type() string](<#func-aaaa-type>)
 - [type AFSDB](<#type-afsdb>)
   - [func ToAFSDB(r Record) AFSDB](<#func-toafsdb>)
-  - [func (r AFSDB) GetId() (uint, bool)](<#func-afsdb-getid>)
-  - [func (r AFSDB) GetParentId() uint](<#func-afsdb-getparentid>)
+  - [func (r AFSDB) GetID() (uint, bool)](<#func-afsdb-getid>)
+  - [func (r AFSDB) GetZoneID() uint](<#func-afsdb-getzoneid>)
   - [func (r AFSDB) Refs() map[string]string](<#func-afsdb-refs>)
   - [func (r AFSDB) Serialise() map[string]string](<#func-afsdb-serialise>)
   - [func (r AFSDB) Type() string](<#func-afsdb-type>)
 - [type ALIAS](<#type-alias>)
   - [func ToALIAS(r Record) ALIAS](<#func-toalias>)
-  - [func (r ALIAS) GetId() (uint, bool)](<#func-alias-getid>)
-  - [func (r ALIAS) GetParentId() uint](<#func-alias-getparentid>)
+  - [func (r ALIAS) GetID() (uint, bool)](<#func-alias-getid>)
+  - [func (r ALIAS) GetZoneID() uint](<#func-alias-getzoneid>)
   - [func (r ALIAS) Refs() map[string]string](<#func-alias-refs>)
   - [func (r ALIAS) Serialise() map[string]string](<#func-alias-serialise>)
   - [func (r ALIAS) Type() string](<#func-alias-type>)
 - [type CAA](<#type-caa>)
   - [func ToCAA(r Record) CAA](<#func-tocaa>)
-  - [func (r CAA) GetId() (uint, bool)](<#func-caa-getid>)
-  - [func (r CAA) GetParentId() uint](<#func-caa-getparentid>)
+  - [func (r CAA) GetID() (uint, bool)](<#func-caa-getid>)
+  - [func (r CAA) GetZoneID() uint](<#func-caa-getzoneid>)
   - [func (r CAA) Refs() map[string]string](<#func-caa-refs>)
   - [func (r CAA) Serialise() map[string]string](<#func-caa-serialise>)
   - [func (r CAA) Type() string](<#func-caa-type>)
 - [type CNAME](<#type-cname>)
   - [func ToCNAME(r Record) CNAME](<#func-tocname>)
-  - [func (r CNAME) GetId() (uint, bool)](<#func-cname-getid>)
-  - [func (r CNAME) GetParentId() uint](<#func-cname-getparentid>)
+  - [func (r CNAME) GetID() (uint, bool)](<#func-cname-getid>)
+  - [func (r CNAME) GetZoneID() uint](<#func-cname-getzoneid>)
   - [func (r CNAME) Refs() map[string]string](<#func-cname-refs>)
   - [func (r CNAME) Serialise() map[string]string](<#func-cname-serialise>)
   - [func (r CNAME) Type() string](<#func-cname-type>)
-- [type Domain](<#type-domain>)
 - [type ErrFormat](<#type-errformat>)
   - [func (e *ErrFormat) Error() string](<#func-errformat-error>)
 - [type HINFO](<#type-hinfo>)
   - [func ToHINFO(r Record) HINFO](<#func-tohinfo>)
-  - [func (r HINFO) GetId() (uint, bool)](<#func-hinfo-getid>)
-  - [func (r HINFO) GetParentId() uint](<#func-hinfo-getparentid>)
+  - [func (r HINFO) GetID() (uint, bool)](<#func-hinfo-getid>)
+  - [func (r HINFO) GetZoneID() uint](<#func-hinfo-getzoneid>)
   - [func (r HINFO) Refs() map[string]string](<#func-hinfo-refs>)
   - [func (r HINFO) Serialise() map[string]string](<#func-hinfo-serialise>)
   - [func (r HINFO) Type() string](<#func-hinfo-type>)
 - [type LOC](<#type-loc>)
   - [func ToLOC(r Record) LOC](<#func-toloc>)
-  - [func (r LOC) GetId() (uint, bool)](<#func-loc-getid>)
-  - [func (r LOC) GetParentId() uint](<#func-loc-getparentid>)
+  - [func (r LOC) GetID() (uint, bool)](<#func-loc-getid>)
+  - [func (r LOC) GetZoneID() uint](<#func-loc-getzoneid>)
   - [func (r LOC) Refs() map[string]string](<#func-loc-refs>)
   - [func (r LOC) Serialise() map[string]string](<#func-loc-serialise>)
   - [func (r LOC) Type() string](<#func-loc-type>)
 - [type MX](<#type-mx>)
   - [func ToMX(r Record) (MX, error)](<#func-tomx>)
-  - [func (r MX) GetId() (uint, bool)](<#func-mx-getid>)
-  - [func (r MX) GetParentId() uint](<#func-mx-getparentid>)
+  - [func (r MX) GetID() (uint, bool)](<#func-mx-getid>)
+  - [func (r MX) GetZoneID() uint](<#func-mx-getzoneid>)
   - [func (r MX) Refs() map[string]string](<#func-mx-refs>)
   - [func (r MX) Serialise() map[string]string](<#func-mx-serialise>)
   - [func (r MX) Type() string](<#func-mx-type>)
 - [type NAPTR](<#type-naptr>)
   - [func ToNAPTR(r Record) NAPTR](<#func-tonaptr>)
-  - [func (r NAPTR) GetId() (uint, bool)](<#func-naptr-getid>)
-  - [func (r NAPTR) GetParentId() uint](<#func-naptr-getparentid>)
+  - [func (r NAPTR) GetID() (uint, bool)](<#func-naptr-getid>)
+  - [func (r NAPTR) GetZoneID() uint](<#func-naptr-getzoneid>)
   - [func (r NAPTR) Refs() map[string]string](<#func-naptr-refs>)
   - [func (r NAPTR) Serialise() map[string]string](<#func-naptr-serialise>)
   - [func (r NAPTR) Type() string](<#func-naptr-type>)
 - [type NS](<#type-ns>)
   - [func ToNS(r Record) NS](<#func-tons>)
-  - [func (r NS) GetId() (uint, bool)](<#func-ns-getid>)
-  - [func (r NS) GetParentId() uint](<#func-ns-getparentid>)
+  - [func (r NS) GetID() (uint, bool)](<#func-ns-getid>)
+  - [func (r NS) GetZoneID() uint](<#func-ns-getzoneid>)
   - [func (r NS) Refs() map[string]string](<#func-ns-refs>)
   - [func (r NS) Serialise() map[string]string](<#func-ns-serialise>)
   - [func (r NS) Type() string](<#func-ns-type>)
 - [type PTR](<#type-ptr>)
   - [func ToPTR(r Record) PTR](<#func-toptr>)
-  - [func (r PTR) GetId() (uint, bool)](<#func-ptr-getid>)
-  - [func (r PTR) GetParentId() uint](<#func-ptr-getparentid>)
+  - [func (r PTR) GetID() (uint, bool)](<#func-ptr-getid>)
+  - [func (r PTR) GetZoneID() uint](<#func-ptr-getzoneid>)
   - [func (r PTR) Refs() map[string]string](<#func-ptr-refs>)
   - [func (r PTR) Serialise() map[string]string](<#func-ptr-serialise>)
   - [func (r PTR) Type() string](<#func-ptr-type>)
 - [type RP](<#type-rp>)
   - [func ToRP(r Record) RP](<#func-torp>)
-  - [func (r RP) GetId() (uint, bool)](<#func-rp-getid>)
-  - [func (r RP) GetParentId() uint](<#func-rp-getparentid>)
+  - [func (r RP) GetID() (uint, bool)](<#func-rp-getid>)
+  - [func (r RP) GetZoneID() uint](<#func-rp-getzoneid>)
   - [func (r RP) Refs() map[string]string](<#func-rp-refs>)
   - [func (r RP) Serialise() map[string]string](<#func-rp-serialise>)
   - [func (r RP) Type() string](<#func-rp-type>)
@@ -112,40 +111,41 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 - [type SOA](<#type-soa>)
   - [func ToSOA(r Record) (SOA, error)](<#func-tosoa>)
   - [func parseSOAData(data string) (SOA, error)](<#func-parsesoadata>)
-  - [func (r SOA) GetId() (uint, bool)](<#func-soa-getid>)
-  - [func (r SOA) GetParentId() uint](<#func-soa-getparentid>)
+  - [func (r SOA) GetID() (uint, bool)](<#func-soa-getid>)
+  - [func (r SOA) GetZoneID() uint](<#func-soa-getzoneid>)
   - [func (r SOA) Refs() map[string]string](<#func-soa-refs>)
   - [func (r SOA) Serialise() map[string]string](<#func-soa-serialise>)
   - [func (r SOA) Type() string](<#func-soa-type>)
 - [type SPF](<#type-spf>)
   - [func ToSPF(r Record) SPF](<#func-tospf>)
-  - [func (r SPF) GetId() (uint, bool)](<#func-spf-getid>)
-  - [func (r SPF) GetParentId() uint](<#func-spf-getparentid>)
+  - [func (r SPF) GetID() (uint, bool)](<#func-spf-getid>)
+  - [func (r SPF) GetZoneID() uint](<#func-spf-getzoneid>)
   - [func (r SPF) Refs() map[string]string](<#func-spf-refs>)
   - [func (r SPF) Serialise() map[string]string](<#func-spf-serialise>)
   - [func (r SPF) Type() string](<#func-spf-type>)
 - [type SRV](<#type-srv>)
   - [func ToSRV(r Record) (SRV, error)](<#func-tosrv>)
   - [func parseSRVData(data string) (SRV, error)](<#func-parsesrvdata>)
-  - [func (r SRV) GetId() (uint, bool)](<#func-srv-getid>)
-  - [func (r SRV) GetParentId() uint](<#func-srv-getparentid>)
+  - [func (r SRV) GetID() (uint, bool)](<#func-srv-getid>)
+  - [func (r SRV) GetZoneID() uint](<#func-srv-getzoneid>)
   - [func (r SRV) Refs() map[string]string](<#func-srv-refs>)
   - [func (r SRV) Serialise() map[string]string](<#func-srv-serialise>)
   - [func (r SRV) Type() string](<#func-srv-type>)
 - [type SSHFP](<#type-sshfp>)
   - [func ToSSHFP(r Record) SSHFP](<#func-tosshfp>)
-  - [func (r SSHFP) GetId() (uint, bool)](<#func-sshfp-getid>)
-  - [func (r SSHFP) GetParentId() uint](<#func-sshfp-getparentid>)
+  - [func (r SSHFP) GetID() (uint, bool)](<#func-sshfp-getid>)
+  - [func (r SSHFP) GetZoneID() uint](<#func-sshfp-getzoneid>)
   - [func (r SSHFP) Refs() map[string]string](<#func-sshfp-refs>)
   - [func (r SSHFP) Serialise() map[string]string](<#func-sshfp-serialise>)
   - [func (r SSHFP) Type() string](<#func-sshfp-type>)
 - [type TXT](<#type-txt>)
   - [func ToTXT(r Record) TXT](<#func-totxt>)
-  - [func (r TXT) GetId() (uint, bool)](<#func-txt-getid>)
-  - [func (r TXT) GetParentId() uint](<#func-txt-getparentid>)
+  - [func (r TXT) GetID() (uint, bool)](<#func-txt-getid>)
+  - [func (r TXT) GetZoneID() uint](<#func-txt-getzoneid>)
   - [func (r TXT) Refs() map[string]string](<#func-txt-refs>)
   - [func (r TXT) Serialise() map[string]string](<#func-txt-serialise>)
   - [func (r TXT) Type() string](<#func-txt-type>)
+- [type Zone](<#type-zone>)
 
 
 ## Variables
@@ -164,12 +164,12 @@ func toString(n interface{}) string
 
 ```go
 type A struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
-    Dynamic  bool
+    ID      *uint
+    ZoneID  uint
+    Domain  string
+    TTL     uint // seconds
+    Data    string
+    Dynamic bool
 }
 ```
 
@@ -179,16 +179,16 @@ type A struct {
 func ToA(r Record) A
 ```
 
-### func \(A\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L45>)
+### func \(A\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L45>)
 
 ```go
-func (r A) GetId() (uint, bool)
+func (r A) GetID() (uint, bool)
 ```
 
-### func \(A\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L53>)
+### func \(A\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L53>)
 
 ```go
-func (r A) GetParentId() uint
+func (r A) GetZoneID() uint
 ```
 
 ### func \(A\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L38>)
@@ -213,12 +213,12 @@ func (r A) Type() string
 
 ```go
 type AAAA struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
-    Dynamic  bool
+    ID      *uint
+    ZoneID  uint
+    Domain  string
+    TTL     uint // seconds
+    Data    string
+    Dynamic bool
 }
 ```
 
@@ -228,16 +228,16 @@ type AAAA struct {
 func ToAAAA(r Record) AAAA
 ```
 
-### func \(AAAA\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L45>)
+### func \(AAAA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L45>)
 
 ```go
-func (r AAAA) GetId() (uint, bool)
+func (r AAAA) GetID() (uint, bool)
 ```
 
-### func \(AAAA\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L53>)
+### func \(AAAA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L53>)
 
 ```go
-func (r AAAA) GetParentId() uint
+func (r AAAA) GetZoneID() uint
 ```
 
 ### func \(AAAA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L38>)
@@ -262,12 +262,12 @@ func (r AAAA) Type() string
 
 ```go
 type AFSDB struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
-    Dynamic  bool
+    ID      *uint
+    ZoneID  uint
+    Domain  string
+    TTL     uint // seconds
+    Data    string
+    Dynamic bool
 }
 ```
 
@@ -277,16 +277,16 @@ type AFSDB struct {
 func ToAFSDB(r Record) AFSDB
 ```
 
-### func \(AFSDB\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L45>)
+### func \(AFSDB\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L45>)
 
 ```go
-func (r AFSDB) GetId() (uint, bool)
+func (r AFSDB) GetID() (uint, bool)
 ```
 
-### func \(AFSDB\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L53>)
+### func \(AFSDB\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L53>)
 
 ```go
-func (r AFSDB) GetParentId() uint
+func (r AFSDB) GetZoneID() uint
 ```
 
 ### func \(AFSDB\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L38>)
@@ -311,11 +311,11 @@ func (r AFSDB) Type() string
 
 ```go
 type ALIAS struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -325,16 +325,16 @@ type ALIAS struct {
 func ToALIAS(r Record) ALIAS
 ```
 
-### func \(ALIAS\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L42>)
+### func \(ALIAS\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L42>)
 
 ```go
-func (r ALIAS) GetId() (uint, bool)
+func (r ALIAS) GetID() (uint, bool)
 ```
 
-### func \(ALIAS\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L50>)
+### func \(ALIAS\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L50>)
 
 ```go
-func (r ALIAS) GetParentId() uint
+func (r ALIAS) GetZoneID() uint
 ```
 
 ### func \(ALIAS\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L35>)
@@ -359,11 +359,11 @@ func (r ALIAS) Type() string
 
 ```go
 type CAA struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -373,16 +373,16 @@ type CAA struct {
 func ToCAA(r Record) CAA
 ```
 
-### func \(CAA\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L42>)
+### func \(CAA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L42>)
 
 ```go
-func (r CAA) GetId() (uint, bool)
+func (r CAA) GetID() (uint, bool)
 ```
 
-### func \(CAA\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L50>)
+### func \(CAA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L50>)
 
 ```go
-func (r CAA) GetParentId() uint
+func (r CAA) GetZoneID() uint
 ```
 
 ### func \(CAA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L35>)
@@ -407,11 +407,11 @@ func (r CAA) Type() string
 
 ```go
 type CNAME struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -421,16 +421,16 @@ type CNAME struct {
 func ToCNAME(r Record) CNAME
 ```
 
-### func \(CNAME\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L42>)
+### func \(CNAME\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L42>)
 
 ```go
-func (r CNAME) GetId() (uint, bool)
+func (r CNAME) GetID() (uint, bool)
 ```
 
-### func \(CNAME\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L50>)
+### func \(CNAME\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L50>)
 
 ```go
-func (r CNAME) GetParentId() uint
+func (r CNAME) GetZoneID() uint
 ```
 
 ### func \(CNAME\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L35>)
@@ -449,15 +449,6 @@ func (r CNAME) Serialise() map[string]string
 
 ```go
 func (r CNAME) Type() string
-```
-
-## type [Domain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/domain.go#L3-L6>)
-
-```go
-type Domain struct {
-    Id     uint
-    Domain string
-}
 ```
 
 ## type [ErrFormat](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/errors.go#L7-L10>)
@@ -479,11 +470,11 @@ func (e *ErrFormat) Error() string
 
 ```go
 type HINFO struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -493,16 +484,16 @@ type HINFO struct {
 func ToHINFO(r Record) HINFO
 ```
 
-### func \(HINFO\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L42>)
+### func \(HINFO\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L42>)
 
 ```go
-func (r HINFO) GetId() (uint, bool)
+func (r HINFO) GetID() (uint, bool)
 ```
 
-### func \(HINFO\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L50>)
+### func \(HINFO\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L50>)
 
 ```go
-func (r HINFO) GetParentId() uint
+func (r HINFO) GetZoneID() uint
 ```
 
 ### func \(HINFO\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L35>)
@@ -527,11 +518,11 @@ func (r HINFO) Type() string
 
 ```go
 type LOC struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -541,16 +532,16 @@ type LOC struct {
 func ToLOC(r Record) LOC
 ```
 
-### func \(LOC\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L42>)
+### func \(LOC\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L42>)
 
 ```go
-func (r LOC) GetId() (uint, bool)
+func (r LOC) GetID() (uint, bool)
 ```
 
-### func \(LOC\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L50>)
+### func \(LOC\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L50>)
 
 ```go
-func (r LOC) GetParentId() uint
+func (r LOC) GetZoneID() uint
 ```
 
 ### func \(LOC\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L35>)
@@ -575,8 +566,8 @@ func (r LOC) Type() string
 
 ```go
 type MX struct {
-    Id       *uint
-    ParentId uint
+    ID       *uint
+    ZoneID   uint
     Domain   string
     TTL      uint // seconds
     Priority uint16
@@ -590,16 +581,16 @@ type MX struct {
 func ToMX(r Record) (MX, error)
 ```
 
-### func \(MX\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L50>)
+### func \(MX\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L50>)
 
 ```go
-func (r MX) GetId() (uint, bool)
+func (r MX) GetID() (uint, bool)
 ```
 
-### func \(MX\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L58>)
+### func \(MX\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L58>)
 
 ```go
-func (r MX) GetParentId() uint
+func (r MX) GetZoneID() uint
 ```
 
 ### func \(MX\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L43>)
@@ -624,11 +615,11 @@ func (r MX) Type() string
 
 ```go
 type NAPTR struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -638,16 +629,16 @@ type NAPTR struct {
 func ToNAPTR(r Record) NAPTR
 ```
 
-### func \(NAPTR\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L42>)
+### func \(NAPTR\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L42>)
 
 ```go
-func (r NAPTR) GetId() (uint, bool)
+func (r NAPTR) GetID() (uint, bool)
 ```
 
-### func \(NAPTR\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L50>)
+### func \(NAPTR\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L50>)
 
 ```go
-func (r NAPTR) GetParentId() uint
+func (r NAPTR) GetZoneID() uint
 ```
 
 ### func \(NAPTR\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L35>)
@@ -672,11 +663,11 @@ func (r NAPTR) Type() string
 
 ```go
 type NS struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -686,16 +677,16 @@ type NS struct {
 func ToNS(r Record) NS
 ```
 
-### func \(NS\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L42>)
+### func \(NS\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L42>)
 
 ```go
-func (r NS) GetId() (uint, bool)
+func (r NS) GetID() (uint, bool)
 ```
 
-### func \(NS\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L50>)
+### func \(NS\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L50>)
 
 ```go
-func (r NS) GetParentId() uint
+func (r NS) GetZoneID() uint
 ```
 
 ### func \(NS\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L35>)
@@ -720,11 +711,11 @@ func (r NS) Type() string
 
 ```go
 type PTR struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -734,16 +725,16 @@ type PTR struct {
 func ToPTR(r Record) PTR
 ```
 
-### func \(PTR\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L42>)
+### func \(PTR\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L42>)
 
 ```go
-func (r PTR) GetId() (uint, bool)
+func (r PTR) GetID() (uint, bool)
 ```
 
-### func \(PTR\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L50>)
+### func \(PTR\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L50>)
 
 ```go
-func (r PTR) GetParentId() uint
+func (r PTR) GetZoneID() uint
 ```
 
 ### func \(PTR\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L35>)
@@ -768,11 +759,11 @@ func (r PTR) Type() string
 
 ```go
 type RP struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -782,16 +773,16 @@ type RP struct {
 func ToRP(r Record) RP
 ```
 
-### func \(RP\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L42>)
+### func \(RP\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L42>)
 
 ```go
-func (r RP) GetId() (uint, bool)
+func (r RP) GetID() (uint, bool)
 ```
 
-### func \(RP\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L50>)
+### func \(RP\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L50>)
 
 ```go
-func (r RP) GetParentId() uint
+func (r RP) GetZoneID() uint
 ```
 
 ### func \(RP\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L35>)
@@ -816,8 +807,8 @@ func (r RP) Type() string
 
 ```go
 type Record struct {
-    Id         *uint
-    ParentId   uint
+    ID         *uint
+    ZoneID     uint
     Domain     string
     RecordType string // to improve
     TTL        uint   // seconds
@@ -850,8 +841,8 @@ func (r Record) ToX() (RecordX, error)
 
 ```go
 type RecordX interface {
-    GetId() (uint, bool)
-    GetParentId() uint
+    GetID() (uint, bool)
+    GetZoneID() uint
     Refs() map[string]string
     Serialise() map[string]string
     Type() string
@@ -862,16 +853,16 @@ type RecordX interface {
 
 ```go
 type SOA struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    MName    string
-    RName    string
-    Serial   uint
-    Refresh  uint
-    Retry    uint
-    Expire   uint
+    ID      *uint
+    ZoneID  uint
+    Domain  string
+    TTL     uint // seconds
+    MName   string
+    RName   string
+    Serial  uint
+    Refresh uint
+    Retry   uint
+    Expire  uint
 }
 ```
 
@@ -887,16 +878,16 @@ func ToSOA(r Record) (SOA, error)
 func parseSOAData(data string) (SOA, error)
 ```
 
-### func \(SOA\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L84>)
+### func \(SOA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L84>)
 
 ```go
-func (r SOA) GetId() (uint, bool)
+func (r SOA) GetID() (uint, bool)
 ```
 
-### func \(SOA\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L92>)
+### func \(SOA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L92>)
 
 ```go
-func (r SOA) GetParentId() uint
+func (r SOA) GetZoneID() uint
 ```
 
 ### func \(SOA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L77>)
@@ -921,11 +912,11 @@ func (r SOA) Type() string
 
 ```go
 type SPF struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -935,16 +926,16 @@ type SPF struct {
 func ToSPF(r Record) SPF
 ```
 
-### func \(SPF\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L42>)
+### func \(SPF\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L42>)
 
 ```go
-func (r SPF) GetId() (uint, bool)
+func (r SPF) GetID() (uint, bool)
 ```
 
-### func \(SPF\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L50>)
+### func \(SPF\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L50>)
 
 ```go
-func (r SPF) GetParentId() uint
+func (r SPF) GetZoneID() uint
 ```
 
 ### func \(SPF\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L35>)
@@ -969,8 +960,8 @@ func (r SPF) Type() string
 
 ```go
 type SRV struct {
-    Id       *uint
-    ParentId uint
+    ID       *uint
+    ZoneID   uint
     Domain   string
     TTL      uint // seconds
     Priority uint16
@@ -992,16 +983,16 @@ func ToSRV(r Record) (SRV, error)
 func parseSRVData(data string) (SRV, error)
 ```
 
-### func \(SRV\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L85>)
+### func \(SRV\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L85>)
 
 ```go
-func (r SRV) GetId() (uint, bool)
+func (r SRV) GetID() (uint, bool)
 ```
 
-### func \(SRV\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L93>)
+### func \(SRV\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L93>)
 
 ```go
-func (r SRV) GetParentId() uint
+func (r SRV) GetZoneID() uint
 ```
 
 ### func \(SRV\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L78>)
@@ -1026,11 +1017,11 @@ func (r SRV) Type() string
 
 ```go
 type SSHFP struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
@@ -1040,16 +1031,16 @@ type SSHFP struct {
 func ToSSHFP(r Record) SSHFP
 ```
 
-### func \(SSHFP\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L42>)
+### func \(SSHFP\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L42>)
 
 ```go
-func (r SSHFP) GetId() (uint, bool)
+func (r SSHFP) GetID() (uint, bool)
 ```
 
-### func \(SSHFP\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L50>)
+### func \(SSHFP\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L50>)
 
 ```go
-func (r SSHFP) GetParentId() uint
+func (r SSHFP) GetZoneID() uint
 ```
 
 ### func \(SSHFP\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L35>)
@@ -1074,12 +1065,12 @@ func (r SSHFP) Type() string
 
 ```go
 type TXT struct {
-    Id       *uint
-    ParentId uint
-    Domain   string
-    TTL      uint // seconds
-    Data     string
-    Dynamic  bool
+    ID      *uint
+    ZoneID  uint
+    Domain  string
+    TTL     uint // seconds
+    Data    string
+    Dynamic bool
 }
 ```
 
@@ -1089,16 +1080,16 @@ type TXT struct {
 func ToTXT(r Record) TXT
 ```
 
-### func \(TXT\) [GetId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L45>)
+### func \(TXT\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L45>)
 
 ```go
-func (r TXT) GetId() (uint, bool)
+func (r TXT) GetID() (uint, bool)
 ```
 
-### func \(TXT\) [GetParentId](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L53>)
+### func \(TXT\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L53>)
 
 ```go
-func (r TXT) GetParentId() uint
+func (r TXT) GetZoneID() uint
 ```
 
 ### func \(TXT\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L38>)
@@ -1117,6 +1108,15 @@ func (r TXT) Serialise() map[string]string
 
 ```go
 func (r TXT) Type() string
+```
+
+## type [Zone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/zone.go#L3-L6>)
+
+```go
+type Zone struct {
+    ID   uint
+    Name string
+}
 ```
 
 
