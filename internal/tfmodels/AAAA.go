@@ -8,17 +8,17 @@ import (
 
 // AAAA maps the record schema data.
 type AAAA struct {
-	ID       types.Int64  `tfsdk:"id"`
-	ParentID types.Int64  `tfsdk:"parent_id"`
-	Domain   types.String `tfsdk:"domain"`
-	TTL      types.Int64  `tfsdk:"ttl"`
-	Data     types.String `tfsdk:"data"`
-	Dynamic  types.Bool   `tfsdk:"dynamic"`
+	ID      types.Int64  `tfsdk:"id"`
+	ZoneID  types.Int64  `tfsdk:"zone_id"`
+	Domain  types.String `tfsdk:"domain"`
+	TTL     types.Int64  `tfsdk:"ttl"`
+	Data    types.String `tfsdk:"data"`
+	Dynamic types.Bool   `tfsdk:"dynamic"`
 }
 
 func (aaaa *AAAA) SetRecord(recordAAAA models.AAAA) error {
-	aaaa.ID = utils.TypeInt(recordAAAA.Id)
-	aaaa.ParentID = types.Int64Value(int64(recordAAAA.ZoneID))
+	aaaa.ID = utils.TypeInt(recordAAAA.ID)
+	aaaa.ZoneID = types.Int64Value(int64(recordAAAA.ZoneID))
 	aaaa.Domain = types.StringValue(recordAAAA.Domain)
 	aaaa.TTL = types.Int64Value(int64(recordAAAA.TTL))
 	aaaa.Data = types.StringValue(recordAAAA.Data)
@@ -29,8 +29,8 @@ func (aaaa *AAAA) SetRecord(recordAAAA models.AAAA) error {
 
 func (aaaa AAAA) GetRecord() (models.AAAA, error) {
 	return models.AAAA{
-		Id:      utils.NativeUInt(aaaa.ID),
-		ZoneID:  uint(aaaa.ParentID.ValueInt64()),
+		ID:      utils.NativeUInt(aaaa.ID),
+		ZoneID:  uint(aaaa.ZoneID.ValueInt64()),
 		Domain:  aaaa.Domain.ValueString(),
 		TTL:     uint(aaaa.TTL.ValueInt64()),
 		Data:    aaaa.Data.ValueString(),

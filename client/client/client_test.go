@@ -36,14 +36,14 @@ func TestClientAuth(t *testing.T) {
 		}
 
 		// Force auth failure and re-authentication before retrial
-		domains, err := cli.GetDomains(context.TODO())
+		zones, err := cli.GetZones(context.TODO())
 		require.NoError(t, err)
 
-		assert.Equal(t, 2, len(domains))
+		assert.Equal(t, 2, len(zones))
 
 		assert.Equal(t, "v6643873d8c41428.97783691", cli.GetAccount())
 
-		// Not onboarded domain
+		// Not onboarded record
 		records, err := cli.GetRecords(context.TODO(), 1091256)
 		require.Error(t, err)
 		assert.Nil(t, records)
@@ -66,10 +66,10 @@ func TestClientAuth(t *testing.T) {
 
 		assert.Equal(t, "v6643873d8c41428.97783691", cli.GetAccount())
 
-		domains, err := cli.GetDomains(context.TODO())
+		zones, err := cli.GetZones(context.TODO())
 		require.NoError(t, err)
 
-		assert.Equal(t, 2, len(domains))
+		assert.Equal(t, 2, len(zones))
 
 		records, err := cli.GetRecords(context.TODO(), 1091256)
 		require.Error(t, err)

@@ -12,7 +12,7 @@ func TestModelMX(t *testing.T) {
 	id := uint(1)
 
 	expected := models.MX{
-		Id:       &id,
+		ID:       &id,
 		ZoneID:   1,
 		Domain:   "example.com",
 		TTL:      3600,

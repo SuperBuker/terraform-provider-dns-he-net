@@ -37,7 +37,7 @@ type recordsModel struct {
 
 type recordModel struct {
 	ID         types.Int64  `tfsdk:"id"`
-	ParentID   types.Int64  `tfsdk:"parent_id"`
+	ZoneID     types.Int64  `tfsdk:"zone_id"`
 	Domain     types.String `tfsdk:"domain"`
 	RecordType types.String `tfsdk:"record_type"`
 	TTL        types.Int64  `tfsdk:"ttl"`
@@ -48,8 +48,8 @@ type recordModel struct {
 }
 
 func (a *recordModel) setRecord(record models.Record) error {
-	a.ID = utils.TypeInt(record.Id)
-	a.ParentID = types.Int64Value(int64(record.ZoneID))
+	a.ID = utils.TypeInt(record.ID)
+	a.ZoneID = types.Int64Value(int64(record.ZoneID))
 	a.Domain = types.StringValue(record.Domain)
 	a.RecordType = types.StringValue(record.RecordType)
 	a.TTL = types.Int64Value(int64(record.TTL))
@@ -63,8 +63,8 @@ func (a *recordModel) setRecord(record models.Record) error {
 
 func (a *recordModel) getRecord() (models.Record, error) {
 	return models.Record{
-		Id:         utils.NativeUInt(a.ID),
-		ZoneID:     uint(a.ParentID.ValueInt64()),
+		ID:         utils.NativeUInt(a.ID),
+		ZoneID:     uint(a.ZoneID.ValueInt64()),
 		Domain:     a.Domain.ValueString(),
 		RecordType: a.RecordType.ValueString(),
 		TTL:        uint(a.TTL.ValueInt64()),
@@ -99,7 +99,7 @@ func (records) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datas
 							MarkdownDescription: "dns.he.net record id",
 							Computed:            true,
 						},
-						"parent_id": schema.Int64Attribute{
+						"zone_id": schema.Int64Attribute{
 							Description:         "dns.he.net zone id",
 							MarkdownDescription: "dns.he.net zone id",
 							Computed:            true,

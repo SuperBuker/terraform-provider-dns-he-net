@@ -12,7 +12,7 @@ func TestModelCAA(t *testing.T) {
 	id := uint(1)
 
 	expected := models.CAA{
-		Id:     &id,
+		ID:     &id,
 		ZoneID: 1,
 		Domain: "example.com",
 		TTL:    86400,

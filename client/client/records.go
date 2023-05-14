@@ -10,20 +10,20 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 )
 
-// getRecordsParams returns the genericquery parameters for the record
+// getRecordsParams returns the generic query parameters for the record
 // operations.
-func getRecordsParams(domainId uint) map[string]string {
+func getRecordsParams(zoneID uint) map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(domainId),
+		"hosted_dns_zoneid":   fmt.Sprint(zoneID),
 		"menu":                "edit_zone",
 		"hosted_dns_editzone": "",
 	}
 }
 
 // GetRecords retrieves all records from the API and returns them in a slice.
-func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record, error) {
+func (c *Client) GetRecords(ctx context.Context, zoneID uint) ([]models.Record, error) {
 	resp, err := c.client.R().
-		SetQueryParams(getRecordsParams(domainId)).
+		SetQueryParams(getRecordsParams(zoneID)).
 		SetContext(ctx).
 		SetResult([]models.Record{}).
 		Get(endpoint)
@@ -42,7 +42,7 @@ func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record
 
 // SetRecord creates or updates a record, then returns it, or an error.
 func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error) {
-	id, idIsSet := record.GetId()
+	id, idIsSet := record.GetID()
 	form := record.Serialise()
 
 	if idIsSet {
@@ -53,7 +53,7 @@ func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.R
 
 	resp, err := c.client.R().
 		SetFormData(form).
-		SetQueryParams(getRecordsParams(record.GetParentId())).
+		SetQueryParams(getRecordsParams(record.GetZoneID())).
 		SetContext(ctx).
 		SetResult([]models.Record{}).
 		Post(endpoint)
@@ -89,7 +89,7 @@ func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error 
 
 	_, err := c.client.R().
 		SetFormData(form).
-		SetQueryParams(getRecordsParams(record.GetParentId())).
+		SetQueryParams(getRecordsParams(record.GetZoneID())).
 		SetContext(ctx).
 		Post(endpoint)
 

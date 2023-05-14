@@ -1,6 +1,6 @@
 package models
 
-type Domain struct {
-	Id     uint
-	Domain string
+type Zone struct {
+	ID   uint
+	Name string
 }

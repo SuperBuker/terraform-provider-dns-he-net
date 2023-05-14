@@ -1,7 +1,7 @@
 package params
 
-// DomainCreate returnes the parameters necessary to create a root domain.
-func DomainCreate(m map[string]string) map[string]string {
+// ZoneCreate returnes the parameters necessary to create a zone.
+func ZoneCreate(m map[string]string) map[string]string {
 	m["action"] = "add_zone"
 	m["retmain:"] = "0"
 	m["submit"] = "Add Domain!"
@@ -9,8 +9,8 @@ func DomainCreate(m map[string]string) map[string]string {
 	return m
 }
 
-// DomainDelete returnes the parameters necessary to delete a root domain.
-func DomainDelete(m map[string]string) map[string]string {
+// ZoneDelete returnes the parameters necessary to delete a zone.
+func ZoneDelete(m map[string]string) map[string]string {
 	m["remove_domain"] = "1"
 
 	return m

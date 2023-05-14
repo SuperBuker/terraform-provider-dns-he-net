@@ -9,7 +9,7 @@ import (
 // MX maps the data source schema data.
 type MX struct {
 	ID       types.Int64  `tfsdk:"id"`
-	ParentID types.Int64  `tfsdk:"parent_id"`
+	ZoneID   types.Int64  `tfsdk:"zone_id"`
 	Domain   types.String `tfsdk:"domain"`
 	TTL      types.Int64  `tfsdk:"ttl"`
 	Priority types.Int64  `tfsdk:"priority"`
@@ -17,8 +17,8 @@ type MX struct {
 }
 
 func (mx *MX) SetRecord(recordMX models.MX) error {
-	mx.ID = utils.TypeInt(recordMX.Id)
-	mx.ParentID = types.Int64Value(int64(recordMX.ZoneID))
+	mx.ID = utils.TypeInt(recordMX.ID)
+	mx.ZoneID = types.Int64Value(int64(recordMX.ZoneID))
 	mx.Domain = types.StringValue(recordMX.Domain)
 	mx.TTL = types.Int64Value(int64(recordMX.TTL))
 	mx.Priority = types.Int64Value(int64(recordMX.Priority))
@@ -29,8 +29,8 @@ func (mx *MX) SetRecord(recordMX models.MX) error {
 
 func (mx MX) GetRecord() (models.MX, error) {
 	return models.MX{
-		Id:       utils.NativeUInt(mx.ID),
-		ZoneID:   uint(mx.ParentID.ValueInt64()),
+		ID:       utils.NativeUInt(mx.ID),
+		ZoneID:   uint(mx.ZoneID.ValueInt64()),
 		Domain:   mx.Domain.ValueString(),
 		TTL:      uint(mx.TTL.ValueInt64()),
 		Priority: uint16(mx.Priority.ValueInt64()),

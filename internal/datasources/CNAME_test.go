@@ -19,7 +19,7 @@ func TestAccCNAME(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_cname" "record-cname" {
 					id = 5195464830
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -29,14 +29,14 @@ func TestAccCNAME(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "id", "5195464830"),
-					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccCNAMEMissingDomain(t *testing.T) {
+func TestAccCNAMEMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccCNAMEMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_cname" "record-cname" {
 					id = 5195464830
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -64,7 +64,7 @@ func TestAccCNAMEMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_cname" "record-cname" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find CNAME record"),
 			},

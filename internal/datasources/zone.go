@@ -16,47 +16,47 @@ import (
 
 // Ensure the implementation satisfies the expected interfaces.
 var (
-	_ datasource.DataSource              = &domain{}
-	_ datasource.DataSourceWithConfigure = &domain{}
+	_ datasource.DataSource              = &zone{}
+	_ datasource.DataSourceWithConfigure = &zone{}
 )
 
-// NewDomain initialises the Domain DataSource.
-func NewDomain() datasource.DataSource {
-	return &domain{}
+// NewZone initialises the Zone DataSource.
+func NewZone() datasource.DataSource {
+	return &zone{}
 }
 
-// cdomain is the data source implementation.
-type domain struct {
+// zone is the data source implementation.
+type zone struct {
 	client *client.Client
 }
 
-// domainModel maps the data source schema data.
-type domainModel struct {
-	ID     types.Int64  `tfsdk:"id"`
-	Domain types.String `tfsdk:"domain"`
+// zoneModel maps the data source schema data.
+type zoneModel struct {
+	ID   types.Int64  `tfsdk:"id"`
+	Name types.String `tfsdk:"name"`
 }
 
-func (d *domainModel) setDomain(domain models.Zone) error {
-	d.ID = types.Int64Value(int64(domain.Id))
-	d.Domain = types.StringValue(domain.Domain)
+func (d *zoneModel) setZone(zone models.Zone) error {
+	d.ID = types.Int64Value(int64(zone.ID))
+	d.Name = types.StringValue(zone.Name)
 
 	return nil
 }
 
-func (d *domainModel) getDomain() (models.Zone, error) {
+func (d *zoneModel) getZone() (models.Zone, error) {
 	return models.Zone{
-		Id:     uint(d.ID.ValueInt64()),
-		Domain: d.Domain.ValueString(),
+		ID:   uint(d.ID.ValueInt64()),
+		Name: d.Name.ValueString(),
 	}, nil
 }
 
 // Metadata returns the data source type name.
-func (domain) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_domain" // TODO: maybe rename
+func (zone) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
+	resp.TypeName = req.ProviderTypeName + "_zone" // TODO: maybe rename
 }
 
 // Schema defines the schema for the data source.
-func (domain) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
+func (zone) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
@@ -64,9 +64,9 @@ func (domain) Schema(_ context.Context, _ datasource.SchemaRequest, resp *dataso
 				MarkdownDescription: "dns.he.net zone id",
 				Required:            true,
 			},
-			"domain": schema.StringAttribute{
-				Description:         "zone root domain name",
-				MarkdownDescription: "zone root domain name",
+			"name": schema.StringAttribute{
+				Description:         "zone name",
+				MarkdownDescription: "zone name",
 				Computed:            true,
 			},
 		},
@@ -74,7 +74,7 @@ func (domain) Schema(_ context.Context, _ datasource.SchemaRequest, resp *dataso
 }
 
 // Configure adds the provider configured client to the data source.
-func (d *domain) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
+func (d *zone) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
 	if req.ProviderData == nil {
 		return
 	}
@@ -92,8 +92,8 @@ func (d *domain) Configure(ctx context.Context, req datasource.ConfigureRequest,
 }
 
 // Read refreshes the Terraform state with the latest data.
-func (d domain) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
-	var state domainModel
+func (d zone) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse) {
+	var state zoneModel
 
 	// Retrieve values from state
 	diags := req.Config.Get(ctx, &state)
@@ -104,33 +104,33 @@ func (d domain) Read(ctx context.Context, req datasource.ReadRequest, resp *data
 
 	// Terraform log
 	ctxLog := tflog.SetField(ctx, "account_id", d.client.GetAccount())
-	tflog.Debug(ctxLog, "Retrieving root domains")
+	tflog.Debug(ctxLog, "Retrieving zones")
 
-	domains, err := d.client.GetDomains(ctx)
+	zones, err := d.client.GetZones(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch root domains",
+			"Unable to fetch zones",
 			err.Error(),
 		)
 		return
 	}
 
 	// Terraform log
-	ctxLog = tflog.SetField(ctx, "zones_count", len(domains))
-	tflog.Debug(ctxLog, "Retrieved root domains")
+	ctxLog = tflog.SetField(ctx, "zones_count", len(zones))
+	tflog.Debug(ctxLog, "Retrieved zones")
 
-	domain, ok := filters.DomainById(domains, uint(state.ID.ValueInt64()))
+	zone, ok := filters.ZoneById(zones, uint(state.ID.ValueInt64()))
 	if !ok {
 		resp.Diagnostics.AddError(
-			"Unable to find root domain",
-			fmt.Sprintf(`root domain "%s" doesn't exist`, state.ID.String()),
+			"Unable to find zone",
+			fmt.Sprintf(`zone ID:"%s" doesn't exist`, state.ID.String()),
 		)
 		return
 	}
 
-	if err := state.setDomain(domain); err != nil {
+	if err := state.setZone(zone); err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to set root domain",
+			"Unable to set zone",
 			err.Error(),
 		)
 		return

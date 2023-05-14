@@ -12,7 +12,7 @@ func TestModelTXT(t *testing.T) {
 	id := uint(1)
 
 	exapected := models.TXT{
-		Id:      &id,
+		ID:      &id,
 		ZoneID:  1,
 		Domain:  "example.com",
 		TTL:     300,

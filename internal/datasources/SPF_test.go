@@ -19,7 +19,7 @@ func TestAccSPF(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_spf" "record-spf" {
 					id = 5195729389
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -29,14 +29,14 @@ func TestAccSPF(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "id", "5195729389"),
-					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccSPFMissingDomain(t *testing.T) {
+func TestAccSPFMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccSPFMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_spf" "record-spf" {
 					id = 5195729389
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -64,7 +64,7 @@ func TestAccSPFMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_spf" "record-spf" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find SPF record"),
 			},

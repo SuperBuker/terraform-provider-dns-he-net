@@ -19,7 +19,7 @@ func TestAccNAPTR(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_naptr" "record-naptr" {
 					id = 5195590349
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -29,14 +29,14 @@ func TestAccNAPTR(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "id", "5195590349"),
-					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccNAPTRMissingDomain(t *testing.T) {
+func TestAccNAPTRMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -46,7 +46,7 @@ func TestAccNAPTRMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_naptr" "record-naptr" {
 					id = 5195590349
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -64,7 +64,7 @@ func TestAccNAPTRMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_naptr" "record-naptr" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find NAPTR record"),
 			},

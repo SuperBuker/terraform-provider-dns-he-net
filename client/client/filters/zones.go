@@ -4,36 +4,36 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 )
 
-// DomainById returns a domain by its ID.
-// If the domain is not found, it returns an empty string and false.
-func DomainById(domains []models.Domain, id uint) (models.Domain, bool) {
-	for _, domain := range domains {
-		if domain.Id == id {
-			return domain, true
+// ZoneById returns a zone by its ID.
+// If the zone is not found, it returns an empty string and false.
+func ZoneById(zones []models.Zone, id uint) (models.Zone, bool) {
+	for _, zone := range zones {
+		if zone.ID == id {
+			return zone, true
 		}
 	}
 
-	return models.Domain{}, false
+	return models.Zone{}, false
 }
 
-// DomainByName returns a domain by its second-level domain.
-// If the domain is not found, it returns an empty string and false.
-func DomainByName(domains []models.Domain, name string) (models.Domain, bool) {
-	for _, domain := range domains {
-		if domain.Domain == name {
-			return domain, true
+// ZoneByName returns a zone by its second-level zone.
+// If the zone is not found, it returns an empty string and false.
+func ZoneByName(zones []models.Zone, name string) (models.Zone, bool) {
+	for _, zone := range zones {
+		if zone.Name == name {
+			return zone, true
 		}
 	}
 
-	return models.Domain{}, false
+	return models.Zone{}, false
 }
 
-// LatestDomain returns the latest domain (highest ID) in a slice of domains.
+// LatestZone returns the latest zone (highest ID) in a slice of zones.
 // If the slice is empty, it returns an empty string and false.
-func LatestDomain(domains []models.Domain) (d models.Domain, ok bool) {
-	for _, domain := range domains {
-		if domain.Id > d.Id {
-			d = domain
+func LatestZone(zones []models.Zone) (d models.Zone, ok bool) {
+	for _, zone := range zones {
+		if zone.ID > d.ID {
+			d = zone
 
 			if !ok {
 				ok = true

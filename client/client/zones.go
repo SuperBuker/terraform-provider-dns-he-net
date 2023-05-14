@@ -10,62 +10,62 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 )
 
-// GetDomains retrieves all domains from the API and returns them in a slice
-func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error) {
+// GetZones retrieves all zones from the API and returns them in a slice
+func (c *Client) GetZones(ctx context.Context) ([]models.Zone, error) {
 	resp, err := c.client.R().
 		SetContext(ctx).
-		SetResult([]models.Domain{}).
+		SetResult([]models.Zone{}).
 		Get(endpoint)
 
 	if err != nil {
 		return nil, err
 	}
 
-	domains, ok := resp.Result().([]models.Domain)
+	zones, ok := resp.Result().([]models.Zone)
 	if !ok {
-		return nil, utils.NewErrCasting([]models.Domain{}, resp.Result())
+		return nil, utils.NewErrCasting([]models.Zone{}, resp.Result())
 	}
 
-	return domains, nil
+	return zones, nil
 }
 
-// CreateDomain creates a new domain, then returns it, or an error.
-func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain, error) {
+// CreateZone creates a new zone, then returns it, or an error.
+func (c *Client) CreateZone(ctx context.Context, name string) (models.Zone, error) {
 	form := map[string]string{
-		"add_domain": domain,
+		"add_domain": name,
 	}
-	params.DomainCreate(form)
+	params.ZoneCreate(form)
 
 	resp, err := c.client.R().
 		SetFormData(form).
 		SetContext(ctx).
-		SetResult([]models.Domain{}).
+		SetResult([]models.Zone{}).
 		Post(endpoint)
 
 	if err != nil {
-		return models.Domain{}, err
+		return models.Zone{}, err
 	}
 
-	domains, ok := resp.Result().([]models.Domain)
+	zones, ok := resp.Result().([]models.Zone)
 	if !ok {
-		return models.Domain{}, utils.NewErrCasting([]models.Domain{}, resp.Result())
+		return models.Zone{}, utils.NewErrCasting([]models.Zone{}, resp.Result())
 	}
 
-	_domain, ok := filters.LatestDomain(domains)
+	zone, ok := filters.LatestZone(zones)
 	if !ok {
-		return models.Domain{}, &ErrItemNotFound{Resource: "domain"} // TODO: to improve
+		return models.Zone{}, &ErrItemNotFound{Resource: "zone"} // TODO: to improve
 	}
 
-	return _domain, nil
+	return zone, nil
 }
 
-// DeleteDomain deletes a domain, returns an error.
-func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error {
+// DeleteZone deletes a zone, returns an error.
+func (c *Client) DeleteZone(ctx context.Context, zone models.Zone) error {
 	form := map[string]string{
 		"account":   c.account,
-		"delete_id": fmt.Sprint(domain.Id),
+		"delete_id": fmt.Sprint(zone.ID),
 	}
-	params.DomainDelete(form)
+	params.ZoneDelete(form)
 
 	_, err := c.client.R().
 		SetFormData(form).

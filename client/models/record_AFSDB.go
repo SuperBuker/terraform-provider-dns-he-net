@@ -3,30 +3,30 @@ package models
 import "fmt"
 
 type AFSDB struct {
-	Id       *uint
-	ParentId uint
-	Domain   string
-	TTL      uint // seconds
-	Data     string
-	Dynamic  bool
+	ID      *uint
+	ZoneID  uint
+	Domain  string
+	TTL     uint // seconds
+	Data    string
+	Dynamic bool
 }
 
 func ToAFSDB(r Record) AFSDB {
 	return AFSDB{
-		Id:       r.Id,
-		ParentId: r.ParentId,
-		Domain:   r.Domain,
-		TTL:      r.TTL,
-		Data:     r.Data,
-		Dynamic:  r.Dynamic,
+		ID:      r.ID,
+		ZoneID:  r.ZoneID,
+		Domain:  r.Domain,
+		TTL:     r.TTL,
+		Data:    r.Data,
+		Dynamic: r.Dynamic,
 	}
 }
 
 func (r AFSDB) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "AFSDB",
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 		//"Priority": "",
 		"Name":    r.Domain,
 		"Content": r.Data,
@@ -37,21 +37,21 @@ func (r AFSDB) Serialise() map[string]string {
 
 func (r AFSDB) Refs() map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 	}
 }
 
-func (r AFSDB) GetId() (uint, bool) {
-	if r.Id == nil {
+func (r AFSDB) GetID() (uint, bool) {
+	if r.ID == nil {
 		return 0, false
 	}
 
-	return *r.Id, true
+	return *r.ID, true
 }
 
-func (r AFSDB) GetParentId() uint {
-	return r.ParentId
+func (r AFSDB) GetZoneID() uint {
+	return r.ZoneID
 }
 
 func (r AFSDB) Type() string {

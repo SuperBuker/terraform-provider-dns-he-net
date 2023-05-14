@@ -19,7 +19,7 @@ func TestAccSOA(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_soa" "record-soa" {
 					id = 5182379278
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
@@ -34,14 +34,14 @@ func TestAccSOA(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "id", "5182379278"),
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "parent_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "zone_id", "1093397"),
 				),
 			},
 		},
 	})
 }
 
-func TestAccSOAMissingDomain(t *testing.T) {
+func TestAccSOAMissingZone(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -51,7 +51,7 @@ func TestAccSOAMissingDomain(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_soa" "record-soa" {
 					id = 5182379278
-					parent_id = 0
+					zone_id = 0
 				}`,
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
@@ -69,7 +69,7 @@ func TestAccSOAMissingRecord(t *testing.T) {
 			{
 				Config: test_utils.ProviderConfig + `data "dns-he-net_soa" "record-soa" {
 					id = 0
-					parent_id = 1093397
+					zone_id = 1093397
 				}`,
 				ExpectError: regexp.MustCompile("Unable to find SOA record"),
 			},

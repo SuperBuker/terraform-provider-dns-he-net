@@ -12,7 +12,7 @@ func TestModelNS(t *testing.T) {
 	id := uint(1)
 
 	expected := models.NS{
-		Id:     &id,
+		ID:     &id,
 		ZoneID: 1,
 		Domain: "example.com",
 		TTL:    172800,

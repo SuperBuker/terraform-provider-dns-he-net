@@ -107,9 +107,9 @@ func unwrapResult(_ *resty.Client, resp *resty.Response) (err error) {
 		//pass
 	} else if res := result.Result(resp); !utils.IsNil(res) {
 		switch res.(type) {
-		case *[]models.Domain:
+		case *[]models.Zone:
 			body := result.Body(resp)
-			resp.Request.Result, err = parsers.GetDomains(body)
+			resp.Request.Result, err = parsers.GetZones(body)
 		case *[]models.Record:
 			body := result.Body(resp)
 			resp.Request.Result, err = parsers.GetRecords(body)

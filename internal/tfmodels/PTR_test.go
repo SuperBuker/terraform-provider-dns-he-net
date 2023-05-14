@@ -12,7 +12,7 @@ func TestModelPTR(t *testing.T) {
 	id := uint(1)
 
 	expected := models.PTR{
-		Id:     &id,
+		ID:     &id,
 		ZoneID: 1,
 		Domain: "sub.example.com",
 		TTL:    300,

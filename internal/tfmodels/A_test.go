@@ -12,7 +12,7 @@ func TestModelA(t *testing.T) {
 	id := uint(1)
 
 	expected := models.A{
-		Id:      &id,
+		ID:      &id,
 		ZoneID:  1,
 		Domain:  "example.com",
 		TTL:     300,

@@ -9,45 +9,45 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-var domains = []models.Domain{
-	{Id: 0, Domain: "a.example.com"},
-	{Id: 1, Domain: "b.example.com"},
-	{Id: 2, Domain: "c.example.com"},
-	{Id: 3, Domain: "d.example.com"},
-	{Id: 4, Domain: "e.example.com"},
+var zones = []models.Zone{
+	{ID: 0, Name: "a.example.com"},
+	{ID: 1, Name: "b.example.com"},
+	{ID: 2, Name: "c.example.com"},
+	{ID: 3, Name: "d.example.com"},
+	{ID: 4, Name: "e.example.com"},
 }
 
-func TestDomainById(t *testing.T) {
+func TestZoneById(t *testing.T) {
 	for i := uint(0); i < 5; i++ {
-		domain, ok := filters.DomainById(domains, i)
-		assert.Equal(t, domains[i], domain)
+		zone, ok := filters.ZoneById(zones, i)
+		assert.Equal(t, zones[i], zone)
 		assert.True(t, ok)
 	}
 
-	domain, ok := filters.DomainById(domains, 5)
-	assert.Equal(t, models.Domain{}, domain)
+	zone, ok := filters.ZoneById(zones, 5)
+	assert.Equal(t, models.Zone{}, zone)
 	assert.False(t, ok)
 }
 
-func TestDomainByName(t *testing.T) {
+func TestZoneByName(t *testing.T) {
 	for i := uint(0); i < 5; i++ {
-		d := domains[i]
-		domain, ok := filters.DomainByName(domains, d.Domain)
-		assert.Equal(t, d, domain)
+		d := zones[i]
+		zone, ok := filters.ZoneByName(zones, d.Name)
+		assert.Equal(t, d, zone)
 		assert.True(t, ok)
 	}
 
-	domain, ok := filters.DomainByName(domains, "")
-	assert.Equal(t, models.Domain{}, domain)
+	zone, ok := filters.ZoneByName(zones, "")
+	assert.Equal(t, models.Zone{}, zone)
 	assert.False(t, ok)
 }
 
-func TestLatestDomain(t *testing.T) {
-	domain, ok := filters.LatestDomain(domains)
-	assert.Equal(t, domains[4], domain)
+func TestLatestZone(t *testing.T) {
+	zone, ok := filters.LatestZone(zones)
+	assert.Equal(t, zones[4], zone)
 	assert.True(t, ok)
 
-	domain, ok = filters.LatestDomain([]models.Domain{})
-	assert.Equal(t, models.Domain{}, domain)
+	zone, ok = filters.LatestZone([]models.Zone{})
+	assert.Equal(t, models.Zone{}, zone)
 	assert.False(t, ok)
 }

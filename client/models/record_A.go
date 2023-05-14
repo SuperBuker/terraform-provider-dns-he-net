@@ -3,30 +3,30 @@ package models
 import "fmt"
 
 type A struct {
-	Id       *uint
-	ParentId uint
-	Domain   string
-	TTL      uint // seconds
-	Data     string
-	Dynamic  bool
+	ID      *uint
+	ZoneID  uint
+	Domain  string
+	TTL     uint // seconds
+	Data    string
+	Dynamic bool
 }
 
 func ToA(r Record) A {
 	return A{
-		Id:       r.Id,
-		ParentId: r.ParentId,
-		Domain:   r.Domain,
-		TTL:      r.TTL,
-		Data:     r.Data,
-		Dynamic:  r.Dynamic,
+		ID:      r.ID,
+		ZoneID:  r.ZoneID,
+		Domain:  r.Domain,
+		TTL:     r.TTL,
+		Data:    r.Data,
+		Dynamic: r.Dynamic,
 	}
 }
 
 func (r A) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "a",
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 		//"Priority":            "",
 		"Name":    r.Domain,
 		"Content": r.Data,
@@ -37,21 +37,21 @@ func (r A) Serialise() map[string]string {
 
 func (r A) Refs() map[string]string {
 	return map[string]string{
-		"hosted_dns_zoneid":   fmt.Sprint(r.ParentId),
-		"hosted_dns_recordid": toString(r.Id),
+		"hosted_dns_zoneid":   fmt.Sprint(r.ZoneID),
+		"hosted_dns_recordid": toString(r.ID),
 	}
 }
 
-func (r A) GetId() (uint, bool) {
-	if r.Id == nil {
+func (r A) GetID() (uint, bool) {
+	if r.ID == nil {
 		return 0, false
 	}
 
-	return *r.Id, true
+	return *r.ID, true
 }
 
-func (r A) GetParentId() uint {
-	return r.ParentId
+func (r A) GetZoneID() uint {
+	return r.ZoneID
 }
 
 func (r A) Type() string {

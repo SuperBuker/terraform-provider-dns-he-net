@@ -12,7 +12,7 @@ func TestModelALIAS(t *testing.T) {
 	id := uint(1)
 
 	expected := models.ALIAS{
-		Id:     &id,
+		ID:     &id,
 		ZoneID: 1,
 		Domain: "example.com",
 		TTL:    300,
