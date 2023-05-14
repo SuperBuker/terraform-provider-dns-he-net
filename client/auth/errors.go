@@ -1,5 +1,19 @@
 package auth
 
+// ErrOTPDisabled is an error returned when the OTP is disabled.
+type ErrOTPDisabled struct {
+}
+
+// Error returns a human-readable error message.
+func (e *ErrOTPDisabled) Error() string {
+	return "otp is not enabled"
+}
+
+// Unwrap implements the errors.Unwrap interface.
+func (e *ErrOTPDisabled) Unwrap() []error {
+	return []error{}
+}
+
 // ErrFileIO is an error returned when there is an issue reading from or
 // writing to a file.
 type ErrFileIO struct {
@@ -13,7 +27,9 @@ func (e *ErrFileIO) Error() string {
 
 // Unwrap returns the underlying error that caused this error.
 func (e *ErrFileIO) Unwrap() []error {
-	return []error{e.err}
+	return []error{
+		e.err,
+	}
 }
 
 // ErrFileEncoding is an error returned when there is an issue decoding or

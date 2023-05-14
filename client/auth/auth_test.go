@@ -21,11 +21,11 @@ func TestAuth(t *testing.T) {
 	require.NoError(t, err)
 
 	// Create a new Auth object with disabled cookie store.
-	auth, err := auth.NewAuth("user", "pass", key.Secret(), auth.Dummy)
+	auth_, err := auth.NewAuth("user", "pass", key.Secret(), auth.Dummy)
 	require.NoError(t, err)
 
 	// Generate a TOTP code.
-	passcode, err := auth.GetCode()
+	passcode, err := auth_.GetCode()
 	require.NoError(t, err)
 
 	// Validate the TOTP code.
@@ -33,7 +33,24 @@ func TestAuth(t *testing.T) {
 
 	// Validate the generated auth form.
 	assert.Equal(t, map[string]string{
-		"email": auth.User,
-		"pass":  auth.Password,
-	}, auth.GetAuthForm())
+		"email": auth_.User,
+		"pass":  auth_.Password,
+	}, auth_.GetAuthForm())
+}
+
+func TestAuthSimple(t *testing.T) {
+	// Create a new Auth object with disabled otp.
+	auth_, err := auth.NewAuth("user", "pass", "", auth.Dummy)
+	require.NoError(t, err)
+
+	// Generate a TOTP code.
+	passcode, err := auth_.GetCode()
+	require.ErrorIs(t, err, &auth.ErrOTPDisabled{})
+	assert.Equal(t, "", passcode)
+
+	// Validate the generated auth form.
+	assert.Equal(t, map[string]string{
+		"email": auth_.User,
+		"pass":  auth_.Password,
+	}, auth_.GetAuthForm())
 }
