@@ -12,11 +12,11 @@ func TestModelRP(t *testing.T) {
 	id := uint(1)
 
 	expected := models.RP{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      86400,
-		Data:     "bofher.example.com bofher.example.com",
+		Id:     &id,
+		ZoneID: 1,
+		Domain: "example.com",
+		TTL:    86400,
+		Data:   "bofher.example.com bofher.example.com",
 	}
 
 	rp := RP{}

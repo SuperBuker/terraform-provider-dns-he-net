@@ -49,7 +49,7 @@ type recordModel struct {
 
 func (a *recordModel) setRecord(record models.Record) error {
 	a.ID = utils.TypeInt(record.Id)
-	a.ParentID = types.Int64Value(int64(record.ParentId))
+	a.ParentID = types.Int64Value(int64(record.ZoneID))
 	a.Domain = types.StringValue(record.Domain)
 	a.RecordType = types.StringValue(record.RecordType)
 	a.TTL = types.Int64Value(int64(record.TTL))
@@ -64,7 +64,7 @@ func (a *recordModel) setRecord(record models.Record) error {
 func (a *recordModel) getRecord() (models.Record, error) {
 	return models.Record{
 		Id:         utils.NativeUInt(a.ID),
-		ParentId:   uint(a.ParentID.ValueInt64()),
+		ZoneID:     uint(a.ParentID.ValueInt64()),
 		Domain:     a.Domain.ValueString(),
 		RecordType: a.RecordType.ValueString(),
 		TTL:        uint(a.TTL.ValueInt64()),

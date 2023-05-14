@@ -17,7 +17,7 @@ type SSHFP struct {
 
 func (sshfp *SSHFP) SetRecord(recordSSHFP models.SSHFP) error {
 	sshfp.ID = utils.TypeInt(recordSSHFP.Id)
-	sshfp.ParentID = types.Int64Value(int64(recordSSHFP.ParentId))
+	sshfp.ParentID = types.Int64Value(int64(recordSSHFP.ZoneID))
 	sshfp.Domain = types.StringValue(recordSSHFP.Domain)
 	sshfp.TTL = types.Int64Value(int64(recordSSHFP.TTL))
 	sshfp.Data = types.StringValue(recordSSHFP.Data)
@@ -27,10 +27,10 @@ func (sshfp *SSHFP) SetRecord(recordSSHFP models.SSHFP) error {
 
 func (sshfp SSHFP) GetRecord() (models.SSHFP, error) {
 	return models.SSHFP{
-		Id:       utils.NativeUInt(sshfp.ID),
-		ParentId: uint(sshfp.ParentID.ValueInt64()),
-		Domain:   sshfp.Domain.ValueString(),
-		TTL:      uint(sshfp.TTL.ValueInt64()),
-		Data:     sshfp.Data.ValueString(),
+		Id:     utils.NativeUInt(sshfp.ID),
+		ZoneID: uint(sshfp.ParentID.ValueInt64()),
+		Domain: sshfp.Domain.ValueString(),
+		TTL:    uint(sshfp.TTL.ValueInt64()),
+		Data:   sshfp.Data.ValueString(),
 	}, nil
 }

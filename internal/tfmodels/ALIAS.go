@@ -17,7 +17,7 @@ type ALIAS struct {
 
 func (alias *ALIAS) SetRecord(recordALIAS models.ALIAS) error {
 	alias.ID = utils.TypeInt(recordALIAS.Id)
-	alias.ParentID = types.Int64Value(int64(recordALIAS.ParentId))
+	alias.ParentID = types.Int64Value(int64(recordALIAS.ZoneID))
 	alias.Domain = types.StringValue(recordALIAS.Domain)
 	alias.TTL = types.Int64Value(int64(recordALIAS.TTL))
 	alias.Data = types.StringValue(recordALIAS.Data)
@@ -27,10 +27,10 @@ func (alias *ALIAS) SetRecord(recordALIAS models.ALIAS) error {
 
 func (alias ALIAS) GetRecord() (models.ALIAS, error) {
 	return models.ALIAS{
-		Id:       utils.NativeUInt(alias.ID),
-		ParentId: uint(alias.ParentID.ValueInt64()),
-		Domain:   alias.Domain.ValueString(),
-		TTL:      uint(alias.TTL.ValueInt64()),
-		Data:     alias.Data.ValueString(),
+		Id:     utils.NativeUInt(alias.ID),
+		ZoneID: uint(alias.ParentID.ValueInt64()),
+		Domain: alias.Domain.ValueString(),
+		TTL:    uint(alias.TTL.ValueInt64()),
+		Data:   alias.Data.ValueString(),
 	}, nil
 }

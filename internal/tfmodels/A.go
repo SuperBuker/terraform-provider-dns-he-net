@@ -18,7 +18,7 @@ type A struct {
 
 func (a *A) SetRecord(recordA models.A) error {
 	a.ID = utils.TypeInt(recordA.Id)
-	a.ParentID = types.Int64Value(int64(recordA.ParentId))
+	a.ParentID = types.Int64Value(int64(recordA.ZoneID))
 	a.Domain = types.StringValue(recordA.Domain)
 	a.TTL = types.Int64Value(int64(recordA.TTL))
 	a.Data = types.StringValue(recordA.Data)
@@ -29,11 +29,11 @@ func (a *A) SetRecord(recordA models.A) error {
 
 func (a A) GetRecord() (models.A, error) {
 	return models.A{
-		Id:       utils.NativeUInt(a.ID),
-		ParentId: uint(a.ParentID.ValueInt64()),
-		Domain:   a.Domain.ValueString(),
-		TTL:      uint(a.TTL.ValueInt64()),
-		Data:     a.Data.ValueString(),
-		Dynamic:  a.Dynamic.ValueBool(),
+		Id:      utils.NativeUInt(a.ID),
+		ZoneID:  uint(a.ParentID.ValueInt64()),
+		Domain:  a.Domain.ValueString(),
+		TTL:     uint(a.TTL.ValueInt64()),
+		Data:    a.Data.ValueString(),
+		Dynamic: a.Dynamic.ValueBool(),
 	}, nil
 }

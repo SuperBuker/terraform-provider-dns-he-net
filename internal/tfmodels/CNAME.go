@@ -17,7 +17,7 @@ type CNAME struct {
 
 func (cname *CNAME) SetRecord(recordCNAME models.CNAME) error {
 	cname.ID = utils.TypeInt(recordCNAME.Id)
-	cname.ParentID = types.Int64Value(int64(recordCNAME.ParentId))
+	cname.ParentID = types.Int64Value(int64(recordCNAME.ZoneID))
 	cname.Domain = types.StringValue(recordCNAME.Domain)
 	cname.TTL = types.Int64Value(int64(recordCNAME.TTL))
 	cname.Data = types.StringValue(recordCNAME.Data)
@@ -27,10 +27,10 @@ func (cname *CNAME) SetRecord(recordCNAME models.CNAME) error {
 
 func (cname CNAME) GetRecord() (models.CNAME, error) {
 	return models.CNAME{
-		Id:       utils.NativeUInt(cname.ID),
-		ParentId: uint(cname.ParentID.ValueInt64()),
-		Domain:   cname.Domain.ValueString(),
-		TTL:      uint(cname.TTL.ValueInt64()),
-		Data:     cname.Data.ValueString(),
+		Id:     utils.NativeUInt(cname.ID),
+		ZoneID: uint(cname.ParentID.ValueInt64()),
+		Domain: cname.Domain.ValueString(),
+		TTL:    uint(cname.TTL.ValueInt64()),
+		Data:   cname.Data.ValueString(),
 	}, nil
 }

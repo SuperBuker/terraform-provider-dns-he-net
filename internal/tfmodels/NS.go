@@ -17,7 +17,7 @@ type NS struct {
 
 func (ns *NS) SetRecord(recordNS models.NS) error {
 	ns.ID = utils.TypeInt(recordNS.Id)
-	ns.ParentID = types.Int64Value(int64(recordNS.ParentId))
+	ns.ParentID = types.Int64Value(int64(recordNS.ZoneID))
 	ns.Domain = types.StringValue(recordNS.Domain)
 	ns.TTL = types.Int64Value(int64(recordNS.TTL))
 	ns.Data = types.StringValue(recordNS.Data)
@@ -27,10 +27,10 @@ func (ns *NS) SetRecord(recordNS models.NS) error {
 
 func (ns NS) GetRecord() (models.NS, error) {
 	return models.NS{
-		Id:       utils.NativeUInt(ns.ID),
-		ParentId: uint(ns.ParentID.ValueInt64()),
-		Domain:   ns.Domain.ValueString(),
-		TTL:      uint(ns.TTL.ValueInt64()),
-		Data:     ns.Data.ValueString(),
+		Id:     utils.NativeUInt(ns.ID),
+		ZoneID: uint(ns.ParentID.ValueInt64()),
+		Domain: ns.Domain.ValueString(),
+		TTL:    uint(ns.TTL.ValueInt64()),
+		Data:   ns.Data.ValueString(),
 	}, nil
 }

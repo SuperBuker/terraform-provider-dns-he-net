@@ -12,12 +12,12 @@ func TestModelAFSDB(t *testing.T) {
 	id := uint(1)
 
 	expected := models.AFSDB{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      300,
-		Data:     "2 green.example.com",
-		Dynamic:  true,
+		Id:      &id,
+		ZoneID:  1,
+		Domain:  "example.com",
+		TTL:     300,
+		Data:    "2 green.example.com",
+		Dynamic: true,
 	}
 
 	afsdb := AFSDB{}

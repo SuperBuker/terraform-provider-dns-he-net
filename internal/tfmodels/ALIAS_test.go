@@ -12,11 +12,11 @@ func TestModelALIAS(t *testing.T) {
 	id := uint(1)
 
 	expected := models.ALIAS{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      300,
-		Data:     "sub.test.com",
+		Id:     &id,
+		ZoneID: 1,
+		Domain: "example.com",
+		TTL:    300,
+		Data:   "sub.test.com",
 	}
 
 	alias := ALIAS{}

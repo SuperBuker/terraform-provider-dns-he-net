@@ -18,7 +18,7 @@ type MX struct {
 
 func (mx *MX) SetRecord(recordMX models.MX) error {
 	mx.ID = utils.TypeInt(recordMX.Id)
-	mx.ParentID = types.Int64Value(int64(recordMX.ParentId))
+	mx.ParentID = types.Int64Value(int64(recordMX.ZoneID))
 	mx.Domain = types.StringValue(recordMX.Domain)
 	mx.TTL = types.Int64Value(int64(recordMX.TTL))
 	mx.Priority = types.Int64Value(int64(recordMX.Priority))
@@ -30,7 +30,7 @@ func (mx *MX) SetRecord(recordMX models.MX) error {
 func (mx MX) GetRecord() (models.MX, error) {
 	return models.MX{
 		Id:       utils.NativeUInt(mx.ID),
-		ParentId: uint(mx.ParentID.ValueInt64()),
+		ZoneID:   uint(mx.ParentID.ValueInt64()),
 		Domain:   mx.Domain.ValueString(),
 		TTL:      uint(mx.TTL.ValueInt64()),
 		Priority: uint16(mx.Priority.ValueInt64()),

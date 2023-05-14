@@ -12,11 +12,11 @@ func TestModelSSHFP(t *testing.T) {
 	id := uint(1)
 
 	expected := models.SSHFP{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      86400,
-		Data:     "4 2 123456789abcdef67890123456789abcdef67890123456789abcdef123456789",
+		Id:     &id,
+		ZoneID: 1,
+		Domain: "example.com",
+		TTL:    86400,
+		Data:   "4 2 123456789abcdef67890123456789abcdef67890123456789abcdef123456789",
 	}
 
 	sshfp := SSHFP{}

@@ -12,12 +12,12 @@ func TestModelA(t *testing.T) {
 	id := uint(1)
 
 	expected := models.A{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      300,
-		Data:     "0.0.0.0",
-		Dynamic:  true,
+		Id:      &id,
+		ZoneID:  1,
+		Domain:  "example.com",
+		TTL:     300,
+		Data:    "0.0.0.0",
+		Dynamic: true,
 	}
 
 	a := A{}

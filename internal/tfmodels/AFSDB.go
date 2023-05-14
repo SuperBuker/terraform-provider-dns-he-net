@@ -18,7 +18,7 @@ type AFSDB struct {
 
 func (afsdb *AFSDB) SetRecord(recordAFSDB models.AFSDB) error {
 	afsdb.ID = utils.TypeInt(recordAFSDB.Id)
-	afsdb.ParentID = types.Int64Value(int64(recordAFSDB.ParentId))
+	afsdb.ParentID = types.Int64Value(int64(recordAFSDB.ZoneID))
 	afsdb.Domain = types.StringValue(recordAFSDB.Domain)
 	afsdb.TTL = types.Int64Value(int64(recordAFSDB.TTL))
 	afsdb.Data = types.StringValue(recordAFSDB.Data)
@@ -29,11 +29,11 @@ func (afsdb *AFSDB) SetRecord(recordAFSDB models.AFSDB) error {
 
 func (afsdb AFSDB) GetRecord() (models.AFSDB, error) {
 	return models.AFSDB{
-		Id:       utils.NativeUInt(afsdb.ID),
-		ParentId: uint(afsdb.ParentID.ValueInt64()),
-		Domain:   afsdb.Domain.ValueString(),
-		TTL:      uint(afsdb.TTL.ValueInt64()),
-		Data:     afsdb.Data.ValueString(),
-		Dynamic:  afsdb.Dynamic.ValueBool(),
+		Id:      utils.NativeUInt(afsdb.ID),
+		ZoneID:  uint(afsdb.ParentID.ValueInt64()),
+		Domain:  afsdb.Domain.ValueString(),
+		TTL:     uint(afsdb.TTL.ValueInt64()),
+		Data:    afsdb.Data.ValueString(),
+		Dynamic: afsdb.Dynamic.ValueBool(),
 	}, nil
 }

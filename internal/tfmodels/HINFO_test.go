@@ -12,11 +12,11 @@ func TestModelHINFO(t *testing.T) {
 	id := uint(1)
 
 	expected := models.HINFO{
-		Id:       &id,
-		ParentId: 1,
-		Domain:   "example.com",
-		TTL:      86400,
-		Data:     `"armv7 Linux"`,
+		Id:     &id,
+		ZoneID: 1,
+		Domain: "example.com",
+		TTL:    86400,
+		Data:   `"armv7 Linux"`,
 	}
 
 	hinfo := HINFO{}

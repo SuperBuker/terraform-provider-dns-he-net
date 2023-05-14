@@ -17,7 +17,7 @@ type PTR struct {
 
 func (ptr *PTR) SetRecord(recordPTR models.PTR) error {
 	ptr.ID = utils.TypeInt(recordPTR.Id)
-	ptr.ParentID = types.Int64Value(int64(recordPTR.ParentId))
+	ptr.ParentID = types.Int64Value(int64(recordPTR.ZoneID))
 	ptr.Domain = types.StringValue(recordPTR.Domain)
 	ptr.TTL = types.Int64Value(int64(recordPTR.TTL))
 	ptr.Data = types.StringValue(recordPTR.Data)
@@ -27,10 +27,10 @@ func (ptr *PTR) SetRecord(recordPTR models.PTR) error {
 
 func (ptr PTR) GetRecord() (models.PTR, error) {
 	return models.PTR{
-		Id:       utils.NativeUInt(ptr.ID),
-		ParentId: uint(ptr.ParentID.ValueInt64()),
-		Domain:   ptr.Domain.ValueString(),
-		TTL:      uint(ptr.TTL.ValueInt64()),
-		Data:     ptr.Data.ValueString(),
+		Id:     utils.NativeUInt(ptr.ID),
+		ZoneID: uint(ptr.ParentID.ValueInt64()),
+		Domain: ptr.Domain.ValueString(),
+		TTL:    uint(ptr.TTL.ValueInt64()),
+		Data:   ptr.Data.ValueString(),
 	}, nil
 }

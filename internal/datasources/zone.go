@@ -36,15 +36,15 @@ type domainModel struct {
 	Domain types.String `tfsdk:"domain"`
 }
 
-func (d *domainModel) setDomain(domain models.Domain) error {
+func (d *domainModel) setDomain(domain models.Zone) error {
 	d.ID = types.Int64Value(int64(domain.Id))
 	d.Domain = types.StringValue(domain.Domain)
 
 	return nil
 }
 
-func (d *domainModel) getDomain() (models.Domain, error) {
-	return models.Domain{
+func (d *domainModel) getDomain() (models.Zone, error) {
+	return models.Zone{
 		Id:     uint(d.ID.ValueInt64()),
 		Domain: d.Domain.ValueString(),
 	}, nil

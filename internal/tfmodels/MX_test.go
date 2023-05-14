@@ -13,7 +13,7 @@ func TestModelMX(t *testing.T) {
 
 	expected := models.MX{
 		Id:       &id,
-		ParentId: 1,
+		ZoneID:   1,
 		Domain:   "example.com",
 		TTL:      3600,
 		Priority: 1,

@@ -17,7 +17,7 @@ type HINFO struct {
 
 func (hinfo *HINFO) SetRecord(recordHINFO models.HINFO) error {
 	hinfo.ID = utils.TypeInt(recordHINFO.Id)
-	hinfo.ParentID = types.Int64Value(int64(recordHINFO.ParentId))
+	hinfo.ParentID = types.Int64Value(int64(recordHINFO.ZoneID))
 	hinfo.Domain = types.StringValue(recordHINFO.Domain)
 	hinfo.TTL = types.Int64Value(int64(recordHINFO.TTL))
 	hinfo.Data = types.StringValue(recordHINFO.Data)
@@ -27,10 +27,10 @@ func (hinfo *HINFO) SetRecord(recordHINFO models.HINFO) error {
 
 func (hinfo HINFO) GetRecord() (models.HINFO, error) {
 	return models.HINFO{
-		Id:       utils.NativeUInt(hinfo.ID),
-		ParentId: uint(hinfo.ParentID.ValueInt64()),
-		Domain:   hinfo.Domain.ValueString(),
-		TTL:      uint(hinfo.TTL.ValueInt64()),
-		Data:     hinfo.Data.ValueString(),
+		Id:     utils.NativeUInt(hinfo.ID),
+		ZoneID: uint(hinfo.ParentID.ValueInt64()),
+		Domain: hinfo.Domain.ValueString(),
+		TTL:    uint(hinfo.TTL.ValueInt64()),
+		Data:   hinfo.Data.ValueString(),
 	}, nil
 }

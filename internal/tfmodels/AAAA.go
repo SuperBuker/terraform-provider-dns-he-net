@@ -18,7 +18,7 @@ type AAAA struct {
 
 func (aaaa *AAAA) SetRecord(recordAAAA models.AAAA) error {
 	aaaa.ID = utils.TypeInt(recordAAAA.Id)
-	aaaa.ParentID = types.Int64Value(int64(recordAAAA.ParentId))
+	aaaa.ParentID = types.Int64Value(int64(recordAAAA.ZoneID))
 	aaaa.Domain = types.StringValue(recordAAAA.Domain)
 	aaaa.TTL = types.Int64Value(int64(recordAAAA.TTL))
 	aaaa.Data = types.StringValue(recordAAAA.Data)
@@ -29,11 +29,11 @@ func (aaaa *AAAA) SetRecord(recordAAAA models.AAAA) error {
 
 func (aaaa AAAA) GetRecord() (models.AAAA, error) {
 	return models.AAAA{
-		Id:       utils.NativeUInt(aaaa.ID),
-		ParentId: uint(aaaa.ParentID.ValueInt64()),
-		Domain:   aaaa.Domain.ValueString(),
-		TTL:      uint(aaaa.TTL.ValueInt64()),
-		Data:     aaaa.Data.ValueString(),
-		Dynamic:  aaaa.Dynamic.ValueBool(),
+		Id:      utils.NativeUInt(aaaa.ID),
+		ZoneID:  uint(aaaa.ParentID.ValueInt64()),
+		Domain:  aaaa.Domain.ValueString(),
+		TTL:     uint(aaaa.TTL.ValueInt64()),
+		Data:    aaaa.Data.ValueString(),
+		Dynamic: aaaa.Dynamic.ValueBool(),
 	}, nil
 }

@@ -17,7 +17,7 @@ type NAPTR struct {
 
 func (naptr *NAPTR) SetRecord(recordNAPTR models.NAPTR) error {
 	naptr.ID = utils.TypeInt(recordNAPTR.Id)
-	naptr.ParentID = types.Int64Value(int64(recordNAPTR.ParentId))
+	naptr.ParentID = types.Int64Value(int64(recordNAPTR.ZoneID))
 	naptr.Domain = types.StringValue(recordNAPTR.Domain)
 	naptr.TTL = types.Int64Value(int64(recordNAPTR.TTL))
 	naptr.Data = types.StringValue(recordNAPTR.Data)
@@ -27,10 +27,10 @@ func (naptr *NAPTR) SetRecord(recordNAPTR models.NAPTR) error {
 
 func (naptr NAPTR) GetRecord() (models.NAPTR, error) {
 	return models.NAPTR{
-		Id:       utils.NativeUInt(naptr.ID),
-		ParentId: uint(naptr.ParentID.ValueInt64()),
-		Domain:   naptr.Domain.ValueString(),
-		TTL:      uint(naptr.TTL.ValueInt64()),
-		Data:     naptr.Data.ValueString(),
+		Id:     utils.NativeUInt(naptr.ID),
+		ZoneID: uint(naptr.ParentID.ValueInt64()),
+		Domain: naptr.Domain.ValueString(),
+		TTL:    uint(naptr.TTL.ValueInt64()),
+		Data:   naptr.Data.ValueString(),
 	}, nil
 }

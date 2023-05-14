@@ -18,7 +18,7 @@ type TXT struct {
 
 func (txt *TXT) SetRecord(recordTXT models.TXT) error {
 	txt.ID = utils.TypeInt(recordTXT.Id)
-	txt.ParentID = types.Int64Value(int64(recordTXT.ParentId))
+	txt.ParentID = types.Int64Value(int64(recordTXT.ZoneID))
 	txt.Domain = types.StringValue(recordTXT.Domain)
 	txt.TTL = types.Int64Value(int64(recordTXT.TTL))
 	txt.Data = types.StringValue(recordTXT.Data)
@@ -29,11 +29,11 @@ func (txt *TXT) SetRecord(recordTXT models.TXT) error {
 
 func (txt TXT) GetRecord() (models.TXT, error) {
 	return models.TXT{
-		Id:       utils.NativeUInt(txt.ID),
-		ParentId: uint(txt.ParentID.ValueInt64()),
-		Domain:   txt.Domain.ValueString(),
-		TTL:      uint(txt.TTL.ValueInt64()),
-		Data:     txt.Data.ValueString(),
-		Dynamic:  txt.Dynamic.ValueBool(),
+		Id:      utils.NativeUInt(txt.ID),
+		ZoneID:  uint(txt.ParentID.ValueInt64()),
+		Domain:  txt.Domain.ValueString(),
+		TTL:     uint(txt.TTL.ValueInt64()),
+		Data:    txt.Data.ValueString(),
+		Dynamic: txt.Dynamic.ValueBool(),
 	}, nil
 }

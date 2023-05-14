@@ -17,7 +17,7 @@ type RP struct {
 
 func (rp *RP) SetRecord(recordRP models.RP) error {
 	rp.ID = utils.TypeInt(recordRP.Id)
-	rp.ParentID = types.Int64Value(int64(recordRP.ParentId))
+	rp.ParentID = types.Int64Value(int64(recordRP.ZoneID))
 	rp.Domain = types.StringValue(recordRP.Domain)
 	rp.TTL = types.Int64Value(int64(recordRP.TTL))
 	rp.Data = types.StringValue(recordRP.Data)
@@ -27,10 +27,10 @@ func (rp *RP) SetRecord(recordRP models.RP) error {
 
 func (rp RP) GetRecord() (models.RP, error) {
 	return models.RP{
-		Id:       utils.NativeUInt(rp.ID),
-		ParentId: uint(rp.ParentID.ValueInt64()),
-		Domain:   rp.Domain.ValueString(),
-		TTL:      uint(rp.TTL.ValueInt64()),
-		Data:     rp.Data.ValueString(),
+		Id:     utils.NativeUInt(rp.ID),
+		ZoneID: uint(rp.ParentID.ValueInt64()),
+		Domain: rp.Domain.ValueString(),
+		TTL:    uint(rp.TTL.ValueInt64()),
+		Data:   rp.Data.ValueString(),
 	}, nil
 }
