@@ -83,9 +83,11 @@ func (c *Client) statusCheck(_ *resty.Client, resp *resty.Response) (err error) 
 	return
 }
 
-// retryIfAuth returns true if the request should be retried, includes pause.
-func (c *Client) retryIfAuth(resp *resty.Response, err error) (retry bool) {
-	return errors.Is(err, &status.ErrNoAuth{})
+// Retry middlewares //
+
+// retryCondition returns true if the request should be retried, includes pause.
+func retryCondition(resp *resty.Response, err error) (retry bool) {
+	return errors.Is(err, &status.ErrNoAuth{}) || resp.StatusCode() >= 500
 }
 
 // Result middlewares //

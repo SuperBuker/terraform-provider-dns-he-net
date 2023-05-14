@@ -75,7 +75,7 @@ func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, opti
 
 	// Set retry condition on auth error
 	// authentication retrials are handled by c.authenticate()
-	client.client.AddRetryCondition(client.retryIfAuth)
+	client.client.AddRetryCondition(retryCondition)
 
 	return client
 }
