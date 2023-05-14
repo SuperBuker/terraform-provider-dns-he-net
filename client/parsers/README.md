@@ -14,7 +14,8 @@ Parsers contains functions to parse the response from the server.
 - [func GetDomains(doc *html.Node) ([]models.Domain, error)](<#func-getdomains>)
 - [func GetRecords(doc *html.Node) ([]models.Record, error)](<#func-getrecords>)
 - [func LoginStatus(doc *html.Node) auth.Status](<#func-loginstatus>)
-- [func ParseError(doc *html.Node) string](<#func-parseerror>)
+- [func ParseError(doc *html.Node) (issues []string)](<#func-parseerror>)
+- [func ParseStatus(doc *html.Node) string](<#func-parsestatus>)
 - [func parseDomainNode(node *html.Node) (models.Domain, error)](<#func-parsedomainnode>)
 - [func parseRecordNode(node *html.Node) (record models.Record, err error)](<#func-parserecordnode>)
 - [type ErrNotFound](<#type-errnotfound>)
@@ -57,13 +58,21 @@ func LoginStatus(doc *html.Node) auth.Status
 
 LoginStatus returns the login status from the HTML body.
 
-## func [ParseError](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/error.go#L9>)
+## func [ParseError](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/error.go#L11>)
 
 ```go
-func ParseError(doc *html.Node) string
+func ParseError(doc *html.Node) (issues []string)
 ```
 
 ParseError returns the error message from the HTML body.
+
+## func [ParseStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/status.go#L11>)
+
+```go
+func ParseStatus(doc *html.Node) string
+```
+
+ParseStatus returns the status message from the HTML body.
 
 ## func [parseDomainNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/domains.go#L13>)
 

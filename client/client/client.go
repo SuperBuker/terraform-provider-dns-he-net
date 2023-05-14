@@ -2,32 +2,30 @@ package client
 
 import (
 	"context"
-	"errors"
-	"log"
-	"time"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/result"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/parsers"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 
 	"github.com/go-resty/resty/v2"
 )
 
 // Client is a client for the dns.he.net API.
 type Client struct {
-	auth    auth.Auth
-	client  *resty.Client
-	account string
+	// SubObjts
+	auth   auth.Auth
+	client *resty.Client
+	log    logging.Logger
+	// State
 	status  auth.Status
+	account string
+	// Options
+	options Options
 }
 
 // NewClient returns a new client, requires a context and an auth.Auth.
 // Autehticates the client against the API.
-func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
-	client := newClient(ctx, authAuth)
+func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options ...Option) (*Client, error) {
+	client := newClient(ctx, authAuth, log, options)
 
 	if account, cookies, err := authAuth.Load(); err == nil {
 		// Load cookies from filestore
@@ -40,7 +38,8 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 		client.client.SetCookies(cookies)
 
 		if err := client.auth.Save(client.account, cookies); err != nil {
-			log.Printf("error happened when saving cookies: %v", err)
+			fields := logging.Fields{"error": err}
+			client.log.Error(ctx, "error happened when saving cookies", fields)
 		}
 
 		return client, nil
@@ -50,85 +49,33 @@ func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error) {
 }
 
 // newClient returns a new client, handles the go-resty client configuration.
-func newClient(ctx context.Context, authAuth auth.Auth) *Client {
+func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options Options) *Client {
 	client := &Client{
-		auth:   authAuth,
-		client: resty.New(),
+		auth:    authAuth,
+		client:  resty.New().SetRetryCount(1), // Ensures auth retrial
+		log:     log,
+		options: options,
 	}
 
+	client.client = client.options.ApplyClient(client.client)
+
+	client.log = client.options.ApplyLogger(client.log)
+
 	// Handle authentication
-	client.client.OnBeforeRequest(func(c *resty.Client, req *resty.Request) error {
-		var hasCookies bool
+	client.client.OnBeforeRequest(client.authValidation)
 
-		for _, cookie := range c.Cookies {
-			if cookie.Expires.Before(time.Now()) {
-				cookie.MaxAge = 0
-			} else if !hasCookies {
-				hasCookies = true
-			}
-		}
-
-		if hasCookies && client.status == auth.Ok {
-			// pass
-		} else if cookies, err := client.autheticate(req.Context()); err == nil {
-			if len(c.Cookies) != 0 {
-				c.Cookies = nil
-				log.Printf("clearing cookies")
-			}
-
-			c.SetCookies(cookies)
-
-			if err := client.auth.Save(client.account, cookies); err != nil {
-				log.Printf("error happened when saving cookies: %v", err)
-			}
-		} else {
-			return err
-		}
-
-		return nil
-	})
-
-	// Parse html
-	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
-		if resp.StatusCode() == 200 {
-			err = result.Init(resp)
-		}
-		return
-	})
+	// Initialise ResultX
+	client.client.OnAfterResponse(initResult)
 
 	// Parse body errors
-	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
-		if resp.StatusCode() == 200 {
-			err = status.Check(result.Body(resp))
-
-			// Update client status
-			if err == nil {
-				// pass
-			} else if errors.Is(err, &status.ErrNoAuth{}) {
-				client.status = auth.NoAuth
-			} else if errors.Is(err, &status.ErrOTPAuth{}) {
-				client.status = auth.OTP
-			}
-		}
-		return
-	})
+	client.client.OnAfterResponse(client.statusCheck)
 
 	// Parse responses
-	client.client.OnAfterResponse(func(c *resty.Client, resp *resty.Response) (err error) {
-		if resp.StatusCode() != 200 {
-			//pass
-		} else if res := result.Result(resp); !utils.IsNil(res) {
-			switch res.(type) {
-			case *[]models.Domain:
-				body := result.Body(resp)
-				resp.Request.Result, err = parsers.GetDomains(body)
-			case *[]models.Record:
-				body := result.Body(resp)
-				resp.Request.Result, err = parsers.GetRecords(body)
-			}
-		}
-		return
-	})
+	client.client.OnAfterResponse(unwrapResult)
+
+	// Set retry condition on auth error
+	// authentication retrials are handled by c.authenticate()
+	client.client.AddRetryCondition(retryCondition)
 
 	return client
 }

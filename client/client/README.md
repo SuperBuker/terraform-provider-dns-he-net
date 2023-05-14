@@ -10,9 +10,12 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 
 - [Constants](<#constants>)
 - [func getRecordsParams(domainId uint) map[string]string](<#func-getrecordsparams>)
+- [func initResult(_ *resty.Client, resp *resty.Response) (err error)](<#func-initresult>)
+- [func retryCondition(resp *resty.Response, err error) (retry bool)](<#func-retrycondition>)
+- [func unwrapResult(_ *resty.Client, resp *resty.Response) (err error)](<#func-unwrapresult>)
 - [type Client](<#type-client>)
-  - [func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error)](<#func-newclient>)
-  - [func newClient(ctx context.Context, authAuth auth.Auth) *Client](<#func-newclient>)
+  - [func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options ...Option) (*Client, error)](<#func-newclient>)
+  - [func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options Options) *Client](<#func-newclient>)
   - [func (c *Client) CreateDomain(ctx context.Context, domain string) (models.Domain, error)](<#func-client-createdomain>)
   - [func (c *Client) DeleteDomain(ctx context.Context, domain models.Domain) error](<#func-client-deletedomain>)
   - [func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error](<#func-client-deleterecord>)
@@ -20,16 +23,38 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
   - [func (c *Client) GetDomains(ctx context.Context) ([]models.Domain, error)](<#func-client-getdomains>)
   - [func (c *Client) GetRecords(ctx context.Context, domainId uint) ([]models.Record, error)](<#func-client-getrecords>)
   - [func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error)](<#func-client-setrecord>)
+  - [func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.Cookie, error)](<#func-client-authbasic>)
+  - [func (c *Client) authOTP(ctx context.Context, client *resty.Client) error](<#func-client-authotp>)
+  - [func (c *Client) authValidation(rc *resty.Client, req *resty.Request) error](<#func-client-authvalidation>)
   - [func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error)](<#func-client-autheticate>)
+  - [func (c *Client) setAccount(resp *resty.Response)](<#func-client-setaccount>)
+  - [func (c *Client) statusCheck(_ *resty.Client, resp *resty.Response) (err error)](<#func-client-statuscheck>)
+  - [func (c *Client) statusCheckLog(resp *resty.Response) error](<#func-client-statuschecklog>)
 - [type ErrItemNotFound](<#type-erritemnotfound>)
   - [func (e *ErrItemNotFound) Error() string](<#func-erritemnotfound-error>)
   - [func (e *ErrItemNotFound) Unwrap() []error](<#func-erritemnotfound-unwrap>)
+- [type Option](<#type-option>)
+  - [func WithDebug() Option](<#func-withdebug>)
+  - [func WithProxy(proxy string) Option](<#func-withproxy>)
+  - [func WithUserAgent(ua string) Option](<#func-withuseragent>)
+- [type Options](<#type-options>)
+  - [func (opts Options) ApplyAuthClient(client *resty.Client) *resty.Client](<#func-options-applyauthclient>)
+  - [func (opts Options) ApplyClient(client *resty.Client) *resty.Client](<#func-options-applyclient>)
+  - [func (opts Options) ApplyLogger(logger logging.Logger) logging.Logger](<#func-options-applylogger>)
 
 
 ## Constants
 
 ```go
 const endpoint = "https://dns.he.net"
+```
+
+```go
+const retries = 3
+```
+
+```go
+const retryDelay = 30 * time.Second
 ```
 
 ## func [getRecordsParams](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L15>)
@@ -40,31 +65,60 @@ func getRecordsParams(domainId uint) map[string]string
 
 getRecordsParams returns the genericquery parameters for the record operations.
 
-## type [Client](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L20-L25>)
+## func [initResult](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/middlewares.go#L96>)
+
+```go
+func initResult(_ *resty.Client, resp *resty.Response) (err error)
+```
+
+initResult initializes the Result field to enable ResultX
+
+## func [retryCondition](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/middlewares.go#L89>)
+
+```go
+func retryCondition(resp *resty.Response, err error) (retry bool)
+```
+
+retryCondition returns true if the request should be retried, includes pause.
+
+## func [unwrapResult](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/middlewares.go#L105>)
+
+```go
+func unwrapResult(_ *resty.Client, resp *resty.Response) (err error)
+```
+
+unwrapResult unwraps the ResultX, parses the body if known type and sets the resp.Result
+
+## type [Client](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L13-L23>)
 
 Client is a client for the dns.he.net API.
 
 ```go
 type Client struct {
-    auth    auth.Auth
-    client  *resty.Client
-    account string
+    // SubObjts
+    auth   auth.Auth
+    client *resty.Client
+    log    logging.Logger
+    // State
     status  auth.Status
+    account string
+    // Options
+    options Options
 }
 ```
 
-### func [NewClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L29>)
+### func [NewClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L27>)
 
 ```go
-func NewClient(ctx context.Context, authAuth auth.Auth) (*Client, error)
+func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options ...Option) (*Client, error)
 ```
 
 NewClient returns a new client, requires a context and an auth.Auth. Autehticates the client against the API.
 
-### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L53>)
+### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L52>)
 
 ```go
-func newClient(ctx context.Context, authAuth auth.Auth) *Client
+func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options Options) *Client
 ```
 
 newClient returns a new client, handles the go\-resty client configuration.
@@ -93,7 +147,7 @@ func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error
 
 DeleteRecord deletes a record, returns an error.
 
-### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L137>)
+### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L84>)
 
 ```go
 func (c *Client) GetAccount() string
@@ -125,13 +179,49 @@ func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.R
 
 SetRecord creates or updates a record, then returns it, or an error.
 
-### func \(\*Client\) [autheticate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L19>)
+### func \(\*Client\) [authBasic](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L78>)
+
+```go
+func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.Cookie, error)
+```
+
+### func \(\*Client\) [authOTP](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L96>)
+
+```go
+func (c *Client) authOTP(ctx context.Context, client *resty.Client) error
+```
+
+### func \(\*Client\) [authValidation](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/middlewares.go#L20>)
+
+```go
+func (c *Client) authValidation(rc *resty.Client, req *resty.Request) error
+```
+
+### func \(\*Client\) [autheticate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L21>)
 
 ```go
 func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error)
 ```
 
 autheticate authenticates the client against the API on a separated go\-resty client, then returns the cookies.
+
+### func \(\*Client\) [setAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L116>)
+
+```go
+func (c *Client) setAccount(resp *resty.Response)
+```
+
+### func \(\*Client\) [statusCheck](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/middlewares.go#L70>)
+
+```go
+func (c *Client) statusCheck(_ *resty.Client, resp *resty.Response) (err error)
+```
+
+### func \(\*Client\) [statusCheckLog](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/middlewares.go#L54>)
+
+```go
+func (c *Client) statusCheckLog(resp *resty.Response) error
+```
 
 ## type [ErrItemNotFound](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/errors.go#L6-L8>)
 
@@ -153,6 +243,66 @@ func (e *ErrItemNotFound) Error() string
 
 ```go
 func (e *ErrItemNotFound) Unwrap() []error
+```
+
+## type [Option](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L8-L12>)
+
+```go
+type Option struct {
+    ClientFn     func(*resty.Client) *resty.Client
+    AuthClientFn func(*resty.Client) *resty.Client
+    LogFn        func(logging.Logger) logging.Logger
+}
+```
+
+### func [WithDebug](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L69>)
+
+```go
+func WithDebug() Option
+```
+
+WithDebug sets the debug mode for the client
+
+### func [WithProxy](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L45>)
+
+```go
+func WithProxy(proxy string) Option
+```
+
+WithProxy sets the proxy for the client
+
+### func [WithUserAgent](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L57>)
+
+```go
+func WithUserAgent(ua string) Option
+```
+
+WithUserAgent sets the user agent for the client
+
+## type [Options](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L14>)
+
+```go
+type Options []Option
+```
+
+### func \(Options\) [ApplyAuthClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L26>)
+
+```go
+func (opts Options) ApplyAuthClient(client *resty.Client) *resty.Client
+```
+
+### func \(Options\) [ApplyClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L17>)
+
+```go
+func (opts Options) ApplyClient(client *resty.Client) *resty.Client
+```
+
+Proc Options
+
+### func \(Options\) [ApplyLogger](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L35>)
+
+```go
+func (opts Options) ApplyLogger(logger logging.Logger) logging.Logger
 ```
 
 

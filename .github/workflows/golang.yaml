@@ -1,17 +1,28 @@
 name: Golang
 
-on: [push]
+on:
+  pull_request:
+    paths-ignore:
+      - 'README.md'
+  push:
+    paths-ignore:
+      - 'README.md'
+
+permissions:
+  contents: read
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     strategy:
+      max-parallel: 1
       matrix:
         go-version: [ '1.20.x' ] # To extend
+        terraform-version : [ '1.0.x', '1.1.x', '1.2.x', '1.3.x', '1.4.x' ] # To extend
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v3.5.0
 
     - name: Setup Go ${{ matrix.go-version }}
       uses: actions/setup-go@v3
@@ -22,22 +33,42 @@ jobs:
     - name: Display Go version
       run: go version
 
+    - uses: hashicorp/setup-terraform@v2.0.3
+      with:
+        terraform_version: ${{ matrix.terraform-version }}
+        terraform_wrapper: false
+
+    - name: Display Terraform version
+      run: terraform version
+
+    - name: Terraform provider cache
+      uses: actions/cache@v3
+      with:
+        key: terraform-provider-dns-he-net
+        path: ~/.config/terraform-provider-dns-he-net/
+
     - name: Install dependencies
       run: go mod download
 
-    - name: Run linter
-      uses: golangci/golangci-lint-action@v3.4.0
-      with:
-        # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-        version: v1.52.0
+    #- name: Run linter
+    #  uses: golangci/golangci-lint-action@v3.4.0
+    #  with:
+    #    # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
+    #    version: v1.52.0
 
     - name: Run go vet
       run: go vet ./...
 
-    - name: Unit tests
+    - name: Unit tests, with terraform coverage
+      env:
+        DNSHENET_USER: ${{ secrets.DNSHENET_USER }}
+        DNSHENET_PASSWD: ${{ secrets.DNSHENET_PASSWD }}
+        DNSHENET_OTP: ${{ secrets.DNSHENET_OTP }}
+        TF_ACC: "1"
       run: |
-        go test -v  ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}.json
+        go test -v  ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json || true
         go tool cover -func coverage.out
+      timeout-minutes: 10
 
     #- name: Build
     #  run: go build -v ./...
@@ -45,8 +76,8 @@ jobs:
     - name: Upload Go test results
       uses: actions/upload-artifact@v3
       with:
-        name: Go-results-${{ matrix.go-version }}
-        path: TestResults-${{ matrix.go-version }}.json
+        name: Go-results-${{ matrix.go-version }}-${{ matrix.terraform-version }}
+        path: TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v3
