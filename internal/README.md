@@ -8,8 +8,10 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal"
 
 ## Index
 
+- [Constants](<#constants>)
 - [Variables](<#variables>)
 - [func New() provider.Provider](<#func-new>)
+- [func UserAgentString(ctx context.Context, tfVersion string) (ua string)](<#func-useragentstring>)
 - [type dnsProvider](<#type-dnsprovider>)
   - [func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse)](<#func-dnsprovider-configure>)
   - [func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSource](<#func-dnsprovider-datasources>)
@@ -18,6 +20,12 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal"
   - [func (p *dnsProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse)](<#func-dnsprovider-schema>)
 - [type dnsProviderModel](<#type-dnsprovidermodel>)
 
+
+## Constants
+
+```go
+const uaEnvVar = "TF_APPEND_USER_AGENT"
+```
 
 ## Variables
 
@@ -37,6 +45,14 @@ func New() provider.Provider
 
 New is a helper function to simplify provider server and testing implementation.
 
+## func [UserAgentString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/user_agent.go#L15>)
+
+```go
+func UserAgentString(ctx context.Context, tfVersion string) (ua string)
+```
+
+UserAgentString returns the User\-Agent string to use for HTTP requests.
+
 ## type [dnsProvider](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L36>)
 
 dnsProvider is the provider implementation.
@@ -53,7 +69,7 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 
 Configure prepares a dns.he.net "API" client for data sources and resources.
 
-### func \(\*dnsProvider\) [DataSources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L254>)
+### func \(\*dnsProvider\) [DataSources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L258>)
 
 ```go
 func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSource
@@ -69,7 +85,7 @@ func (p *dnsProvider) Metadata(_ context.Context, _ provider.MetadataRequest, re
 
 Metadata returns the provider type name.
 
-### func \(\*dnsProvider\) [Resources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L282>)
+### func \(\*dnsProvider\) [Resources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L286>)
 
 ```go
 func (p *dnsProvider) Resources(_ context.Context) []func() resource.Resource
