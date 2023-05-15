@@ -231,7 +231,11 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 		return
 	}
 
-	c, err := client.NewClient(ctx, auth, logging.NewTlog())
+	// Configure User-Agent
+	ua := UserAgentString(ctx, req.TerraformVersion)
+
+	// Create a new dns.he.net client using the configuration values
+	c, err := client.NewClient(ctx, auth, logging.NewTlog(), client.With.UserAgent(ua))
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Create dns.he.net API Client",

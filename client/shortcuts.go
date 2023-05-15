@@ -20,3 +20,13 @@ var CookieStore = struct {
 	auth.Simple,
 	auth.Encrypted,
 }
+
+var With = struct {
+	Debug     func() client.Option
+	Proxy     func(string) client.Option
+	UserAgent func(string) client.Option
+}{
+	client.WithDebug,
+	client.WithProxy,
+	client.WithUserAgent,
+}
