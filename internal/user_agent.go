@@ -12,10 +12,10 @@ import (
 const uaEnvVar = "TF_APPEND_USER_AGENT"
 
 // UserAgentString returns the User-Agent string to use for HTTP requests.
-func UserAgentString(ctx context.Context, tfVersion string) (ua string) {
+func UserAgentString(ctx context.Context, version, tfVersion string) (ua string) {
 	ua = user_agent.UserAgentProducts{
 		{Name: "HashiCorp Terraform", Version: tfVersion, Comment: "+https://www.terraform.io"},
-		{Name: "terraform-provider-dns-he-net", Version: "0.0.1", Comment: "+https://registry.terraform.io/providers/SuperBuker/dns-he-net"}, // TODO: set version
+		{Name: "terraform-provider-dns-he-net", Version: version, Comment: "+https://registry.terraform.io/providers/SuperBuker/dns-he-net"}, // TODO: set version
 	}.String()
 
 	if add := os.Getenv(uaEnvVar); add != "" {

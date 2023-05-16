@@ -28,12 +28,20 @@ var (
 )
 
 // New is a helper function to simplify provider server and testing implementation.
-func New() provider.Provider {
-	return &dnsProvider{}
+func New(build BuildFlags, run RunFlags) func() provider.Provider {
+	return func() provider.Provider {
+		return &dnsProvider{
+			Build: build,
+			Run:   run,
+		}
+	}
 }
 
 // dnsProvider is the provider implementation.
-type dnsProvider struct{}
+type dnsProvider struct {
+	Build BuildFlags
+	Run   RunFlags
+}
 
 // dnsProviderModel maps provider schema data to a Go type.
 type dnsProviderModel struct {
@@ -232,10 +240,16 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 	}
 
 	// Configure User-Agent
-	ua := UserAgentString(ctx, req.TerraformVersion)
+	ua := UserAgentString(ctx, p.Build.Version, req.TerraformVersion)
+	options := client.With.Options(client.With.UserAgent(ua))
+
+	// Configure Debug flag
+	if p.Run.Debug {
+		options = append(options, client.With.Debug())
+	}
 
 	// Create a new dns.he.net client using the configuration values
-	c, err := client.NewClient(ctx, auth, logging.NewTlog(), client.With.UserAgent(ua))
+	c, err := client.NewClient(ctx, auth, logging.NewTlog(), options...)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to Create dns.he.net API Client",
