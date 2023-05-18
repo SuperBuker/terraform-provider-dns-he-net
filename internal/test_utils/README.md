@@ -21,9 +21,9 @@ var (
     // such as updating the Makefile and running the testing through that tool.
     ProviderConfig = fmt.Sprintf(`
 provider "dns-he-net" {
-  username = "%s"
-  password = "%s"
-  otp_secret = "%s"
+  username = %q
+  password = %q
+  otp_secret = %q
   store_type = "simple"
 }
 `, os.Getenv("DNSHENET_USER"), os.Getenv("DNSHENET_PASSWD"), os.Getenv("DNSHENET_OTP"))

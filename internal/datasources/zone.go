@@ -123,7 +123,7 @@ func (d zone) Read(ctx context.Context, req datasource.ReadRequest, resp *dataso
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to find zone",
-			fmt.Sprintf(`zone ID:"%s" doesn't exist`, state.ID.String()),
+			fmt.Sprintf("zone ID:%q doesn't exist", state.ID.String()),
 		)
 		return
 	}

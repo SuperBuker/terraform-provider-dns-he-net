@@ -133,7 +133,7 @@ func (d srv) Read(ctx context.Context, req datasource.ReadRequest, resp *datasou
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to find SRV record",
-			fmt.Sprintf(`record "%s" in zone "%s" doesn't exist`, state.ID.String(), state.ZoneID.String()),
+			fmt.Sprintf("record %q in zone %q doesn't exist", state.ID.String(), state.ZoneID.String()),
 		)
 		return
 	}
