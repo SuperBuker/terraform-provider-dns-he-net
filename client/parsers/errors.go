@@ -11,7 +11,7 @@ type ErrNotFound struct {
 }
 
 func (e *ErrNotFound) Error() string {
-	return fmt.Sprintf("element \"%s\" not found in document", e.XPath)
+	return fmt.Sprintf("element %q not found in document", e.XPath)
 }
 
 func (e *ErrNotFound) Unwrap() []error {
@@ -27,7 +27,7 @@ type ErrParsing struct {
 }
 
 func (e *ErrParsing) Error() string {
-	return fmt.Sprintf("an error happened when parsing \"%s\" ", e.XPath)
+	return fmt.Sprintf("an error happened when parsing %q", e.XPath)
 }
 
 func (e *ErrParsing) Unwrap() []error {

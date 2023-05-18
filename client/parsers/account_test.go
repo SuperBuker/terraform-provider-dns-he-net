@@ -36,6 +36,6 @@ func TestAccount(t *testing.T) {
 		assert.ErrorAs(t, err, &targetErr)
 
 		assert.Equal(t, "", account)
-		assert.Equal(t, "element \"//form[@name=\"remove_domain\"]/input[@name=\"account\"]\" not found in document", err.Error())
+		assert.Equal(t, `element "//form[@name=\"remove_domain\"]/input[@name=\"account\"]" not found in document`, err.Error())
 	})
 }
