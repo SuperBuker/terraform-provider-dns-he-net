@@ -49,7 +49,7 @@ func TestErrors(t *testing.T) {
 			err: &ErrFileEncryption{
 				err,
 			},
-			msg:    "file encryption failed",
+			msg:    "file encryption/decryption failed",
 			unwrap: []error{err},
 		},
 	}
