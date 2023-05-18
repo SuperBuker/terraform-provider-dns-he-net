@@ -88,24 +88,8 @@ func (l zerologLogger) Error(_ context.Context, msg string, additionalFields ...
 	}
 }
 
-func (l zerologLogger) Fatal(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
-	e := l.logger.Fatal()
-
-	if e.Enabled() {
-		l.proc(e, msg, additionalFields...)
-	}
-}
-
 func (l zerologLogger) Info(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
 	e := l.logger.Info()
-
-	if e.Enabled() {
-		l.proc(e, msg, additionalFields...)
-	}
-}
-
-func (l zerologLogger) Panic(_ context.Context, msg string, additionalFields ...map[string]interface{}) {
-	e := l.logger.Panic()
 
 	if e.Enabled() {
 		l.proc(e, msg, additionalFields...)

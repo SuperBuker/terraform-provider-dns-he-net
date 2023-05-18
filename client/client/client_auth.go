@@ -50,7 +50,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 	c.status = auth.OTP
 
 	if c.auth.OTPKey == nil {
-		c.log.Fatal(ctx, "OTP key not set")
+		c.log.Error(ctx, "OTP key not set")
 		return nil, err
 	}
 
