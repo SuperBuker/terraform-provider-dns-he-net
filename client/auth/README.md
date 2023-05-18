@@ -32,9 +32,9 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 - [type ErrFileEncoding](<#type-errfileencoding>)
   - [func (e *ErrFileEncoding) Error() string](<#func-errfileencoding-error>)
   - [func (e *ErrFileEncoding) Unwrap() []error](<#func-errfileencoding-unwrap>)
-- [type ErrFileEncrypt](<#type-errfileencrypt>)
-  - [func (e *ErrFileEncrypt) Error() string](<#func-errfileencrypt-error>)
-  - [func (e *ErrFileEncrypt) Unwrap() []error](<#func-errfileencrypt-unwrap>)
+- [type ErrFileEncryption](<#type-errfileencryption>)
+  - [func (e *ErrFileEncryption) Error() string](<#func-errfileencryption-error>)
+  - [func (e *ErrFileEncryption) Unwrap() []error](<#func-errfileencryption-unwrap>)
 - [type ErrFileIO](<#type-errfileio>)
   - [func (e *ErrFileIO) Error() string](<#func-errfileio-error>)
   - [func (e *ErrFileIO) Unwrap() []error](<#func-errfileio-unwrap>)
@@ -246,28 +246,28 @@ func (e *ErrFileEncoding) Unwrap() []error
 
 Unwrap returns the underlying error that caused this error.
 
-## type [ErrFileEncrypt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/errors.go#L69-L71>)
+## type [ErrFileEncryption](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/errors.go#L69-L71>)
 
-ErrFileEncrypt is returned by the when the file encryption fails.
+ErrFileEncryption is returned by the when the file encryption fails.
 
 ```go
-type ErrFileEncrypt struct {
+type ErrFileEncryption struct {
     err error
 }
 ```
 
-### func \(\*ErrFileEncrypt\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/errors.go#L74>)
+### func \(\*ErrFileEncryption\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/errors.go#L74>)
 
 ```go
-func (e *ErrFileEncrypt) Error() string
+func (e *ErrFileEncryption) Error() string
 ```
 
 Error returns a human\-readable error message.
 
-### func \(\*ErrFileEncrypt\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/errors.go#L79>)
+### func \(\*ErrFileEncryption\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/errors.go#L79>)
 
 ```go
-func (e *ErrFileEncrypt) Unwrap() []error
+func (e *ErrFileEncryption) Unwrap() []error
 ```
 
 Unwrap returns the underlying error that caused this error.

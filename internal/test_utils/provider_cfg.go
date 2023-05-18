@@ -10,7 +10,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-go/tfprotov6"
 )
 
-var ( // WIP... heavily
+var (
 	// ProviderConfig is a shared configuration to combine with the actual
 	// test configuration so the dns.he.net client is properly configured.
 	// It is also possible to use the DHN_ environment variables instead,
@@ -33,8 +33,14 @@ provider "dns-he-net" {
 )
 
 func init() {
-	testProvider = internal.New()
-	//testProvider.Configure(context.Background(), provider.ConfigureRequest{}, &provider.ConfigureResponse{})
+	testProvider = internal.New(
+		internal.BuildFlags{
+			Version: "v0.0.1",
+		},
+		internal.RunFlags{
+			Debug: false,
+		})()
+
 	TestAccProtoV6ProviderFactories = map[string]func() (tfprotov6.ProviderServer, error){
 		"dns-he-net": providerserver.NewProtocol6WithError(testProvider),
 	}
