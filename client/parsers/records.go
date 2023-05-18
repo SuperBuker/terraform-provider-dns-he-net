@@ -131,7 +131,7 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 			} else if p != "-" {
 				err = &ErrParsing{
 					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // priority`,
-					fmt.Errorf(`unknown priority value "%s"`, p),
+					fmt.Errorf("unknown priority value %q", p),
 				}
 				return
 			}
