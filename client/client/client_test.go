@@ -39,12 +39,12 @@ func TestClientAuth(t *testing.T) {
 		zones, err := cli.GetZones(context.TODO())
 		require.NoError(t, err)
 
-		assert.Equal(t, 2, len(zones))
+		assert.Equal(t, 3, len(zones))
 
 		assert.Equal(t, "v6643873d8c41428.97783691", cli.GetAccount())
 
 		// Not onboarded record
-		records, err := cli.GetRecords(context.TODO(), 1091256)
+		records, err := cli.GetRecords(context.TODO(), 1096291)
 		require.Error(t, err)
 		assert.Nil(t, records)
 
@@ -69,9 +69,9 @@ func TestClientAuth(t *testing.T) {
 		zones, err := cli.GetZones(context.TODO())
 		require.NoError(t, err)
 
-		assert.Equal(t, 2, len(zones))
+		assert.Equal(t, 3, len(zones))
 
-		records, err := cli.GetRecords(context.TODO(), 1091256)
+		records, err := cli.GetRecords(context.TODO(), 1096291)
 		require.Error(t, err)
 		assert.Nil(t, records)
 	})
