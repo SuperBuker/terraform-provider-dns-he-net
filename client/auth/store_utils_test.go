@@ -44,7 +44,7 @@ func TestEncryption(t *testing.T) {
 	// Error
 	data2, err = decrypt(&auth, enc[:15])
 	require.Error(t, err)
-	targetErr := &ErrFileEncrypt{}
+	targetErr := &ErrFileEncryption{}
 	assert.ErrorAs(t, err, &targetErr)
 	assert.Nil(t, data2)
 }

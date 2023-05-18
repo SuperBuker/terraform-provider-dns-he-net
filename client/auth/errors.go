@@ -65,18 +65,18 @@ func (e *ErrFileChecksum) Unwrap() []error {
 	return []error{}
 }
 
-// ErrFileEncrypt is returned by the when the file encryption fails.
-type ErrFileEncrypt struct {
+// ErrFileEncryption is returned by the when the file encryption fails.
+type ErrFileEncryption struct {
 	err error
 }
 
 // Error returns a human-readable error message.
-func (e *ErrFileEncrypt) Error() string {
+func (e *ErrFileEncryption) Error() string {
 	return "file encryption/decryption failed"
 }
 
 // Unwrap returns the underlying error that caused this error.
-func (e *ErrFileEncrypt) Unwrap() []error {
+func (e *ErrFileEncryption) Unwrap() []error {
 	return []error{
 		e.err,
 	}
