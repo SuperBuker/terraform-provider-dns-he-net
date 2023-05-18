@@ -8,7 +8,7 @@ type ErrItemNotFound struct {
 }
 
 func (e *ErrItemNotFound) Error() string {
-	return fmt.Sprintf(`item "%s" not found`, e.Resource)
+	return fmt.Sprintf("item %q not found", e.Resource)
 }
 
 func (e *ErrItemNotFound) Unwrap() []error {
