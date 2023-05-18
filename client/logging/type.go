@@ -6,9 +6,7 @@ import "context"
 type Logger interface {
 	Debug(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 	Error(ctx context.Context, msg string, additionalFields ...map[string]interface{})
-	Fatal(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 	Info(ctx context.Context, msg string, additionalFields ...map[string]interface{})
-	Panic(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 	Trace(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 	Warn(ctx context.Context, msg string, additionalFields ...map[string]interface{})
 }

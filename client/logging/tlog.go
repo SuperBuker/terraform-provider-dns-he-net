@@ -20,16 +20,8 @@ func (tlogLogger) Error(ctx context.Context, msg string, additionalFields ...map
 	tflog.Error(ctx, msg, additionalFields...)
 }
 
-func (tlogLogger) Fatal(ctx context.Context, msg string, additionalFields ...map[string]interface{}) {
-	tflog.Error(ctx, msg, additionalFields...)
-}
-
 func (tlogLogger) Info(ctx context.Context, msg string, additionalFields ...map[string]interface{}) {
 	tflog.Info(ctx, msg, additionalFields...)
-}
-
-func (tlogLogger) Panic(ctx context.Context, msg string, additionalFields ...map[string]interface{}) {
-	tflog.Error(ctx, msg, additionalFields...)
 }
 
 func (tlogLogger) Trace(ctx context.Context, msg string, additionalFields ...map[string]interface{}) {
