@@ -25,10 +25,7 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 			zoneID, err = strconv.Atoi(htmlquery.InnerText(c))
 
 			if err != nil {
-				err = &ErrParsing{
-					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // zoneID`,
-					err,
-				}
+				err = errParsingNode(recordQ, "zoneID", err)
 				return
 			}
 
@@ -47,10 +44,7 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 			recordID, err = strconv.Atoi(htmlquery.InnerText(c))
 
 			if err != nil {
-				err = &ErrParsing{
-					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // recordID`,
-					err,
-				}
+				err = errParsingNode(recordQ, "recordID", err)
 				return
 			}
 
@@ -105,10 +99,7 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 			recordTTL, err = strconv.Atoi(htmlquery.InnerText(c)) // To improve
 
 			if err != nil {
-				err = &ErrParsing{
-					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // recordTTL`,
-					err,
-				}
+				err = errParsingNode(recordQ, "recordTTL", err)
 				return
 			}
 
@@ -129,10 +120,7 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 				p := uint16(priority)
 				record.Priority = &p
 			} else if p != "-" {
-				err = &ErrParsing{
-					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // priority`,
-					fmt.Errorf("unknown priority value %q", p),
-				}
+				err = errParsingNode(recordQ, "priority", fmt.Errorf("unknown priority value %q", p))
 				return
 			}
 			break
@@ -161,10 +149,7 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 			record.Dynamic, err = strconv.ParseBool(htmlquery.InnerText(c))
 
 			if err != nil {
-				err = &ErrParsing{
-					`//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class] // dynamic`,
-					err,
-				}
+				err = errParsingNode(recordQ, "dynamic", err)
 				return
 			}
 
@@ -177,15 +162,11 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 
 // GetRecords returns the records from the HTML body.
 func GetRecords(doc *html.Node) ([]models.Record, error) {
-	q := `//div[@id="dns_main_content"]/table[@class="generictable"]`
-
-	if table := htmlquery.FindOne(doc, q); table == nil {
-		return nil, &ErrNotFound{q}
+	if table := htmlquery.FindOne(doc, recordsTableQ); table == nil {
+		return nil, &ErrNotFound{recordsTableQ}
 	}
 
-	q = `//div[@id="dns_main_content"]/table[@class="generictable"]/tbody/tr[@class]`
-	nodes := htmlquery.Find(doc, q)
-
+	nodes := htmlquery.Find(doc, recordQ)
 	records := make([]models.Record, len(nodes))
 
 	for i, node := range nodes {

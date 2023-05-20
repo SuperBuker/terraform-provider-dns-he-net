@@ -11,50 +11,42 @@ import (
 
 // parseZoneNode parses a zone node.
 func parseZoneNode(node *html.Node) (models.Zone, error) {
-	q := `//td[@style]/img[@name][@value]`
-
-	c := htmlquery.FindOne(node, q)
-	recordId, err := strconv.Atoi(htmlquery.SelectAttr(c, "value"))
+	c := htmlquery.FindOne(node, zoneIDQ)
+	zoneID, err := strconv.Atoi(htmlquery.SelectAttr(c, "value"))
 
 	if err != nil {
 		return models.Zone{}, err
 	}
 
 	return models.Zone{
-		ID:   uint(recordId),
+		ID:   uint(zoneID),
 		Name: htmlquery.SelectAttr(c, "name"),
 	}, nil
 }
 
 // GetZones returns the zones from the HTML body.
 func GetZones(doc *html.Node) ([]models.Zone, error) {
-	q := `//table[@id="domains_table"]`
-
-	if table := htmlquery.FindOne(doc, q); table == nil {
-		return nil, &ErrNotFound{q}
+	if table := htmlquery.FindOne(doc, zonesTableQ); table == nil {
+		return nil, &ErrNotFound{zonesTableQ}
 	}
 
-	q = `//table[@id="domains_table"]/tbody/tr`
-	nodes := htmlquery.Find(doc, q)
+	nodes := htmlquery.Find(doc, zoneQ)
 
 	if nodes == nil {
 		return []models.Zone{}, nil // empty table
 	}
 
-	records := make([]models.Zone, len(nodes))
+	zones := make([]models.Zone, len(nodes))
 
 	for i, node := range nodes {
-		record, err := parseZoneNode(node)
+		zone, err := parseZoneNode(node)
 
 		if err != nil {
-			return nil, &ErrParsing{
-				`//table[@id="domains_table"]/tbody/tr // recordId`,
-				err,
-			}
+			return nil, errParsingNode(zoneQ, "zoneID", err)
 		}
 
-		records[i] = record
+		zones[i] = zone
 	}
 
-	return records, nil
+	return zones, nil
 }

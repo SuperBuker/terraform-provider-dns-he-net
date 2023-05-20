@@ -7,31 +7,33 @@ import (
 	"github.com/antchfx/htmlquery"
 )
 
+// loginStatusQuery is the query to find the login status.
+type loginStatusQuery struct {
+	status auth.Status
+	query  string
+}
+
+// getLoginStatusTuples returns the login status tuples.
+func getLoginStatusTuples() []loginStatusQuery {
+	return []loginStatusQuery{
+		{auth.Ok, loginOkQ},
+		{auth.OTP, loginOtpQ},
+		{auth.NoAuth, loginNoAuthQ},
+	}
+}
+
 // LoginStatus returns the login status from the HTML body.
 func LoginStatus(doc *html.Node) auth.Status {
 	if doc == nil {
 		return auth.Unknown
 	}
 
-	q := `//a[@id="_tlogout"]`
-	node := htmlquery.FindOne(doc, q)
-
-	if node != nil {
-		return auth.Ok
-	}
-
-	q = `//input[@id="tfacode"]`
-	node = htmlquery.FindOne(doc, q)
-
-	if node != nil {
-		return auth.OTP
-	}
-
-	q = `//form[@name="login"]`
-	node = htmlquery.FindOne(doc, q)
-
-	if node != nil {
-		return auth.NoAuth
+	// Note: the order of the tuples is important
+	for _, tuple := range getLoginStatusTuples() {
+		node := htmlquery.FindOne(doc, tuple.query)
+		if node != nil {
+			return tuple.status
+		}
 	}
 
 	return auth.Unknown

@@ -9,8 +9,7 @@ import (
 
 // ParseError returns the error message from the HTML body.
 func ParseError(doc *html.Node) (issues []string) {
-	q := `//div[@id="dns_err"]`
-	node := htmlquery.FindOne(doc, q)
+	node := htmlquery.FindOne(doc, errorQ)
 
 	if node != nil {
 		issues = strings.Split(htmlquery.InnerText(node), "  ")
