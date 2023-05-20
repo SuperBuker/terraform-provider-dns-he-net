@@ -6,4 +6,7 @@ const (
 
 	// recordsTableQ is the XPath query for the records table.
 	recordsTableQ = `//div[@id="dns_main_content"]/table[@class="generictable"]`
+
+	// statusQ is the XPath query for the status message.
+	statusQ = `//div[@id="dns_status"]`
 )
