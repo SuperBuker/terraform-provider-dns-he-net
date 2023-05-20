@@ -113,6 +113,9 @@ func unwrapResult(_ *resty.Client, resp *resty.Response) (err error) {
 		case *[]models.Record:
 			body := result.Body(resp)
 			resp.Request.Result, err = parsers.GetRecords(body)
+		case *models.StatusMessage:
+			body := result.Body(resp)
+			resp.Request.Result, err = parsers.GetStatusMessage(body)
 		default:
 			resp.Request.Result = res
 		}

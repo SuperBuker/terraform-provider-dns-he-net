@@ -81,7 +81,7 @@ func TestRecords(t *testing.T) {
 		assert.ErrorAs(t, err, &targetErr)
 
 		assert.Nil(t, _records)
-		assert.Equal(t, `element "//div[@id=\"dns_main_content\"]/table[@class=\"generictable\"]" not found in document`, err.Error())
+		assert.Equal(t, errNotFoundString(recordsTableQ), err.Error())
 	})
 
 	t.Run("empty table", func(t *testing.T) {

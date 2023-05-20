@@ -138,6 +138,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r SSHFP) Refs() map[string]string](<#func-sshfp-refs>)
   - [func (r SSHFP) Serialise() map[string]string](<#func-sshfp-serialise>)
   - [func (r SSHFP) Type() string](<#func-sshfp-type>)
+- [type StatusMessage](<#type-statusmessage>)
 - [type TXT](<#type-txt>)
   - [func ToTXT(r Record) TXT](<#func-totxt>)
   - [func (r TXT) GetID() (uint, bool)](<#func-txt-getid>)
@@ -1059,6 +1060,14 @@ func (r SSHFP) Serialise() map[string]string
 
 ```go
 func (r SSHFP) Type() string
+```
+
+## type [StatusMessage](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/status_message.go#L3-L5>)
+
+```go
+type StatusMessage struct {
+    Data string
+}
 ```
 
 ## type [TXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L5-L12>)

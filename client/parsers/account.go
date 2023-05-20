@@ -7,11 +7,10 @@ import (
 
 // GetAccount returns the account name from the HTML body.
 func GetAccount(doc *html.Node) (string, error) {
-	q := `//form[@name="remove_domain"]/input[@name="account"]`
-	node := htmlquery.FindOne(doc, q)
+	node := htmlquery.FindOne(doc, accountQ)
 
-	if table := htmlquery.FindOne(doc, q); table == nil {
-		return "", &ErrNotFound{q}
+	if table := htmlquery.FindOne(doc, accountQ); table == nil {
+		return "", &ErrNotFound{accountQ}
 	}
 
 	return htmlquery.SelectAttr(node, "value"), nil
