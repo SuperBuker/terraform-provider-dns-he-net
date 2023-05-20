@@ -52,6 +52,11 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r CNAME) Refs() map[string]string](<#func-cname-refs>)
   - [func (r CNAME) Serialise() map[string]string](<#func-cname-serialise>)
   - [func (r CNAME) Type() string](<#func-cname-type>)
+- [type DDNSKey](<#type-ddnskey>)
+  - [func (dk DDNSKey) GetDomain() string](<#func-ddnskey-getdomain>)
+  - [func (dk DDNSKey) GetZoneID() uint](<#func-ddnskey-getzoneid>)
+  - [func (dk DDNSKey) Refs() map[string]string](<#func-ddnskey-refs>)
+  - [func (dk DDNSKey) Serialise() map[string]string](<#func-ddnskey-serialise>)
 - [type ErrFormat](<#type-errformat>)
   - [func (e *ErrFormat) Error() string](<#func-errformat-error>)
 - [type HINFO](<#type-hinfo>)
@@ -450,6 +455,40 @@ func (r CNAME) Serialise() map[string]string
 
 ```go
 func (r CNAME) Type() string
+```
+
+## type [DDNSKey](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/ddns_key.go#L5-L9>)
+
+```go
+type DDNSKey struct {
+    Domain string
+    ZoneID uint
+    Key    string
+}
+```
+
+### func \(DDNSKey\) [GetDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/ddns_key.go#L27>)
+
+```go
+func (dk DDNSKey) GetDomain() string
+```
+
+### func \(DDNSKey\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/ddns_key.go#L31>)
+
+```go
+func (dk DDNSKey) GetZoneID() uint
+```
+
+### func \(DDNSKey\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/ddns_key.go#L20>)
+
+```go
+func (dk DDNSKey) Refs() map[string]string
+```
+
+### func \(DDNSKey\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/ddns_key.go#L11>)
+
+```go
+func (dk DDNSKey) Serialise() map[string]string
 ```
 
 ## type [ErrFormat](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/errors.go#L7-L10>)

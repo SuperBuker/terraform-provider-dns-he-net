@@ -8,6 +8,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/params
 
 ## Index
 
+- [func DDNSKeySet(m map[string]string) map[string]string](<#func-ddnskeyset>)
 - [func RecordCreate(m map[string]string) map[string]string](<#func-recordcreate>)
 - [func RecordDelete(m map[string]string) map[string]string](<#func-recorddelete>)
 - [func RecordUpdate(m map[string]string) map[string]string](<#func-recordupdate>)
@@ -15,6 +16,14 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/params
 - [func ZoneDelete(m map[string]string) map[string]string](<#func-zonedelete>)
 - [func recordGeneric(m map[string]string) map[string]string](<#func-recordgeneric>)
 
+
+## func [DDNSKeySet](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/ddns_key.go#L4>)
+
+```go
+func DDNSKeySet(m map[string]string) map[string]string
+```
+
+DDNSKeySet returnes the parameters necessary to set the ddns key.
 
 ## func [RecordCreate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/records.go#L12>)
 
