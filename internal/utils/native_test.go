@@ -13,6 +13,7 @@ func TestNativeUInt(t *testing.T) {
 
 	assert.Equal(t, uint(x), *utils.NativeUInt(types.Int64Value(int64(x))))
 	assert.Nil(t, utils.NativeUInt(types.Int64Null()))
+	assert.Nil(t, utils.NativeUInt(types.Int64Unknown()))
 }
 
 func TestNativeUInt16(t *testing.T) {
@@ -20,4 +21,5 @@ func TestNativeUInt16(t *testing.T) {
 
 	assert.Equal(t, x, *utils.NativeUInt16(types.Int64Value(int64(x))))
 	assert.Nil(t, utils.NativeUInt16(types.Int64Null()))
+	assert.Nil(t, utils.NativeUInt16(types.Int64Unknown()))
 }
