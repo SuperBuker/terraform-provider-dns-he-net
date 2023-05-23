@@ -614,7 +614,7 @@ Schema defines the schema for the data source.
 
 ## type [account](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/account.go#L26-L28>)
 
-a is the data source implementation.
+account is the data source implementation.
 
 ```go
 type account struct {
@@ -656,7 +656,7 @@ Schema defines the schema for the data source.
 
 ## type [accountModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/account.go#L31-L33>)
 
-aModel maps the data source schema data.
+accountModel maps the data source schema data.
 
 ```go
 type accountModel struct {

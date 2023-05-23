@@ -19,14 +19,13 @@ var (
     // test configuration so the dns.he.net client is properly configured.
     // It is also possible to use the DHN_ environment variables instead,
     // such as updating the Makefile and running the testing through that tool.
-    ProviderConfig = fmt.Sprintf(`
-provider "dns-he-net" {
-  username = %q
-  password = %q
-  otp_secret = %q
-  store_type = "simple"
-}
-`, os.Getenv("DNSHENET_USER"), os.Getenv("DNSHENET_PASSWD"), os.Getenv("DNSHENET_OTP"))
+    ProviderConfig = fmt.Sprintf(`provider "dns-he-net" {
+		username = %q
+		password = %q
+		otp_secret = %q
+		store_type = "simple"
+	}
+	`, os.Getenv("DNSHENET_USER"), os.Getenv("DNSHENET_PASSWD"), os.Getenv("DNSHENET_OTP"))
 
     TestAccProtoV6ProviderFactories map[string]func() (tfprotov6.ProviderServer, error)
 )

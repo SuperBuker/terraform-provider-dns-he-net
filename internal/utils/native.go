@@ -5,7 +5,7 @@ import (
 )
 
 func NativeUInt(i basetypes.Int64Value) *uint {
-	if i.IsNull() {
+	if i.IsUnknown() || i.IsNull() {
 		return nil
 	}
 	n := uint(i.ValueInt64())
@@ -13,7 +13,7 @@ func NativeUInt(i basetypes.Int64Value) *uint {
 }
 
 func NativeUInt16(i basetypes.Int64Value) *uint16 {
-	if i.IsNull() {
+	if i.IsUnknown() || i.IsNull() {
 		return nil
 	}
 	n := uint16(i.ValueInt64())

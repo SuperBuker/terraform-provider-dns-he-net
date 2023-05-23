@@ -15,14 +15,13 @@ var (
 	// test configuration so the dns.he.net client is properly configured.
 	// It is also possible to use the DHN_ environment variables instead,
 	// such as updating the Makefile and running the testing through that tool.
-	ProviderConfig = fmt.Sprintf(`
-provider "dns-he-net" {
-  username = %q
-  password = %q
-  otp_secret = %q
-  store_type = "simple"
-}
-`, os.Getenv("DNSHENET_USER"), os.Getenv("DNSHENET_PASSWD"), os.Getenv("DNSHENET_OTP"))
+	ProviderConfig = fmt.Sprintf(`provider "dns-he-net" {
+		username = %q
+		password = %q
+		otp_secret = %q
+		store_type = "simple"
+	}
+	`, os.Getenv("DNSHENET_USER"), os.Getenv("DNSHENET_PASSWD"), os.Getenv("DNSHENET_OTP"))
 
 	testProvider                    provider.Provider
 	TestAccProtoV6ProviderFactories map[string]func() (tfprotov6.ProviderServer, error)
@@ -45,5 +44,3 @@ func init() {
 		"dns-he-net": providerserver.NewProtocol6WithError(testProvider),
 	}
 }
-
-// TODO: https://github.com/dell/terraform-provider-powermax/blob/db425aa781b36a9f29fba1c65a3f10bba1c6bbbf/powermax/provider_test.go

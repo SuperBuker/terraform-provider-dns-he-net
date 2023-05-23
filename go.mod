@@ -2,6 +2,8 @@ module github.com/SuperBuker/terraform-provider-dns-he-net
 
 go 1.20
 
+replace github.com/golang/protobuf => github.com/golang/protobuf v1.5.3
+
 require (
 	github.com/antchfx/htmlquery v1.3.0
 	github.com/go-resty/resty/v2 v2.7.0
@@ -14,7 +16,7 @@ require (
 	github.com/kirsle/configdir v0.0.0-20170128060238-e45d2f54772f
 	github.com/pquerna/otp v1.4.0
 	github.com/rs/zerolog v1.29.1
-	github.com/stretchr/testify v1.8.2
+	github.com/stretchr/testify v1.8.3
 	golang.org/x/net v0.10.0
 )
 
@@ -58,9 +60,7 @@ require (
 	github.com/oklog/run v1.1.0 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	github.com/vmihailenco/msgpack v4.0.4+incompatible // indirect
-	github.com/vmihailenco/msgpack/v4 v4.3.12 // indirect
 	github.com/vmihailenco/msgpack/v5 v5.3.5 // indirect
-	github.com/vmihailenco/tagparser v0.1.2 // indirect
 	github.com/vmihailenco/tagparser/v2 v2.0.0 // indirect
 	github.com/zclconf/go-cty v1.13.1 // indirect
 	golang.org/x/crypto v0.9.0 // indirect

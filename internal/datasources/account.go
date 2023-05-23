@@ -22,12 +22,12 @@ func NewAccount() datasource.DataSource {
 	return &account{}
 }
 
-// a is the data source implementation.
+// account is the data source implementation.
 type account struct {
 	client *client.Client
 }
 
-// aModel maps the data source schema data.
+// accountModel maps the data source schema data.
 type accountModel struct {
 	ID types.String `tfsdk:"id"`
 }
