@@ -72,20 +72,9 @@ func (zones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 
 // Configure adds the provider configured client to the data source.
 func (d *zones) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
-	if req.ProviderData == nil {
-		return
+	if cli, ok := configure(ctx, req, resp); ok {
+		d.client = cli
 	}
-
-	cli, ok := req.ProviderData.(*client.Client)
-	if !ok {
-		resp.Diagnostics.AddError(
-			"unable to configure client",
-			"client casting failed",
-		)
-		return
-	}
-
-	d.client = cli
 }
 
 // Read refreshes the Terraform state with the latest data.
