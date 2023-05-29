@@ -20,6 +20,7 @@ import (
 // Validators //
 
 var ipv4Validator = stringvalidator.RegexMatches(regexp.MustCompile(`^((25[0-5]|(2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$`), "value must be a valid IPv4 address")
+var ipv6Validator = stringvalidator.RegexMatches(regexp.MustCompile(`^([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)$`), "value must be a valid IPv6 address")
 var domainValidator = stringvalidator.RegexMatches(regexp.MustCompile(`^([a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`), "value must be a valid domain name")
 
 // Common functions //
@@ -109,4 +110,12 @@ func importRecordState(ctx context.Context, req resource.ImportStateRequest, res
 
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("zone_id"), ids[0])...)
 	resp.Diagnostics.Append(resp.State.SetAttribute(ctx, path.Root("id"), ids[1])...)
+}
+
+func validateName(name string) error {
+	if len(name) > 255 {
+		return fmt.Errorf("name is too long (%d > 255)", len(name))
+	}
+
+	return nil
 }
