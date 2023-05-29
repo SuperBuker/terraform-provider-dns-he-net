@@ -5,13 +5,11 @@ import (
 	"fmt"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filters"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/tfmodels"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
-	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -75,20 +73,9 @@ func (a) Schema(ctx context.Context, _ datasource.SchemaRequest, resp *datasourc
 
 // Configure adds the provider configured client to the data source.
 func (d *a) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) {
-	if req.ProviderData == nil {
-		return
+	if cli, ok := configure(ctx, req, resp); ok {
+		d.client = cli
 	}
-
-	cli, ok := req.ProviderData.(*client.Client)
-	if !ok {
-		resp.Diagnostics.AddError(
-			"unable to configure client",
-			"client casting failed",
-		)
-		return
-	}
-
-	d.client = cli
 }
 
 // Read refreshes the Terraform state with the latest data.
@@ -102,51 +89,24 @@ func (d a) Read(ctx context.Context, req datasource.ReadRequest, resp *datasourc
 		return
 	}
 
-	// Terraform log
-	ctxLog := tflog.SetField(ctx, "zone_id", state.ZoneID.String())
-	tflog.Debug(ctxLog, "Retrieving DNS records")
-
-	records, err := d.client.GetRecords(ctx, uint(state.ZoneID.ValueInt64())) //GetOne(state.ID.ValueString())
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Unable to fetch DNS records",
-			err.Error(),
-		)
-		return
-	}
-
-	// Terraform log
-	ctxLog = tflog.SetField(ctxLog, "record_count", len(records))
-	tflog.Debug(ctxLog, "Retrieved DNS records")
-
-	record, ok := filters.RecordById(records, uint(state.ID.ValueInt64()))
+	// Retrieves record from dns.he.net, handles logging and errors
+	recordX, ok := readRecord(ctx, d.client, state.ID, state.ZoneID, "A", resp)
 	if !ok {
-		resp.Diagnostics.AddError(
-			"Unable to find A record",
-			fmt.Sprintf("record %q in zone %q doesn't exist", state.ID.String(), state.ZoneID.String()),
-		)
 		return
 	}
 
-	recordX, err := record.ToX()
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Unable to cast A record",
-			err.Error(),
-		)
-		return
-	}
-
+	// Cast record to A
 	recordA, ok := recordX.(models.A)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to cast A record",
-			fmt.Sprintf("unexpacted record type %T", recordX),
+			fmt.Sprintf("unexpected record type %T", recordX),
 		)
 		return
 	}
 
-	if err = state.SetRecord(recordA); err != nil {
+	// Update state
+	if err := state.SetRecord(recordA); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to set A record",
 			err.Error(),
@@ -154,7 +114,7 @@ func (d a) Read(ctx context.Context, req datasource.ReadRequest, resp *datasourc
 		return
 	}
 
-	// Set state
+	// Set state in response
 	diags = resp.State.Set(ctx, state)
 	resp.Diagnostics.Append(diags...)
 	if resp.Diagnostics.HasError() {
