@@ -6,7 +6,6 @@ import (
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filters"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/ddns"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
@@ -70,18 +69,21 @@ func (ddnsKey) Schema(_ context.Context, _ resource.SchemaRequest, resp *resourc
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Computed:            true,
-				MarkdownDescription: "",
+				Description:         "dns.he.net ddns key id",
+				MarkdownDescription: "dns.he.net ddns key id",
 			},
 			"domain": schema.StringAttribute{
 				Required:            true,
-				MarkdownDescription: "",
+				Description:         "dns.he.net ddns key domain",
+				MarkdownDescription: "dns.he.net ddns key domain",
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 			},
 			"zone_id": schema.Int64Attribute{
 				Required:            true,
-				MarkdownDescription: "",
+				Description:         "dns.he.net zone id",
+				MarkdownDescription: "dns.he.net zone id",
 				PlanModifiers: []planmodifier.Int64{
 					int64planmodifier.RequiresReplace(),
 				},
@@ -89,8 +91,9 @@ func (ddnsKey) Schema(_ context.Context, _ resource.SchemaRequest, resp *resourc
 			"key": schema.StringAttribute{
 				Required:            true,
 				Sensitive:           true,
-				MarkdownDescription: "",
-				// TODO: Missing validation
+				Description:         "dns.he.net ddns key secret",
+				MarkdownDescription: "dns.he.net ddns key secret",
+				// TODO: Missing regexp validation
 			},
 		},
 	}
@@ -98,20 +101,9 @@ func (ddnsKey) Schema(_ context.Context, _ resource.SchemaRequest, resp *resourc
 
 // Configure adds the provider configured client to the resource.
 func (dk *ddnsKey) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
-	if req.ProviderData == nil {
-		return
+	if cli, ok := configure(ctx, req, resp); ok {
+		dk.client = cli
 	}
-
-	cli, ok := req.ProviderData.(*client.Client)
-	if !ok {
-		resp.Diagnostics.AddError(
-			"unable to configure client",
-			"client casting failed",
-		)
-		return
-	}
-
-	dk.client = cli
 }
 
 // Create creates the resource and sets the initial Terraform state.

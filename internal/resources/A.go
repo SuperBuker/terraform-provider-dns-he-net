@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filters"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/planmodifiers"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/tfmodels"
@@ -49,21 +48,24 @@ func (a) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sche
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Computed:            true,
-				MarkdownDescription: "",
+				Description:         "dns.he.net record id",
+				MarkdownDescription: "dns.he.net record id",
 				PlanModifiers: []planmodifier.Int64{
 					int64planmodifier.UseStateForUnknown(),
 				},
 			},
 			"zone_id": schema.Int64Attribute{
 				Required:            true,
-				MarkdownDescription: "",
+				Description:         "dns.he.net zone id",
+				MarkdownDescription: "dns.he.net zone id",
 				PlanModifiers: []planmodifier.Int64{
 					int64planmodifier.RequiresReplace(),
 				},
 			},
 			"domain": schema.StringAttribute{
 				Required:            true,
-				MarkdownDescription: "",
+				Description:         "Name of the DNS record",
+				MarkdownDescription: "Name of the DNS record",
 				Validators: []validator.String{
 					domainValidator,
 				},
@@ -71,7 +73,8 @@ func (a) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sche
 			},
 			"ttl": schema.Int64Attribute{
 				Required:            true,
-				MarkdownDescription: "",
+				Description:         "Time-To-Live of the DNS record",
+				MarkdownDescription: "Time-To-Live of the DNS record",
 				Validators: []validator.Int64{
 					int64validator.Between(300, 86400),
 				},
@@ -79,7 +82,8 @@ func (a) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sche
 			"data": schema.StringAttribute{
 				Computed:            true,
 				Optional:            true,
-				MarkdownDescription: "",
+				Description:         "Value of the DNS record: IPv4 address",
+				MarkdownDescription: "Value of the DNS record: IPv4 address",
 				Validators: []validator.String{
 					ipv4Validator,
 				},
@@ -90,7 +94,8 @@ func (a) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sche
 			"dynamic": schema.BoolAttribute{
 				Computed:            true, // Isn't really computed...
 				Optional:            true,
-				MarkdownDescription: "",
+				Description:         "Enable DDNS for this record",
+				MarkdownDescription: "Enable DDNS for this record",
 				Default:             booldefault.StaticBool(false),
 			},
 		},
@@ -99,20 +104,9 @@ func (a) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sche
 
 // Configure adds the provider configured client to the resource.
 func (r *a) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) {
-	if req.ProviderData == nil {
-		return
+	if cli, ok := configure(ctx, req, resp); ok {
+		r.client = cli
 	}
-
-	cli, ok := req.ProviderData.(*client.Client)
-	if !ok {
-		resp.Diagnostics.AddError(
-			"unable to configure client",
-			"client casting failed",
-		)
-		return
-	}
-
-	r.client = cli
 }
 
 // Create creates the resource and sets the initial Terraform state.
@@ -148,7 +142,7 @@ func (r a) Create(ctx context.Context, req resource.CreateRequest, resp *resourc
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to cast A record",
-			fmt.Sprintf("unexpacted record type %T", recordX),
+			fmt.Sprintf("unexpected record type %T", recordX),
 		)
 		return
 	}
@@ -180,43 +174,19 @@ func (r a) Read(ctx context.Context, req resource.ReadRequest, resp *resource.Re
 		return
 	}
 
-	records, err := r.client.GetRecords(ctx, uint(state.ZoneID.ValueInt64())) //GetOne(state.ID.ValueString())
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Unable to fetch DNS records",
-			err.Error(),
-		)
-		return
-	}
-
-	record, ok := filters.RecordById(records, uint(state.ID.ValueInt64()))
-	if !ok {
-		resp.Diagnostics.AddError(
-			"Unable to find A record",
-			fmt.Sprintf("record %q in zone %q doesn't exist", state.ID.String(), state.ZoneID.String()),
-		)
-		return
-	}
-
-	recordX, err := record.ToX()
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Unable to cast A record",
-			err.Error(),
-		)
-		return
-	}
+	// Retrieves record from dns.he.net, handles logging and errors
+	recordX, ok := readRecord(ctx, r.client, state.ID, state.ZoneID, "A", resp)
 
 	recordA, ok := recordX.(models.A)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to cast A record",
-			fmt.Sprintf("unexpacted record type %T", recordX),
+			fmt.Sprintf("unexpected record type %T", recordX),
 		)
 		return
 	}
 
-	if err = state.SetRecord(recordA); err != nil {
+	if err := state.SetRecord(recordA); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to set A record",
 			err.Error(),
@@ -265,7 +235,7 @@ func (r a) Update(ctx context.Context, req resource.UpdateRequest, resp *resourc
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to cast A record",
-			fmt.Sprintf("unexpacted record type %T", recordX),
+			fmt.Sprintf("unexpected record type %T", recordX),
 		)
 		return
 	}
