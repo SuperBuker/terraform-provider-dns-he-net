@@ -22,6 +22,8 @@ func TestAccDDNSKey(t *testing.T) {
 	domainInit := fmt.Sprintf("example%v.dns-he-net.eu.org", rand.Intn(1000))
 	domainUpdate := fmt.Sprintf("example%v.dns-he-net.eu.org", rand.Intn(1000))
 
+	password := randStringBytesMaskImprSrcSB(16)
+
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
@@ -31,14 +33,14 @@ func TestAccDDNSKey(t *testing.T) {
 				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
 					domain = %q
 					zone_id = 1091256
-					key = "abcderfhuijklm"
-				}`, domainInit),
+					key = %q
+				}`, domainInit, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "id", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", "1091256"),
-					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", "abcderfhuijklm"),
+					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", password),
 				),
 			},
 			// Update and Read testing
@@ -57,10 +59,13 @@ func TestAccDDNSKey(t *testing.T) {
 
 					assert.Equal(t, "v6643873d8c41428.97783691", cli.GetAccount())
 
+					// Makes auth fail when validating the expected key, triggering an update
+					anotherPassword := randStringBytesMaskImprSrcSB(16)
+
 					ddnsKey := models.DDNSKey{
 						Domain: domainInit,
 						ZoneID: 1091256,
-						Key:    "some other key",
+						Key:    anotherPassword,
 					}
 
 					_, err = cli.SetDDNSKey(context.TODO(), ddnsKey)
@@ -69,14 +74,14 @@ func TestAccDDNSKey(t *testing.T) {
 				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
 					domain = %q
 					zone_id = 1091256
-					key = "abcderfhuijklm"
-				}`, domainInit),
+					key = %q
+				}`, domainInit, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "id", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", "1091256"),
-					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", "abcderfhuijklm"),
+					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", password),
 				),
 			},
 			// Update and Read testing
@@ -84,14 +89,14 @@ func TestAccDDNSKey(t *testing.T) {
 				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
 					domain = %q
 					zone_id = 1091256
-					key = "abcderfhuijklm"
-				}`, domainUpdate),
+					key = %q
+				}`, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "id", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", "1091256"),
-					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", "abcderfhuijklm"),
+					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", password),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

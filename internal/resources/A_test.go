@@ -18,6 +18,8 @@ func TestAccARecord(t *testing.T) {
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
+	password := randStringBytesMaskImprSrcSB(16)
+
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
@@ -88,8 +90,8 @@ func TestAccARecord(t *testing.T) {
 				resource "dns-he-net_ddnskey" "ddnskey" {
 					domain = %q
 					zone_id = 1091256
-					key = "abcderfhuijklm"
-				}`, domainUpdate, domainUpdate),
+					key = %q
+				}`, domainUpdate, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", "1091256"),
@@ -119,8 +121,8 @@ func TestAccARecord(t *testing.T) {
 				resource "dns-he-net_ddnskey" "ddnskey" {
 					domain = %q
 					zone_id = 1091256
-					key = "abcderfhuijklm"
-				}`, domainUpdate, domainUpdate),
+					key = %q
+				}`, domainUpdate, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", "1091256"),
@@ -144,8 +146,8 @@ func TestAccARecord(t *testing.T) {
 				resource "dns-he-net_ddnskey" "ddnskey" {
 					domain = %q
 					zone_id = 1091256
-					key = "abcderfhuijklm"
-				}`, domainUpdate, domainUpdate),
+					key = %q
+				}`, domainUpdate, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", "1091256"),
