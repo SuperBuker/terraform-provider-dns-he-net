@@ -8,6 +8,7 @@ import (
 type Option struct {
 	ClientFn     func(*resty.Client) *resty.Client
 	AuthClientFn func(*resty.Client) *resty.Client
+	DDNSClientFn func(*resty.Client) *resty.Client
 	LogFn        func(logging.Logger) logging.Logger
 }
 
@@ -32,6 +33,15 @@ func (opts Options) ApplyAuthClient(client *resty.Client) *resty.Client {
 	return client
 }
 
+func (opts Options) ApplyDDNSClient(client *resty.Client) *resty.Client {
+	for _, option := range opts {
+		if option.DDNSClientFn != nil {
+			client = option.DDNSClientFn(client)
+		}
+	}
+	return client
+}
+
 func (opts Options) ApplyLogger(logger logging.Logger) logging.Logger {
 	for _, option := range opts {
 		if option.LogFn != nil {
@@ -50,6 +60,7 @@ func WithProxy(proxy string) Option {
 	return Option{
 		ClientFn:     fn,
 		AuthClientFn: fn,
+		DDNSClientFn: fn,
 	}
 }
 
@@ -62,6 +73,7 @@ func WithUserAgent(ua string) Option {
 	return Option{
 		ClientFn:     fn,
 		AuthClientFn: fn,
+		DDNSClientFn: fn,
 	}
 }
 
@@ -74,5 +86,6 @@ func WithDebug() Option {
 	return Option{
 		ClientFn:     fn,
 		AuthClientFn: fn,
+		DDNSClientFn: fn,
 	}
 }

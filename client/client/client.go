@@ -4,6 +4,7 @@ import (
 	"context"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/ddns"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 
 	"github.com/go-resty/resty/v2"
@@ -83,4 +84,11 @@ func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, opti
 // GetAccount returns the account ID.
 func (c *Client) GetAccount() string {
 	return c.account
+}
+
+func (c *Client) DDNS() ddns.Client {
+	client := resty.New()
+	client = c.options.ApplyDDNSClient(client)
+
+	return ddns.New(client)
 }

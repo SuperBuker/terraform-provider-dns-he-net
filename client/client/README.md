@@ -22,6 +22,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
   - [func (c *Client) GetAccount() string](<#func-client-getaccount>)
   - [func (c *Client) GetRecords(ctx context.Context, zoneID uint) ([]models.Record, error)](<#func-client-getrecords>)
   - [func (c *Client) GetZones(ctx context.Context) ([]models.Zone, error)](<#func-client-getzones>)
+  - [func (c *Client) SetDDNSKey(ctx context.Context, dk models.DDNSKey) (string, error)](<#func-client-setddnskey>)
   - [func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error)](<#func-client-setrecord>)
   - [func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.Cookie, error)](<#func-client-authbasic>)
   - [func (c *Client) authOTP(ctx context.Context, client *resty.Client) error](<#func-client-authotp>)
@@ -170,6 +171,14 @@ func (c *Client) GetZones(ctx context.Context) ([]models.Zone, error)
 ```
 
 GetZones retrieves all zones from the API and returns them in a slice
+
+### func \(\*Client\) [SetDDNSKey](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/ddns_key.go#L12>)
+
+```go
+func (c *Client) SetDDNSKey(ctx context.Context, dk models.DDNSKey) (string, error)
+```
+
+SetDDNSKey creates or updates a ddns domain key, then returns the result message or an error.
 
 ### func \(\*Client\) [SetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L44>)
 
