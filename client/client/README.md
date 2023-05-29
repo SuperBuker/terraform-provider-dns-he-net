@@ -17,6 +17,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
   - [func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options ...Option) (*Client, error)](<#func-newclient>)
   - [func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options Options) *Client](<#func-newclient>)
   - [func (c *Client) CreateZone(ctx context.Context, name string) (models.Zone, error)](<#func-client-createzone>)
+  - [func (c *Client) DDNS() ddns.Client](<#func-client-ddns>)
   - [func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error](<#func-client-deleterecord>)
   - [func (c *Client) DeleteZone(ctx context.Context, zone models.Zone) error](<#func-client-deletezone>)
   - [func (c *Client) GetAccount() string](<#func-client-getaccount>)
@@ -41,6 +42,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 - [type Options](<#type-options>)
   - [func (opts Options) ApplyAuthClient(client *resty.Client) *resty.Client](<#func-options-applyauthclient>)
   - [func (opts Options) ApplyClient(client *resty.Client) *resty.Client](<#func-options-applyclient>)
+  - [func (opts Options) ApplyDDNSClient(client *resty.Client) *resty.Client](<#func-options-applyddnsclient>)
   - [func (opts Options) ApplyLogger(logger logging.Logger) logging.Logger](<#func-options-applylogger>)
 
 
@@ -90,7 +92,7 @@ func unwrapResult(_ *resty.Client, resp *resty.Response) (err error)
 
 unwrapResult unwraps the ResultX, parses the body if known type and sets the resp.Result
 
-## type [Client](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L13-L23>)
+## type [Client](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L14-L24>)
 
 Client is a client for the dns.he.net API.
 
@@ -108,7 +110,7 @@ type Client struct {
 }
 ```
 
-### func [NewClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L27>)
+### func [NewClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L28>)
 
 ```go
 func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options ...Option) (*Client, error)
@@ -116,7 +118,7 @@ func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, opti
 
 NewClient returns a new client, requires a context and an auth.Auth. Autehticates the client against the API.
 
-### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L52>)
+### func [newClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L53>)
 
 ```go
 func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options Options) *Client
@@ -131,6 +133,12 @@ func (c *Client) CreateZone(ctx context.Context, name string) (models.Zone, erro
 ```
 
 CreateZone creates a new zone, then returns it, or an error.
+
+### func \(\*Client\) [DDNS](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L89>)
+
+```go
+func (c *Client) DDNS() ddns.Client
+```
 
 ### func \(\*Client\) [DeleteRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L86>)
 
@@ -148,7 +156,7 @@ func (c *Client) DeleteZone(ctx context.Context, zone models.Zone) error
 
 DeleteZone deletes a zone, returns an error.
 
-### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L84>)
+### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L85>)
 
 ```go
 func (c *Client) GetAccount() string
@@ -254,17 +262,18 @@ func (e *ErrItemNotFound) Error() string
 func (e *ErrItemNotFound) Unwrap() []error
 ```
 
-## type [Option](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L8-L12>)
+## type [Option](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L8-L13>)
 
 ```go
 type Option struct {
     ClientFn     func(*resty.Client) *resty.Client
     AuthClientFn func(*resty.Client) *resty.Client
+    DDNSClientFn func(*resty.Client) *resty.Client
     LogFn        func(logging.Logger) logging.Logger
 }
 ```
 
-### func [WithDebug](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L69>)
+### func [WithDebug](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L81>)
 
 ```go
 func WithDebug() Option
@@ -272,7 +281,7 @@ func WithDebug() Option
 
 WithDebug sets the debug mode for the client
 
-### func [WithProxy](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L45>)
+### func [WithProxy](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L55>)
 
 ```go
 func WithProxy(proxy string) Option
@@ -280,7 +289,7 @@ func WithProxy(proxy string) Option
 
 WithProxy sets the proxy for the client
 
-### func [WithUserAgent](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L57>)
+### func [WithUserAgent](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L68>)
 
 ```go
 func WithUserAgent(ua string) Option
@@ -288,19 +297,19 @@ func WithUserAgent(ua string) Option
 
 WithUserAgent sets the user agent for the client
 
-## type [Options](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L14>)
+## type [Options](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L15>)
 
 ```go
 type Options []Option
 ```
 
-### func \(Options\) [ApplyAuthClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L26>)
+### func \(Options\) [ApplyAuthClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L27>)
 
 ```go
 func (opts Options) ApplyAuthClient(client *resty.Client) *resty.Client
 ```
 
-### func \(Options\) [ApplyClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L17>)
+### func \(Options\) [ApplyClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L18>)
 
 ```go
 func (opts Options) ApplyClient(client *resty.Client) *resty.Client
@@ -308,7 +317,13 @@ func (opts Options) ApplyClient(client *resty.Client) *resty.Client
 
 Proc Options
 
-### func \(Options\) [ApplyLogger](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L35>)
+### func \(Options\) [ApplyDDNSClient](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L36>)
+
+```go
+func (opts Options) ApplyDDNSClient(client *resty.Client) *resty.Client
+```
+
+### func \(Options\) [ApplyLogger](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L45>)
 
 ```go
 func (opts Options) ApplyLogger(logger logging.Logger) logging.Logger

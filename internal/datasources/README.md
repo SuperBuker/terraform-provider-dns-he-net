@@ -530,13 +530,13 @@ func NewZoneIndex() datasource.DataSource
 
 NewZoneIndex initialises the ZoneIndex DataSource.
 
-## func [configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/utils.go#L15>)
+## func [configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/utils.go#L17>)
 
 ```go
 func configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse) (*client.Client, bool)
 ```
 
-## func [readRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/utils.go#L32>)
+## func [readRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/utils.go#L34>)
 
 ```go
 func readRecord(ctx context.Context, cli *client.Client, ID types.Int64, zoneID types.Int64, typ string, resp *datasource.ReadResponse) (models.RecordX, bool)
