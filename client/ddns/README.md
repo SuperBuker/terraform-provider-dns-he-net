@@ -23,7 +23,12 @@ This forces us to randomise the domains used during testing.
 - [func UpdateIP(ctx context.Context, hostname, password, myip string) (bool, error)](<#func-updateip>)
 - [func UpdateTXT(ctx context.Context, hostname, password, txt string) (bool, error)](<#func-updatetxt>)
 - [func processResponse(msg string) (bool, error)](<#func-processresponse>)
-- [func update(ctx context.Context, form map[string]string) (string, error)](<#func-update>)
+- [type Client](<#type-client>)
+  - [func New(cli *resty.Client) Client](<#func-new>)
+  - [func (c Client) CheckAuth(ctx context.Context, hostname, password string) (bool, error)](<#func-client-checkauth>)
+  - [func (c Client) UpdateIP(ctx context.Context, hostname, password, myip string) (bool, error)](<#func-client-updateip>)
+  - [func (c Client) UpdateTXT(ctx context.Context, hostname, password, txt string) (bool, error)](<#func-client-updatetxt>)
+  - [func (c Client) update(ctx context.Context, form map[string]string) (string, error)](<#func-client-update>)
 - [type ErrAPI](<#type-errapi>)
   - [func (e *ErrAPI) Error() string](<#func-errapi-error>)
   - [func (e *ErrAPI) Unwrap() []error](<#func-errapi-unwrap>)
@@ -53,34 +58,66 @@ const (
 )
 ```
 
-## func [CheckAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L80>)
+## func [CheckAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns_shortcuts.go#L17>)
 
 ```go
 func CheckAuth(ctx context.Context, hostname, password string) (bool, error)
 ```
 
-## func [UpdateIP](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L48>)
+## func [UpdateIP](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns_shortcuts.go#L9>)
 
 ```go
 func UpdateIP(ctx context.Context, hostname, password, myip string) (bool, error)
 ```
 
-## func [UpdateTXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L64>)
+## func [UpdateTXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns_shortcuts.go#L13>)
 
 ```go
 func UpdateTXT(ctx context.Context, hostname, password, txt string) (bool, error)
 ```
 
-## func [processResponse](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L29>)
+## func [processResponse](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns_utils.go#L5>)
 
 ```go
 func processResponse(msg string) (bool, error)
 ```
 
-## func [update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L15>)
+## type [Client](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L15-L17>)
 
 ```go
-func update(ctx context.Context, form map[string]string) (string, error)
+type Client struct {
+    client *resty.Client
+}
+```
+
+### func [New](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L19>)
+
+```go
+func New(cli *resty.Client) Client
+```
+
+### func \(Client\) [CheckAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L70>)
+
+```go
+func (c Client) CheckAuth(ctx context.Context, hostname, password string) (bool, error)
+```
+
+### func \(Client\) [UpdateIP](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L38>)
+
+```go
+func (c Client) UpdateIP(ctx context.Context, hostname, password, myip string) (bool, error)
+```
+
+### func \(Client\) [UpdateTXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L54>)
+
+```go
+func (c Client) UpdateTXT(ctx context.Context, hostname, password, txt string) (bool, error)
+```
+
+### func \(Client\) [update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/ddns.go#L25>)
+
+```go
+func (c Client) update(ctx context.Context, form map[string]string) (string, error)
 ```
 
 ## type [ErrAPI](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/client/ddns/blob/master/client/ddns/errors.go#L78-L80>)
