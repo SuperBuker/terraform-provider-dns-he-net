@@ -182,7 +182,7 @@ func (dk ddnsKey) Read(ctx context.Context, req resource.ReadRequest, resp *reso
 	}
 
 	// Check if the state key is still valid, remove otherwhise
-	ok, err = ddns.CheckAuth(ctx, state.Domain.ValueString(), state.Key.ValueString())
+	ok, err = dk.client.DDNS().CheckAuth(ctx, state.Domain.ValueString(), state.Key.ValueString())
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to validate DDNS key",

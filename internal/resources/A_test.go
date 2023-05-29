@@ -3,12 +3,16 @@ package resources_test
 import (
 	"context"
 	"fmt"
+	"os"
 	"regexp"
 	"testing"
 
-	"github.com/SuperBuker/terraform-provider-dns-he-net/client/ddns"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/test_utils"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
+	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -106,8 +110,19 @@ func TestAccARecord(t *testing.T) {
 			{
 				PreConfig: func() {
 					// Force the ddns "external" update
+					user := os.Getenv("DNSHENET_USER")
+					password_ := os.Getenv("DNSHENET_PASSWD")
+					otp := os.Getenv("DNSHENET_OTP")
 
-					ok, err := ddns.UpdateIP(context.TODO(), domainUpdate, "abcderfhuijklm", "10.2.3.4")
+					authObj, err := auth.NewAuth(user, password_, otp, auth.Simple)
+					require.NoError(t, err)
+
+					cli, err := client.NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+					require.NoError(t, err)
+
+					assert.Equal(t, "v6643873d8c41428.97783691", cli.GetAccount())
+
+					ok, err := cli.DDNS().UpdateIP(context.TODO(), domainUpdate, password, "10.2.3.4")
 					require.NoError(t, err)
 					assert.True(t, ok)
 				},
