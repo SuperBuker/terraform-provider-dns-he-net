@@ -9,6 +9,8 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 ## Index
 
 - [Variables](<#variables>)
+- [func concatTXTData(data string) string](<#func-concattxtdata>)
+- [func splitTXTData(data string) string](<#func-splittxtdata>)
 - [func toString(n interface{}) string](<#func-tostring>)
 - [type A](<#type-a>)
   - [func ToA(r Record) A](<#func-toa>)
@@ -159,6 +161,30 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 ```go
 var b2s = map[bool]string{false: "0", true: "1"}
 ```
+
+```go
+var txtInData = regexp.MustCompile(`(?:"([ -~]{255})" )|"([ -~]{1,255})"$`)
+```
+
+```go
+var txtOutData = regexp.MustCompile(`^"([ -~]*)"$`)
+```
+
+## func [concatTXTData](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L25>)
+
+```go
+func concatTXTData(data string) string
+```
+
+concatTXTData concatenates the received field to reconstruct the original value. By default, the provider splits the data in chunks of 255 characters.
+
+## func [splitTXTData](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L38>)
+
+```go
+func splitTXTData(data string) string
+```
+
+splitTXTData splits the data in chunks of 255 characters which are sent quoted and separated by a whitespace. This processing is automatically done by the provider on the server side, we just handle it on advance to mimic the regular website requests.
 
 ## func [toString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/utils.go#L11>)
 
@@ -1109,7 +1135,7 @@ type StatusMessage struct {
 }
 ```
 
-## type [TXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L5-L12>)
+## type [TXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L14-L21>)
 
 ```go
 type TXT struct {
@@ -1122,37 +1148,37 @@ type TXT struct {
 }
 ```
 
-### func [ToTXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L14>)
+### func [ToTXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L50>)
 
 ```go
 func ToTXT(r Record) TXT
 ```
 
-### func \(TXT\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L45>)
+### func \(TXT\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L81>)
 
 ```go
 func (r TXT) GetID() (uint, bool)
 ```
 
-### func \(TXT\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L53>)
+### func \(TXT\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L89>)
 
 ```go
 func (r TXT) GetZoneID() uint
 ```
 
-### func \(TXT\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L38>)
+### func \(TXT\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L74>)
 
 ```go
 func (r TXT) Refs() map[string]string
 ```
 
-### func \(TXT\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L25>)
+### func \(TXT\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L61>)
 
 ```go
 func (r TXT) Serialise() map[string]string
 ```
 
-### func \(TXT\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L57>)
+### func \(TXT\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L93>)
 
 ```go
 func (r TXT) Type() string

@@ -122,6 +122,9 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 			} else if p != "-" {
 				err = errParsingNode(recordQ, "priority", fmt.Errorf("unknown priority value %q", p))
 				return
+			} else {
+				// Clean the error
+				err = nil
 			}
 			break
 		}
@@ -132,10 +135,8 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 			return
 		} else if c.Type != html.ElementNode || c.Data != "td" {
 			// pass
-		} else if htmlquery.SelectAttr(c, "align") != "left" {
-			// pass
-		} else if data := htmlquery.SelectAttr(c, "data"); len(data) != 0 {
-			record.Data = data
+		} else if htmlquery.SelectAttr(c, "align") == "left" {
+			record.Data = htmlquery.SelectAttr(c, "data")
 			break
 		}
 	}

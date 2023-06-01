@@ -11,7 +11,7 @@ import (
 func TestModelCNAME(t *testing.T) {
 	id := uint(1)
 
-	exapected := models.CNAME{
+	expected := models.CNAME{
 		ID:     &id,
 		ZoneID: 1,
 		Domain: "example.com",
@@ -21,10 +21,10 @@ func TestModelCNAME(t *testing.T) {
 
 	cname := CNAME{}
 
-	require.NoError(t, cname.SetRecord(exapected))
+	require.NoError(t, cname.SetRecord(expected))
 
 	actual, err := cname.GetRecord()
 	require.NoError(t, err)
 
-	assert.Equal(t, exapected, actual)
+	assert.Equal(t, expected, actual)
 }
