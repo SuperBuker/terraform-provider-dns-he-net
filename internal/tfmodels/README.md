@@ -8,6 +8,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/tfmodels"
 
 ## Index
 
+- [Variables](<#variables>)
 - [type A](<#type-a>)
   - [func (a A) GetRecord() (models.A, error)](<#func-a-getrecord>)
   - [func (a *A) SetRecord(recordA models.A) error](<#func-a-setrecord>)
@@ -63,6 +64,16 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/tfmodels"
   - [func (txt TXT) GetRecord() (models.TXT, error)](<#func-txt-getrecord>)
   - [func (txt *TXT) SetRecord(recordTXT models.TXT) error](<#func-txt-setrecord>)
 
+
+## Variables
+
+```go
+var txtPattern = regexp.MustCompile(`(?:"([ -~]{255})" )|"([ -~]{1,255})"$`)
+```
+
+```go
+var txtPatternExt = regexp.MustCompile(`^"([ -~]*)"$`)
+```
 
 ## type [A](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/A.go#L10-L17>)
 
@@ -518,7 +529,7 @@ func (sshfp SSHFP) GetRecord() (models.SSHFP, error)
 func (sshfp *SSHFP) SetRecord(recordSSHFP models.SSHFP) error
 ```
 
-## type [TXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/TXT.go#L10-L17>)
+## type [TXT](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/TXT.go#L15-L22>)
 
 TXT maps the data source schema data.
 
@@ -533,13 +544,13 @@ type TXT struct {
 }
 ```
 
-### func \(TXT\) [GetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/TXT.go#L30>)
+### func \(TXT\) [GetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/TXT.go#L35>)
 
 ```go
 func (txt TXT) GetRecord() (models.TXT, error)
 ```
 
-### func \(\*TXT\) [SetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/TXT.go#L19>)
+### func \(\*TXT\) [SetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/TXT.go#L24>)
 
 ```go
 func (txt *TXT) SetRecord(recordTXT models.TXT) error

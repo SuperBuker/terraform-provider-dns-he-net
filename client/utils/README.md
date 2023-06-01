@@ -8,7 +8,9 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 
 ## Index
 
+- [func ApplyToSlice[T any](fn func(T) T, slice []T) []T](<#func-applytoslice>)
 - [func IsNil(i interface{}) bool](<#func-isnil>)
+- [func SplitByLen(data string, length int) []string](<#func-splitbylen>)
 - [type ErrCasting](<#type-errcasting>)
   - [func NewErrCasting(expected, actual interface{}) *ErrCasting](<#func-newerrcasting>)
   - [func (e *ErrCasting) Error() string](<#func-errcasting-error>)
@@ -18,6 +20,12 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
   - [func (e *ErrNotImplemented) Unwrap() []error](<#func-errnotimplemented-unwrap>)
 
 
+## func [ApplyToSlice](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/slice.go#L3>)
+
+```go
+func ApplyToSlice[T any](fn func(T) T, slice []T) []T
+```
+
 ## func [IsNil](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/nil.go#L6>)
 
 ```go
@@ -25,6 +33,12 @@ func IsNil(i interface{}) bool
 ```
 
 IsNil returns true if the interface is nil or is a nil pointer, map, array, channel, or slice.
+
+## func [SplitByLen](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/strings.go#L3>)
+
+```go
+func SplitByLen(data string, length int) []string
+```
 
 ## type [ErrCasting](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/errors.go#L17-L20>)
 
