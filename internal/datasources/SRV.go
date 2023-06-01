@@ -73,8 +73,8 @@ func (srv) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasourc
 				Computed:            true,
 			},
 			"target": schema.StringAttribute{
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "DNS record target domain",
+				MarkdownDescription: "DNS record target domain",
 				Computed:            true,
 			},
 		},
