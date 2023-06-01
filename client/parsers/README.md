@@ -78,7 +78,7 @@ func GetAccount(doc *html.Node) (string, error)
 
 GetAccount returns the account name from the HTML body.
 
-## func [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L164>)
+## func [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L165>)
 
 ```go
 func GetRecords(doc *html.Node) ([]models.Record, error)
