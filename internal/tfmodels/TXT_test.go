@@ -11,21 +11,21 @@ import (
 func TestModelTXT(t *testing.T) {
 	id := uint(1)
 
-	exapected := models.TXT{
+	expected := models.TXT{
 		ID:      &id,
 		ZoneID:  1,
 		Domain:  "example.com",
 		TTL:     300,
-		Data:    "Just for the record",
+		Data:    `"Just for the record"`,
 		Dynamic: true,
 	}
 
 	txt := TXT{}
 
-	require.NoError(t, txt.SetRecord(exapected))
+	require.NoError(t, txt.SetRecord(expected))
 
 	actual, err := txt.GetRecord()
 	require.NoError(t, err)
 
-	assert.Equal(t, exapected, actual)
+	assert.Equal(t, expected, actual)
 }
