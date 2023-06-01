@@ -161,6 +161,9 @@ func (r cname) Read(ctx context.Context, req resource.ReadRequest, resp *resourc
 
 	// Retrieves record from dns.he.net, handles logging and errors
 	recordX, ok := readRecord(ctx, r.client, state.ID, state.ZoneID, "CNAME", resp)
+	if !ok {
+		return
+	}
 
 	recordCNAME, ok := recordX.(models.CNAME)
 	if !ok {

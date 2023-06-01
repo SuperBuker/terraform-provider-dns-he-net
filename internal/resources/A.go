@@ -176,6 +176,9 @@ func (r a) Read(ctx context.Context, req resource.ReadRequest, resp *resource.Re
 
 	// Retrieves record from dns.he.net, handles logging and errors
 	recordX, ok := readRecord(ctx, r.client, state.ID, state.ZoneID, "A", resp)
+	if !ok {
+		return
+	}
 
 	recordA, ok := recordX.(models.A)
 	if !ok {
