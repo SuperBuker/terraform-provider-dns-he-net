@@ -3,7 +3,6 @@ package resources_test
 import (
 	"context"
 	"fmt"
-	"math/rand"
 	"os"
 	"testing"
 
@@ -19,8 +18,9 @@ import (
 )
 
 func TestAccDDNSKey(t *testing.T) {
-	domainInit := fmt.Sprintf("example%v.dns-he-net.eu.org", rand.Intn(1000))
-	domainUpdate := fmt.Sprintf("example%v.dns-he-net.eu.org", rand.Intn(1000))
+	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
+	domainInit := domains[0]
+	domainUpdate := domains[1]
 
 	password := randStringBytesMaskImprSrcSB(16)
 
