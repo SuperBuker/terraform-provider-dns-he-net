@@ -301,7 +301,21 @@ func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSou
 func (p *dnsProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		resources.NewA,
+		resources.NewAAAA,
+		resources.NewALIAS,
+		resources.NewCAA,
 		resources.NewCNAME,
 		resources.NewDDNSKey,
+		resources.NewHINFO,
+		resources.NewLOC,
+		resources.NewMX,
+		resources.NewNAPTR,
+		resources.NewNS,
+		resources.NewPTR,
+		resources.NewRP,
+		resources.NewSPF,
+		resources.NewSRV,
+		resources.NewSSHFP,
+		resources.NewTXT,
 	}
 }
