@@ -1,7 +1,9 @@
 package utils
 
-func SplitByLen(data string, length int) []string {
-	var result []string
+func SplitByLen(data string, length int) (result []string) {
+	if length == 0 {
+		return
+	}
 
 	for len(data) > 0 {
 		if len(data) < length {
@@ -13,5 +15,5 @@ func SplitByLen(data string, length int) []string {
 		data = data[length:]
 	}
 
-	return result
+	return
 }

@@ -36,7 +36,7 @@ func TestSplitByLen(t *testing.T) {
 		{
 			inputString: "1234567890",
 			inputLen:    0,
-			result:      []string{},
+			result:      nil,
 		},
 	}
 
