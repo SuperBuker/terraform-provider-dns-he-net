@@ -19,15 +19,24 @@ import (
 
 // Validators //
 
-var domainValidator = stringvalidator.RegexMatches(regexp.MustCompile(`^(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`), "value must be a valid domain name")
-var ipv4Validator = stringvalidator.RegexMatches(regexp.MustCompile(`^(?:(?:25[0-5]|(?:2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$`), "value must be a valid IPv4 address")
-var ipv6Validator = stringvalidator.RegexMatches(regexp.MustCompile(`^([0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,7}:|([0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|([0-9a-fA-F]{1,4}:){1,5}(:[0-9a-fA-F]{1,4}){1,2}|([0-9a-fA-F]{1,4}:){1,4}(:[0-9a-fA-F]{1,4}){1,3}|([0-9a-fA-F]{1,4}:){1,3}(:[0-9a-fA-F]{1,4}){1,4}|([0-9a-fA-F]{1,4}:){1,2}(:[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:((:[0-9a-fA-F]{1,4}){1,6})|:((:[0-9a-fA-F]{1,4}){1,7}|:)$`), "value must be a valid IPv6 address")
-var afsdbValidator = stringvalidator.RegexMatches(regexp.MustCompile(`^[1,2] (?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`), "value must be a valid AFSDB record")
-var locValidator = stringvalidator.RegexMatches(regexp.MustCompile(`^(?:[\d]+(?:\.[\d]+)? ){3}[NS] (?:[\d]+(?:\.[\d]+)? ){3}[EW](?: [\d]+(?:\.[\d]+)?m){4}$`), "value must be a valid LOC record")
-var spfValidator = stringvalidator.RegexMatches(regexp.MustCompile(`^"v=spf1 .+"$`), "value must be a valid SPF record")
-var srvDomainValidator = stringvalidator.RegexMatches(regexp.MustCompile(`^_[a-zA-Z0-9]+\._(?:tcp|udp)\.(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`), "value must be a valid SRV domain name")
-var sshfpValidator = stringvalidator.RegexMatches(regexp.MustCompile(`^[12346] [12] [a-fA-F0-9]+$`), "value must be a valid SSHFP record") // Case insensitive ¯\_(ツ)_/¯
-var txtValidator = stringvalidator.RegexMatches(regexp.MustCompile(`^"[ -~]*"$`), "value must be a valid TXT record")
+var domainRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)
+var domainValidator = stringvalidator.RegexMatches(domainRegexp, "value must be a valid domain name")
+var ipv4Regexp = regexp.MustCompile(`^(?:(?:25[0-5]|(?:2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$`)
+var ipv4Validator = stringvalidator.RegexMatches(ipv4Regexp, "value must be a valid IPv4 address")
+var ipv6Regexp = regexp.MustCompile(`^(?:[0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,7}:|(?:[0-9a-fA-F]{1,4}:){1,6}:[0-9a-fA-F]{1,4}|(?:[0-9a-fA-F]{1,4}:){1,5}(?::[0-9a-fA-F]{1,4}){1,2}|(?:[0-9a-fA-F]{1,4}:){1,4}(?::[0-9a-fA-F]{1,4}){1,3}|(?:[0-9a-fA-F]{1,4}:){1,3}(?::[0-9a-fA-F]{1,4}){1,4}|(?:[0-9a-fA-F]{1,4}:){1,2}(?::[0-9a-fA-F]{1,4}){1,5}|[0-9a-fA-F]{1,4}:(?:(?::[0-9a-fA-F]{1,4}){1,6})|:(?:(?::[0-9a-fA-F]{1,4}){1,7}|:)$`)
+var ipv6Validator = stringvalidator.RegexMatches(ipv6Regexp, "value must be a valid IPv6 address")
+var afsdbRegexp = regexp.MustCompile(`^[1,2] (?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)
+var afsdbValidator = stringvalidator.RegexMatches(afsdbRegexp, "value must be a valid AFSDB record")
+var locRegexp = regexp.MustCompile(`^(?:[\d]+(?:\.[\d]+)? ){3}[NS] (?:[\d]+(?:\.[\d]+)? ){3}[EW](?: [\d]+(?:\.[\d]+)?m){4}$`)
+var locValidator = stringvalidator.RegexMatches(locRegexp, "value must be a valid LOC record")
+var spfRegexp = regexp.MustCompile(`^"v=spf1 .+"$`)
+var spfValidator = stringvalidator.RegexMatches(spfRegexp, "value must be a valid SPF record")
+var srvRegexp = regexp.MustCompile(`^_[a-zA-Z0-9]+\._(?:tcp|udp)\.(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)
+var srvDomainValidator = stringvalidator.RegexMatches(srvRegexp, "value must be a valid SRV domain name")
+var sshfpRegexp = regexp.MustCompile(`^[12346] [12] [a-fA-F0-9]+$`) // Case insensitive ¯\_(ツ)_/¯
+var sshfpValidator = stringvalidator.RegexMatches(sshfpRegexp, "value must be a valid SSHFP record")
+var txtRegexp = regexp.MustCompile(`^"[ -~]*"$`)
+var txtValidator = stringvalidator.RegexMatches(txtRegexp, "value must be a valid TXT record")
 
 // Common functions //
 
