@@ -302,6 +302,7 @@ func (p *dnsProvider) Resources(_ context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		resources.NewA,
 		resources.NewAAAA,
+		resources.NewAFSDB,
 		resources.NewALIAS,
 		resources.NewCAA,
 		resources.NewCNAME,
