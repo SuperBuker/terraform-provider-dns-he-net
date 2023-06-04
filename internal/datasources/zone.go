@@ -43,12 +43,12 @@ func (d *zoneModel) setZone(zone models.Zone) error {
 	return nil
 }
 
-func (d *zoneModel) getZone() (models.Zone, error) {
+/*func (d *zoneModel) getZone() (models.Zone, error) {
 	return models.Zone{
 		ID:   uint(d.ID.ValueInt64()),
 		Name: d.Name.ValueString(),
 	}, nil
-}
+}*/
 
 // Metadata returns the data source type name.
 func (zone) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {

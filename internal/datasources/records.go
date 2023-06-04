@@ -61,7 +61,7 @@ func (a *recordModel) setRecord(record models.Record) error {
 	return nil
 }
 
-func (a *recordModel) getRecord() (models.Record, error) {
+/*func (a *recordModel) getRecord() (models.Record, error) {
 	return models.Record{
 		ID:         utils.NativeUInt(a.ID),
 		ZoneID:     uint(a.ZoneID.ValueInt64()),
@@ -73,7 +73,7 @@ func (a *recordModel) getRecord() (models.Record, error) {
 		Dynamic:    a.Dynamic.ValueBool(),
 		Locked:     a.Locked.ValueBool(),
 	}, nil
-}
+}*/
 
 // Metadata returns the data source type name.
 func (records) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {

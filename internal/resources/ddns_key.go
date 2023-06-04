@@ -41,14 +41,11 @@ type ddnsKeyModel struct {
 	Key    types.String `tfsdk:"key"`
 }
 
-func (dk *ddnsKeyModel) set(ndk models.DDNSKey) {
-
+/*func (dk *ddnsKeyModel) set(ndk models.DDNSKey) {
 	dk.Domain = types.StringValue(ndk.Domain)
 	dk.ZoneID = types.Int64Value(int64(ndk.ZoneID))
 	dk.Key = types.StringValue(ndk.Key)
-
-	return
-}
+}*/
 
 func (dk ddnsKeyModel) get() models.DDNSKey {
 	return models.DDNSKey{
