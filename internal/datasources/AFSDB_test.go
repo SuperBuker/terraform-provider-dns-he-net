@@ -26,7 +26,6 @@ func TestAccAFSDB(t *testing.T) {
 					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "domain", "dns-he-net.ovh"),
 					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "ttl", "300"),
 					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "data", "2 green.dns-he-net.ovh"),
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "dynamic", "true"),
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "id", "5195520341"),

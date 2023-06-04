@@ -688,7 +688,7 @@ type afsdb struct {
 }
 ```
 
-### func \(\*afsdb\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AFSDB.go#L75>)
+### func \(\*afsdb\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AFSDB.go#L70>)
 
 ```go
 func (d *afsdb) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -704,7 +704,7 @@ func (afsdb) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(afsdb\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AFSDB.go#L82>)
+### func \(afsdb\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AFSDB.go#L77>)
 
 ```go
 func (d afsdb) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
