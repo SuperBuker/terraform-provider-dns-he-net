@@ -4,12 +4,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/utils"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-
-	"regexp"
 )
-
-var txtPattern = regexp.MustCompile(`(?:"([ -~]{255})" )|"([ -~]{1,255})"$`)
-var txtPatternExt = regexp.MustCompile(`^"([ -~]*)"$`)
 
 // TXT maps the data source schema data.
 type TXT struct {

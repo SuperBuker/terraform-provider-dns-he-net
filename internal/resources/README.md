@@ -97,7 +97,6 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/resources"
   - [func (dk ddnsKey) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)](<#func-ddnskey-update>)
 - [type ddnsKeyModel](<#type-ddnskeymodel>)
   - [func (dk ddnsKeyModel) get() models.DDNSKey](<#func-ddnskeymodel-get>)
-  - [func (dk *ddnsKeyModel) set(ndk models.DDNSKey)](<#func-ddnskeymodel-set>)
 - [type hinfo](<#type-hinfo>)
   - [func (r *hinfo) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)](<#func-hinfo-configure>)
   - [func (r hinfo) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)](<#func-hinfo-create>)
@@ -1074,7 +1073,7 @@ type ddnsKey struct {
 }
 ```
 
-### func \(\*ddnsKey\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L103>)
+### func \(\*ddnsKey\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L100>)
 
 ```go
 func (dk *ddnsKey) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1082,7 +1081,7 @@ func (dk *ddnsKey) Configure(ctx context.Context, req resource.ConfigureRequest,
 
 Configure adds the provider configured client to the resource.
 
-### func \(ddnsKey\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L110>)
+### func \(ddnsKey\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L107>)
 
 ```go
 func (dk ddnsKey) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1090,7 +1089,7 @@ func (dk ddnsKey) Create(ctx context.Context, req resource.CreateRequest, resp *
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(ddnsKey\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L227>)
+### func \(ddnsKey\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L224>)
 
 ```go
 func (ddnsKey) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1098,7 +1097,7 @@ func (ddnsKey) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(ddnsKey\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L62>)
+### func \(ddnsKey\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L59>)
 
 ```go
 func (ddnsKey) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse)
@@ -1106,13 +1105,13 @@ func (ddnsKey) Metadata(_ context.Context, req resource.MetadataRequest, resp *r
 
 Metadata returns the resource type name.
 
-### func \(ddnsKey\) [ModifyPlan](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L231>)
+### func \(ddnsKey\) [ModifyPlan](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L228>)
 
 ```go
 func (ddnsKey) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse)
 ```
 
-### func \(ddnsKey\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L143>)
+### func \(ddnsKey\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L140>)
 
 ```go
 func (dk ddnsKey) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1120,7 +1119,7 @@ func (dk ddnsKey) Read(ctx context.Context, req resource.ReadRequest, resp *reso
 
 Read refreshes the Terraform state with the latest data.
 
-### func \(ddnsKey\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L67>)
+### func \(ddnsKey\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L64>)
 
 ```go
 func (ddnsKey) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse)
@@ -1128,7 +1127,7 @@ func (ddnsKey) Schema(_ context.Context, _ resource.SchemaRequest, resp *resourc
 
 Schema defines the schema for the resource.
 
-### func \(ddnsKey\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L197>)
+### func \(ddnsKey\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L194>)
 
 ```go
 func (dk ddnsKey) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1149,16 +1148,10 @@ type ddnsKeyModel struct {
 }
 ```
 
-### func \(ddnsKeyModel\) [get](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L53>)
+### func \(ddnsKeyModel\) [get](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L50>)
 
 ```go
 func (dk ddnsKeyModel) get() models.DDNSKey
-```
-
-### func \(\*ddnsKeyModel\) [set](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L44>)
-
-```go
-func (dk *ddnsKeyModel) set(ndk models.DDNSKey)
 ```
 
 ## type [hinfo](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L32-L34>)

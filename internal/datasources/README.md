@@ -100,7 +100,6 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources
   - [func (d ptr) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-ptr-read>)
   - [func (ptr) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-ptr-schema>)
 - [type recordModel](<#type-recordmodel>)
-  - [func (a *recordModel) getRecord() (models.Record, error)](<#func-recordmodel-getrecord>)
   - [func (a *recordModel) setRecord(record models.Record) error](<#func-recordmodel-setrecord>)
 - [type records](<#type-records>)
   - [func (d *records) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-records-configure>)
@@ -144,7 +143,6 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources
   - [func (d zone) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-zone-read>)
   - [func (zone) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-zone-schema>)
 - [type zoneModel](<#type-zonemodel>)
-  - [func (d *zoneModel) getZone() (models.Zone, error)](<#func-zonemodel-getzone>)
   - [func (d *zoneModel) setZone(zone models.Zone) error](<#func-zonemodel-setzone>)
 - [type zones](<#type-zones>)
   - [func (d *zones) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-zones-configure>)
@@ -1114,12 +1112,6 @@ type recordModel struct {
 }
 ```
 
-### func \(\*recordModel\) [getRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/records.go#L64>)
-
-```go
-func (a *recordModel) getRecord() (models.Record, error)
-```
-
 ### func \(\*recordModel\) [setRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/records.go#L50>)
 
 ```go
@@ -1482,12 +1474,6 @@ type zoneModel struct {
     ID   types.Int64  `tfsdk:"id"`
     Name types.String `tfsdk:"name"`
 }
-```
-
-### func \(\*zoneModel\) [getZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L46>)
-
-```go
-func (d *zoneModel) getZone() (models.Zone, error)
 ```
 
 ### func \(\*zoneModel\) [setZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L39>)
