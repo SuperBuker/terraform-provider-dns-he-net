@@ -10,6 +10,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/resources"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
@@ -298,5 +299,24 @@ func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSou
 
 // Resources defines the resources implemented in the provider.
 func (p *dnsProvider) Resources(_ context.Context) []func() resource.Resource {
-	return []func() resource.Resource{}
+	return []func() resource.Resource{
+		resources.NewA,
+		resources.NewAAAA,
+		resources.NewAFSDB,
+		resources.NewALIAS,
+		resources.NewCAA,
+		resources.NewCNAME,
+		resources.NewDDNSKey,
+		resources.NewHINFO,
+		resources.NewLOC,
+		resources.NewMX,
+		resources.NewNAPTR,
+		resources.NewNS,
+		resources.NewPTR,
+		resources.NewRP,
+		resources.NewSPF,
+		resources.NewSRV,
+		resources.NewSSHFP,
+		resources.NewTXT,
+	}
 }

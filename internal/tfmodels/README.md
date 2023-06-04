@@ -129,28 +129,27 @@ func (aaaa AAAA) GetRecord() (models.AAAA, error)
 func (aaaa *AAAA) SetRecord(recordAAAA models.AAAA) error
 ```
 
-## type [AFSDB](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/AFSDB.go#L10-L17>)
+## type [AFSDB](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/AFSDB.go#L10-L16>)
 
 AFSDB maps the record schema data.
 
 ```go
 type AFSDB struct {
-    ID      types.Int64  `tfsdk:"id"`
-    ZoneID  types.Int64  `tfsdk:"zone_id"`
-    Domain  types.String `tfsdk:"domain"`
-    TTL     types.Int64  `tfsdk:"ttl"`
-    Data    types.String `tfsdk:"data"`
-    Dynamic types.Bool   `tfsdk:"dynamic"`
+    ID     types.Int64  `tfsdk:"id"`
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Domain types.String `tfsdk:"domain"`
+    TTL    types.Int64  `tfsdk:"ttl"`
+    Data   types.String `tfsdk:"data"`
 }
 ```
 
-### func \(AFSDB\) [GetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/AFSDB.go#L30>)
+### func \(AFSDB\) [GetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/AFSDB.go#L28>)
 
 ```go
 func (afsdb AFSDB) GetRecord() (models.AFSDB, error)
 ```
 
-### func \(\*AFSDB\) [SetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/AFSDB.go#L19>)
+### func \(\*AFSDB\) [SetRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/tfmodels/blob/master/internal/tfmodels/AFSDB.go#L18>)
 
 ```go
 func (afsdb *AFSDB) SetRecord(recordAFSDB models.AFSDB) error

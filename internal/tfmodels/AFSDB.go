@@ -8,12 +8,11 @@ import (
 
 // AFSDB maps the record schema data.
 type AFSDB struct {
-	ID      types.Int64  `tfsdk:"id"`
-	ZoneID  types.Int64  `tfsdk:"zone_id"`
-	Domain  types.String `tfsdk:"domain"`
-	TTL     types.Int64  `tfsdk:"ttl"`
-	Data    types.String `tfsdk:"data"`
-	Dynamic types.Bool   `tfsdk:"dynamic"`
+	ID     types.Int64  `tfsdk:"id"`
+	ZoneID types.Int64  `tfsdk:"zone_id"`
+	Domain types.String `tfsdk:"domain"`
+	TTL    types.Int64  `tfsdk:"ttl"`
+	Data   types.String `tfsdk:"data"`
 }
 
 func (afsdb *AFSDB) SetRecord(recordAFSDB models.AFSDB) error {
@@ -22,18 +21,16 @@ func (afsdb *AFSDB) SetRecord(recordAFSDB models.AFSDB) error {
 	afsdb.Domain = types.StringValue(recordAFSDB.Domain)
 	afsdb.TTL = types.Int64Value(int64(recordAFSDB.TTL))
 	afsdb.Data = types.StringValue(recordAFSDB.Data)
-	afsdb.Dynamic = types.BoolValue(recordAFSDB.Dynamic)
 
 	return nil
 }
 
 func (afsdb AFSDB) GetRecord() (models.AFSDB, error) {
 	return models.AFSDB{
-		ID:      utils.NativeUInt(afsdb.ID),
-		ZoneID:  uint(afsdb.ZoneID.ValueInt64()),
-		Domain:  afsdb.Domain.ValueString(),
-		TTL:     uint(afsdb.TTL.ValueInt64()),
-		Data:    afsdb.Data.ValueString(),
-		Dynamic: afsdb.Dynamic.ValueBool(),
+		ID:     utils.NativeUInt(afsdb.ID),
+		ZoneID: uint(afsdb.ZoneID.ValueInt64()),
+		Domain: afsdb.Domain.ValueString(),
+		TTL:    uint(afsdb.TTL.ValueInt64()),
+		Data:   afsdb.Data.ValueString(),
 	}, nil
 }

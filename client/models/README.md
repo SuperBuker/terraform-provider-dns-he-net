@@ -290,50 +290,49 @@ func (r AAAA) Serialise() map[string]string
 func (r AAAA) Type() string
 ```
 
-## type [AFSDB](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L5-L12>)
+## type [AFSDB](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L5-L11>)
 
 ```go
 type AFSDB struct {
-    ID      *uint
-    ZoneID  uint
-    Domain  string
-    TTL     uint // seconds
-    Data    string
-    Dynamic bool
+    ID     *uint
+    ZoneID uint
+    Domain string
+    TTL    uint // seconds
+    Data   string
 }
 ```
 
-### func [ToAFSDB](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L14>)
+### func [ToAFSDB](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L13>)
 
 ```go
 func ToAFSDB(r Record) AFSDB
 ```
 
-### func \(AFSDB\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L45>)
+### func \(AFSDB\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L42>)
 
 ```go
 func (r AFSDB) GetID() (uint, bool)
 ```
 
-### func \(AFSDB\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L53>)
+### func \(AFSDB\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L50>)
 
 ```go
 func (r AFSDB) GetZoneID() uint
 ```
 
-### func \(AFSDB\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L38>)
+### func \(AFSDB\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L35>)
 
 ```go
 func (r AFSDB) Refs() map[string]string
 ```
 
-### func \(AFSDB\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L25>)
+### func \(AFSDB\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L23>)
 
 ```go
 func (r AFSDB) Serialise() map[string]string
 ```
 
-### func \(AFSDB\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L57>)
+### func \(AFSDB\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L54>)
 
 ```go
 func (r AFSDB) Type() string
