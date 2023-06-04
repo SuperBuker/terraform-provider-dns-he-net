@@ -62,7 +62,7 @@ var records_out = []models.RecordX{
 	models.CAA{ID: nil, ZoneID: 1234567, Domain: "example.com", TTL: 86400, Data: "0 iodef \"webmaster@example.com\""},
 	models.SRV{ID: nil, ZoneID: 1234567, Domain: "_https._tcp.example.com", TTL: 300, Priority: 0, Weight: 0, Port: 443, Target: "ff.example.com"},
 	models.TXT{ID: nil, ZoneID: 1234567, Domain: "txt.example.com", TTL: 86400, Data: "\"Some data 0\"", Dynamic: false},
-	models.AFSDB{ID: nil, ZoneID: 1234567, Domain: "example.com", TTL: 300, Data: "1 afsdb.example.com", Dynamic: false},
+	models.AFSDB{ID: nil, ZoneID: 1234567, Domain: "example.com", TTL: 300, Data: "1 afsdb.example.com"},
 	models.HINFO{ID: nil, ZoneID: 1234567, Domain: "example.com", TTL: 300, Data: "i686 Linux"},
 	models.RP{ID: nil, ZoneID: 1234567, Domain: "example.com", TTL: 300, Data: "user.example.com user.example.com"},
 	models.LOC{ID: nil, ZoneID: 1234567, Domain: "example.com", TTL: 300, Data: "51 56 0.123 N 5 54 0.000 E 4.00m 1.00m 10000.00m 10.00m"},

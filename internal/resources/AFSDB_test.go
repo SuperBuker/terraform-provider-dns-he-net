@@ -2,7 +2,6 @@ package resources_test
 
 import (
 	"fmt"
-	"regexp"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/test_utils"
@@ -14,21 +13,9 @@ func TestAccAFSDBRecord(t *testing.T) {
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
-	password := randStringBytesMaskImprSrcSB(16)
-
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
-			// Validate config
-			// Must fail because the default dynamic value is false and data is not set
-			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_afsdb" "record-afsdb" {
-					zone_id = 1091256
-					domain = %q
-					ttl = 300
-				}`, domainInit),
-				ExpectError: regexp.MustCompile("Invalid AFSDB record configuration"),
-			},
 			// Create and Read testing
 			// Validates data default value by setting dynamic to true
 			{
@@ -36,15 +23,14 @@ func TestAccAFSDBRecord(t *testing.T) {
 					zone_id = 1091256
 					domain = %q
 					ttl = 300
-					dynamic = true
+					data = "1 green.dns-he-net.eu.org"
 				}`, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "zone_id", "1091256"),
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "ttl", "300"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", "1 afsdb.example.com"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "dynamic", "true"),
+					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", "1 green.dns-he-net.eu.org"),
 				),
 			},
 			// ImportState testing
@@ -62,65 +48,14 @@ func TestAccAFSDBRecord(t *testing.T) {
 					zone_id = 1091256
 					domain = %q
 					ttl = 600
-					data = "1 green.dns-he-net.eu.org"
+					data = "2 blue.dns-he-net.eu.org"
 				}`, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "zone_id", "1091256"),
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "ttl", "600"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", "1 green.dns-he-net.eu.org"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "dynamic", "false"),
-				),
-			},
-			// Update and Read testing
-			// Validates state continuity by setting dynamic to true and ommiting data
-			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_afsdb" "record-afsdb" {
-					zone_id = 1091256
-					domain = %q
-					ttl = 600
-					dynamic = true
-				}
-
-				resource "dns-he-net_ddnskey" "ddnskey" {
-					domain = %q
-					zone_id = 1091256
-					key = %q
-				}`, domainUpdate, domainUpdate, password),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "zone_id", "1091256"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "domain", domainUpdate),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "ttl", "600"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", "1 green.dns-he-net.eu.org"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "dynamic", "true"),
-				),
-			},
-			// Update and Read testing
-			// Update and Read testing
-			// Validates forcing a data value with dynamic set to true
-			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_afsdb" "record-afsdb" {
-					zone_id = 1091256
-					domain = %q
-					ttl = 600
-					data = "1 green.dns-he-net.eu.org"
-					dynamic = true
-				}
-
-				resource "dns-he-net_ddnskey" "ddnskey" {
-					domain = %q
-					zone_id = 1091256
-					key = %q
-				}`, domainUpdate, domainUpdate, password),
-				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "zone_id", "1091256"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "domain", domainUpdate),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "ttl", "600"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", "1 green.dns-he-net.eu.org"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "dynamic", "true"),
+					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", "2 blue.dns-he-net.eu.org"),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

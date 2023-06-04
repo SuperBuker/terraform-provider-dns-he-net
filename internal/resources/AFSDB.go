@@ -6,14 +6,11 @@ import (
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/planmodifiers"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/tfmodels"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/booldefault"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
@@ -80,23 +77,12 @@ func (afsdb) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 				},
 			},
 			"data": schema.StringAttribute{
-				Computed:            true,
-				Optional:            true,
+				Required:            true,
 				Description:         "Value of the DNS record: *TODO*",
 				MarkdownDescription: "Value of the DNS record: *TODO*",
 				Validators: []validator.String{
 					afsdbValidator,
 				},
-				PlanModifiers: []planmodifier.String{
-					planmodifiers.UseStateOrDftForUnknown("1 afsdb.example.com"),
-				},
-			},
-			"dynamic": schema.BoolAttribute{
-				Computed:            true, // Isn't really computed...
-				Optional:            true,
-				Description:         "Enable DDNS for this record",
-				MarkdownDescription: "Enable DDNS for this record",
-				Default:             booldefault.StaticBool(false),
 			},
 		},
 	}
@@ -285,43 +271,6 @@ func (r afsdb) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 			"Unable to delete AFSDB record",
 			err.Error(),
 		)
-	}
-}
-
-func (afsdb) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse) {
-	var config tfmodels.AFSDB
-
-	// Retrieve values from config
-	diags := req.Config.Get(ctx, &config)
-	resp.Diagnostics.Append(diags...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	recordA, err := config.GetRecord()
-	if err != nil {
-		resp.Diagnostics.AddError(
-			"Unable to build AFSDB record",
-			err.Error(),
-		)
-		return
-	}
-
-	// Validate configuration
-	if !config.Data.IsUnknown() && !config.Data.IsNull() {
-		// pass
-	} else if recordA.Dynamic {
-		resp.Diagnostics.AddAttributeWarning(
-			path.Root("data"),
-			"Missing Attribute Configuration",
-			"Applying default configuration",
-		)
-	} else {
-		resp.Diagnostics.AddError(
-			"Invalid AFSDB record configuration",
-			"Static AFSDB records must have Data configured.",
-		)
-		return
 	}
 }
 

@@ -3,22 +3,20 @@ package models
 import "fmt"
 
 type AFSDB struct {
-	ID      *uint
-	ZoneID  uint
-	Domain  string
-	TTL     uint // seconds
-	Data    string
-	Dynamic bool
+	ID     *uint
+	ZoneID uint
+	Domain string
+	TTL    uint // seconds
+	Data   string
 }
 
 func ToAFSDB(r Record) AFSDB {
 	return AFSDB{
-		ID:      r.ID,
-		ZoneID:  r.ZoneID,
-		Domain:  r.Domain,
-		TTL:     r.TTL,
-		Data:    r.Data,
-		Dynamic: r.Dynamic,
+		ID:     r.ID,
+		ZoneID: r.ZoneID,
+		Domain: r.Domain,
+		TTL:    r.TTL,
+		Data:   r.Data,
 	}
 }
 
@@ -31,7 +29,6 @@ func (r AFSDB) Serialise() map[string]string {
 		"Name":    r.Domain,
 		"Content": r.Data,
 		"TTL":     fmt.Sprint(r.TTL),
-		"dynamic": b2s[r.Dynamic],
 	}
 }
 

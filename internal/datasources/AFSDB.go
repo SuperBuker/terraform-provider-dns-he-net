@@ -62,11 +62,6 @@ func (afsdb) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 				MarkdownDescription: "Value of the DNS record: *TODO*",
 				Computed:            true,
 			},
-			"dynamic": schema.BoolAttribute{
-				Description:         "Enable DDNS for this record",
-				MarkdownDescription: "Enable DDNS for this record",
-				Computed:            true,
-			},
 		},
 	}
 }
