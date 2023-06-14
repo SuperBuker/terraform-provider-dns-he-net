@@ -18,6 +18,19 @@ func RecordById(records []models.Record, id uint) (models.Record, bool) {
 	return models.Record{}, false
 }
 
+// MatchRecord returns the record matching the input in a slice of records.
+// If the slice doesn't contain any matching record, it returns an empty record
+// and false.
+func MatchRecord(records []models.Record, rx models.RecordX) (r models.Record, ok bool) {
+	for _, record := range records {
+		if rx.Equals(record) {
+			return record, true
+		}
+	}
+
+	return models.Record{}, false
+}
+
 // LatestRecord returns the latest record (highest ID) in a slice of records.
 // If the slice doesn't contain any record with ID, it returns an empty record
 // and false.

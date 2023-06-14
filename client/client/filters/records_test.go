@@ -49,6 +49,14 @@ func TestRecordById(t *testing.T) {
 	}
 }
 
+func TestMatchRecord(t *testing.T) {
+	for i, record := range records {
+		rec, ok := filters.MatchRecord(records, record)
+		assert.True(t, ok)
+		assert.Equal(t, records[i], rec)
+	}
+}
+
 func TestLatestRecord(t *testing.T) {
 	record, ok := filters.LatestRecord(records)
 	assert.Equal(t, records[9], record)
