@@ -36,6 +36,8 @@ func (mx) Metadata(_ context.Context, req datasource.MetadataRequest, resp *data
 // Schema defines the schema for the data source.
 func (mx) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS MX record",
+		MarkdownDescription: "DNS MX record",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Description:         "dns.he.net record id",

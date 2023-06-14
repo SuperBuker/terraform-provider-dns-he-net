@@ -41,6 +41,8 @@ func (caa) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 // Schema defines the schema for the resource.
 func (caa) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS CAA record",
+		MarkdownDescription: "DNS CAA record",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Computed:            true,

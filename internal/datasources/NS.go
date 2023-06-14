@@ -36,6 +36,8 @@ func (ns) Metadata(_ context.Context, req datasource.MetadataRequest, resp *data
 // Schema defines the schema for the data source.
 func (ns) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS NS record",
+		MarkdownDescription: "DNS NS record",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Description:         "dns.he.net record id",

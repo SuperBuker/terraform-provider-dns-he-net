@@ -41,6 +41,8 @@ func (loc) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 // Schema defines the schema for the resource.
 func (loc) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS LOC record",
+		MarkdownDescription: "DNS LOC record",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Computed:            true,

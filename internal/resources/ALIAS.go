@@ -41,6 +41,8 @@ func (alias) Metadata(_ context.Context, req resource.MetadataRequest, resp *res
 // Schema defines the schema for the resource.
 func (alias) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS ALIAS record",
+		MarkdownDescription: "DNS ALIAS record",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Computed:            true,

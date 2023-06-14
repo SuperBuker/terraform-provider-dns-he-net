@@ -63,6 +63,8 @@ func (ddnsKey) Metadata(_ context.Context, req resource.MetadataRequest, resp *r
 // Schema defines the schema for the resource.
 func (ddnsKey) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DDNS update key",
+		MarkdownDescription: "DDNS update key",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Computed:            true,

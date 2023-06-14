@@ -550,7 +550,7 @@ type a struct {
 }
 ```
 
-### func \(\*a\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/A.go#L75>)
+### func \(\*a\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/A.go#L77>)
 
 ```go
 func (d *a) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -566,7 +566,7 @@ func (a) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datas
 
 Metadata returns the data source type name.
 
-### func \(a\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/A.go#L82>)
+### func \(a\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/A.go#L84>)
 
 ```go
 func (d a) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -592,7 +592,7 @@ type aaaa struct {
 }
 ```
 
-### func \(\*aaaa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AAAA.go#L75>)
+### func \(\*aaaa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AAAA.go#L77>)
 
 ```go
 func (d *aaaa) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -608,7 +608,7 @@ func (aaaa) Metadata(_ context.Context, req datasource.MetadataRequest, resp *da
 
 Metadata returns the data source type name.
 
-### func \(aaaa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AAAA.go#L82>)
+### func \(aaaa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AAAA.go#L84>)
 
 ```go
 func (d aaaa) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -634,7 +634,7 @@ type account struct {
 }
 ```
 
-### func \(\*account\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/account.go#L53>)
+### func \(\*account\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/account.go#L55>)
 
 ```go
 func (d *account) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -650,7 +650,7 @@ func (account) Metadata(_ context.Context, req datasource.MetadataRequest, resp 
 
 Metadata returns the data source type name.
 
-### func \(account\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/account.go#L60>)
+### func \(account\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/account.go#L62>)
 
 ```go
 func (d account) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -686,7 +686,7 @@ type afsdb struct {
 }
 ```
 
-### func \(\*afsdb\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AFSDB.go#L70>)
+### func \(\*afsdb\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AFSDB.go#L72>)
 
 ```go
 func (d *afsdb) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -702,7 +702,7 @@ func (afsdb) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(afsdb\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AFSDB.go#L77>)
+### func \(afsdb\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/AFSDB.go#L79>)
 
 ```go
 func (d afsdb) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -728,7 +728,7 @@ type alias struct {
 }
 ```
 
-### func \(\*alias\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/ALIAS.go#L70>)
+### func \(\*alias\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/ALIAS.go#L72>)
 
 ```go
 func (d *alias) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -744,7 +744,7 @@ func (alias) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(alias\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/ALIAS.go#L77>)
+### func \(alias\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/ALIAS.go#L79>)
 
 ```go
 func (d alias) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -770,7 +770,7 @@ type caa struct {
 }
 ```
 
-### func \(\*caa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CAA.go#L70>)
+### func \(\*caa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CAA.go#L72>)
 
 ```go
 func (d *caa) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -786,7 +786,7 @@ func (caa) Metadata(_ context.Context, req datasource.MetadataRequest, resp *dat
 
 Metadata returns the data source type name.
 
-### func \(caa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CAA.go#L77>)
+### func \(caa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CAA.go#L79>)
 
 ```go
 func (d caa) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -812,7 +812,7 @@ type cname struct {
 }
 ```
 
-### func \(\*cname\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CNAME.go#L70>)
+### func \(\*cname\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CNAME.go#L72>)
 
 ```go
 func (d *cname) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -828,7 +828,7 @@ func (cname) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(cname\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CNAME.go#L77>)
+### func \(cname\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CNAME.go#L79>)
 
 ```go
 func (d cname) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -854,7 +854,7 @@ type hinfo struct {
 }
 ```
 
-### func \(\*hinfo\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/HINFO.go#L70>)
+### func \(\*hinfo\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/HINFO.go#L72>)
 
 ```go
 func (d *hinfo) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -870,7 +870,7 @@ func (hinfo) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(hinfo\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/HINFO.go#L77>)
+### func \(hinfo\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/HINFO.go#L79>)
 
 ```go
 func (d hinfo) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -896,7 +896,7 @@ type loc struct {
 }
 ```
 
-### func \(\*loc\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/LOC.go#L70>)
+### func \(\*loc\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/LOC.go#L72>)
 
 ```go
 func (d *loc) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -912,7 +912,7 @@ func (loc) Metadata(_ context.Context, req datasource.MetadataRequest, resp *dat
 
 Metadata returns the data source type name.
 
-### func \(loc\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/LOC.go#L77>)
+### func \(loc\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/LOC.go#L79>)
 
 ```go
 func (d loc) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -938,7 +938,7 @@ type mx struct {
 }
 ```
 
-### func \(\*mx\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/MX.go#L75>)
+### func \(\*mx\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/MX.go#L77>)
 
 ```go
 func (d *mx) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -954,7 +954,7 @@ func (mx) Metadata(_ context.Context, req datasource.MetadataRequest, resp *data
 
 Metadata returns the data source type name.
 
-### func \(mx\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/MX.go#L82>)
+### func \(mx\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/MX.go#L84>)
 
 ```go
 func (d mx) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -980,7 +980,7 @@ type naptr struct {
 }
 ```
 
-### func \(\*naptr\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NAPTR.go#L70>)
+### func \(\*naptr\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NAPTR.go#L72>)
 
 ```go
 func (d *naptr) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -996,7 +996,7 @@ func (naptr) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(naptr\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NAPTR.go#L77>)
+### func \(naptr\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NAPTR.go#L79>)
 
 ```go
 func (d naptr) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1022,7 +1022,7 @@ type ns struct {
 }
 ```
 
-### func \(\*ns\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NS.go#L70>)
+### func \(\*ns\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NS.go#L72>)
 
 ```go
 func (d *ns) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1038,7 +1038,7 @@ func (ns) Metadata(_ context.Context, req datasource.MetadataRequest, resp *data
 
 Metadata returns the data source type name.
 
-### func \(ns\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NS.go#L77>)
+### func \(ns\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NS.go#L79>)
 
 ```go
 func (d ns) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1064,7 +1064,7 @@ type ptr struct {
 }
 ```
 
-### func \(\*ptr\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/PTR.go#L70>)
+### func \(\*ptr\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/PTR.go#L72>)
 
 ```go
 func (d *ptr) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1080,7 +1080,7 @@ func (ptr) Metadata(_ context.Context, req datasource.MetadataRequest, resp *dat
 
 Metadata returns the data source type name.
 
-### func \(ptr\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/PTR.go#L77>)
+### func \(ptr\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/PTR.go#L79>)
 
 ```go
 func (d ptr) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1128,7 +1128,7 @@ type records struct {
 }
 ```
 
-### func \(\*records\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/records.go#L150>)
+### func \(\*records\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/records.go#L152>)
 
 ```go
 func (d *records) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1144,7 +1144,7 @@ func (records) Metadata(_ context.Context, req datasource.MetadataRequest, resp 
 
 Metadata returns the data source type name.
 
-### func \(records\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/records.go#L157>)
+### func \(records\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/records.go#L159>)
 
 ```go
 func (d records) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1181,7 +1181,7 @@ type rp struct {
 }
 ```
 
-### func \(\*rp\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/RP.go#L70>)
+### func \(\*rp\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/RP.go#L72>)
 
 ```go
 func (d *rp) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1197,7 +1197,7 @@ func (rp) Metadata(_ context.Context, req datasource.MetadataRequest, resp *data
 
 Metadata returns the data source type name.
 
-### func \(rp\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/RP.go#L77>)
+### func \(rp\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/RP.go#L79>)
 
 ```go
 func (d rp) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1223,7 +1223,7 @@ type soa struct {
 }
 ```
 
-### func \(\*soa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SOA.go#L95>)
+### func \(\*soa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SOA.go#L97>)
 
 ```go
 func (d *soa) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1239,7 +1239,7 @@ func (soa) Metadata(_ context.Context, req datasource.MetadataRequest, resp *dat
 
 Metadata returns the data source type name.
 
-### func \(soa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SOA.go#L102>)
+### func \(soa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SOA.go#L104>)
 
 ```go
 func (d soa) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1265,7 +1265,7 @@ type spf struct {
 }
 ```
 
-### func \(\*spf\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SPF.go#L70>)
+### func \(\*spf\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SPF.go#L72>)
 
 ```go
 func (d *spf) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1281,7 +1281,7 @@ func (spf) Metadata(_ context.Context, req datasource.MetadataRequest, resp *dat
 
 Metadata returns the data source type name.
 
-### func \(spf\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SPF.go#L77>)
+### func \(spf\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SPF.go#L79>)
 
 ```go
 func (d spf) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1307,7 +1307,7 @@ type srv struct {
 }
 ```
 
-### func \(\*srv\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SRV.go#L85>)
+### func \(\*srv\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SRV.go#L87>)
 
 ```go
 func (d *srv) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1323,7 +1323,7 @@ func (srv) Metadata(_ context.Context, req datasource.MetadataRequest, resp *dat
 
 Metadata returns the data source type name.
 
-### func \(srv\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SRV.go#L92>)
+### func \(srv\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SRV.go#L94>)
 
 ```go
 func (d srv) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1349,7 +1349,7 @@ type sshfp struct {
 }
 ```
 
-### func \(\*sshfp\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SSHFP.go#L70>)
+### func \(\*sshfp\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SSHFP.go#L72>)
 
 ```go
 func (d *sshfp) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1365,7 +1365,7 @@ func (sshfp) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(sshfp\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SSHFP.go#L77>)
+### func \(sshfp\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/SSHFP.go#L79>)
 
 ```go
 func (d sshfp) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1391,7 +1391,7 @@ type txt struct {
 }
 ```
 
-### func \(\*txt\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/TXT.go#L75>)
+### func \(\*txt\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/TXT.go#L77>)
 
 ```go
 func (d *txt) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1407,7 +1407,7 @@ func (txt) Metadata(_ context.Context, req datasource.MetadataRequest, resp *dat
 
 Metadata returns the data source type name.
 
-### func \(txt\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/TXT.go#L82>)
+### func \(txt\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/TXT.go#L84>)
 
 ```go
 func (d txt) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1433,7 +1433,7 @@ type zone struct {
 }
 ```
 
-### func \(\*zone\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L77>)
+### func \(\*zone\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L79>)
 
 ```go
 func (d *zone) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1449,7 +1449,7 @@ func (zone) Metadata(_ context.Context, req datasource.MetadataRequest, resp *da
 
 Metadata returns the data source type name.
 
-### func \(zone\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L84>)
+### func \(zone\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L86>)
 
 ```go
 func (d zone) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1492,7 +1492,7 @@ type zones struct {
 }
 ```
 
-### func \(\*zones\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zones.go#L74>)
+### func \(\*zones\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zones.go#L76>)
 
 ```go
 func (d *zones) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1508,7 +1508,7 @@ func (zones) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(zones\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zones.go#L81>)
+### func \(zones\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zones.go#L83>)
 
 ```go
 func (d zones) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
