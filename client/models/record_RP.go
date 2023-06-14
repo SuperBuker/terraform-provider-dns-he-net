@@ -20,6 +20,24 @@ func ToRP(r Record) RP {
 	}
 }
 
+func (r RP) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "RP" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToRP(rec)
+	}
+
+	rrp := rx.(RP)
+
+	return r.ZoneID == rrp.ZoneID &&
+		r.Domain == rrp.Domain &&
+		r.TTL == rrp.TTL &&
+		r.Data == rrp.Data
+}
+
 func (r RP) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "RP",

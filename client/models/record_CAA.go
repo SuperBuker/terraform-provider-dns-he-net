@@ -20,6 +20,24 @@ func ToCAA(r Record) CAA {
 	}
 }
 
+func (r CAA) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "CAA" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToCAA(rec)
+	}
+
+	rcaa := rx.(CAA)
+
+	return r.ZoneID == rcaa.ZoneID &&
+		r.Domain == rcaa.Domain &&
+		r.TTL == rcaa.TTL &&
+		r.Data == rcaa.Data
+}
+
 func (r CAA) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "CAA",

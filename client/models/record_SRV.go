@@ -61,6 +61,32 @@ func ToSRV(r Record) (SRV, error) {
 	}, nil
 }
 
+func (r SRV) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "SRV" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		var err error
+		rx, err = ToSRV(rec)
+
+		if err != nil {
+			return false
+		}
+	}
+
+	rsrv := rx.(SRV)
+
+	return r.ZoneID == rsrv.ZoneID &&
+		r.Domain == rsrv.Domain &&
+		r.TTL == rsrv.TTL &&
+		r.Priority == rsrv.Priority &&
+		r.Weight == rsrv.Weight &&
+		r.Port == rsrv.Port &&
+		r.Target == rsrv.Target
+}
+
 func (r SRV) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "SRV",

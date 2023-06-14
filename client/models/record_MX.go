@@ -28,6 +28,30 @@ func ToMX(r Record) (MX, error) {
 	}, nil
 }
 
+func (r MX) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "MX" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		var err error
+		rx, err = ToMX(rec)
+
+		if err != nil {
+			return false
+		}
+	}
+
+	rmx := rx.(MX)
+
+	return r.ZoneID == rmx.ZoneID &&
+		r.Domain == rmx.Domain &&
+		r.TTL == rmx.TTL &&
+		r.Priority == rmx.Priority &&
+		r.Data == rmx.Data
+}
+
 func (r MX) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "MX",

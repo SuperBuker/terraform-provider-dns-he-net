@@ -20,6 +20,24 @@ func ToNAPTR(r Record) NAPTR {
 	}
 }
 
+func (r NAPTR) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "NAPTR" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToNAPTR(rec)
+	}
+
+	rnaptr := rx.(NAPTR)
+
+	return r.ZoneID == rnaptr.ZoneID &&
+		r.Domain == rnaptr.Domain &&
+		r.TTL == rnaptr.TTL &&
+		r.Data == rnaptr.Data
+}
+
 func (r NAPTR) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "NAPTR",

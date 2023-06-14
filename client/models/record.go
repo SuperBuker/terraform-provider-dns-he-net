@@ -15,7 +15,7 @@ type Record struct {
 }
 
 func (r Record) ToX() (RecordX, error) {
-	switch strings.ToUpper(r.RecordType) {
+	switch r.Type() {
 	case "SOA":
 		return ToSOA(r)
 	case "A":
@@ -56,6 +56,18 @@ func (r Record) ToX() (RecordX, error) {
 	return nil, nil // This needs an error, whatever
 }
 
+func (r Record) Equals(rx RecordX) bool {
+	if rx == nil {
+		// pass
+	} else if rx.Type() != r.Type() {
+		// pass
+	} else if rec, err := r.ToX(); err == nil {
+		return rec.Equals(rx)
+	}
+
+	return false
+}
+
 func (r Record) Serialise() map[string]string {
 	if rx, err := r.ToX(); err == nil {
 		return rx.Serialise()
@@ -70,4 +82,20 @@ func (r Record) Refs() map[string]string {
 	}
 
 	return nil
+}
+
+func (r Record) GetID() (uint, bool) {
+	if r.ID == nil {
+		return 0, false
+	}
+
+	return *r.ID, true
+}
+
+func (r Record) GetZoneID() uint {
+	return r.ZoneID
+}
+
+func (r Record) Type() string {
+	return strings.ToUpper(r.RecordType)
 }

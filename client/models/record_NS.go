@@ -20,6 +20,24 @@ func ToNS(r Record) NS {
 	}
 }
 
+func (r NS) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "NS" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToNS(rec)
+	}
+
+	rns := rx.(NS)
+
+	return r.ZoneID == rns.ZoneID &&
+		r.Domain == rns.Domain &&
+		r.TTL == rns.TTL &&
+		r.Data == rns.Data
+}
+
 func (r NS) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "NS",

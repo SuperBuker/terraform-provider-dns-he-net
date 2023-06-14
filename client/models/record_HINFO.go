@@ -20,6 +20,24 @@ func ToHINFO(r Record) HINFO {
 	}
 }
 
+func (r HINFO) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "HINFO" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToHINFO(rec)
+	}
+
+	rhinfo := rx.(HINFO)
+
+	return r.ZoneID == rhinfo.ZoneID &&
+		r.Domain == rhinfo.Domain &&
+		r.TTL == rhinfo.TTL &&
+		r.Data == rhinfo.Data
+}
+
 func (r HINFO) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "HINFO",
