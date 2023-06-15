@@ -20,6 +20,24 @@ func ToPTR(r Record) PTR {
 	}
 }
 
+func (r PTR) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "PTR" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToPTR(rec)
+	}
+
+	rptr := rx.(PTR)
+
+	return r.ZoneID == rptr.ZoneID &&
+		r.Domain == rptr.Domain &&
+		r.TTL == rptr.TTL &&
+		r.Data == rptr.Data
+}
+
 func (r PTR) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "PTR",

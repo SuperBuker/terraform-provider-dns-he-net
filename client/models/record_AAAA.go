@@ -22,6 +22,25 @@ func ToAAAA(r Record) AAAA {
 	}
 }
 
+func (r AAAA) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "AAAA" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToAAAA(rec)
+	}
+
+	raaaa := rx.(AAAA)
+
+	return r.ZoneID == raaaa.ZoneID &&
+		r.Domain == raaaa.Domain &&
+		r.TTL == raaaa.TTL &&
+		r.Data == raaaa.Data &&
+		r.Dynamic == raaaa.Dynamic
+}
+
 func (r AAAA) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "aaaa",

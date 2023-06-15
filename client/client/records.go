@@ -68,7 +68,7 @@ func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.R
 	}
 
 	if !idIsSet {
-		_record, ok := filters.LatestRecord(records)
+		_record, ok := filters.MatchRecord(records, record)
 
 		if !ok {
 			return nil, &ErrItemNotFound{Resource: "record"} // TODO: to improve

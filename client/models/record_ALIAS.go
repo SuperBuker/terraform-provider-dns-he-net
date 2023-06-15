@@ -20,6 +20,24 @@ func ToALIAS(r Record) ALIAS {
 	}
 }
 
+func (r ALIAS) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "ALIAS" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToALIAS(rec)
+	}
+
+	ralias := rx.(ALIAS)
+
+	return r.ZoneID == ralias.ZoneID &&
+		r.Domain == ralias.Domain &&
+		r.TTL == ralias.TTL &&
+		r.Data == ralias.Data
+}
+
 func (r ALIAS) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "ALIAS",

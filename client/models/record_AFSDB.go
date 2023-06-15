@@ -20,6 +20,24 @@ func ToAFSDB(r Record) AFSDB {
 	}
 }
 
+func (r AFSDB) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "AFSDB" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToAFSDB(rec)
+	}
+
+	rafsdb := rx.(AFSDB)
+
+	return r.ZoneID == rafsdb.ZoneID &&
+		r.Domain == rafsdb.Domain &&
+		r.TTL == rafsdb.TTL &&
+		r.Data == rafsdb.Data
+}
+
 func (r AFSDB) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "AFSDB",

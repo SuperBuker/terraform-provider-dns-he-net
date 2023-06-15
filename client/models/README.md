@@ -14,6 +14,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 - [func toString(n interface{}) string](<#func-tostring>)
 - [type A](<#type-a>)
   - [func ToA(r Record) A](<#func-toa>)
+  - [func (r A) Equals(rx RecordX) bool](<#func-a-equals>)
   - [func (r A) GetID() (uint, bool)](<#func-a-getid>)
   - [func (r A) GetZoneID() uint](<#func-a-getzoneid>)
   - [func (r A) Refs() map[string]string](<#func-a-refs>)
@@ -21,6 +22,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r A) Type() string](<#func-a-type>)
 - [type AAAA](<#type-aaaa>)
   - [func ToAAAA(r Record) AAAA](<#func-toaaaa>)
+  - [func (r AAAA) Equals(rx RecordX) bool](<#func-aaaa-equals>)
   - [func (r AAAA) GetID() (uint, bool)](<#func-aaaa-getid>)
   - [func (r AAAA) GetZoneID() uint](<#func-aaaa-getzoneid>)
   - [func (r AAAA) Refs() map[string]string](<#func-aaaa-refs>)
@@ -28,6 +30,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r AAAA) Type() string](<#func-aaaa-type>)
 - [type AFSDB](<#type-afsdb>)
   - [func ToAFSDB(r Record) AFSDB](<#func-toafsdb>)
+  - [func (r AFSDB) Equals(rx RecordX) bool](<#func-afsdb-equals>)
   - [func (r AFSDB) GetID() (uint, bool)](<#func-afsdb-getid>)
   - [func (r AFSDB) GetZoneID() uint](<#func-afsdb-getzoneid>)
   - [func (r AFSDB) Refs() map[string]string](<#func-afsdb-refs>)
@@ -35,6 +38,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r AFSDB) Type() string](<#func-afsdb-type>)
 - [type ALIAS](<#type-alias>)
   - [func ToALIAS(r Record) ALIAS](<#func-toalias>)
+  - [func (r ALIAS) Equals(rx RecordX) bool](<#func-alias-equals>)
   - [func (r ALIAS) GetID() (uint, bool)](<#func-alias-getid>)
   - [func (r ALIAS) GetZoneID() uint](<#func-alias-getzoneid>)
   - [func (r ALIAS) Refs() map[string]string](<#func-alias-refs>)
@@ -42,6 +46,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r ALIAS) Type() string](<#func-alias-type>)
 - [type CAA](<#type-caa>)
   - [func ToCAA(r Record) CAA](<#func-tocaa>)
+  - [func (r CAA) Equals(rx RecordX) bool](<#func-caa-equals>)
   - [func (r CAA) GetID() (uint, bool)](<#func-caa-getid>)
   - [func (r CAA) GetZoneID() uint](<#func-caa-getzoneid>)
   - [func (r CAA) Refs() map[string]string](<#func-caa-refs>)
@@ -49,6 +54,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r CAA) Type() string](<#func-caa-type>)
 - [type CNAME](<#type-cname>)
   - [func ToCNAME(r Record) CNAME](<#func-tocname>)
+  - [func (r CNAME) Equals(rx RecordX) bool](<#func-cname-equals>)
   - [func (r CNAME) GetID() (uint, bool)](<#func-cname-getid>)
   - [func (r CNAME) GetZoneID() uint](<#func-cname-getzoneid>)
   - [func (r CNAME) Refs() map[string]string](<#func-cname-refs>)
@@ -63,6 +69,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (e *ErrFormat) Error() string](<#func-errformat-error>)
 - [type HINFO](<#type-hinfo>)
   - [func ToHINFO(r Record) HINFO](<#func-tohinfo>)
+  - [func (r HINFO) Equals(rx RecordX) bool](<#func-hinfo-equals>)
   - [func (r HINFO) GetID() (uint, bool)](<#func-hinfo-getid>)
   - [func (r HINFO) GetZoneID() uint](<#func-hinfo-getzoneid>)
   - [func (r HINFO) Refs() map[string]string](<#func-hinfo-refs>)
@@ -70,6 +77,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r HINFO) Type() string](<#func-hinfo-type>)
 - [type LOC](<#type-loc>)
   - [func ToLOC(r Record) LOC](<#func-toloc>)
+  - [func (r LOC) Equals(rx RecordX) bool](<#func-loc-equals>)
   - [func (r LOC) GetID() (uint, bool)](<#func-loc-getid>)
   - [func (r LOC) GetZoneID() uint](<#func-loc-getzoneid>)
   - [func (r LOC) Refs() map[string]string](<#func-loc-refs>)
@@ -77,6 +85,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r LOC) Type() string](<#func-loc-type>)
 - [type MX](<#type-mx>)
   - [func ToMX(r Record) (MX, error)](<#func-tomx>)
+  - [func (r MX) Equals(rx RecordX) bool](<#func-mx-equals>)
   - [func (r MX) GetID() (uint, bool)](<#func-mx-getid>)
   - [func (r MX) GetZoneID() uint](<#func-mx-getzoneid>)
   - [func (r MX) Refs() map[string]string](<#func-mx-refs>)
@@ -84,6 +93,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r MX) Type() string](<#func-mx-type>)
 - [type NAPTR](<#type-naptr>)
   - [func ToNAPTR(r Record) NAPTR](<#func-tonaptr>)
+  - [func (r NAPTR) Equals(rx RecordX) bool](<#func-naptr-equals>)
   - [func (r NAPTR) GetID() (uint, bool)](<#func-naptr-getid>)
   - [func (r NAPTR) GetZoneID() uint](<#func-naptr-getzoneid>)
   - [func (r NAPTR) Refs() map[string]string](<#func-naptr-refs>)
@@ -91,6 +101,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r NAPTR) Type() string](<#func-naptr-type>)
 - [type NS](<#type-ns>)
   - [func ToNS(r Record) NS](<#func-tons>)
+  - [func (r NS) Equals(rx RecordX) bool](<#func-ns-equals>)
   - [func (r NS) GetID() (uint, bool)](<#func-ns-getid>)
   - [func (r NS) GetZoneID() uint](<#func-ns-getzoneid>)
   - [func (r NS) Refs() map[string]string](<#func-ns-refs>)
@@ -98,6 +109,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r NS) Type() string](<#func-ns-type>)
 - [type PTR](<#type-ptr>)
   - [func ToPTR(r Record) PTR](<#func-toptr>)
+  - [func (r PTR) Equals(rx RecordX) bool](<#func-ptr-equals>)
   - [func (r PTR) GetID() (uint, bool)](<#func-ptr-getid>)
   - [func (r PTR) GetZoneID() uint](<#func-ptr-getzoneid>)
   - [func (r PTR) Refs() map[string]string](<#func-ptr-refs>)
@@ -105,19 +117,25 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r PTR) Type() string](<#func-ptr-type>)
 - [type RP](<#type-rp>)
   - [func ToRP(r Record) RP](<#func-torp>)
+  - [func (r RP) Equals(rx RecordX) bool](<#func-rp-equals>)
   - [func (r RP) GetID() (uint, bool)](<#func-rp-getid>)
   - [func (r RP) GetZoneID() uint](<#func-rp-getzoneid>)
   - [func (r RP) Refs() map[string]string](<#func-rp-refs>)
   - [func (r RP) Serialise() map[string]string](<#func-rp-serialise>)
   - [func (r RP) Type() string](<#func-rp-type>)
 - [type Record](<#type-record>)
+  - [func (r Record) Equals(rx RecordX) bool](<#func-record-equals>)
+  - [func (r Record) GetID() (uint, bool)](<#func-record-getid>)
+  - [func (r Record) GetZoneID() uint](<#func-record-getzoneid>)
   - [func (r Record) Refs() map[string]string](<#func-record-refs>)
   - [func (r Record) Serialise() map[string]string](<#func-record-serialise>)
   - [func (r Record) ToX() (RecordX, error)](<#func-record-tox>)
+  - [func (r Record) Type() string](<#func-record-type>)
 - [type RecordX](<#type-recordx>)
 - [type SOA](<#type-soa>)
   - [func ToSOA(r Record) (SOA, error)](<#func-tosoa>)
   - [func parseSOAData(data string) (SOA, error)](<#func-parsesoadata>)
+  - [func (r SOA) Equals(rx RecordX) bool](<#func-soa-equals>)
   - [func (r SOA) GetID() (uint, bool)](<#func-soa-getid>)
   - [func (r SOA) GetZoneID() uint](<#func-soa-getzoneid>)
   - [func (r SOA) Refs() map[string]string](<#func-soa-refs>)
@@ -125,6 +143,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r SOA) Type() string](<#func-soa-type>)
 - [type SPF](<#type-spf>)
   - [func ToSPF(r Record) SPF](<#func-tospf>)
+  - [func (r SPF) Equals(rx RecordX) bool](<#func-spf-equals>)
   - [func (r SPF) GetID() (uint, bool)](<#func-spf-getid>)
   - [func (r SPF) GetZoneID() uint](<#func-spf-getzoneid>)
   - [func (r SPF) Refs() map[string]string](<#func-spf-refs>)
@@ -133,6 +152,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 - [type SRV](<#type-srv>)
   - [func ToSRV(r Record) (SRV, error)](<#func-tosrv>)
   - [func parseSRVData(data string) (SRV, error)](<#func-parsesrvdata>)
+  - [func (r SRV) Equals(rx RecordX) bool](<#func-srv-equals>)
   - [func (r SRV) GetID() (uint, bool)](<#func-srv-getid>)
   - [func (r SRV) GetZoneID() uint](<#func-srv-getzoneid>)
   - [func (r SRV) Refs() map[string]string](<#func-srv-refs>)
@@ -140,6 +160,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r SRV) Type() string](<#func-srv-type>)
 - [type SSHFP](<#type-sshfp>)
   - [func ToSSHFP(r Record) SSHFP](<#func-tosshfp>)
+  - [func (r SSHFP) Equals(rx RecordX) bool](<#func-sshfp-equals>)
   - [func (r SSHFP) GetID() (uint, bool)](<#func-sshfp-getid>)
   - [func (r SSHFP) GetZoneID() uint](<#func-sshfp-getzoneid>)
   - [func (r SSHFP) Refs() map[string]string](<#func-sshfp-refs>)
@@ -148,6 +169,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
 - [type StatusMessage](<#type-statusmessage>)
 - [type TXT](<#type-txt>)
   - [func ToTXT(r Record) TXT](<#func-totxt>)
+  - [func (r TXT) Equals(rx RecordX) bool](<#func-txt-equals>)
   - [func (r TXT) GetID() (uint, bool)](<#func-txt-getid>)
   - [func (r TXT) GetZoneID() uint](<#func-txt-getzoneid>)
   - [func (r TXT) Refs() map[string]string](<#func-txt-refs>)
@@ -211,31 +233,37 @@ type A struct {
 func ToA(r Record) A
 ```
 
-### func \(A\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L45>)
+### func \(A\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L25>)
+
+```go
+func (r A) Equals(rx RecordX) bool
+```
+
+### func \(A\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L64>)
 
 ```go
 func (r A) GetID() (uint, bool)
 ```
 
-### func \(A\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L53>)
+### func \(A\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L72>)
 
 ```go
 func (r A) GetZoneID() uint
 ```
 
-### func \(A\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L38>)
+### func \(A\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L57>)
 
 ```go
 func (r A) Refs() map[string]string
 ```
 
-### func \(A\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L25>)
+### func \(A\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L44>)
 
 ```go
 func (r A) Serialise() map[string]string
 ```
 
-### func \(A\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L57>)
+### func \(A\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_A.go#L76>)
 
 ```go
 func (r A) Type() string
@@ -260,31 +288,37 @@ type AAAA struct {
 func ToAAAA(r Record) AAAA
 ```
 
-### func \(AAAA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L45>)
+### func \(AAAA\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L25>)
+
+```go
+func (r AAAA) Equals(rx RecordX) bool
+```
+
+### func \(AAAA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L64>)
 
 ```go
 func (r AAAA) GetID() (uint, bool)
 ```
 
-### func \(AAAA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L53>)
+### func \(AAAA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L72>)
 
 ```go
 func (r AAAA) GetZoneID() uint
 ```
 
-### func \(AAAA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L38>)
+### func \(AAAA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L57>)
 
 ```go
 func (r AAAA) Refs() map[string]string
 ```
 
-### func \(AAAA\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L25>)
+### func \(AAAA\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L44>)
 
 ```go
 func (r AAAA) Serialise() map[string]string
 ```
 
-### func \(AAAA\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L57>)
+### func \(AAAA\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AAAA.go#L76>)
 
 ```go
 func (r AAAA) Type() string
@@ -308,31 +342,37 @@ type AFSDB struct {
 func ToAFSDB(r Record) AFSDB
 ```
 
-### func \(AFSDB\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L42>)
+### func \(AFSDB\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L23>)
+
+```go
+func (r AFSDB) Equals(rx RecordX) bool
+```
+
+### func \(AFSDB\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L60>)
 
 ```go
 func (r AFSDB) GetID() (uint, bool)
 ```
 
-### func \(AFSDB\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L50>)
+### func \(AFSDB\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L68>)
 
 ```go
 func (r AFSDB) GetZoneID() uint
 ```
 
-### func \(AFSDB\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L35>)
+### func \(AFSDB\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L53>)
 
 ```go
 func (r AFSDB) Refs() map[string]string
 ```
 
-### func \(AFSDB\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L23>)
+### func \(AFSDB\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L41>)
 
 ```go
 func (r AFSDB) Serialise() map[string]string
 ```
 
-### func \(AFSDB\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L54>)
+### func \(AFSDB\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_AFSDB.go#L72>)
 
 ```go
 func (r AFSDB) Type() string
@@ -356,31 +396,37 @@ type ALIAS struct {
 func ToALIAS(r Record) ALIAS
 ```
 
-### func \(ALIAS\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L42>)
+### func \(ALIAS\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L23>)
+
+```go
+func (r ALIAS) Equals(rx RecordX) bool
+```
+
+### func \(ALIAS\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L60>)
 
 ```go
 func (r ALIAS) GetID() (uint, bool)
 ```
 
-### func \(ALIAS\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L50>)
+### func \(ALIAS\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L68>)
 
 ```go
 func (r ALIAS) GetZoneID() uint
 ```
 
-### func \(ALIAS\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L35>)
+### func \(ALIAS\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L53>)
 
 ```go
 func (r ALIAS) Refs() map[string]string
 ```
 
-### func \(ALIAS\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L23>)
+### func \(ALIAS\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L41>)
 
 ```go
 func (r ALIAS) Serialise() map[string]string
 ```
 
-### func \(ALIAS\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L54>)
+### func \(ALIAS\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_ALIAS.go#L72>)
 
 ```go
 func (r ALIAS) Type() string
@@ -404,31 +450,37 @@ type CAA struct {
 func ToCAA(r Record) CAA
 ```
 
-### func \(CAA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L42>)
+### func \(CAA\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L23>)
+
+```go
+func (r CAA) Equals(rx RecordX) bool
+```
+
+### func \(CAA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L60>)
 
 ```go
 func (r CAA) GetID() (uint, bool)
 ```
 
-### func \(CAA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L50>)
+### func \(CAA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L68>)
 
 ```go
 func (r CAA) GetZoneID() uint
 ```
 
-### func \(CAA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L35>)
+### func \(CAA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L53>)
 
 ```go
 func (r CAA) Refs() map[string]string
 ```
 
-### func \(CAA\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L23>)
+### func \(CAA\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L41>)
 
 ```go
 func (r CAA) Serialise() map[string]string
 ```
 
-### func \(CAA\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L54>)
+### func \(CAA\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L72>)
 
 ```go
 func (r CAA) Type() string
@@ -452,31 +504,37 @@ type CNAME struct {
 func ToCNAME(r Record) CNAME
 ```
 
-### func \(CNAME\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L42>)
+### func \(CNAME\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L23>)
+
+```go
+func (r CNAME) Equals(rx RecordX) bool
+```
+
+### func \(CNAME\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L60>)
 
 ```go
 func (r CNAME) GetID() (uint, bool)
 ```
 
-### func \(CNAME\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L50>)
+### func \(CNAME\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L68>)
 
 ```go
 func (r CNAME) GetZoneID() uint
 ```
 
-### func \(CNAME\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L35>)
+### func \(CNAME\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L53>)
 
 ```go
 func (r CNAME) Refs() map[string]string
 ```
 
-### func \(CNAME\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L23>)
+### func \(CNAME\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L41>)
 
 ```go
 func (r CNAME) Serialise() map[string]string
 ```
 
-### func \(CNAME\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L54>)
+### func \(CNAME\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CNAME.go#L72>)
 
 ```go
 func (r CNAME) Type() string
@@ -549,31 +607,37 @@ type HINFO struct {
 func ToHINFO(r Record) HINFO
 ```
 
-### func \(HINFO\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L42>)
+### func \(HINFO\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L23>)
+
+```go
+func (r HINFO) Equals(rx RecordX) bool
+```
+
+### func \(HINFO\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L60>)
 
 ```go
 func (r HINFO) GetID() (uint, bool)
 ```
 
-### func \(HINFO\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L50>)
+### func \(HINFO\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L68>)
 
 ```go
 func (r HINFO) GetZoneID() uint
 ```
 
-### func \(HINFO\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L35>)
+### func \(HINFO\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L53>)
 
 ```go
 func (r HINFO) Refs() map[string]string
 ```
 
-### func \(HINFO\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L23>)
+### func \(HINFO\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L41>)
 
 ```go
 func (r HINFO) Serialise() map[string]string
 ```
 
-### func \(HINFO\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L54>)
+### func \(HINFO\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_HINFO.go#L72>)
 
 ```go
 func (r HINFO) Type() string
@@ -597,31 +661,37 @@ type LOC struct {
 func ToLOC(r Record) LOC
 ```
 
-### func \(LOC\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L42>)
+### func \(LOC\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L23>)
+
+```go
+func (r LOC) Equals(rx RecordX) bool
+```
+
+### func \(LOC\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L60>)
 
 ```go
 func (r LOC) GetID() (uint, bool)
 ```
 
-### func \(LOC\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L50>)
+### func \(LOC\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L68>)
 
 ```go
 func (r LOC) GetZoneID() uint
 ```
 
-### func \(LOC\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L35>)
+### func \(LOC\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L53>)
 
 ```go
 func (r LOC) Refs() map[string]string
 ```
 
-### func \(LOC\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L23>)
+### func \(LOC\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L41>)
 
 ```go
 func (r LOC) Serialise() map[string]string
 ```
 
-### func \(LOC\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L54>)
+### func \(LOC\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_LOC.go#L72>)
 
 ```go
 func (r LOC) Type() string
@@ -646,31 +716,37 @@ type MX struct {
 func ToMX(r Record) (MX, error)
 ```
 
-### func \(MX\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L50>)
+### func \(MX\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L31>)
+
+```go
+func (r MX) Equals(rx RecordX) bool
+```
+
+### func \(MX\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L74>)
 
 ```go
 func (r MX) GetID() (uint, bool)
 ```
 
-### func \(MX\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L58>)
+### func \(MX\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L82>)
 
 ```go
 func (r MX) GetZoneID() uint
 ```
 
-### func \(MX\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L43>)
+### func \(MX\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L67>)
 
 ```go
 func (r MX) Refs() map[string]string
 ```
 
-### func \(MX\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L31>)
+### func \(MX\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L55>)
 
 ```go
 func (r MX) Serialise() map[string]string
 ```
 
-### func \(MX\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L62>)
+### func \(MX\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_MX.go#L86>)
 
 ```go
 func (r MX) Type() string
@@ -694,31 +770,37 @@ type NAPTR struct {
 func ToNAPTR(r Record) NAPTR
 ```
 
-### func \(NAPTR\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L42>)
+### func \(NAPTR\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L23>)
+
+```go
+func (r NAPTR) Equals(rx RecordX) bool
+```
+
+### func \(NAPTR\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L60>)
 
 ```go
 func (r NAPTR) GetID() (uint, bool)
 ```
 
-### func \(NAPTR\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L50>)
+### func \(NAPTR\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L68>)
 
 ```go
 func (r NAPTR) GetZoneID() uint
 ```
 
-### func \(NAPTR\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L35>)
+### func \(NAPTR\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L53>)
 
 ```go
 func (r NAPTR) Refs() map[string]string
 ```
 
-### func \(NAPTR\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L23>)
+### func \(NAPTR\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L41>)
 
 ```go
 func (r NAPTR) Serialise() map[string]string
 ```
 
-### func \(NAPTR\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L54>)
+### func \(NAPTR\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NAPTR.go#L72>)
 
 ```go
 func (r NAPTR) Type() string
@@ -742,31 +824,37 @@ type NS struct {
 func ToNS(r Record) NS
 ```
 
-### func \(NS\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L42>)
+### func \(NS\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L23>)
+
+```go
+func (r NS) Equals(rx RecordX) bool
+```
+
+### func \(NS\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L60>)
 
 ```go
 func (r NS) GetID() (uint, bool)
 ```
 
-### func \(NS\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L50>)
+### func \(NS\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L68>)
 
 ```go
 func (r NS) GetZoneID() uint
 ```
 
-### func \(NS\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L35>)
+### func \(NS\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L53>)
 
 ```go
 func (r NS) Refs() map[string]string
 ```
 
-### func \(NS\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L23>)
+### func \(NS\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L41>)
 
 ```go
 func (r NS) Serialise() map[string]string
 ```
 
-### func \(NS\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L53>)
+### func \(NS\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_NS.go#L71>)
 
 ```go
 func (r NS) Type() string
@@ -790,31 +878,37 @@ type PTR struct {
 func ToPTR(r Record) PTR
 ```
 
-### func \(PTR\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L42>)
+### func \(PTR\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L23>)
+
+```go
+func (r PTR) Equals(rx RecordX) bool
+```
+
+### func \(PTR\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L60>)
 
 ```go
 func (r PTR) GetID() (uint, bool)
 ```
 
-### func \(PTR\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L50>)
+### func \(PTR\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L68>)
 
 ```go
 func (r PTR) GetZoneID() uint
 ```
 
-### func \(PTR\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L35>)
+### func \(PTR\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L53>)
 
 ```go
 func (r PTR) Refs() map[string]string
 ```
 
-### func \(PTR\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L23>)
+### func \(PTR\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L41>)
 
 ```go
 func (r PTR) Serialise() map[string]string
 ```
 
-### func \(PTR\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L54>)
+### func \(PTR\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L72>)
 
 ```go
 func (r PTR) Type() string
@@ -838,31 +932,37 @@ type RP struct {
 func ToRP(r Record) RP
 ```
 
-### func \(RP\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L42>)
+### func \(RP\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L23>)
+
+```go
+func (r RP) Equals(rx RecordX) bool
+```
+
+### func \(RP\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L60>)
 
 ```go
 func (r RP) GetID() (uint, bool)
 ```
 
-### func \(RP\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L50>)
+### func \(RP\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L68>)
 
 ```go
 func (r RP) GetZoneID() uint
 ```
 
-### func \(RP\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L35>)
+### func \(RP\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L53>)
 
 ```go
 func (r RP) Refs() map[string]string
 ```
 
-### func \(RP\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L23>)
+### func \(RP\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L41>)
 
 ```go
 func (r RP) Serialise() map[string]string
 ```
 
-### func \(RP\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L54>)
+### func \(RP\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_RP.go#L72>)
 
 ```go
 func (r RP) Type() string
@@ -884,13 +984,31 @@ type Record struct {
 }
 ```
 
-### func \(Record\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record.go#L67>)
+### func \(Record\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record.go#L59>)
+
+```go
+func (r Record) Equals(rx RecordX) bool
+```
+
+### func \(Record\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record.go#L87>)
+
+```go
+func (r Record) GetID() (uint, bool)
+```
+
+### func \(Record\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record.go#L95>)
+
+```go
+func (r Record) GetZoneID() uint
+```
+
+### func \(Record\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record.go#L79>)
 
 ```go
 func (r Record) Refs() map[string]string
 ```
 
-### func \(Record\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record.go#L59>)
+### func \(Record\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record.go#L71>)
 
 ```go
 func (r Record) Serialise() map[string]string
@@ -902,10 +1020,17 @@ func (r Record) Serialise() map[string]string
 func (r Record) ToX() (RecordX, error)
 ```
 
-## type [RecordX](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/interface.go#L3-L9>)
+### func \(Record\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record.go#L99>)
+
+```go
+func (r Record) Type() string
+```
+
+## type [RecordX](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/interface.go#L3-L10>)
 
 ```go
 type RecordX interface {
+    Equals(RecordX) bool
     GetID() (uint, bool)
     GetZoneID() uint
     Refs() map[string]string
@@ -943,31 +1068,37 @@ func ToSOA(r Record) (SOA, error)
 func parseSOAData(data string) (SOA, error)
 ```
 
-### func \(SOA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L84>)
+### func \(SOA\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L65>)
+
+```go
+func (r SOA) Equals(rx RecordX) bool
+```
+
+### func \(SOA\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L112>)
 
 ```go
 func (r SOA) GetID() (uint, bool)
 ```
 
-### func \(SOA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L92>)
+### func \(SOA\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L120>)
 
 ```go
 func (r SOA) GetZoneID() uint
 ```
 
-### func \(SOA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L77>)
+### func \(SOA\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L105>)
 
 ```go
 func (r SOA) Refs() map[string]string
 ```
 
-### func \(SOA\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L65>)
+### func \(SOA\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L93>)
 
 ```go
 func (r SOA) Serialise() map[string]string
 ```
 
-### func \(SOA\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L96>)
+### func \(SOA\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SOA.go#L124>)
 
 ```go
 func (r SOA) Type() string
@@ -991,31 +1122,37 @@ type SPF struct {
 func ToSPF(r Record) SPF
 ```
 
-### func \(SPF\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L42>)
+### func \(SPF\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L23>)
+
+```go
+func (r SPF) Equals(rx RecordX) bool
+```
+
+### func \(SPF\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L60>)
 
 ```go
 func (r SPF) GetID() (uint, bool)
 ```
 
-### func \(SPF\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L50>)
+### func \(SPF\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L68>)
 
 ```go
 func (r SPF) GetZoneID() uint
 ```
 
-### func \(SPF\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L35>)
+### func \(SPF\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L53>)
 
 ```go
 func (r SPF) Refs() map[string]string
 ```
 
-### func \(SPF\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L23>)
+### func \(SPF\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L41>)
 
 ```go
 func (r SPF) Serialise() map[string]string
 ```
 
-### func \(SPF\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L54>)
+### func \(SPF\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SPF.go#L72>)
 
 ```go
 func (r SPF) Type() string
@@ -1048,31 +1185,37 @@ func ToSRV(r Record) (SRV, error)
 func parseSRVData(data string) (SRV, error)
 ```
 
-### func \(SRV\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L85>)
+### func \(SRV\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L64>)
+
+```go
+func (r SRV) Equals(rx RecordX) bool
+```
+
+### func \(SRV\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L111>)
 
 ```go
 func (r SRV) GetID() (uint, bool)
 ```
 
-### func \(SRV\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L93>)
+### func \(SRV\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L119>)
 
 ```go
 func (r SRV) GetZoneID() uint
 ```
 
-### func \(SRV\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L78>)
+### func \(SRV\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L104>)
 
 ```go
 func (r SRV) Refs() map[string]string
 ```
 
-### func \(SRV\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L64>)
+### func \(SRV\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L90>)
 
 ```go
 func (r SRV) Serialise() map[string]string
 ```
 
-### func \(SRV\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L97>)
+### func \(SRV\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L123>)
 
 ```go
 func (r SRV) Type() string
@@ -1096,31 +1239,37 @@ type SSHFP struct {
 func ToSSHFP(r Record) SSHFP
 ```
 
-### func \(SSHFP\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L42>)
+### func \(SSHFP\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L23>)
+
+```go
+func (r SSHFP) Equals(rx RecordX) bool
+```
+
+### func \(SSHFP\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L60>)
 
 ```go
 func (r SSHFP) GetID() (uint, bool)
 ```
 
-### func \(SSHFP\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L50>)
+### func \(SSHFP\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L68>)
 
 ```go
 func (r SSHFP) GetZoneID() uint
 ```
 
-### func \(SSHFP\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L35>)
+### func \(SSHFP\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L53>)
 
 ```go
 func (r SSHFP) Refs() map[string]string
 ```
 
-### func \(SSHFP\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L23>)
+### func \(SSHFP\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L41>)
 
 ```go
 func (r SSHFP) Serialise() map[string]string
 ```
 
-### func \(SSHFP\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L54>)
+### func \(SSHFP\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SSHFP.go#L72>)
 
 ```go
 func (r SSHFP) Type() string
@@ -1153,31 +1302,37 @@ type TXT struct {
 func ToTXT(r Record) TXT
 ```
 
-### func \(TXT\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L81>)
+### func \(TXT\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L61>)
+
+```go
+func (r TXT) Equals(rx RecordX) bool
+```
+
+### func \(TXT\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L99>)
 
 ```go
 func (r TXT) GetID() (uint, bool)
 ```
 
-### func \(TXT\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L89>)
+### func \(TXT\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L107>)
 
 ```go
 func (r TXT) GetZoneID() uint
 ```
 
-### func \(TXT\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L74>)
+### func \(TXT\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L92>)
 
 ```go
 func (r TXT) Refs() map[string]string
 ```
 
-### func \(TXT\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L61>)
+### func \(TXT\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L79>)
 
 ```go
 func (r TXT) Serialise() map[string]string
 ```
 
-### func \(TXT\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L93>)
+### func \(TXT\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_TXT.go#L111>)
 
 ```go
 func (r TXT) Type() string

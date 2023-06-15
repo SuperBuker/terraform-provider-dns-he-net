@@ -20,6 +20,24 @@ func ToSSHFP(r Record) SSHFP {
 	}
 }
 
+func (r SSHFP) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "SSHFP" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToSSHFP(rec)
+	}
+
+	rsshfp := rx.(SSHFP)
+
+	return r.ZoneID == rsshfp.ZoneID &&
+		r.Domain == rsshfp.Domain &&
+		r.TTL == rsshfp.TTL &&
+		r.Data == rsshfp.Data
+}
+
 func (r SSHFP) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "SSHFP",

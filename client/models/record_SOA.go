@@ -62,6 +62,34 @@ func ToSOA(r Record) (SOA, error) {
 	}, nil
 }
 
+func (r SOA) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "SOA" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		var err error
+		rx, err = ToSOA(rec)
+
+		if err != nil {
+			return false
+		}
+	}
+
+	rsoa := rx.(SOA)
+
+	return r.ZoneID == rsoa.ZoneID &&
+		r.Domain == rsoa.Domain &&
+		r.TTL == rsoa.TTL &&
+		r.MName == rsoa.MName &&
+		r.RName == rsoa.RName &&
+		r.Serial == rsoa.Serial &&
+		r.Refresh == rsoa.Refresh &&
+		r.Retry == rsoa.Retry &&
+		r.Expire == rsoa.Expire
+}
+
 func (r SOA) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "SOA",

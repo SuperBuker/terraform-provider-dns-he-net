@@ -58,6 +58,24 @@ func ToTXT(r Record) TXT {
 	}
 }
 
+func (r TXT) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "TXT" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToTXT(rec)
+	}
+
+	rtxt := rx.(TXT)
+
+	return r.ZoneID == rtxt.ZoneID &&
+		r.Domain == rtxt.Domain &&
+		r.TTL == rtxt.TTL &&
+		r.Data == rtxt.Data
+}
+
 func (r TXT) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "TXT",

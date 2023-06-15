@@ -10,13 +10,14 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filter
 
 - [func LatestRecord(records []models.Record) (r models.Record, ok bool)](<#func-latestrecord>)
 - [func LatestZone(zones []models.Zone) (d models.Zone, ok bool)](<#func-latestzone>)
+- [func MatchRecord(records []models.Record, rx models.RecordX) (r models.Record, ok bool)](<#func-matchrecord>)
 - [func Record(records []models.Record, domain *string, typ *string) []models.Record](<#func-record>)
 - [func RecordById(records []models.Record, id uint) (models.Record, bool)](<#func-recordbyid>)
 - [func ZoneById(zones []models.Zone, id uint) (models.Zone, bool)](<#func-zonebyid>)
 - [func ZoneByName(zones []models.Zone, name string) (models.Zone, bool)](<#func-zonebyname>)
 
 
-## func [LatestRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/records.go#L24>)
+## func [LatestRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/records.go#L37>)
 
 ```go
 func LatestRecord(records []models.Record) (r models.Record, ok bool)
@@ -32,7 +33,15 @@ func LatestZone(zones []models.Zone) (d models.Zone, ok bool)
 
 LatestZone returns the latest zone \(highest ID\) in a slice of zones. If the slice is empty, it returns an empty string and false.
 
-## func [Record](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/records.go#L44>)
+## func [MatchRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/records.go#L24>)
+
+```go
+func MatchRecord(records []models.Record, rx models.RecordX) (r models.Record, ok bool)
+```
+
+MatchRecord returns the record matching the input in a slice of records. If the slice doesn't contain any matching record, it returns an empty record and false.
+
+## func [Record](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/records.go#L57>)
 
 ```go
 func Record(records []models.Record, domain *string, typ *string) []models.Record

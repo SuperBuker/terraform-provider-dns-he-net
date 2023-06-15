@@ -20,7 +20,7 @@ var records_serial = map[string]int{
 	"CAA":   6,
 	"SRV":   9,
 	"TXT":   7,
-	"AFSDB": 7,
+	"AFSDB": 6,
 	"HINFO": 6,
 	"RP":    6,
 	"LOC":   6,
@@ -101,5 +101,32 @@ func TestRecord(t *testing.T) {
 
 		assert.Equal(t, record_out.Serialise(), record_in.Serialise(), record_in.RecordType)
 
+	}
+}
+
+func TestEqual(t *testing.T) {
+
+	for i, record_in := range records_in {
+		assert.False(t, record_in.Equals(nil), record_in.RecordType+"-nil")
+
+		for j, record_in2 := range records_in {
+			assert.Equal(t, i == j, record_in.Equals(record_in2), record_in.RecordType+"-"+record_in2.RecordType)
+			assert.Equal(t, i == j, record_in2.Equals(record_in), record_in2.RecordType+"-"+record_in.RecordType)
+		}
+	}
+
+	for i, record_out := range records_out {
+		assert.False(t, record_out.Equals(nil), record_out.Type()+"-nil")
+		for j, record2_out := range records_out {
+			assert.Equal(t, i == j, record_out.Equals(record2_out), record_out.Type()+"-"+record2_out.Type())
+			assert.Equal(t, i == j, record2_out.Equals(record_out), record2_out.Type()+"-"+record_out.Type())
+		}
+	}
+
+	for i, record_in := range records_in {
+		for j, record_out := range records_out {
+			assert.Equal(t, i == j, record_in.Equals(record_out), record_in.RecordType+"-"+record_out.Type())
+			assert.Equal(t, i == j, record_out.Equals(record_in), record_out.Type()+"-"+record_in.RecordType)
+		}
 	}
 }

@@ -20,6 +20,24 @@ func ToLOC(r Record) LOC {
 	}
 }
 
+func (r LOC) Equals(rx RecordX) bool {
+	if rx == nil {
+		return false
+	} else if rx.Type() != "LOC" {
+		return false
+	} else if rec, ok := rx.(Record); ok {
+		// Convert from Record
+		rx = ToLOC(rec)
+	}
+
+	rloc := rx.(LOC)
+
+	return r.ZoneID == rloc.ZoneID &&
+		r.Domain == rloc.Domain &&
+		r.TTL == rloc.TTL &&
+		r.Data == rloc.Data
+}
+
 func (r LOC) Serialise() map[string]string {
 	return map[string]string{
 		"Type":                "LOC",
