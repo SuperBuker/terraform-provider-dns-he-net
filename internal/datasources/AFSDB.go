@@ -36,6 +36,8 @@ func (afsdb) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 // Schema defines the schema for the data source.
 func (afsdb) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS AFSDB record",
+		MarkdownDescription: "DNS AFSDB record",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Description:         "dns.he.net record id",

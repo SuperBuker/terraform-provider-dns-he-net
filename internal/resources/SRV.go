@@ -42,6 +42,8 @@ func (srv) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 // Schema defines the schema for the resource.
 func (srv) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS SRV record",
+		MarkdownDescription: "DNS SRV record",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Computed:            true,

@@ -19,7 +19,7 @@ import (
 
 // Validators //
 
-var domainRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)
+var domainRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$`)
 var domainValidator = stringvalidator.RegexMatches(domainRegexp, "value must be a valid domain name")
 var ipv4Regexp = regexp.MustCompile(`^(?:(?:25[0-5]|(?:2[0-4]|1\d|[1-9]|)\d)\.?\b){4}$`)
 var ipv4Validator = stringvalidator.RegexMatches(ipv4Regexp, "value must be a valid IPv4 address")

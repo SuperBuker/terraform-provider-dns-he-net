@@ -25,3 +25,27 @@ func TestValidators(t *testing.T) {
 
 	assert.True(t, txtRegexp.MatchString(`"hello world"`))
 }
+
+func TestDomainRegexp(t *testing.T) {
+	matrix := map[string]bool{
+		"example.com":              true,
+		"example.com.":             false,
+		"example":                  false,
+		"example.":                 false,
+		"example..com":             false,
+		"example.com. ":            false,
+		" example.com":             false,
+		"example. com":             false,
+		"example-1620.example.com": true,
+		"-example.com.":            false,
+		".com":                     false,
+		"123456789012345678901234567890123456789012345678901234567890123.com":   true,
+		"1234567890123456789012345678901234567890123456789012345678901234.com":  false,
+		"a.123456789012345678901234567890123456789012345678901234567890123.com": true,
+		"ex--ample.ex__ample.example.com":                                       true,
+	}
+
+	for domain, expected := range matrix {
+		assert.Equal(t, expected, domainRegexp.MatchString(domain))
+	}
+}

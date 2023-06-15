@@ -41,6 +41,8 @@ func (hinfo) Metadata(_ context.Context, req resource.MetadataRequest, resp *res
 // Schema defines the schema for the resource.
 func (hinfo) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS HINFO record",
+		MarkdownDescription: "DNS HINFO record",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.Int64Attribute{
 				Computed:            true,

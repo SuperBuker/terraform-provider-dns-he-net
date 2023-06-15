@@ -41,6 +41,8 @@ func (zones) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 // Schema defines the schema for the data source.
 func (zones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description:         "DNS zones in account",
+		MarkdownDescription: "DNS zones in account",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Description:         "dns.he.net account id",

@@ -629,7 +629,7 @@ type a struct {
 }
 ```
 
-### func \(\*a\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L106>)
+### func \(\*a\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L108>)
 
 ```go
 func (r *a) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -637,7 +637,7 @@ func (r *a) Configure(ctx context.Context, req resource.ConfigureRequest, resp *
 
 Configure adds the provider configured client to the resource.
 
-### func \(a\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L113>)
+### func \(a\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L115>)
 
 ```go
 func (r a) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -645,7 +645,7 @@ func (r a) Create(ctx context.Context, req resource.CreateRequest, resp *resourc
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(a\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L263>)
+### func \(a\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L265>)
 
 ```go
 func (r a) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -653,7 +653,7 @@ func (r a) Delete(ctx context.Context, req resource.DeleteRequest, resp *resourc
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(a\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L328>)
+### func \(a\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L330>)
 
 ```go
 func (a) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -667,7 +667,7 @@ func (a) Metadata(_ context.Context, req resource.MetadataRequest, resp *resourc
 
 Metadata returns the resource type name.
 
-### func \(a\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L167>)
+### func \(a\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L169>)
 
 ```go
 func (r a) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -683,7 +683,7 @@ func (a) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sche
 
 Schema defines the schema for the resource.
 
-### func \(a\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L209>)
+### func \(a\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L211>)
 
 ```go
 func (r a) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -691,7 +691,7 @@ func (r a) Update(ctx context.Context, req resource.UpdateRequest, resp *resourc
 
 Update updates the resource and sets the updated Terraform state on success.
 
-### func \(a\) [ValidateConfig](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L291>)
+### func \(a\) [ValidateConfig](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L293>)
 
 ```go
 func (a) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse)
@@ -707,7 +707,7 @@ type aaaa struct {
 }
 ```
 
-### func \(\*aaaa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L106>)
+### func \(\*aaaa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L108>)
 
 ```go
 func (r *aaaa) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -715,7 +715,7 @@ func (r *aaaa) Configure(ctx context.Context, req resource.ConfigureRequest, res
 
 Configure adds the provider configured client to the resource.
 
-### func \(aaaa\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L113>)
+### func \(aaaa\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L115>)
 
 ```go
 func (r aaaa) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -723,7 +723,7 @@ func (r aaaa) Create(ctx context.Context, req resource.CreateRequest, resp *reso
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(aaaa\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L263>)
+### func \(aaaa\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L265>)
 
 ```go
 func (r aaaa) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -731,7 +731,7 @@ func (r aaaa) Delete(ctx context.Context, req resource.DeleteRequest, resp *reso
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(aaaa\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L328>)
+### func \(aaaa\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L330>)
 
 ```go
 func (aaaa) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -745,7 +745,7 @@ func (aaaa) Metadata(_ context.Context, req resource.MetadataRequest, resp *reso
 
 Metadata returns the resource type name.
 
-### func \(aaaa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L167>)
+### func \(aaaa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L169>)
 
 ```go
 func (r aaaa) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -761,7 +761,7 @@ func (aaaa) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.S
 
 Schema defines the schema for the resource.
 
-### func \(aaaa\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L209>)
+### func \(aaaa\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L211>)
 
 ```go
 func (r aaaa) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -769,7 +769,7 @@ func (r aaaa) Update(ctx context.Context, req resource.UpdateRequest, resp *reso
 
 Update updates the resource and sets the updated Terraform state on success.
 
-### func \(aaaa\) [ValidateConfig](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L291>)
+### func \(aaaa\) [ValidateConfig](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L293>)
 
 ```go
 func (aaaa) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse)
@@ -785,7 +785,7 @@ type afsdb struct {
 }
 ```
 
-### func \(\*afsdb\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L92>)
+### func \(\*afsdb\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L94>)
 
 ```go
 func (r *afsdb) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -793,7 +793,7 @@ func (r *afsdb) Configure(ctx context.Context, req resource.ConfigureRequest, re
 
 Configure adds the provider configured client to the resource.
 
-### func \(afsdb\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L99>)
+### func \(afsdb\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L101>)
 
 ```go
 func (r afsdb) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -801,7 +801,7 @@ func (r afsdb) Create(ctx context.Context, req resource.CreateRequest, resp *res
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(afsdb\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L249>)
+### func \(afsdb\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L251>)
 
 ```go
 func (r afsdb) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -809,7 +809,7 @@ func (r afsdb) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(afsdb\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L277>)
+### func \(afsdb\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L279>)
 
 ```go
 func (afsdb) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -823,7 +823,7 @@ func (afsdb) Metadata(_ context.Context, req resource.MetadataRequest, resp *res
 
 Metadata returns the resource type name.
 
-### func \(afsdb\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L153>)
+### func \(afsdb\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L155>)
 
 ```go
 func (r afsdb) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -839,7 +839,7 @@ func (afsdb) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 
 Schema defines the schema for the resource.
 
-### func \(afsdb\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L195>)
+### func \(afsdb\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AFSDB.go#L197>)
 
 ```go
 func (r afsdb) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -857,7 +857,7 @@ type alias struct {
 }
 ```
 
-### func \(\*alias\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L91>)
+### func \(\*alias\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L93>)
 
 ```go
 func (r *alias) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -865,7 +865,7 @@ func (r *alias) Configure(ctx context.Context, req resource.ConfigureRequest, re
 
 Configure adds the provider configured client to the resource.
 
-### func \(alias\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L98>)
+### func \(alias\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L100>)
 
 ```go
 func (r alias) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -873,7 +873,7 @@ func (r alias) Create(ctx context.Context, req resource.CreateRequest, resp *res
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(alias\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L248>)
+### func \(alias\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L250>)
 
 ```go
 func (r alias) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -881,7 +881,7 @@ func (r alias) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(alias\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L276>)
+### func \(alias\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L278>)
 
 ```go
 func (alias) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -895,7 +895,7 @@ func (alias) Metadata(_ context.Context, req resource.MetadataRequest, resp *res
 
 Metadata returns the resource type name.
 
-### func \(alias\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L152>)
+### func \(alias\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L154>)
 
 ```go
 func (r alias) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -911,7 +911,7 @@ func (alias) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 
 Schema defines the schema for the resource.
 
-### func \(alias\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L194>)
+### func \(alias\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ALIAS.go#L196>)
 
 ```go
 func (r alias) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -929,7 +929,7 @@ type caa struct {
 }
 ```
 
-### func \(\*caa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L91>)
+### func \(\*caa\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L93>)
 
 ```go
 func (r *caa) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -937,7 +937,7 @@ func (r *caa) Configure(ctx context.Context, req resource.ConfigureRequest, resp
 
 Configure adds the provider configured client to the resource.
 
-### func \(caa\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L98>)
+### func \(caa\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L100>)
 
 ```go
 func (r caa) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -945,7 +945,7 @@ func (r caa) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(caa\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L248>)
+### func \(caa\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L250>)
 
 ```go
 func (r caa) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -953,7 +953,7 @@ func (r caa) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(caa\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L276>)
+### func \(caa\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L278>)
 
 ```go
 func (caa) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -967,7 +967,7 @@ func (caa) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 
 Metadata returns the resource type name.
 
-### func \(caa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L152>)
+### func \(caa\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L154>)
 
 ```go
 func (r caa) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -983,7 +983,7 @@ func (caa) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 
 Schema defines the schema for the resource.
 
-### func \(caa\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L194>)
+### func \(caa\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CAA.go#L196>)
 
 ```go
 func (r caa) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1001,7 +1001,7 @@ type cname struct {
 }
 ```
 
-### func \(\*cname\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L91>)
+### func \(\*cname\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L93>)
 
 ```go
 func (r *cname) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1009,7 +1009,7 @@ func (r *cname) Configure(ctx context.Context, req resource.ConfigureRequest, re
 
 Configure adds the provider configured client to the resource.
 
-### func \(cname\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L98>)
+### func \(cname\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L100>)
 
 ```go
 func (r cname) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1017,7 +1017,7 @@ func (r cname) Create(ctx context.Context, req resource.CreateRequest, resp *res
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(cname\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L248>)
+### func \(cname\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L250>)
 
 ```go
 func (r cname) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1025,7 +1025,7 @@ func (r cname) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(cname\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L276>)
+### func \(cname\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L278>)
 
 ```go
 func (cname) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1039,7 +1039,7 @@ func (cname) Metadata(_ context.Context, req resource.MetadataRequest, resp *res
 
 Metadata returns the resource type name.
 
-### func \(cname\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L152>)
+### func \(cname\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L154>)
 
 ```go
 func (r cname) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1055,7 +1055,7 @@ func (cname) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 
 Schema defines the schema for the resource.
 
-### func \(cname\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L194>)
+### func \(cname\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/CNAME.go#L196>)
 
 ```go
 func (r cname) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1073,7 +1073,7 @@ type ddnsKey struct {
 }
 ```
 
-### func \(\*ddnsKey\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L100>)
+### func \(\*ddnsKey\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L102>)
 
 ```go
 func (dk *ddnsKey) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1081,7 +1081,7 @@ func (dk *ddnsKey) Configure(ctx context.Context, req resource.ConfigureRequest,
 
 Configure adds the provider configured client to the resource.
 
-### func \(ddnsKey\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L107>)
+### func \(ddnsKey\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L109>)
 
 ```go
 func (dk ddnsKey) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1089,7 +1089,7 @@ func (dk ddnsKey) Create(ctx context.Context, req resource.CreateRequest, resp *
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(ddnsKey\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L224>)
+### func \(ddnsKey\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L226>)
 
 ```go
 func (ddnsKey) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1105,13 +1105,13 @@ func (ddnsKey) Metadata(_ context.Context, req resource.MetadataRequest, resp *r
 
 Metadata returns the resource type name.
 
-### func \(ddnsKey\) [ModifyPlan](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L228>)
+### func \(ddnsKey\) [ModifyPlan](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L230>)
 
 ```go
 func (ddnsKey) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse)
 ```
 
-### func \(ddnsKey\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L140>)
+### func \(ddnsKey\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L142>)
 
 ```go
 func (dk ddnsKey) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1127,7 +1127,7 @@ func (ddnsKey) Schema(_ context.Context, _ resource.SchemaRequest, resp *resourc
 
 Schema defines the schema for the resource.
 
-### func \(ddnsKey\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L194>)
+### func \(ddnsKey\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/ddns_key.go#L196>)
 
 ```go
 func (dk ddnsKey) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1164,7 +1164,7 @@ type hinfo struct {
 }
 ```
 
-### func \(\*hinfo\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L91>)
+### func \(\*hinfo\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L93>)
 
 ```go
 func (r *hinfo) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1172,7 +1172,7 @@ func (r *hinfo) Configure(ctx context.Context, req resource.ConfigureRequest, re
 
 Configure adds the provider configured client to the resource.
 
-### func \(hinfo\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L98>)
+### func \(hinfo\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L100>)
 
 ```go
 func (r hinfo) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1180,7 +1180,7 @@ func (r hinfo) Create(ctx context.Context, req resource.CreateRequest, resp *res
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(hinfo\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L248>)
+### func \(hinfo\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L250>)
 
 ```go
 func (r hinfo) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1188,7 +1188,7 @@ func (r hinfo) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(hinfo\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L276>)
+### func \(hinfo\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L278>)
 
 ```go
 func (hinfo) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1202,7 +1202,7 @@ func (hinfo) Metadata(_ context.Context, req resource.MetadataRequest, resp *res
 
 Metadata returns the resource type name.
 
-### func \(hinfo\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L152>)
+### func \(hinfo\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L154>)
 
 ```go
 func (r hinfo) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1218,7 +1218,7 @@ func (hinfo) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 
 Schema defines the schema for the resource.
 
-### func \(hinfo\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L194>)
+### func \(hinfo\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/HINFO.go#L196>)
 
 ```go
 func (r hinfo) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1236,7 +1236,7 @@ type loc struct {
 }
 ```
 
-### func \(\*loc\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L91>)
+### func \(\*loc\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L93>)
 
 ```go
 func (r *loc) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1244,7 +1244,7 @@ func (r *loc) Configure(ctx context.Context, req resource.ConfigureRequest, resp
 
 Configure adds the provider configured client to the resource.
 
-### func \(loc\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L98>)
+### func \(loc\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L100>)
 
 ```go
 func (r loc) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1252,7 +1252,7 @@ func (r loc) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(loc\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L248>)
+### func \(loc\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L250>)
 
 ```go
 func (r loc) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1260,7 +1260,7 @@ func (r loc) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(loc\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L276>)
+### func \(loc\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L278>)
 
 ```go
 func (loc) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1274,7 +1274,7 @@ func (loc) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 
 Metadata returns the resource type name.
 
-### func \(loc\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L152>)
+### func \(loc\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L154>)
 
 ```go
 func (r loc) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1290,7 +1290,7 @@ func (loc) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 
 Schema defines the schema for the resource.
 
-### func \(loc\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L194>)
+### func \(loc\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/LOC.go#L196>)
 
 ```go
 func (r loc) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1308,7 +1308,7 @@ type mx struct {
 }
 ```
 
-### func \(\*mx\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L99>)
+### func \(\*mx\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L101>)
 
 ```go
 func (r *mx) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1316,7 +1316,7 @@ func (r *mx) Configure(ctx context.Context, req resource.ConfigureRequest, resp 
 
 Configure adds the provider configured client to the resource.
 
-### func \(mx\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L106>)
+### func \(mx\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L108>)
 
 ```go
 func (r mx) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1324,7 +1324,7 @@ func (r mx) Create(ctx context.Context, req resource.CreateRequest, resp *resour
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(mx\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L256>)
+### func \(mx\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L258>)
 
 ```go
 func (r mx) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1332,7 +1332,7 @@ func (r mx) Delete(ctx context.Context, req resource.DeleteRequest, resp *resour
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(mx\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L284>)
+### func \(mx\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L286>)
 
 ```go
 func (mx) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1346,7 +1346,7 @@ func (mx) Metadata(_ context.Context, req resource.MetadataRequest, resp *resour
 
 Metadata returns the resource type name.
 
-### func \(mx\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L160>)
+### func \(mx\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L162>)
 
 ```go
 func (r mx) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1362,7 +1362,7 @@ func (mx) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sch
 
 Schema defines the schema for the resource.
 
-### func \(mx\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L202>)
+### func \(mx\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/MX.go#L204>)
 
 ```go
 func (r mx) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1380,7 +1380,7 @@ type naptr struct {
 }
 ```
 
-### func \(\*naptr\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L91>)
+### func \(\*naptr\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L93>)
 
 ```go
 func (r *naptr) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1388,7 +1388,7 @@ func (r *naptr) Configure(ctx context.Context, req resource.ConfigureRequest, re
 
 Configure adds the provider configured client to the resource.
 
-### func \(naptr\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L98>)
+### func \(naptr\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L100>)
 
 ```go
 func (r naptr) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1396,7 +1396,7 @@ func (r naptr) Create(ctx context.Context, req resource.CreateRequest, resp *res
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(naptr\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L248>)
+### func \(naptr\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L250>)
 
 ```go
 func (r naptr) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1404,7 +1404,7 @@ func (r naptr) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(naptr\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L276>)
+### func \(naptr\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L278>)
 
 ```go
 func (naptr) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1418,7 +1418,7 @@ func (naptr) Metadata(_ context.Context, req resource.MetadataRequest, resp *res
 
 Metadata returns the resource type name.
 
-### func \(naptr\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L152>)
+### func \(naptr\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L154>)
 
 ```go
 func (r naptr) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1434,7 +1434,7 @@ func (naptr) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 
 Schema defines the schema for the resource.
 
-### func \(naptr\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L194>)
+### func \(naptr\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NAPTR.go#L196>)
 
 ```go
 func (r naptr) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1452,7 +1452,7 @@ type ns struct {
 }
 ```
 
-### func \(\*ns\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L91>)
+### func \(\*ns\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L93>)
 
 ```go
 func (r *ns) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1460,7 +1460,7 @@ func (r *ns) Configure(ctx context.Context, req resource.ConfigureRequest, resp 
 
 Configure adds the provider configured client to the resource.
 
-### func \(ns\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L98>)
+### func \(ns\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L100>)
 
 ```go
 func (r ns) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1468,7 +1468,7 @@ func (r ns) Create(ctx context.Context, req resource.CreateRequest, resp *resour
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(ns\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L248>)
+### func \(ns\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L250>)
 
 ```go
 func (r ns) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1476,7 +1476,7 @@ func (r ns) Delete(ctx context.Context, req resource.DeleteRequest, resp *resour
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(ns\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L276>)
+### func \(ns\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L278>)
 
 ```go
 func (ns) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1490,7 +1490,7 @@ func (ns) Metadata(_ context.Context, req resource.MetadataRequest, resp *resour
 
 Metadata returns the resource type name.
 
-### func \(ns\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L152>)
+### func \(ns\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L154>)
 
 ```go
 func (r ns) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1506,7 +1506,7 @@ func (ns) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sch
 
 Schema defines the schema for the resource.
 
-### func \(ns\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L194>)
+### func \(ns\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/NS.go#L196>)
 
 ```go
 func (r ns) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1524,7 +1524,7 @@ type ptr struct {
 }
 ```
 
-### func \(\*ptr\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L91>)
+### func \(\*ptr\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L93>)
 
 ```go
 func (r *ptr) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1532,7 +1532,7 @@ func (r *ptr) Configure(ctx context.Context, req resource.ConfigureRequest, resp
 
 Configure adds the provider configured client to the resource.
 
-### func \(ptr\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L98>)
+### func \(ptr\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L100>)
 
 ```go
 func (r ptr) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1540,7 +1540,7 @@ func (r ptr) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(ptr\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L248>)
+### func \(ptr\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L250>)
 
 ```go
 func (r ptr) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1548,7 +1548,7 @@ func (r ptr) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(ptr\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L276>)
+### func \(ptr\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L278>)
 
 ```go
 func (ptr) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1562,7 +1562,7 @@ func (ptr) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 
 Metadata returns the resource type name.
 
-### func \(ptr\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L152>)
+### func \(ptr\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L154>)
 
 ```go
 func (r ptr) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1578,7 +1578,7 @@ func (ptr) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 
 Schema defines the schema for the resource.
 
-### func \(ptr\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L194>)
+### func \(ptr\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/PTR.go#L196>)
 
 ```go
 func (r ptr) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1596,7 +1596,7 @@ type rp struct {
 }
 ```
 
-### func \(\*rp\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L91>)
+### func \(\*rp\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L93>)
 
 ```go
 func (r *rp) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1604,7 +1604,7 @@ func (r *rp) Configure(ctx context.Context, req resource.ConfigureRequest, resp 
 
 Configure adds the provider configured client to the resource.
 
-### func \(rp\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L98>)
+### func \(rp\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L100>)
 
 ```go
 func (r rp) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1612,7 +1612,7 @@ func (r rp) Create(ctx context.Context, req resource.CreateRequest, resp *resour
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(rp\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L248>)
+### func \(rp\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L250>)
 
 ```go
 func (r rp) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1620,7 +1620,7 @@ func (r rp) Delete(ctx context.Context, req resource.DeleteRequest, resp *resour
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(rp\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L276>)
+### func \(rp\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L278>)
 
 ```go
 func (rp) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1634,7 +1634,7 @@ func (rp) Metadata(_ context.Context, req resource.MetadataRequest, resp *resour
 
 Metadata returns the resource type name.
 
-### func \(rp\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L152>)
+### func \(rp\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L154>)
 
 ```go
 func (r rp) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1650,7 +1650,7 @@ func (rp) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sch
 
 Schema defines the schema for the resource.
 
-### func \(rp\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L194>)
+### func \(rp\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/RP.go#L196>)
 
 ```go
 func (r rp) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1668,7 +1668,7 @@ type spf struct {
 }
 ```
 
-### func \(\*spf\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L91>)
+### func \(\*spf\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L93>)
 
 ```go
 func (r *spf) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1676,7 +1676,7 @@ func (r *spf) Configure(ctx context.Context, req resource.ConfigureRequest, resp
 
 Configure adds the provider configured client to the resource.
 
-### func \(spf\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L98>)
+### func \(spf\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L100>)
 
 ```go
 func (r spf) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1684,7 +1684,7 @@ func (r spf) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(spf\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L248>)
+### func \(spf\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L250>)
 
 ```go
 func (r spf) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1692,7 +1692,7 @@ func (r spf) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(spf\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L276>)
+### func \(spf\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L278>)
 
 ```go
 func (spf) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1706,7 +1706,7 @@ func (spf) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 
 Metadata returns the resource type name.
 
-### func \(spf\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L152>)
+### func \(spf\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L154>)
 
 ```go
 func (r spf) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1722,7 +1722,7 @@ func (spf) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 
 Schema defines the schema for the resource.
 
-### func \(spf\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L194>)
+### func \(spf\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SPF.go#L196>)
 
 ```go
 func (r spf) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1740,7 +1740,7 @@ type srv struct {
 }
 ```
 
-### func \(\*srv\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L121>)
+### func \(\*srv\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L123>)
 
 ```go
 func (r *srv) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1748,7 +1748,7 @@ func (r *srv) Configure(ctx context.Context, req resource.ConfigureRequest, resp
 
 Configure adds the provider configured client to the resource.
 
-### func \(srv\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L128>)
+### func \(srv\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L130>)
 
 ```go
 func (r srv) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1756,7 +1756,7 @@ func (r srv) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(srv\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L278>)
+### func \(srv\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L280>)
 
 ```go
 func (r srv) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1764,7 +1764,7 @@ func (r srv) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(srv\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L306>)
+### func \(srv\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L308>)
 
 ```go
 func (srv) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1778,7 +1778,7 @@ func (srv) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 
 Metadata returns the resource type name.
 
-### func \(srv\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L182>)
+### func \(srv\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L184>)
 
 ```go
 func (r srv) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1794,7 +1794,7 @@ func (srv) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 
 Schema defines the schema for the resource.
 
-### func \(srv\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L224>)
+### func \(srv\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SRV.go#L226>)
 
 ```go
 func (r srv) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1812,7 +1812,7 @@ type sshfp struct {
 }
 ```
 
-### func \(\*sshfp\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L91>)
+### func \(\*sshfp\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L93>)
 
 ```go
 func (r *sshfp) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1820,7 +1820,7 @@ func (r *sshfp) Configure(ctx context.Context, req resource.ConfigureRequest, re
 
 Configure adds the provider configured client to the resource.
 
-### func \(sshfp\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L98>)
+### func \(sshfp\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L100>)
 
 ```go
 func (r sshfp) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1828,7 +1828,7 @@ func (r sshfp) Create(ctx context.Context, req resource.CreateRequest, resp *res
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(sshfp\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L248>)
+### func \(sshfp\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L250>)
 
 ```go
 func (r sshfp) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1836,7 +1836,7 @@ func (r sshfp) Delete(ctx context.Context, req resource.DeleteRequest, resp *res
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(sshfp\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L276>)
+### func \(sshfp\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L278>)
 
 ```go
 func (sshfp) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1850,7 +1850,7 @@ func (sshfp) Metadata(_ context.Context, req resource.MetadataRequest, resp *res
 
 Metadata returns the resource type name.
 
-### func \(sshfp\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L152>)
+### func \(sshfp\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L154>)
 
 ```go
 func (r sshfp) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1866,7 +1866,7 @@ func (sshfp) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 
 Schema defines the schema for the resource.
 
-### func \(sshfp\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L194>)
+### func \(sshfp\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/SSHFP.go#L196>)
 
 ```go
 func (r sshfp) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1884,7 +1884,7 @@ type txt struct {
 }
 ```
 
-### func \(\*txt\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L106>)
+### func \(\*txt\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L108>)
 
 ```go
 func (r *txt) Configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse)
@@ -1892,7 +1892,7 @@ func (r *txt) Configure(ctx context.Context, req resource.ConfigureRequest, resp
 
 Configure adds the provider configured client to the resource.
 
-### func \(txt\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L113>)
+### func \(txt\) [Create](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L115>)
 
 ```go
 func (r txt) Create(ctx context.Context, req resource.CreateRequest, resp *resource.CreateResponse)
@@ -1900,7 +1900,7 @@ func (r txt) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 
 Create creates the resource and sets the initial Terraform state.
 
-### func \(txt\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L263>)
+### func \(txt\) [Delete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L265>)
 
 ```go
 func (r txt) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse)
@@ -1908,7 +1908,7 @@ func (r txt) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(txt\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L328>)
+### func \(txt\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L330>)
 
 ```go
 func (txt) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1922,7 +1922,7 @@ func (txt) Metadata(_ context.Context, req resource.MetadataRequest, resp *resou
 
 Metadata returns the resource type name.
 
-### func \(txt\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L167>)
+### func \(txt\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L169>)
 
 ```go
 func (r txt) Read(ctx context.Context, req resource.ReadRequest, resp *resource.ReadResponse)
@@ -1938,7 +1938,7 @@ func (txt) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 
 Schema defines the schema for the resource.
 
-### func \(txt\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L209>)
+### func \(txt\) [Update](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L211>)
 
 ```go
 func (r txt) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse)
@@ -1946,7 +1946,7 @@ func (r txt) Update(ctx context.Context, req resource.UpdateRequest, resp *resou
 
 Update updates the resource and sets the updated Terraform state on success.
 
-### func \(txt\) [ValidateConfig](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L291>)
+### func \(txt\) [ValidateConfig](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L293>)
 
 ```go
 func (txt) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest, resp *resource.ValidateConfigResponse)

@@ -84,7 +84,7 @@ type dnsProvider struct {
 }
 ```
 
-### func \(\*dnsProvider\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L94>)
+### func \(\*dnsProvider\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L96>)
 
 ```go
 func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse)
@@ -92,7 +92,7 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 
 Configure prepares a dns.he.net "API" client for data sources and resources.
 
-### func \(\*dnsProvider\) [DataSources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L273>)
+### func \(\*dnsProvider\) [DataSources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L275>)
 
 ```go
 func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSource
@@ -108,7 +108,7 @@ func (p *dnsProvider) Metadata(_ context.Context, _ provider.MetadataRequest, re
 
 Metadata returns the provider type name.
 
-### func \(\*dnsProvider\) [Resources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L301>)
+### func \(\*dnsProvider\) [Resources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L303>)
 
 ```go
 func (p *dnsProvider) Resources(_ context.Context) []func() resource.Resource
