@@ -84,7 +84,7 @@ func TestAccARecord(t *testing.T) {
 				),
 			},
 			// Update and Read testing
-			// Validates state continuity by setting dynamic to true and ommiting data
+			// Validates state continuity by setting dynamic to true and omitting data
 			{
 				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
 					zone_id = 1091256

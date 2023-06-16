@@ -10,7 +10,7 @@ import (
 
 func TestAccSSHFPRecord(t *testing.T) {
 	t.Parallel()
-	
+
 	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
