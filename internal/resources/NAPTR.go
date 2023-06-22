@@ -81,8 +81,8 @@ func (naptr) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 				Required:            true,
 				Description:         "Value of the DNS record: *TODO*",
 				MarkdownDescription: "Value of the DNS record: *TODO*",
-				Validators:          []validator.String{
-					//naptrValidator,
+				Validators: []validator.String{
+					naptrValidator,
 				},
 			},
 		},
