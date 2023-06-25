@@ -60,8 +60,8 @@ func (sshfp) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 				Computed:            true,
 			},
 			"data": schema.StringAttribute{
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: algorithm, (hash) type and fingerprint",
+				MarkdownDescription: "Value of the DNS record: algorithm, (hash) type and fingerprint",
 				Computed:            true,
 			},
 		},

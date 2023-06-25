@@ -30,7 +30,7 @@ resource "dns-he-net_txt" "example" {
 
 ### Read-Only
 
-- `data` (String) Value of the DNS record: *TODO*
+- `data` (String) Value of the DNS record: arbitrary text*
 - `domain` (String) Name of the DNS record
 - `dynamic` (Boolean) Enable DDNS for this record
 - `ttl` (Number) Time-To-Live of the DNS record

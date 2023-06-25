@@ -50,7 +50,7 @@ resource "dns-he-net_txt" "example" {
 
 ### Optional
 
-- `data` (String) Value of the DNS record: IPv6 address
+- `data` (String) Value of the DNS record: arbitrary text
 - `dynamic` (Boolean) Enable DDNS for this record
 
 ### Read-Only

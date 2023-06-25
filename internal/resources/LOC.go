@@ -79,8 +79,8 @@ func (loc) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 			},
 			"data": schema.StringAttribute{
 				Required:            true,
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: WGS 84 system coordinates",
+				MarkdownDescription: "Value of the DNS record: WGS 84 system coordinates",
 				Validators: []validator.String{
 					locValidator,
 				},

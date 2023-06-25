@@ -65,8 +65,8 @@ func (mx) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource
 				Computed:            true,
 			},
 			"data": schema.StringAttribute{
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: mail server hostname",
+				MarkdownDescription: "Value of the DNS record: mail server hostname",
 				Computed:            true,
 			},
 		},

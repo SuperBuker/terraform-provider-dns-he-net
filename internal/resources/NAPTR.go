@@ -79,8 +79,8 @@ func (naptr) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 			},
 			"data": schema.StringAttribute{
 				Required:            true,
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: contact information for the host/domain",
+				MarkdownDescription: "Value of the DNS record: contact information for the host/domain",
 				Validators: []validator.String{
 					naptrValidator,
 				},

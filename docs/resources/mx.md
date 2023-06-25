@@ -28,7 +28,7 @@ resource "dns-he-net_mx" "example" {
 
 ### Required
 
-- `data` (String) Value of the DNS record: *TODO*
+- `data` (String) Value of the DNS record: mail server hostname
 - `domain` (String) Name of the DNS record
 - `priority` (Number) DNS record priority
 - `ttl` (Number) Time-To-Live of the DNS record

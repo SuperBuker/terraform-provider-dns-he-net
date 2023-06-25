@@ -27,7 +27,7 @@ resource "dns-he-net_hinfo" "example" {
 
 ### Required
 
-- `data` (String) Value of the DNS record: *TODO*
+- `data` (String) Value of the DNS record: CPU architecture and OS family
 - `domain` (String) Name of the DNS record
 - `ttl` (Number) Time-To-Live of the DNS record
 - `zone_id` (Number) dns.he.net zone id

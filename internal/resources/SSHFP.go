@@ -79,8 +79,8 @@ func (sshfp) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 			},
 			"data": schema.StringAttribute{
 				Required:            true,
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: algorithm, (hash) type and fingerprint",
+				MarkdownDescription: "Value of the DNS record: algorithm, (hash) type and fingerprint",
 				Validators: []validator.String{
 					sshfpValidator,
 				},

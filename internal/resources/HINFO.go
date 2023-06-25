@@ -79,8 +79,8 @@ func (hinfo) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 			},
 			"data": schema.StringAttribute{
 				Required:            true,
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: CPU architecture and OS family",
+				MarkdownDescription: "Value of the DNS record: CPU architecture and OS family",
 				Validators: []validator.String{
 					hinfoValidator,
 				},

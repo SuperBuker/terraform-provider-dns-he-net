@@ -60,8 +60,8 @@ func (naptr) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 				Computed:            true,
 			},
 			"data": schema.StringAttribute{
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: contact information for the host/domain",
+				MarkdownDescription: "Value of the DNS record: contact information for the host/domain",
 				Computed:            true,
 			},
 		},
