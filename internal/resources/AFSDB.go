@@ -80,8 +80,8 @@ func (afsdb) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 			},
 			"data": schema.StringAttribute{
 				Required:            true,
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: service subtype and hostname",
+				MarkdownDescription: "Value of the DNS record: service subtype and hostname",
 				Validators: []validator.String{
 					afsdbValidator,
 				},

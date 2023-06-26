@@ -60,8 +60,8 @@ func (rp) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource
 				Computed:            true,
 			},
 			"data": schema.StringAttribute{
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: contact person email",
+				MarkdownDescription: "Value of the DNS record: contact person email",
 				Computed:            true,
 			},
 		},

@@ -19,7 +19,7 @@ import (
 
 func TestAccAAAARecord(t *testing.T) {
 	t.Parallel()
-	
+
 	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
@@ -84,7 +84,7 @@ func TestAccAAAARecord(t *testing.T) {
 				),
 			},
 			// Update and Read testing
-			// Validates state continuity by setting dynamic to true and ommiting data
+			// Validates state continuity by setting dynamic to true and omitting data
 			{
 				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_aaaa" "record-aaaa" {
 					zone_id = 1091256

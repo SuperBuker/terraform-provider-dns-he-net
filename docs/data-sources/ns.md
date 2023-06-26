@@ -30,6 +30,6 @@ resource "dns-he-net_ns" "example" {
 
 ### Read-Only
 
-- `data` (String) Value of the DNS record: *TODO*
+- `data` (String) Value of the DNS record: nameserver hostname
 - `domain` (String) Name of the DNS record
 - `ttl` (Number) Time-To-Live of the DNS record

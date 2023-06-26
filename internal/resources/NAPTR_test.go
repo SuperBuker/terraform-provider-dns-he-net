@@ -10,7 +10,7 @@ import (
 
 func TestAccNAPTRRecord(t *testing.T) {
 	t.Parallel()
-	
+
 	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
@@ -24,14 +24,14 @@ func TestAccNAPTRRecord(t *testing.T) {
 					zone_id = 1091256
 					domain = %q
 					ttl = 300
-					data = "example.com"
+					data = "100 10 \"S\" \"SIP+D2U\" \"!^.*$!sip:bofher@dns-he-net.eu.org!\" _sip._udp.dns-he-net.eu.org."
 				}`, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "zone_id", "1091256"),
 					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "ttl", "300"),
-					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "data", "example.com"),
+					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "data", "100 10 \"S\" \"SIP+D2U\" \"!^.*$!sip:bofher@dns-he-net.eu.org!\" _sip._udp.dns-he-net.eu.org."),
 				),
 			},
 			// ImportState testing
@@ -47,14 +47,14 @@ func TestAccNAPTRRecord(t *testing.T) {
 					zone_id = 1091256
 					domain = %q
 					ttl = 600
-					data = "example.io"
+					data = "100 10 \"S\" \"SIP+D2T\" \"!^.*$!sip:bofher@dns-he-net.eu.org!\" _sip._tcp.dns-he-net.eu.org."
 			}`, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "zone_id", "1091256"),
 					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "ttl", "600"),
-					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "data", "example.io"),
+					resource.TestCheckResourceAttr("dns-he-net_naptr.record-naptr", "data", "100 10 \"S\" \"SIP+D2T\" \"!^.*$!sip:bofher@dns-he-net.eu.org!\" _sip._tcp.dns-he-net.eu.org."),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

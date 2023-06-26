@@ -79,10 +79,10 @@ func (rp) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sch
 			},
 			"data": schema.StringAttribute{
 				Required:            true,
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
-				Validators:          []validator.String{
-					//Needs to be a valid email address,
+				Description:         "Value of the DNS record: contact person email",
+				MarkdownDescription: "Value of the DNS record: contact person email",
+				Validators: []validator.String{
+					rpValidator,
 				},
 			},
 		},

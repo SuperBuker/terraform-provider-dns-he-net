@@ -394,11 +394,27 @@ var afsdbValidator = stringvalidator.RegexMatches(afsdbRegexp, "value must be a 
 ```
 
 ```go
-var domainRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)
+var caaRegexp = regexp.MustCompile(`^(?:0|128) (?:iodef|issue|issuewild) "[^"]*"$`) // Very light regexp, can be hardened
+```
+
+```go
+var caaValidator = stringvalidator.RegexMatches(caaRegexp, "value must be a valid CAA record")
+```
+
+```go
+var domainRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$`)
 ```
 
 ```go
 var domainValidator = stringvalidator.RegexMatches(domainRegexp, "value must be a valid domain name")
+```
+
+```go
+var hinfoRegexp = regexp.MustCompile(`^"[^ ]+ [^ ]+"$`) // Very light regexp, can be hardened
+```
+
+```go
+var hinfoValidator = stringvalidator.RegexMatches(hinfoRegexp, "value must be a valid HINFO record")
 ```
 
 ```go
@@ -423,6 +439,22 @@ var locRegexp = regexp.MustCompile(`^(?:[\d]+(?:\.[\d]+)? ){3}[NS] (?:[\d]+(?:\.
 
 ```go
 var locValidator = stringvalidator.RegexMatches(locRegexp, "value must be a valid LOC record")
+```
+
+```go
+var naptrRegexp = regexp.MustCompile(`^\d+ \d+ "[SAUP]?" "[^"]*" "[^"]*" [^" ]+$`) // Very light regexp, can be hardened
+```
+
+```go
+var naptrValidator = stringvalidator.RegexMatches(naptrRegexp, "value must be a valid NAPTR record")
+```
+
+```go
+var rpRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9])?\.){2,}[a-zA-Z]{2,} (?:[a-zA-Z0-9](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9])?\.){2,}[a-zA-Z]{2,}$`)
+```
+
+```go
+var rpValidator = stringvalidator.RegexMatches(rpRegexp, "value must be a valid RP record")
 ```
 
 ```go
@@ -601,19 +633,19 @@ func NewTXT() resource.Resource
 
 NewTXT initialises the A Resource.
 
-## func [configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/utils.go#L43>)
+## func [configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/utils.go#L51>)
 
 ```go
 func configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) (*client.Client, bool)
 ```
 
-## func [importRecordState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/utils.go#L99>)
+## func [importRecordState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/utils.go#L107>)
 
 ```go
 func importRecordState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
 ```
 
-## func [readRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/utils.go#L60>)
+## func [readRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/utils.go#L68>)
 
 ```go
 func readRecord(ctx context.Context, cli *client.Client, ID types.Int64, zoneID types.Int64, typ string, resp *resource.ReadResponse) (models.RecordX, bool)

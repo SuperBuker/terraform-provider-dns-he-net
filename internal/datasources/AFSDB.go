@@ -60,8 +60,8 @@ func (afsdb) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 				Computed:            true,
 			},
 			"data": schema.StringAttribute{
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: service subtype and hostname",
+				MarkdownDescription: "Value of the DNS record: service subtype and hostname",
 				Computed:            true,
 			},
 		},

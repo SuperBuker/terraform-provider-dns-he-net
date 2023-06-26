@@ -84,8 +84,8 @@ func (txt) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 			"data": schema.StringAttribute{
 				Computed:            true,
 				Optional:            true,
-				Description:         "Value of the DNS record: IPv6 address",
-				MarkdownDescription: "Value of the DNS record: IPv6 address",
+				Description:         "Value of the DNS record: arbitrary text",
+				MarkdownDescription: "Value of the DNS record: arbitrary text",
 				Validators: []validator.String{
 					txtValidator,
 				},

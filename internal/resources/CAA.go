@@ -79,10 +79,10 @@ func (caa) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 			},
 			"data": schema.StringAttribute{
 				Required:            true,
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
-				Validators:          []validator.String{
-					//TODO: CAA validator,
+				Description:         "Value of the DNS record: flags, tag and value",
+				MarkdownDescription: "Value of the DNS record: flags, tag and value",
+				Validators: []validator.String{
+					caaValidator,
 				},
 			},
 		},

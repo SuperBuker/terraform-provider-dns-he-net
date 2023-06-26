@@ -60,8 +60,8 @@ func (caa) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasourc
 				Computed:            true,
 			},
 			"data": schema.StringAttribute{
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: flags, tag and value",
+				MarkdownDescription: "Value of the DNS record: flags, tag and value",
 				Computed:            true,
 			},
 		},

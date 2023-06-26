@@ -79,8 +79,8 @@ func (ptr) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 			},
 			"data": schema.StringAttribute{
 				Required:            true,
-				Description:         "Value of the DNS record: *TODO*",
-				MarkdownDescription: "Value of the DNS record: *TODO*",
+				Description:         "Value of the DNS record: a hostname",
+				MarkdownDescription: "Value of the DNS record: a hostname",
 				Validators: []validator.String{
 					domainValidator,
 				},

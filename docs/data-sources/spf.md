@@ -30,6 +30,6 @@ resource "dns-he-net_spf" "example" {
 
 ### Read-Only
 
-- `data` (String) Value of the DNS record: *TODO*
+- `data` (String) Value of the DNS record: authorised email servers
 - `domain` (String) Name of the DNS record
 - `ttl` (Number) Time-To-Live of the DNS record

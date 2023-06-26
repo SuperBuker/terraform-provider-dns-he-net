@@ -27,8 +27,16 @@ var ipv6Regexp = regexp.MustCompile(`^(?:[0-9a-fA-F]{1,4}:){7,7}[0-9a-fA-F]{1,4}
 var ipv6Validator = stringvalidator.RegexMatches(ipv6Regexp, "value must be a valid IPv6 address")
 var afsdbRegexp = regexp.MustCompile(`^[1,2] (?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)
 var afsdbValidator = stringvalidator.RegexMatches(afsdbRegexp, "value must be a valid AFSDB record")
+var caaRegexp = regexp.MustCompile(`^(?:0|128) (?:iodef|issue|issuewild) "[^"]*"$`) // Very light regexp, can be hardened
+var caaValidator = stringvalidator.RegexMatches(caaRegexp, "value must be a valid CAA record")
+var hinfoRegexp = regexp.MustCompile(`^"[^ ]+ [^ ]+"$`) // Very light regexp, can be hardened
+var hinfoValidator = stringvalidator.RegexMatches(hinfoRegexp, "value must be a valid HINFO record")
 var locRegexp = regexp.MustCompile(`^(?:[\d]+(?:\.[\d]+)? ){3}[NS] (?:[\d]+(?:\.[\d]+)? ){3}[EW](?: [\d]+(?:\.[\d]+)?m){4}$`)
 var locValidator = stringvalidator.RegexMatches(locRegexp, "value must be a valid LOC record")
+var naptrRegexp = regexp.MustCompile(`^\d+ \d+ "[SAUP]?" "[^"]*" "[^"]*" [^" ]+$`) // Very light regexp, can be hardened
+var naptrValidator = stringvalidator.RegexMatches(naptrRegexp, "value must be a valid NAPTR record")
+var rpRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9])?\.){2,}[a-zA-Z]{2,} (?:[a-zA-Z0-9](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9])?\.){2,}[a-zA-Z]{2,}$`)
+var rpValidator = stringvalidator.RegexMatches(rpRegexp, "value must be a valid RP record")
 var spfRegexp = regexp.MustCompile(`^"v=spf1 .+"$`)
 var spfValidator = stringvalidator.RegexMatches(spfRegexp, "value must be a valid SPF record")
 var srvRegexp = regexp.MustCompile(`^_[a-zA-Z0-9]+\._(?:tcp|udp)\.(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)

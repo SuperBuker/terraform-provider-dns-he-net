@@ -15,7 +15,19 @@ func TestValidators(t *testing.T) {
 
 	assert.True(t, afsdbRegexp.MatchString("1 example.com"))
 
+	assert.True(t, caaRegexp.MatchString(`0 issue ";"`))
+
+	assert.True(t, caaRegexp.MatchString(`0 issuewild "sectigo.com"`))
+
+	assert.True(t, caaRegexp.MatchString(`0 iodef "mailto:example@example.com"`))
+
+	assert.True(t, hinfoRegexp.MatchString(`"intel-xeon linux"`))
+
 	assert.True(t, locRegexp.MatchString("1 2 3.000 N 4 5 6.000 E 7.00m 8.00m 9.00m 10.00m"))
+
+	assert.True(t, naptrRegexp.MatchString(`102 10 "U" "E2U+email" "!^.*$!mailto:information@example.com!" .`))
+
+	assert.True(t, rpRegexp.MatchString("john.doe.example.com john.doe.example.com"))
 
 	assert.True(t, spfRegexp.MatchString(`"v=spf1 ~all"`))
 

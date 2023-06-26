@@ -60,7 +60,7 @@ func (p *dnsProvider) Metadata(_ context.Context, _ provider.MetadataRequest, re
 // Schema defines the provider-level schema for configuration data.
 func (p *dnsProvider) Schema(_ context.Context, _ provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: "dns.he.net provider configuration",
+		Description:         "dns.he.net provider configuration",
 		MarkdownDescription: "dns.he.net provider configuration",
 		Attributes: map[string]schema.Attribute{
 			"username": schema.StringAttribute{
