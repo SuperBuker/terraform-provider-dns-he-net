@@ -55,7 +55,8 @@ func TestChecksum(t *testing.T) {
 	err := initIV(data)
 	require.NoError(t, err)
 
-	dataSum := addChecksum(data)
+	dataSum, err := addChecksum(data)
+	require.NoError(t, err)
 
 	data2, err := extractChecksum(dataSum)
 	require.NoError(t, err)

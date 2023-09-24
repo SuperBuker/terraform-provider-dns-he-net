@@ -108,7 +108,10 @@ func encryptedStore() authStore {
 				return err // Returns custom error
 			}
 
-			sumData := addChecksum(data)
+			sumData, err := addChecksum(data)
+			if err != nil {
+				return err // Returns custom error
+			}
 
 			cipherData, err := encrypt(a, sumData)
 			if err != nil {
