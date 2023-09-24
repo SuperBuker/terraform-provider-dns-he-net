@@ -64,6 +64,7 @@ jobs:
         DNSHENET_USER: ${{ secrets.DNSHENET_USER }}
         DNSHENET_PASSWD: ${{ secrets.DNSHENET_PASSWD }}
         DNSHENET_OTP: ${{ secrets.DNSHENET_OTP }}
+        DNSHENET_ACCOUNTID: ${{ secrets.DNSHENET_ACCOUNTID }}
         TF_ACC: "1"
       run: |
         go test -v  ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json || true
