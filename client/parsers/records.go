@@ -2,6 +2,7 @@ package parsers
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 
@@ -116,7 +117,7 @@ func parseRecordNode(node *html.Node) (record models.Record, err error) {
 		} else if htmlquery.SelectAttr(c, "align") == "center" {
 			p := htmlquery.InnerText(c)
 			var priority int
-			if priority, err = strconv.Atoi(p); err == nil {
+			if priority, err = strconv.Atoi(p); priority >= 0 && priority < math.MaxUint16 && err == nil {
 				p := uint16(priority)
 				record.Priority = &p
 			} else if p != "-" {
