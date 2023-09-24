@@ -10,7 +10,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 
 - [Constants](<#constants>)
 - [Variables](<#variables>)
-- [func addChecksum(data []byte) []byte](<#func-addchecksum>)
+- [func addChecksum(data []byte) ([]byte, error)](<#func-addchecksum>)
 - [func buildSecret(a *Auth) []byte](<#func-buildsecret>)
 - [func configFilePath(a *Auth, cs AuthStore) string](<#func-configfilepath>)
 - [func decrypt(a *Auth, cipherData []byte) ([]byte, error)](<#func-decrypt>)
@@ -65,7 +65,7 @@ var configPath = configdir.LocalConfig("terraform-provider-dns-he-net")
 ## func [addChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L135>)
 
 ```go
-func addChecksum(data []byte) []byte
+func addChecksum(data []byte) ([]byte, error)
 ```
 
 addChecksum prepends a checksum to the given data.
@@ -108,7 +108,7 @@ func encrypt(a *Auth, data []byte) ([]byte, error)
 
 encrypt the given data using the given Auth, returns new slice and custom error.
 
-## func [extractChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L145>)
+## func [extractChecksum](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/auth/blob/master/client/auth/store_utils.go#L149>)
 
 ```go
 func extractChecksum(data []byte) ([]byte, error)
