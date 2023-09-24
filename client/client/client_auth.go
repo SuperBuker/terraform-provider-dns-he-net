@@ -79,12 +79,19 @@ func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.C
 	c.log.Debug(ctx, "auth request - basic creds")
 
 	// Dummy request to initialise session and generate session cookies
-	respDummy, err := client.R().
+	resp, err := client.R().
 		SetContext(ctx).
 		Get(endpoint)
-	client.SetCookies(respDummy.Cookies());
 
-	resp, err := client.R().
+	if !errors.Is(err, &status.ErrNoAuth{}) {
+		// Unexpected error response
+		return nil, err
+	}
+
+	cookies := resp.Cookies()
+	client.SetCookies(cookies)
+
+	resp, err = client.R().
 		SetContext(ctx).
 		SetFormData(authx.Creds(c.auth)).
 		Post(endpoint)
@@ -96,7 +103,7 @@ func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.C
 		return nil, err
 	}
 
-	return respDummy.Cookies(), err
+	return cookies, err
 }
 
 func (c *Client) authOTP(ctx context.Context, client *resty.Client) error {
