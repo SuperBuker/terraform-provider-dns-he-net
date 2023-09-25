@@ -52,6 +52,7 @@ func TestAccDDNSKey(t *testing.T) {
 					user := os.Getenv("DNSHENET_USER")
 					password := os.Getenv("DNSHENET_PASSWD")
 					otp := os.Getenv("DNSHENET_OTP")
+					accountID := os.Getenv("DNSHENET_ACCOUNT_ID")
 
 					authObj, err := auth.NewAuth(user, password, otp, auth.Simple)
 					require.NoError(t, err)
@@ -59,7 +60,7 @@ func TestAccDDNSKey(t *testing.T) {
 					cli, err := client.NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
-					assert.Equal(t, "v6643873d8c41428.97783691", cli.GetAccount())
+					assert.Equal(t, accountID, cli.GetAccount())
 
 					// Makes auth fail when validating the expected key, triggering an update
 					anotherPassword := randStringBytesMaskImprSrcSB(16)

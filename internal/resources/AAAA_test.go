@@ -115,6 +115,7 @@ func TestAccAAAARecord(t *testing.T) {
 					user := os.Getenv("DNSHENET_USER")
 					password_ := os.Getenv("DNSHENET_PASSWD")
 					otp := os.Getenv("DNSHENET_OTP")
+					accountID := os.Getenv("DNSHENET_ACCOUNT_ID")
 
 					authObj, err := auth.NewAuth(user, password_, otp, auth.Simple)
 					require.NoError(t, err)
@@ -122,7 +123,7 @@ func TestAccAAAARecord(t *testing.T) {
 					cli, err := client.NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
-					assert.Equal(t, "v6643873d8c41428.97783691", cli.GetAccount())
+					assert.Equal(t, accountID, cli.GetAccount())
 
 					ok, err := cli.DDNS().UpdateIP(context.TODO(), domainUpdate, password, "::2")
 					require.NoError(t, err)
