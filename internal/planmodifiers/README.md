@@ -10,8 +10,8 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/planmodifie
 
 - [func UseStateOrDftForUnknown(dft string) planmodifier.String](<#func-usestateordftforunknown>)
 - [type useStateOrDftForUnknownModifier](<#type-usestateordftforunknownmodifier>)
-  - [func (_ useStateOrDftForUnknownModifier) Description(_ context.Context) string](<#func-usestateordftforunknownmodifier-description>)
-  - [func (_ useStateOrDftForUnknownModifier) MarkdownDescription(_ context.Context) string](<#func-usestateordftforunknownmodifier-markdowndescription>)
+  - [func (useStateOrDftForUnknownModifier) Description(context.Context) string](<#func-usestateordftforunknownmodifier-description>)
+  - [func (useStateOrDftForUnknownModifier) MarkdownDescription(context.Context) string](<#func-usestateordftforunknownmodifier-markdowndescription>)
   - [func (m useStateOrDftForUnknownModifier) PlanModifyString(_ context.Context, req planmodifier.StringRequest, resp *planmodifier.StringResponse)](<#func-usestateordftforunknownmodifier-planmodifystring>)
 
 
@@ -38,7 +38,7 @@ type useStateOrDftForUnknownModifier struct {
 ### func \(useStateOrDftForUnknownModifier\) [Description](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L31>)
 
 ```go
-func (_ useStateOrDftForUnknownModifier) Description(_ context.Context) string
+func (useStateOrDftForUnknownModifier) Description(context.Context) string
 ```
 
 Description returns a human\-readable description of the plan modifier.
@@ -46,7 +46,7 @@ Description returns a human\-readable description of the plan modifier.
 ### func \(useStateOrDftForUnknownModifier\) [MarkdownDescription](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L36>)
 
 ```go
-func (_ useStateOrDftForUnknownModifier) MarkdownDescription(_ context.Context) string
+func (useStateOrDftForUnknownModifier) MarkdownDescription(context.Context) string
 ```
 
 MarkdownDescription returns a markdown description of the plan modifier.
