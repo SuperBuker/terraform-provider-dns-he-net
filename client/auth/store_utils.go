@@ -132,13 +132,17 @@ func encrypt(a *Auth, data []byte) ([]byte, error) {
 }
 
 // addChecksum prepends a checksum to the given data.
-func addChecksum(data []byte) []byte {
+func addChecksum(data []byte) ([]byte, error) {
+	if len(data) > 64*1024*1024 {
+		return nil, &ErrFileEncryption{errors.New("data too large")}
+	}
+
 	out := make([]byte, sha256.Size+len(data))
 	sum := sha256.Sum256(data)
 	copy(out, sum[:])
 	copy(out[sha256.Size:], data)
 
-	return out
+	return out, nil
 }
 
 // extractChecksum given data, returns new slice and error.

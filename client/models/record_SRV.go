@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -31,6 +32,9 @@ func parseSRVData(data string) (SRV, error) {
 	for i, x := range []*uint16{&srv.Weight, &srv.Port} {
 		if a, err := strconv.Atoi(s[i]); err != nil {
 			return SRV{}, err
+		} else if a < 0 || a > math.MaxUint16 {
+			field := []string{"Weight", "Port"}[i]
+			return SRV{}, &ErrFormat{field, "value out of range"}
 		} else {
 			*x = uint16(a)
 		}

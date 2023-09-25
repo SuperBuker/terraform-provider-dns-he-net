@@ -28,12 +28,12 @@ type useStateOrDftForUnknownModifier struct {
 }
 
 // Description returns a human-readable description of the plan modifier.
-func (_ useStateOrDftForUnknownModifier) Description(_ context.Context) string {
+func (useStateOrDftForUnknownModifier) Description(context.Context) string {
 	return "Once set, the value of this attribute in state will not change."
 }
 
 // MarkdownDescription returns a markdown description of the plan modifier.
-func (_ useStateOrDftForUnknownModifier) MarkdownDescription(_ context.Context) string {
+func (useStateOrDftForUnknownModifier) MarkdownDescription(context.Context) string {
 	return "Once set, the value of this attribute in state will not change."
 }
 
