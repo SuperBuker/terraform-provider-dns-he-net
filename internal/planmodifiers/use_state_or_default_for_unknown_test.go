@@ -79,7 +79,7 @@ func TestUseStateForUnknownModifierPlanModifyString(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase
+		name, testCase := name, testCase // To deprecate in Go v1.22
 
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()

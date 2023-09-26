@@ -202,7 +202,7 @@ SetRecord creates or updates a record, then returns it, or an error.
 func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.Cookie, error)
 ```
 
-### func \(\*Client\) [authOTP](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L96>)
+### func \(\*Client\) [authOTP](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L109>)
 
 ```go
 func (c *Client) authOTP(ctx context.Context, client *resty.Client) error
@@ -222,7 +222,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error)
 
 autheticate authenticates the client against the API on a separated go\-resty client, then returns the cookies.
 
-### func \(\*Client\) [setAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L116>)
+### func \(\*Client\) [setAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L129>)
 
 ```go
 func (c *Client) setAccount(resp *resty.Response)

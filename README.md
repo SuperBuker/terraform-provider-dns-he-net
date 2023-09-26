@@ -67,9 +67,10 @@ $ go build -o terraform-provider-dns-he-net
 
 In order to run the full suite of Acceptance tests, the following environment variables must be set:
 
-- `DNSHENET_USER`
-- `DNSHENET_PASSWD`
-- `DNSHENET_OTP`
+- `DNSHENET_USER` (mandatory)
+- `DNSHENET_PASSWD` (mandatory)
+- `DNSHENET_OTP` (optional, only required if the OTP auth is enabled)
+- `DNSHENET_ACCOUNT_ID` (mandatory, used for validating the testing results)
 
 ```sh
 $ TF_ACC=1 go test -v ./...

@@ -78,7 +78,7 @@ func GetAccount(doc *html.Node) (string, error)
 
 GetAccount returns the account name from the HTML body.
 
-## func [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L165>)
+## func [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L166>)
 
 ```go
 func GetRecords(doc *html.Node) ([]models.Record, error)
@@ -134,7 +134,7 @@ func errParsingNode(path, field string, err error) error
 
 errParsingNode returns a tailored ErrParsing error.
 
-## func [parseRecordNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L15>)
+## func [parseRecordNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L16>)
 
 ```go
 func parseRecordNode(node *html.Node) (record models.Record, err error)

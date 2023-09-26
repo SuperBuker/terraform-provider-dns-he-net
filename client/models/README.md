@@ -1158,7 +1158,7 @@ func (r SPF) Serialise() map[string]string
 func (r SPF) Type() string
 ```
 
-## type [SRV](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L9-L18>)
+## type [SRV](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L10-L19>)
 
 ```go
 type SRV struct {
@@ -1173,49 +1173,49 @@ type SRV struct {
 }
 ```
 
-### func [ToSRV](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L42>)
+### func [ToSRV](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L46>)
 
 ```go
 func ToSRV(r Record) (SRV, error)
 ```
 
-### func [parseSRVData](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L20>)
+### func [parseSRVData](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L21>)
 
 ```go
 func parseSRVData(data string) (SRV, error)
 ```
 
-### func \(SRV\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L64>)
+### func \(SRV\) [Equals](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L68>)
 
 ```go
 func (r SRV) Equals(rx RecordX) bool
 ```
 
-### func \(SRV\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L111>)
+### func \(SRV\) [GetID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L115>)
 
 ```go
 func (r SRV) GetID() (uint, bool)
 ```
 
-### func \(SRV\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L119>)
+### func \(SRV\) [GetZoneID](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L123>)
 
 ```go
 func (r SRV) GetZoneID() uint
 ```
 
-### func \(SRV\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L104>)
+### func \(SRV\) [Refs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L108>)
 
 ```go
 func (r SRV) Refs() map[string]string
 ```
 
-### func \(SRV\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L90>)
+### func \(SRV\) [Serialise](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L94>)
 
 ```go
 func (r SRV) Serialise() map[string]string
 ```
 
-### func \(SRV\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L123>)
+### func \(SRV\) [Type](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_SRV.go#L127>)
 
 ```go
 func (r SRV) Type() string
