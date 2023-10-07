@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/test_utils"
@@ -16,15 +17,16 @@ func TestAccRecords(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_records" "test" {
-					id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_records" "test" {
+					id = %d
+				}`, Zone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					//resource.TestCheckResourceAttr("data.dns-he-net_records.test", "records.#", "104"),
+					//resource.TestCheckResourceAttr("data.dns-he-net_records.test", "records.#", "104"), // TODO: enable
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_records.test", "id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_records.test", "id", toString(Zone.ID)),
 				),
 			},
 		},

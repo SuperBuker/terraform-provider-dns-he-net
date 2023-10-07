@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func TestAccALIAS(t *testing.T) {
+	record, ok := Records["ALIAS"]
+	if !ok {
+		t.Skip("ALIAS record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -17,19 +23,20 @@ func TestAccALIAS(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_alias" "record-alias" {
-					id = 5195504740
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_alias" "record-alias" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, Zone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "domain", "example-alias.dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "domain", Zone.Sub("example-alias")),
 					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "data", "dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "data", Zone.Name),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "id", "5195504740"),
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "zone_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "id", toString(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "zone_id", toString(Zone.ID)),
 				),
 			},
 		},
@@ -37,6 +44,11 @@ func TestAccALIAS(t *testing.T) {
 }
 
 func TestAccALIASMissingZone(t *testing.T) {
+	record, ok := Records["ALIAS"]
+	if !ok {
+		t.Skip("ALIAS record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -44,10 +56,11 @@ func TestAccALIASMissingZone(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_alias" "record-alias" {
-					id = 5195504740
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_alias" "record-alias" {
+					id = %d
 					zone_id = 0
-				}`,
+				}`, record.ID),
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
 		},
@@ -62,10 +75,11 @@ func TestAccALIASMissingRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_alias" "record-alias" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_alias" "record-alias" {
 					id = 0
-					zone_id = 1093397
-				}`,
+					zone_id = %d
+				}`, Zone.ID),
 				ExpectError: regexp.MustCompile("Unable to find ALIAS record"),
 			},
 		},

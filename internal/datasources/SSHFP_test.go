@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func TestAccSSHFP(t *testing.T) {
+	record, ok := Records["SSHFP"]
+	if !ok {
+		t.Skip("SSHFP record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -17,19 +23,20 @@ func TestAccSSHFP(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_sshfp" "record-sshfp" {
-					id = 5195770791
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_sshfp" "record-sshfp" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, Zone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "domain", "example-sshfp.dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "domain", Zone.Sub("example-sshfp")),
 					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "ttl", "86400"),
 					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "data", "4 2 123456789abcdef67890123456789abcdef67890123456789abcdef123456789"),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "id", "5195770791"),
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "zone_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "id", toString(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "zone_id", toString(Zone.ID)),
 				),
 			},
 		},
@@ -37,6 +44,11 @@ func TestAccSSHFP(t *testing.T) {
 }
 
 func TestAccSSHFPMissingZone(t *testing.T) {
+	record, ok := Records["SSHFP"]
+	if !ok {
+		t.Skip("SSHFP record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -44,10 +56,11 @@ func TestAccSSHFPMissingZone(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_sshfp" "record-sshfp" {
-					id = 5195770791
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_sshfp" "record-sshfp" {
+					id = %d
 					zone_id = 0
-				}`,
+				}`, record.ID),
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
 		},
@@ -62,10 +75,11 @@ func TestAccSSHFPMissingRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_sshfp" "record-sshfp" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_sshfp" "record-sshfp" {
 					id = 0
-					zone_id = 1093397
-				}`,
+					zone_id = %d
+				}`, Zone.ID),
 				ExpectError: regexp.MustCompile("Unable to find SSHFP record"),
 			},
 		},

@@ -12,11 +12,7 @@ import (
 )
 
 func TestMain(m *testing.M) {
-	user := os.Getenv("DNSHENET_USER")
-	password := os.Getenv("DNSHENET_PASSWD")
-	otp := os.Getenv("DNSHENET_OTP")
-
-	auth, err := client.NewAuth(user, password, otp, client.CookieStore.Simple)
+	auth, err := client.NewAuth(Account.User, Account.Password, Account.OTP, client.CookieStore.Simple)
 
 	if err != nil {
 		log.Printf("Auth init failed : %s", err.Error())
@@ -24,7 +20,8 @@ func TestMain(m *testing.M) {
 		return
 	}
 
-	client, err := client.NewClient(context.TODO(), auth,
+	ctx := context.Background()
+	client, err := client.NewClient(ctx, auth,
 		logging.NewZerolog(zerolog.DebugLevel, false))
 
 	if err != nil {
@@ -34,7 +31,7 @@ func TestMain(m *testing.M) {
 	}
 
 	// Ensure authentication works
-	if _, err = client.GetZones(context.TODO()); err != nil {
+	if _, err = client.GetZones(ctx); err != nil {
 		log.Printf("Authentication failed : %s", err.Error())
 		os.Exit(1)
 		return

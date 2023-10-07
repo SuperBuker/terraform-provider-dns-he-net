@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func TestAccSRV(t *testing.T) {
+	record, ok := Records["SRV"]
+	if !ok {
+		t.Skip("SRV record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -17,10 +23,11 @@ func TestAccSRV(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_srv" "record-srv" {
-					id = 5195753926
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_srv" "record-srv" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, Zone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "domain", "_bofher._tcp.dns-he-net.ovh"),
@@ -28,11 +35,11 @@ func TestAccSRV(t *testing.T) {
 					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "priority", "0"),
 					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "weight", "0"),
 					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "port", "22"),
-					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "target", "dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "target", Zone.Name),
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "id", "5195753926"),
-					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "zone_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_srv.record-srv", "zone_id", toString(Zone.ID)),
 				),
 			},
 		},
@@ -40,6 +47,11 @@ func TestAccSRV(t *testing.T) {
 }
 
 func TestAccSRVMissingZone(t *testing.T) {
+	record, ok := Records["SRV"]
+	if !ok {
+		t.Skip("SRV record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -47,10 +59,11 @@ func TestAccSRVMissingZone(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_srv" "record-srv" {
-					id = 5195753926
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_srv" "record-srv" {
+					id = %d
 					zone_id = 0
-				}`,
+				}`, record.ID),
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
 		},
@@ -65,10 +78,11 @@ func TestAccSRVMissingRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_srv" "record-srv" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_srv" "record-srv" {
 					id = 0
-					zone_id = 1093397
-				}`,
+					zone_id = %d
+				}`, Zone.ID),
 				ExpectError: regexp.MustCompile("Unable to find SRV record"),
 			},
 		},

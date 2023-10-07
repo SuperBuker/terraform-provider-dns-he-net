@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func TestAccMX(t *testing.T) {
+	record, ok := Records["MX"]
+	if !ok {
+		t.Skip("MX record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -17,20 +23,21 @@ func TestAccMX(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_mx" "record-mx" {
-					id = 5195493159
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_mx" "record-mx" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, Zone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "domain", "dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "domain", Zone.Name),
 					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "ttl", "3600"),
 					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "priority", "1"),
 					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "data", "mx.example.com"),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "id", "5195493159"),
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "zone_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "id", toString(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "zone_id", toString(Zone.ID)),
 				),
 			},
 		},
@@ -38,6 +45,11 @@ func TestAccMX(t *testing.T) {
 }
 
 func TestAccMXMissingZone(t *testing.T) {
+	record, ok := Records["MX"]
+	if !ok {
+		t.Skip("MX record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -45,10 +57,11 @@ func TestAccMXMissingZone(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_mx" "record-mx" {
-					id = 5195493159
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_mx" "record-mx" {
+					id = %d
 					zone_id = 0
-				}`,
+				}`, record.ID),
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
 		},
@@ -63,10 +76,11 @@ func TestAccMXMissingRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_mx" "record-mx" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_mx" "record-mx" {
 					id = 0
-					zone_id = 1093397
-				}`,
+					zone_id = %d
+				}`, Zone.ID),
 				ExpectError: regexp.MustCompile("Unable to find MX record"),
 			},
 		},
