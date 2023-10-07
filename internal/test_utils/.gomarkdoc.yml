@@ -4,4 +4,4 @@ repository:
   url: https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/test_utils
   defaultBranch: master
   directory: .
-includeUnexported: false
+includeUnexported: true
