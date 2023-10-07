@@ -115,7 +115,6 @@ func TestAccARecord(t *testing.T) {
 			{
 				PreConfig: func() {
 					// Force the ddns "external" update
-
 					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 

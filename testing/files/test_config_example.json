@@ -1,4 +1,12 @@
 {
+    "client": {
+        "account": {
+            "user": "",
+            "password": "",
+            "otp": "",
+            "id": ""
+        }
+    },
     "datasources": {
         "account": {
             "user": "",

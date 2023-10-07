@@ -3,7 +3,6 @@ package resources_test
 import (
 	"context"
 	"fmt"
-	"os"
 	"regexp"
 	"testing"
 
@@ -119,18 +118,13 @@ func TestAccTXTRecord(t *testing.T) {
 			{
 				PreConfig: func() {
 					// Force the ddns "external" update
-					user := os.Getenv("DNSHENET_USER")
-					password_ := os.Getenv("DNSHENET_PASSWD")
-					otp := os.Getenv("DNSHENET_OTP")
-					accountID := os.Getenv("DNSHENET_ACCOUNT_ID")
-
-					authObj, err := auth.NewAuth(user, password_, otp, auth.Simple)
+					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 
 					cli, err := client.NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
-					assert.Equal(t, accountID, cli.GetAccount())
+					assert.Equal(t, Account.ID, cli.GetAccount())
 
 					ok, err := cli.DDNS().UpdateTXT(context.TODO(), domainUpdate, password, data2[1:len(data2)-1])
 					require.NoError(t, err)

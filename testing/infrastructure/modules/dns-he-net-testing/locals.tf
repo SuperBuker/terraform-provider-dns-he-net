@@ -126,6 +126,9 @@ locals {
   }
 
   test_config = {
+    client = {
+      account     = var.account.mask_creds ? null : local.account
+    }
     datasources = {
       account     = var.account.mask_creds ? null : local.account
       zone        = local.datasources_zone

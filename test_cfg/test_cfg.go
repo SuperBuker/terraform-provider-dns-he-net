@@ -1,4 +1,4 @@
-package test_utils
+package test_cfg
 
 import (
 	"context"
@@ -6,8 +6,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-
-	//"log"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/sethvargo/go-envconfig"
@@ -72,6 +70,10 @@ func (c ZoneCfg) RandSub(prefix string, size int, len int) []string {
 	return generateSubDomains(fmt.Sprintf("%s.%s", prefix, c.Name), size, len)
 }
 
+type ClientTestCfg struct {
+	Account AccountCfg `json:"account"`
+}
+
 type DataSoucesTestCfg struct {
 	Account    AccountCfg           `json:"account"`
 	Zone       ZoneCfg              `json:"zone"`
@@ -79,14 +81,15 @@ type DataSoucesTestCfg struct {
 	Records    map[string]RecordCfg `json:"records"`
 }
 
-type ResourceTestCFG struct {
+type ResourceTestCfg struct {
 	Account AccountCfg `json:"account"`
 	Zone    ZoneCfg    `json:"zone"`
 }
 
 type TestCfg struct {
+	Client     ClientTestCfg     `json:"client"`
 	DataSouces DataSoucesTestCfg `json:"datasources"`
-	Resources  ResourceTestCFG   `json:"resources"`
+	Resources  ResourceTestCfg   `json:"resources"`
 }
 
 // Load loads the test configuration from the JSON file.
@@ -103,6 +106,7 @@ func (c *TestCfg) Load(path string) error {
 
 	// Load the test configuration from the environment variables
 	for _, v := range []*AccountCfg{
+		&c.Client.Account,
 		&c.DataSouces.Account,
 		&c.Resources.Account,
 	} {

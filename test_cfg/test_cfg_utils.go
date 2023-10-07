@@ -1,4 +1,4 @@
-package test_utils
+package test_cfg
 
 import (
 	"fmt"

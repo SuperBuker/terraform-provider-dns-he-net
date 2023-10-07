@@ -4,13 +4,13 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/test_utils"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/test_cfg"
 	"github.com/hashicorp/terraform-plugin-testing/terraform"
 )
 
 var (
 	// Capitalised variables are accessed by the entire the test package
-	_resources     = test_utils.Config.Resources
+	_resources     = test_cfg.Config.Resources
 	ProviderConfig = _resources.Account.ProviderConfig("simple")
 	Account        = _resources.Account
 	Zone           = _resources.Zone
