@@ -79,7 +79,7 @@ jobs:
       run: |
         DNSHENET_TEST_CONFIG_PATH="${PWD}/${DNSHENET_TEST_CONFIG_PATH}" # Set the absolute path
         DEBUG_MODE=${{ github.event.inputs.debug_mode }}
-        DEBUG_MODE=${DEBUG_MODE:-"true"} # Use user input or fall back to "false"
+        DEBUG_MODE=${DEBUG_MODE:-"false"} # Use user input or fall back to "false"
         "${DEBUG_MODE}" && echo "Debug mode enabled"
         echo "${TEST_CONFIG}" > "${DNSHENET_TEST_CONFIG_PATH}"
         go test -v ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json || "${DEBUG_MODE}"
