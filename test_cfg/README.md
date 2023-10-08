@@ -8,33 +8,32 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/test_cfg"
 
 ## Index
 
-- [func generateSubDomains(template string, size int, len int) []string](<#func-generatesubdomains>)
+- [func generateSubDomains(template string, bound int, count int) []string](<#func-generatesubdomains>)
 - [func init()](<#func-init>)
 - [type AccountCfg](<#type-accountcfg>)
   - [func (c AccountCfg) Auth(store_type auth.AuthStore) (auth.Auth, error)](<#func-accountcfg-auth>)
   - [func (c AccountCfg) ProviderConfig(store_type string) string](<#func-accountcfg-providerconfig>)
   - [func (c *AccountCfg) loadENV() error](<#func-accountcfg-loadenv>)
-- [type ClientTestCfg](<#type-clienttestcfg>)
 - [type DataSoucesTestCfg](<#type-datasoucestestcfg>)
 - [type RecordCfg](<#type-recordcfg>)
 - [type ResourceTestCfg](<#type-resourcetestcfg>)
 - [type TestCfg](<#type-testcfg>)
   - [func (c *TestCfg) Load(path string) error](<#func-testcfg-load>)
 - [type ZoneCfg](<#type-zonecfg>)
-  - [func (c ZoneCfg) RandSub(prefix string, size int, len int) []string](<#func-zonecfg-randsub>)
+  - [func (c ZoneCfg) RandSubs(prefix string, bound int, count int) []string](<#func-zonecfg-randsubs>)
   - [func (c ZoneCfg) Sub(subdomain string) string](<#func-zonecfg-sub>)
 - [type uniqueRand](<#type-uniquerand>)
-  - [func newUniqueRand(size uint) *uniqueRand](<#func-newuniquerand>)
+  - [func newUniqueRand(bound uint) *uniqueRand](<#func-newuniquerand>)
   - [func (u *uniqueRand) Int() int](<#func-uniquerand-int>)
 
 
 ## func [generateSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L33>)
 
 ```go
-func generateSubDomains(template string, size int, len int) []string
+func generateSubDomains(template string, bound int, count int) []string
 ```
 
-## func [init](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L122>)
+## func [init](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L115>)
 
 ```go
 func init()
@@ -53,7 +52,7 @@ type AccountCfg struct {
 }
 ```
 
-### func \(AccountCfg\) [Auth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L49>)
+### func \(AccountCfg\) [Auth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L48>)
 
 ```go
 func (c AccountCfg) Auth(store_type auth.AuthStore) (auth.Auth, error)
@@ -61,7 +60,7 @@ func (c AccountCfg) Auth(store_type auth.AuthStore) (auth.Auth, error)
 
 Auth returns an auth.Auth instance for the account configuration.
 
-### func \(AccountCfg\) [ProviderConfig](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L38>)
+### func \(AccountCfg\) [ProviderConfig](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L37>)
 
 ```go
 func (c AccountCfg) ProviderConfig(store_type string) string
@@ -77,15 +76,7 @@ func (c *AccountCfg) loadENV() error
 
 loadENV loads the account configuration from the environment variables.
 
-## type [ClientTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L73-L75>)
-
-```go
-type ClientTestCfg struct {
-    Account AccountCfg `json:"account"`
-}
-```
-
-## type [DataSoucesTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L77-L82>)
+## type [DataSoucesTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L72-L77>)
 
 ```go
 type DataSoucesTestCfg struct {
@@ -96,7 +87,7 @@ type DataSoucesTestCfg struct {
 }
 ```
 
-## type [RecordCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L53-L58>)
+## type [RecordCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L52-L57>)
 
 ```go
 type RecordCfg struct {
@@ -107,7 +98,7 @@ type RecordCfg struct {
 }
 ```
 
-## type [ResourceTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L84-L87>)
+## type [ResourceTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L79-L82>)
 
 ```go
 type ResourceTestCfg struct {
@@ -116,11 +107,10 @@ type ResourceTestCfg struct {
 }
 ```
 
-## type [TestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L89-L93>)
+## type [TestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L84-L87>)
 
 ```go
 type TestCfg struct {
-    Client     ClientTestCfg     `json:"client"`
     DataSouces DataSoucesTestCfg `json:"datasources"`
     Resources  ResourceTestCfg   `json:"resources"`
 }
@@ -134,7 +124,7 @@ var (
 )
 ```
 
-### func \(\*TestCfg\) [Load](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L96>)
+### func \(\*TestCfg\) [Load](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L90>)
 
 ```go
 func (c *TestCfg) Load(path string) error
@@ -142,7 +132,7 @@ func (c *TestCfg) Load(path string) error
 
 Load loads the test configuration from the JSON file.
 
-## type [ZoneCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L60-L63>)
+## type [ZoneCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L59-L62>)
 
 ```go
 type ZoneCfg struct {
@@ -151,13 +141,13 @@ type ZoneCfg struct {
 }
 ```
 
-### func \(ZoneCfg\) [RandSub](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L69>)
+### func \(ZoneCfg\) [RandSubs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L68>)
 
 ```go
-func (c ZoneCfg) RandSub(prefix string, size int, len int) []string
+func (c ZoneCfg) RandSubs(prefix string, bound int, count int) []string
 ```
 
-### func \(ZoneCfg\) [Sub](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L65>)
+### func \(ZoneCfg\) [Sub](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L64>)
 
 ```go
 func (c ZoneCfg) Sub(subdomain string) string
@@ -167,7 +157,7 @@ func (c ZoneCfg) Sub(subdomain string) string
 
 ```go
 type uniqueRand struct {
-    size      uint
+    bound     uint
     generated map[int]struct{}
 }
 ```
@@ -175,7 +165,7 @@ type uniqueRand struct {
 ### func [newUniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L29>)
 
 ```go
-func newUniqueRand(size uint) *uniqueRand
+func newUniqueRand(bound uint) *uniqueRand
 ```
 
 ### func \(\*uniqueRand\) [Int](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L13>)

@@ -10,24 +10,24 @@ import (
 )
 
 func TestDDNS(t *testing.T) {
-	domains := generateSubDomains("hostname-%04d.example.com", 9999, 3)
+	domains := generateSubDomains("hostname-%04d.example.com", 10000, 3)
 
 	t.Run("CheckAuth", func(t *testing.T) {
-		ok, err := CheckAuth(context.TODO(), domains[0], "password")
+		ok, err := CheckAuth(context.Background(), domains[0], "password")
 
 		require.NoError(t, err)
 		assert.False(t, ok)
 	})
 
 	t.Run("UpdateIP", func(t *testing.T) {
-		ok, err := UpdateIP(context.TODO(), domains[1], "password", "0.0.0.0")
+		ok, err := UpdateIP(context.Background(), domains[1], "password", "0.0.0.0")
 
 		require.ErrorIs(t, err, &ErrAuthFailed{})
 		assert.False(t, ok)
 	})
 
 	t.Run("UpdateTXT", func(t *testing.T) {
-		ok, err := UpdateTXT(context.TODO(), domains[2], "password", "some text")
+		ok, err := UpdateTXT(context.Background(), domains[2], "password", "some text")
 
 		require.ErrorIs(t, err, &ErrAuthFailed{})
 		assert.False(t, ok)

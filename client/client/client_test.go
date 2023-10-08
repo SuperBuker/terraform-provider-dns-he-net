@@ -2,6 +2,7 @@ package client
 
 import (
 	"context"
+	"fmt"
 	"strings"
 	"testing"
 
@@ -15,13 +16,15 @@ import (
 )
 
 func TestClientAuth(t *testing.T) {
-	account := test_cfg.Config.Client.Account
+	_datasources := test_cfg.Config.DataSouces
+	account := _datasources.Account
+	zoneID := _datasources.Zone.ID
 
 	t.Run("Client auth.Simple", func(t *testing.T) {
 		authObj, err := auth.NewAuth(account.User, account.Password, account.OTP, auth.Simple)
 		require.NoError(t, err)
 
-		cli, err := NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+		cli, err := NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 		require.NoError(t, err)
 
 		assert.Equal(t, account.ID, cli.GetAccount())
@@ -34,7 +37,7 @@ func TestClientAuth(t *testing.T) {
 		}
 
 		// Force auth failure and re-authentication before retrial
-		zones, err := cli.GetZones(context.TODO())
+		zones, err := cli.GetZones(context.Background())
 		require.NoError(t, err)
 
 		assert.Equal(t, 3, len(zones))
@@ -42,55 +45,53 @@ func TestClientAuth(t *testing.T) {
 		assert.Equal(t, account.ID, cli.GetAccount())
 
 		// Not onboarded record
-		records, err := cli.GetRecords(context.TODO(), 1096291)
+		records, err := cli.GetRecords(context.Background(), 0)
 		require.Error(t, err)
 		assert.Nil(t, records)
 
-		records, err = cli.GetRecords(context.TODO(), 1093397)
+		records, err = cli.GetRecords(context.Background(), zoneID)
 		require.NoError(t, err)
 		assert.Equal(t, 24, len(records))
 	})
 
 	t.Run("Client auth.Dummy", func(t *testing.T) {
-
 		authObj, err := auth.NewAuth(account.User, account.Password, account.OTP, auth.Dummy)
 		require.NoError(t, err)
 
 		// Forces regular authentication with totp retrials
-		cli, err := NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithUserAgent("user-agent test"))
+		cli, err := NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithUserAgent("user-agent test"))
 		require.NoError(t, err)
+		fmt.Println(err)
 
 		assert.Equal(t, "user-agent test", cli.client.Header.Get("User-Agent"))
 
 		assert.Equal(t, account.ID, cli.GetAccount())
 
-		zones, err := cli.GetZones(context.TODO())
+		zones, err := cli.GetZones(context.Background())
 		require.NoError(t, err)
 
 		assert.Equal(t, 3, len(zones))
 
-		records, err := cli.GetRecords(context.TODO(), 1096291)
+		records, err := cli.GetRecords(context.Background(), 1096291)
 		require.Error(t, err)
 		assert.Nil(t, records)
 	})
 
 	t.Run("Client auth.Dummy failed", func(t *testing.T) {
-
 		authObj, err := auth.NewAuth("user", "password", "", auth.Dummy)
 		require.NoError(t, err)
 
 		// Forces regular authentication with totp retrials
-		_, err = NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithDebug())
+		_, err = NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithDebug())
 		require.ErrorIs(t, err, &status.ErrNoAuth{}) // Current status is not autheticated
 	})
 
 	t.Run("Client auth.Dummy otp failed", func(t *testing.T) {
-
 		authObj, err := auth.NewAuth(account.User, account.Password, "", auth.Dummy)
 		require.NoError(t, err)
 
 		// Forces regular authentication with totp retrials
-		_, err = NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+		_, err = NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 		require.ErrorIs(t, err, &status.ErrOTPAuth{}) // Current status is missing OTP auth
 	})
 }

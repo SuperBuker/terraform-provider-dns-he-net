@@ -19,7 +19,7 @@ import (
 func TestAccTXTRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSub("example-%04d", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -121,12 +121,12 @@ func TestAccTXTRecord(t *testing.T) {
 					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 
-					cli, err := client.NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+					cli, err := client.NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
 					assert.Equal(t, Account.ID, cli.GetAccount())
 
-					ok, err := cli.DDNS().UpdateTXT(context.TODO(), domainUpdate, password, data2[1:len(data2)-1])
+					ok, err := cli.DDNS().UpdateTXT(context.Background(), domainUpdate, password, data2[1:len(data2)-1])
 					require.NoError(t, err)
 					assert.True(t, ok)
 				},

@@ -19,7 +19,7 @@ import (
 func TestAccAAAARecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSub("example-%04d", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -58,6 +58,9 @@ func TestAccAAAARecord(t *testing.T) {
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "dynamic", "true"),
 				),
 			},
+			/*{
+				Check TestCheckFunc
+			},*/
 			// ImportState testing
 			{
 				ResourceName:      "dns-he-net_aaaa.record-aaaa",
@@ -118,12 +121,12 @@ func TestAccAAAARecord(t *testing.T) {
 					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 
-					cli, err := client.NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+					cli, err := client.NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
 					assert.Equal(t, Account.ID, cli.GetAccount())
 
-					ok, err := cli.DDNS().UpdateIP(context.TODO(), domainUpdate, password, "::2")
+					ok, err := cli.DDNS().UpdateIP(context.Background(), domainUpdate, password, "::2")
 					require.NoError(t, err)
 					assert.True(t, ok)
 				},
@@ -177,5 +180,6 @@ func TestAccAAAARecord(t *testing.T) {
 			},
 			// Delete testing automatically occurs in TestCase
 		},
+		//CheckDestroy: testCheckDestroy, //TODO
 	})
 }

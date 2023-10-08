@@ -29,8 +29,7 @@ type AccountCfg struct {
 
 // loadENV loads the account configuration from the environment variables.
 func (c *AccountCfg) loadENV() error {
-	ctx := context.Background()
-	return envconfig.Process(ctx, c)
+	return envconfig.Process(context.Background(), c)
 }
 
 // ProviderConfig is a shared configuration to combine with the actual
@@ -66,12 +65,8 @@ func (c ZoneCfg) Sub(subdomain string) string {
 	return fmt.Sprintf("%s.%s", subdomain, c.Name)
 }
 
-func (c ZoneCfg) RandSub(prefix string, size int, len int) []string {
-	return generateSubDomains(fmt.Sprintf("%s.%s", prefix, c.Name), size, len)
-}
-
-type ClientTestCfg struct {
-	Account AccountCfg `json:"account"`
+func (c ZoneCfg) RandSubs(prefix string, bound int, count int) []string {
+	return generateSubDomains(fmt.Sprintf("%s.%s", prefix, c.Name), bound, count)
 }
 
 type DataSoucesTestCfg struct {
@@ -87,7 +82,6 @@ type ResourceTestCfg struct {
 }
 
 type TestCfg struct {
-	Client     ClientTestCfg     `json:"client"`
 	DataSouces DataSoucesTestCfg `json:"datasources"`
 	Resources  ResourceTestCfg   `json:"resources"`
 }
@@ -106,7 +100,6 @@ func (c *TestCfg) Load(path string) error {
 
 	// Load the test configuration from the environment variables
 	for _, v := range []*AccountCfg{
-		&c.Client.Account,
 		&c.DataSouces.Account,
 		&c.Resources.Account,
 	} {

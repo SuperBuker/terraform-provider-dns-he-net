@@ -11,7 +11,7 @@ import (
 func TestAccHINFORecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSub("example-%04d", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
