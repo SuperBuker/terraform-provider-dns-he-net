@@ -14,7 +14,7 @@ type nestedError interface {
 }
 
 func TestErrors(t *testing.T) {
-	path := `//div[@id="missing_ref"]`
+	path := "//div[@id='missing_ref']"
 
 	matrix := []struct {
 		err    nestedError
@@ -23,15 +23,15 @@ func TestErrors(t *testing.T) {
 	}{
 		{
 			err: &ErrNotFound{path},
-			msg: `element "//div[@id=\"missing_ref\"]" not found in document`,
+			msg: `element "//div[@id='missing_ref']" not found in document`,
 			unwrap: []error{
-				&ErrParsing{path, errors.New(`element "//div[@id=\"missing_ref\"]" not found in document`)},
+				&ErrParsing{path, errors.New(`element "//div[@id='missing_ref']" not found in document`)},
 			},
 		},
 		{
-			err:    &ErrParsing{path, errors.New(`element "//div[@id=\"missing_ref\"]" not found in document`)},
-			msg:    `an error happened when parsing "//div[@id=\"missing_ref\"]"`,
-			unwrap: []error{errors.New(`element "//div[@id=\"missing_ref\"]" not found in document`)},
+			err:    &ErrParsing{path, errors.New(`element "//div[@id='missing_ref']" not found in document`)},
+			msg:    `an error happened when parsing "//div[@id='missing_ref']"`,
+			unwrap: []error{errors.New(`element "//div[@id='missing_ref']" not found in document`)},
 		},
 	}
 
