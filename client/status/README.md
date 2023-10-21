@@ -8,33 +8,75 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 
 ## Index
 
+- [Variables](<#variables>)
 - [func Check(doc *html.Node) (string, []string, error)](<#func-check>)
+- [func errorMerging(errs []error) error](<#func-errormerging>)
+- [func errorScore(err error) int](<#func-errorscore>)
+- [func filterIssues(issues []string) ([]string, []error)](<#func-filterissues>)
 - [func fromAuthStatus(status auth.Status) (err error)](<#func-fromauthstatus>)
-- [func fromIssue(issues []string) (err error)](<#func-fromissue>)
+- [func fromIssue(issues []string) (errs []error)](<#func-fromissue>)
 - [type ErrAuthFailed](<#type-errauthfailed>)
   - [func (e *ErrAuthFailed) Error() string](<#func-errauthfailed-error>)
+  - [func (e *ErrAuthFailed) Unwrap() []error](<#func-errauthfailed-unwrap>)
 - [type ErrHeNet](<#type-errhenet>)
   - [func (e *ErrHeNet) Error() string](<#func-errhenet-error>)
+- [type ErrMissingOTPAuth](<#type-errmissingotpauth>)
+  - [func (e *ErrMissingOTPAuth) Error() string](<#func-errmissingotpauth-error>)
+  - [func (e *ErrMissingOTPAuth) Unwrap() []error](<#func-errmissingotpauth-unwrap>)
 - [type ErrNoAuth](<#type-errnoauth>)
   - [func (e *ErrNoAuth) Error() string](<#func-errnoauth-error>)
   - [func (e *ErrNoAuth) Unwrap() []error](<#func-errnoauth-unwrap>)
-- [type ErrOTPAuth](<#type-errotpauth>)
-  - [func (e *ErrOTPAuth) Error() string](<#func-errotpauth-error>)
-  - [func (e *ErrOTPAuth) Unwrap() []error](<#func-errotpauth-unwrap>)
+- [type ErrOTPAuthFailed](<#type-errotpauthfailed>)
+  - [func (e *ErrOTPAuthFailed) Error() string](<#func-errotpauthfailed-error>)
+  - [func (e *ErrOTPAuthFailed) Unwrap() []error](<#func-errotpauthfailed-unwrap>)
+- [type ErrPartialAuth](<#type-errpartialauth>)
+  - [func (e *ErrPartialAuth) Error() string](<#func-errpartialauth-error>)
+  - [func (e *ErrPartialAuth) Unwrap() []error](<#func-errpartialauth-unwrap>)
 - [type ErrUnknownAuth](<#type-errunknownauth>)
   - [func (e *ErrUnknownAuth) Error() string](<#func-errunknownauth-error>)
   - [func (e *ErrUnknownAuth) Unwrap() []error](<#func-errunknownauth-unwrap>)
 
 
-## func [Check](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/status.go#L14>)
+## Variables
+
+TODO: extend ErrOTPAuthFailed?
+
+```go
+var knownIssues = map[string]error{
+    "Incorrect":                         &ErrAuthFailed{"Incorrect"},
+    "The token supplied is invalid.":    &ErrOTPAuthFailed{"The token supplied is invalid."},
+    "This token has already been used.": &ErrOTPAuthFailed{"This token has already been used. You may not reuse tokens."},
+    "You may not reuse tokens.":         nil,
+}
+```
+
+## func [Check](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/status.go#L16>)
 
 ```go
 func Check(doc *html.Node) (string, []string, error)
 ```
 
-Check checks all possible errors in the response. \- If the user is not fully logged in. \- If there are other contained errors. \- If there are error messges in the response.
+Check checks all possible errors in the response. \- If the user is not fully logged in. \- If there are other contained errors. \- If there are error messges in the response. \- Sorts errors output by severity
 
-## func [fromAuthStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L10>)
+## func [errorMerging](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/status.go#L37>)
+
+```go
+func errorMerging(errs []error) error
+```
+
+## func [errorScore](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L108>)
+
+```go
+func errorScore(err error) int
+```
+
+## func [filterIssues](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L34>)
+
+```go
+func filterIssues(issues []string) ([]string, []error)
+```
+
+## func [fromAuthStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L17>)
 
 ```go
 func fromAuthStatus(status auth.Status) (err error)
@@ -42,29 +84,37 @@ func fromAuthStatus(status auth.Status) (err error)
 
 fromAuthStatus returns an error asssociated to the auth status.
 
-## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L28>)
+## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L53>)
 
 ```go
-func fromIssue(issues []string) (err error)
+func fromIssue(issues []string) (errs []error)
 ```
 
 fromIssue parses the errors in the response and returns them as &ErrHeNet\{\}.
 
-## type [ErrAuthFailed](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L4>)
+## type [ErrAuthFailed](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L35-L37>)
 
 ErrAuthFailed is an error that is returned when authentication fails.
 
 ```go
-type ErrAuthFailed struct{}
+type ErrAuthFailed struct {
+    error string
+}
 ```
 
-### func \(\*ErrAuthFailed\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L6>)
+### func \(\*ErrAuthFailed\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L39>)
 
 ```go
 func (e *ErrAuthFailed) Error() string
 ```
 
-## type [ErrHeNet](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L60-L62>)
+### func \(\*ErrAuthFailed\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L43>)
+
+```go
+func (e *ErrAuthFailed) Unwrap() []error
+```
+
+## type [ErrHeNet](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L100-L102>)
 
 ErrHeNet is an error returned when dns.he.net returns an error. It contains the error message returned in the HTML response.
 
@@ -74,13 +124,33 @@ type ErrHeNet struct {
 }
 ```
 
-### func \(\*ErrHeNet\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L64>)
+### func \(\*ErrHeNet\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L104>)
 
 ```go
 func (e *ErrHeNet) Error() string
 ```
 
-## type [ErrNoAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L13>)
+## type [ErrMissingOTPAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L53>)
+
+ErrMissingOTPAuth is an error returned when the user is not fully authenticated. It is used when dns.he.net returns that the client lacks OTP authentication. It includes two wrapped errors, ErrAuth and ErrHeNet.
+
+```go
+type ErrMissingOTPAuth struct{}
+```
+
+### func \(\*ErrMissingOTPAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L55>)
+
+```go
+func (e *ErrMissingOTPAuth) Error() string
+```
+
+### func \(\*ErrMissingOTPAuth\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L59>)
+
+```go
+func (e *ErrMissingOTPAuth) Unwrap() []error
+```
+
+## type [ErrNoAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L8>)
 
 ErrNoAuth is an error returned when the user is not authenticated. It is used when dns.he.net returns that the client is not authenticated. It includes two wrapped errors, ErrAuth and ErrHeNet.
 
@@ -88,39 +158,61 @@ ErrNoAuth is an error returned when the user is not authenticated. It is used wh
 type ErrNoAuth struct{}
 ```
 
-### func \(\*ErrNoAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L15>)
+### func \(\*ErrNoAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L10>)
 
 ```go
 func (e *ErrNoAuth) Error() string
 ```
 
-### func \(\*ErrNoAuth\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L19>)
+### func \(\*ErrNoAuth\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L14>)
 
 ```go
 func (e *ErrNoAuth) Unwrap() []error
 ```
 
-## type [ErrOTPAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L29>)
+## type [ErrOTPAuthFailed](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L67-L69>)
 
-ErrOTPAuth is an error returned when the user is not fully authenticated. It is used when dns.he.net returns that the client lacks OTP authentication. It includes two wrapped errors, ErrAuth and ErrHeNet.
-
-```go
-type ErrOTPAuth struct{}
-```
-
-### func \(\*ErrOTPAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L31>)
+ErrOTPAuthFailed is an error that is returned when authentication fails.
 
 ```go
-func (e *ErrOTPAuth) Error() string
+type ErrOTPAuthFailed struct {
+    error string
+}
 ```
 
-### func \(\*ErrOTPAuth\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L35>)
+### func \(\*ErrOTPAuthFailed\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L71>)
 
 ```go
-func (e *ErrOTPAuth) Unwrap() []error
+func (e *ErrOTPAuthFailed) Error() string
 ```
 
-## type [ErrUnknownAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L45>)
+### func \(\*ErrOTPAuthFailed\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L75>)
+
+```go
+func (e *ErrOTPAuthFailed) Unwrap() []error
+```
+
+## type [ErrPartialAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L21>)
+
+ErrPartialAuth is an error that is returned when authentication is incomplete.
+
+```go
+type ErrPartialAuth struct{}
+```
+
+### func \(\*ErrPartialAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L23>)
+
+```go
+func (e *ErrPartialAuth) Error() string
+```
+
+### func \(\*ErrPartialAuth\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L27>)
+
+```go
+func (e *ErrPartialAuth) Unwrap() []error
+```
+
+## type [ErrUnknownAuth](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L85>)
 
 ErrUnknownAuth is an error returned when it's not possible to determine the authentication status. It includes two wrapped errors, ErrAuth and ErrHeNet.
 
@@ -128,13 +220,13 @@ ErrUnknownAuth is an error returned when it's not possible to determine the auth
 type ErrUnknownAuth struct{}
 ```
 
-### func \(\*ErrUnknownAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L47>)
+### func \(\*ErrUnknownAuth\) [Error](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L87>)
 
 ```go
 func (e *ErrUnknownAuth) Error() string
 ```
 
-### func \(\*ErrUnknownAuth\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L51>)
+### func \(\*ErrUnknownAuth\) [Unwrap](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L91>)
 
 ```go
 func (e *ErrUnknownAuth) Unwrap() []error

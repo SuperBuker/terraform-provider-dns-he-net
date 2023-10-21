@@ -92,6 +92,6 @@ func TestClientAuth(t *testing.T) {
 
 		// Forces regular authentication with totp retrials
 		_, err = NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
-		require.ErrorIs(t, err, &status.ErrOTPAuth{}) // Current status is missing OTP auth
+		require.ErrorIs(t, err, &status.ErrMissingOTPAuth{})
 	})
 }

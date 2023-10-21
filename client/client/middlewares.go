@@ -76,7 +76,7 @@ func (c *Client) statusCheck(_ *resty.Client, resp *resty.Response) (err error) 
 			// pass
 		} else if errors.Is(err, &status.ErrNoAuth{}) {
 			c.status = auth.NoAuth
-		} else if errors.Is(err, &status.ErrOTPAuth{}) {
+		} else if errors.Is(err, &status.ErrMissingOTPAuth{}) {
 			c.status = auth.OTP
 		}
 	}

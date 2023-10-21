@@ -18,7 +18,7 @@ func getLoginStatusTuples() []loginStatusQuery {
 	return []loginStatusQuery{
 		{auth.Ok, loginOkQ},
 		{auth.OTP, loginOtpQ},
-		{auth.NoAuth, loginNoAuthQ},
+		{auth.NoAuth, loginNoAuthQ}, // NOTE: this must be the last one
 	}
 }
 

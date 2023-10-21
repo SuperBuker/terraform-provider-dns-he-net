@@ -43,7 +43,8 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 		c.status = auth.Ok
 		// account already set
 		return cookies, nil
-	} else if !errors.Is(err, &status.ErrOTPAuth{}) {
+	} else if !errors.Is(err, &status.ErrMissingOTPAuth{}) {
+		// Could be extended to ErrPartialAuth
 		return nil, err
 	}
 
@@ -55,6 +56,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 	}
 
 	// WIP Must be moved to auth OTP
+	errx := &status.ErrOTPAuthFailed{}
 	for i := 0; i < retries; i++ {
 		err = c.authOTP(ctx, client)
 		if err == nil {
@@ -62,7 +64,8 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 			// account already set
 
 			return cookies, nil
-		} else if !errors.Is(err, &status.ErrOTPAuth{}) {
+		} else if !errors.As(err, &errx) {
+			// errors.Is can't be used because AuthFailed has payload
 			// unexpected error
 			break
 		} else if i < retries-1 {
@@ -99,7 +102,7 @@ func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.C
 	if err == nil {
 		// Requires parsing response
 		c.setAccount(resp)
-	} else if !errors.Is(err, &status.ErrOTPAuth{}) {
+	} else if !errors.Is(err, &status.ErrMissingOTPAuth{}) {
 		return nil, err
 	}
 
