@@ -43,7 +43,7 @@ func TestZones(t *testing.T) {
 		assert.ErrorAs(t, err, &targetErr)
 
 		assert.Nil(t, zones_)
-		assert.Equal(t, `element "//table[@id=\"domains_table\"]" not found in document`, err.Error())
+		assert.Equal(t, `element "//table[@id='domains_table']" not found in document`, err.Error())
 	})
 
 	t.Run("empty table", func(t *testing.T) {
