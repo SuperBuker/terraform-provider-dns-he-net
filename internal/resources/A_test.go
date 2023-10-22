@@ -3,7 +3,6 @@ package resources_test
 import (
 	"context"
 	"fmt"
-	"os"
 	"regexp"
 	"testing"
 
@@ -20,7 +19,7 @@ import (
 func TestAccARecord(t *testing.T) {
 	t.Parallel()
 
-	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -32,25 +31,27 @@ func TestAccARecord(t *testing.T) {
 			// Validate config
 			// Must fail because the default dynamic value is false and data is not set
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
+					zone_id = %d
 					domain = %q
 					ttl = 300
-				}`, domainInit),
+				}`, Zone.ID, domainInit),
 				ExpectError: regexp.MustCompile("Invalid A record configuration"),
 			},
 			// Create and Read testing
 			// Validates data default value by setting dynamic to true
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
+					zone_id = %d
 					domain = %q
 					ttl = 300
 					dynamic = true
-				}`, domainInit),
+				}`, Zone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "data", "0.0.0.0"),
@@ -68,15 +69,16 @@ func TestAccARecord(t *testing.T) {
 			// Updates ttl and domain
 			// Sets dynamic to false and data to a known value
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
+					zone_id = %d
 					domain = %q
 					ttl = 600
 					data = "1.2.3.4"
-				}`, domainUpdate),
+				}`, Zone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "data", "1.2.3.4"),
@@ -86,21 +88,22 @@ func TestAccARecord(t *testing.T) {
 			// Update and Read testing
 			// Validates state continuity by setting dynamic to true and omitting data
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
+					zone_id = %d
 					domain = %q
 					ttl = 600
 					dynamic = true
 				}
 
 				resource "dns-he-net_ddnskey" "ddnskey" {
+					zone_id = %d
 					domain = %q
-					zone_id = 1091256
 					key = %q
-				}`, domainUpdate, domainUpdate, password),
+				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "data", "1.2.3.4"),
@@ -112,38 +115,34 @@ func TestAccARecord(t *testing.T) {
 			{
 				PreConfig: func() {
 					// Force the ddns "external" update
-					user := os.Getenv("DNSHENET_USER")
-					password_ := os.Getenv("DNSHENET_PASSWD")
-					otp := os.Getenv("DNSHENET_OTP")
-					accountID := os.Getenv("DNSHENET_ACCOUNT_ID")
-
-					authObj, err := auth.NewAuth(user, password_, otp, auth.Simple)
+					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 
-					cli, err := client.NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+					cli, err := client.NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
-					assert.Equal(t, accountID, cli.GetAccount())
+					assert.Equal(t, Account.ID, cli.GetAccount())
 
-					ok, err := cli.DDNS().UpdateIP(context.TODO(), domainUpdate, password, "10.2.3.4")
+					ok, err := cli.DDNS().UpdateIP(context.Background(), domainUpdate, password, "10.2.3.4")
 					require.NoError(t, err)
 					assert.True(t, ok)
 				},
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
+					zone_id = %d
 					domain = %q
 					ttl = 600
 					dynamic = true
 				}
 
 				resource "dns-he-net_ddnskey" "ddnskey" {
+					zone_id = %d
 					domain = %q
-					zone_id = 1091256
 					key = %q
-				}`, domainUpdate, domainUpdate, password),
+				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "data", "10.2.3.4"),
@@ -153,8 +152,9 @@ func TestAccARecord(t *testing.T) {
 			// Update and Read testing
 			// Validates forcing a data value with dynamic set to true
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_a" "record-a" {
+					zone_id = %d
 					domain = %q
 					ttl = 600
 					data = "0.0.0.0"
@@ -162,13 +162,13 @@ func TestAccARecord(t *testing.T) {
 				}
 
 				resource "dns-he-net_ddnskey" "ddnskey" {
+					zone_id = %d
 					domain = %q
-					zone_id = 1091256
 					key = %q
-				}`, domainUpdate, domainUpdate, password),
+				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_a.record-a", "data", "0.0.0.0"),

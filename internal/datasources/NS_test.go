@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func TestAccNS(t *testing.T) {
+	record, ok := Records["NS"]
+	if !ok {
+		t.Skip("NS record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -17,19 +23,20 @@ func TestAccNS(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_ns" "record-ns" {
-					id = 5182379279
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_ns" "record-ns" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, Zone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "domain", "dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "domain", Zone.Name),
 					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "ttl", "172800"),
 					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "data", "ns1.he.net"),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "id", "5182379279"),
-					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "zone_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "id", toString(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "zone_id", toString(Zone.ID)),
 				),
 			},
 		},
@@ -37,6 +44,11 @@ func TestAccNS(t *testing.T) {
 }
 
 func TestAccNSMissingZone(t *testing.T) {
+	record, ok := Records["NS"]
+	if !ok {
+		t.Skip("NS record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -44,10 +56,11 @@ func TestAccNSMissingZone(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_ns" "record-ns" {
-					id = 5182379279
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_ns" "record-ns" {
+					id = %d
 					zone_id = 0
-				}`,
+				}`, record.ID),
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
 		},
@@ -62,10 +75,11 @@ func TestAccNSMissingRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_ns" "record-ns" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_ns" "record-ns" {
 					id = 0
-					zone_id = 1093397
-				}`,
+					zone_id = %d
+				}`, Zone.ID),
 				ExpectError: regexp.MustCompile("Unable to find NS record"),
 			},
 		},

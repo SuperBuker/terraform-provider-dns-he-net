@@ -3,7 +3,6 @@ package resources_test
 import (
 	"context"
 	"fmt"
-	"os"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client"
@@ -20,7 +19,7 @@ import (
 func TestAccDDNSKey(t *testing.T) {
 	t.Parallel()
 
-	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -32,16 +31,17 @@ func TestAccDDNSKey(t *testing.T) {
 			// Create and Read testing
 			// Validate defaults
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
+					zone_id = %d
 					domain = %q
-					zone_id = 1091256
 					key = %q
-				}`, domainInit, password),
+				}`, Zone.ID, domainInit, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "id", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "domain", domainInit),
-					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", password),
 				),
 			},
@@ -49,56 +49,53 @@ func TestAccDDNSKey(t *testing.T) {
 			{
 				PreConfig: func() {
 					// Force the ddns key to be updated externally
-					user := os.Getenv("DNSHENET_USER")
-					password := os.Getenv("DNSHENET_PASSWD")
-					otp := os.Getenv("DNSHENET_OTP")
-					accountID := os.Getenv("DNSHENET_ACCOUNT_ID")
-
-					authObj, err := auth.NewAuth(user, password, otp, auth.Simple)
+					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 
-					cli, err := client.NewClient(context.TODO(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+					cli, err := client.NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
-					assert.Equal(t, accountID, cli.GetAccount())
+					assert.Equal(t, Account.ID, cli.GetAccount())
 
 					// Makes auth fail when validating the expected key, triggering an update
 					anotherPassword := randStringBytesMaskImprSrcSB(16)
 
 					ddnsKey := models.DDNSKey{
 						Domain: domainInit,
-						ZoneID: 1091256,
+						ZoneID: Zone.ID,
 						Key:    anotherPassword,
 					}
 
-					_, err = cli.SetDDNSKey(context.TODO(), ddnsKey)
+					_, err = cli.SetDDNSKey(context.Background(), ddnsKey)
 					require.NoError(t, err)
 				},
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
+					zone_id = %d
 					domain = %q
-					zone_id = 1091256
 					key = %q
-				}`, domainInit, password),
+				}`, Zone.ID, domainInit, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "id", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "domain", domainInit),
-					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", password),
 				),
 			},
 			// Update and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_ddnskey" "ddnskey" {
+					zone_id = %d
 					domain = %q
-					zone_id = 1091256
 					key = %q
-				}`, domainUpdate, password),
+				}`, Zone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "id", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "domain", domainUpdate),
-					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_ddnskey.ddnskey", "key", password),
 				),
 			},

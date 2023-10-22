@@ -11,7 +11,7 @@ import (
 func TestAccSSHFPRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -20,15 +20,16 @@ func TestAccSSHFPRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_sshfp" "record-sshfp" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_sshfp" "record-sshfp" {
+					zone_id = %d
 					domain = %q
 					ttl = 300
 					data = "4 2 123456789abcdef67890123456789abcdef67890123456789abcdef123456789"
-				}`, domainInit),
+				}`, Zone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "data", "4 2 123456789abcdef67890123456789abcdef67890123456789abcdef123456789"),
@@ -43,15 +44,16 @@ func TestAccSSHFPRecord(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_sshfp" "record-sshfp" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_sshfp" "record-sshfp" {
+					zone_id = %d
 					domain = %q
 					ttl = 600
 					data = "4 2 123456789Abcdef67890123456789abcdef67890123456789abcdef123456789"
-			}`, domainUpdate),
+			}`, Zone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_sshfp.record-sshfp", "data", "4 2 123456789Abcdef67890123456789abcdef67890123456789abcdef123456789"),

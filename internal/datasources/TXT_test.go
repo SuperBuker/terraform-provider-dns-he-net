@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func TestAccTXT(t *testing.T) {
+	record, ok := Records["TXT"]
+	if !ok {
+		t.Skip("TXT record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -17,20 +23,20 @@ func TestAccTXT(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_txt" "record-txt" {
+				Config: ProviderConfig + `data "dns-he-net_txt" "record-txt" {
 					id = 5195711991
 					zone_id = 1093397
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "domain", "bofher.dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "domain", Zone.Sub("bofher")),
 					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "ttl", "300"),
 					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "data", `"Just for the record"`),
 					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "dynamic", "true"),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "id", "5195711991"),
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "zone_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "id", toString(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "zone_id", toString(Zone.ID)),
 				),
 			},
 		},
@@ -38,6 +44,11 @@ func TestAccTXT(t *testing.T) {
 }
 
 func TestAccTXTMissingZone(t *testing.T) {
+	record, ok := Records["TXT"]
+	if !ok {
+		t.Skip("TXT record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -45,10 +56,11 @@ func TestAccTXTMissingZone(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_txt" "record-txt" {
-					id = 5195711991
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_txt" "record-txt" {
+					id = %d
 					zone_id = 0
-				}`,
+				}`, record.ID),
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
 		},
@@ -63,10 +75,11 @@ func TestAccTXTMissingRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_txt" "record-txt" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_txt" "record-txt" {
 					id = 0
-					zone_id = 1093397
-				}`,
+					zone_id = %d
+				}`, Zone.ID),
 				ExpectError: regexp.MustCompile("Unable to find TXT record"),
 			},
 		},

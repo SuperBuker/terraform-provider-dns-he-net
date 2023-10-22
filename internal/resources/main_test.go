@@ -24,7 +24,7 @@ func TestMain(m *testing.M) {
 		return
 	}
 
-	client, err := client.NewClient(context.TODO(), auth,
+	client, err := client.NewClient(context.Background(), auth,
 		logging.NewZerolog(zerolog.DebugLevel, false))
 
 	if err != nil {
@@ -34,7 +34,7 @@ func TestMain(m *testing.M) {
 	}
 
 	// Ensure authentication works
-	if _, err = client.GetZones(context.TODO()); err != nil {
+	if _, err = client.GetZones(context.Background()); err != nil {
 		log.Printf("Authentication failed : %s", err.Error())
 		os.Exit(1)
 		return

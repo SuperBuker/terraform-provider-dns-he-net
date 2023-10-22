@@ -82,7 +82,7 @@ func (mx) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sch
 				Description:         "DNS record priority",
 				MarkdownDescription: "DNS record priority",
 				Validators: []validator.Int64{
-					int64validator.Between(0, 999999),
+					int64validator.Between(0, 1000099),
 				},
 			},
 			"data": schema.StringAttribute{

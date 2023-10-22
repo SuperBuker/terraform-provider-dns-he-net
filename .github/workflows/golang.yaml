@@ -7,6 +7,13 @@ on:
   push:
     paths-ignore:
       - 'README.md'
+  workflow_dispatch:
+    inputs: 
+      debug_mode:
+        description: 'Makes the CI/CD succeed even if the golang tests fail, outputing the test results'
+        type: boolean
+        required: false
+        default: false
 
 permissions:
   contents: read
@@ -65,10 +72,17 @@ jobs:
         DNSHENET_USER: ${{ secrets.DNSHENET_USER }}
         DNSHENET_PASSWD: ${{ secrets.DNSHENET_PASSWD }}
         DNSHENET_OTP: ${{ secrets.DNSHENET_OTP }}
-        DNSHENET_ACCOUNTID: ${{ secrets.DNSHENET_ACCOUNTID }}
+        DNSHENET_ACCOUNT_ID: ${{ secrets.DNSHENET_ACCOUNT_ID }}
+        DNSHENET_TEST_CONFIG_PATH: ${{ vars.DNSHENET_TEST_CONFIG_PATH }}
+        TEST_CONFIG: ${{ secrets.TEST_CONFIG }}
         TF_ACC: "1"
       run: |
-        go test -v  ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json || true
+        DNSHENET_TEST_CONFIG_PATH="${PWD}/${DNSHENET_TEST_CONFIG_PATH}" # Set the absolute path
+        DEBUG_MODE=${{ github.event.inputs.debug_mode }}
+        DEBUG_MODE=${DEBUG_MODE:-"false"} # Use user input or fall back to "false"
+        "${DEBUG_MODE}" && echo "Debug mode enabled"
+        echo "${TEST_CONFIG}" > "${DNSHENET_TEST_CONFIG_PATH}"
+        go test -v ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json || "${DEBUG_MODE}"
         go tool cover -func coverage.out
       timeout-minutes: 10
 

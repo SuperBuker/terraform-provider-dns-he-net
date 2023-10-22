@@ -9,26 +9,26 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/test_utils"
 ## Index
 
 - [Variables](<#variables>)
+- [func init()](<#func-init>)
 
 
 ## Variables
 
 ```go
 var (
-    // ProviderConfig is a shared configuration to combine with the actual
-    // test configuration so the dns.he.net client is properly configured.
-    // It is also possible to use the DHN_ environment variables instead,
-    // such as updating the Makefile and running the testing through that tool.
-    ProviderConfig = fmt.Sprintf(`provider "dns-he-net" {
-		username = %q
-		password = %q
-		otp_secret = %q
-		store_type = "simple"
-	}
-	`, os.Getenv("DNSHENET_USER"), os.Getenv("DNSHENET_PASSWD"), os.Getenv("DNSHENET_OTP"))
-
+    // testAccProtoV6ProviderFactories are used to instantiate a provider during
+    // acceptance testing. The factory function will be invoked for every Terraform
+    // CLI command executed to create a provider server to which the CLI can
+    // reattach.
+    testProvider                    provider.Provider
     TestAccProtoV6ProviderFactories map[string]func() (tfprotov6.ProviderServer, error)
 )
+```
+
+## func [init](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/test_utils/blob/master/internal/test_utils/provider_cfg.go#L19>)
+
+```go
+func init()
 ```
 
 

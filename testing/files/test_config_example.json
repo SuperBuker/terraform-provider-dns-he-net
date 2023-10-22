@@ -1,0 +1,41 @@
+{
+    "datasources": {
+        "account": {
+            "user": "",
+            "password": "",
+            "otp": "",
+            "id": ""
+        },
+        "records": {
+            "TYPE_0": {
+                "data": "0.0.0.0",
+                "domain": "sub.example.com",
+                "id": 23456,
+                "ttl": 300
+            },
+            "TYPE_1": {
+                "data": "::",
+                "domain": "sub.example.com",
+                "id": 23457,
+                "ttl": 300
+            }
+        },
+        "zone": {
+            "id": 123456,
+            "name": "example.com"
+        },
+        "zones_count": 2
+    },
+    "resources": {
+        "account": {
+            "user": "",
+            "password": "",
+            "otp": "",
+            "id": ""
+        },
+        "zone": {
+            "id": 123458,
+            "name": "example.io"
+        }
+    }
+}

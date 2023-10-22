@@ -11,7 +11,7 @@ import (
 func TestAccCNAMERecord(t *testing.T) {
 	t.Parallel()
 
-	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -20,15 +20,16 @@ func TestAccCNAMERecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_cname" "record-cname" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_cname" "record-cname" {
+					zone_id = %d
 					domain = %q
 					ttl = 300
 					data = "example.com"
-				}`, domainInit),
+				}`, Zone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "data", "example.com"),
@@ -43,15 +44,16 @@ func TestAccCNAMERecord(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_cname" "record-cname" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_cname" "record-cname" {
+					zone_id = %d
 					domain = %q
 					ttl = 600
 					data = "example.io"
-			}`, domainUpdate),
+			}`, Zone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_cname.record-cname", "data", "example.io"),

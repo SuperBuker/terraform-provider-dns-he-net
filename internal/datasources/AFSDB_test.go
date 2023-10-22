@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func TestAccAFSDB(t *testing.T) {
+	record, ok := Records["AFSDB"]
+	if !ok {
+		t.Skip("AFSDB record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -17,19 +23,20 @@ func TestAccAFSDB(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_afsdb" "record-afsdb" {
-					id = 5195520341
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_afsdb" "record-afsdb" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, Zone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "domain", "dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "domain", Zone.Name),
 					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "data", "2 green.dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "data", fmt.Sprintf("2 %s", Zone.Sub("green"))),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "id", "5195520341"),
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "zone_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "id", toString(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "zone_id", toString(Zone.ID)),
 				),
 			},
 		},
@@ -37,6 +44,11 @@ func TestAccAFSDB(t *testing.T) {
 }
 
 func TestAccAFSDBMissingZone(t *testing.T) {
+	record, ok := Records["AFSDB"]
+	if !ok {
+		t.Skip("AFSDB record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -44,10 +56,11 @@ func TestAccAFSDBMissingZone(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_afsdb" "record-afsdb" {
-					id = 5195520341
-					zone_id = 0
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_afsdb" "record-afsdb" {
+				id = %d
+				zone_id = 0
+			}`, record.ID),
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
 		},
@@ -62,10 +75,11 @@ func TestAccAFSDBMissingRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_afsdb" "record-afsdb" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_afsdb" "record-afsdb" {
 					id = 0
-					zone_id = 1093397
-				}`,
+					zone_id = %d
+				}`, Zone.ID),
 				ExpectError: regexp.MustCompile("Unable to find AFSDB record"),
 			},
 		},

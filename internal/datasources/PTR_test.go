@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -10,6 +11,11 @@ import (
 )
 
 func TestAccPTR(t *testing.T) {
+	record, ok := Records["PTR"]
+	if !ok {
+		t.Skip("PTR record missing in config")
+	}
+
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -17,19 +23,20 @@ func TestAccPTR(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_ptr" "record-ptr" {
-					id = 5195612976
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_ptr" "record-ptr" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, Zone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "domain", "example-ptr.dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "domain", Zone.Sub("example-ptr")),
 					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "data", "dns-he-net.ovh"),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "data", Zone.Name),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "id", "5195612976"),
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "zone_id", "1093397"),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "id", toString(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "zone_id", toString(Zone.ID)),
 				),
 			},
 		},
@@ -37,17 +44,21 @@ func TestAccPTR(t *testing.T) {
 }
 
 func TestAccPTRMissingZone(t *testing.T) {
-	t.Parallel()
+	record, ok := Records["PTR"]
+	if !ok {
+		t.Skip("PTR record missing in config")
+	}
 
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_ptr" "record-ptr" {
-					id = 5195612976
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_ptr" "record-ptr" {
+					id = %d
 					zone_id = 0
-				}`,
+				}`, record.ID),
 				ExpectError: regexp.MustCompile("Unable to fetch DNS records"),
 			},
 		},
@@ -62,10 +73,11 @@ func TestAccPTRMissingRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: test_utils.ProviderConfig + `data "dns-he-net_ptr" "record-ptr" {
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_ptr" "record-ptr" {
 					id = 0
-					zone_id = 1093397
-				}`,
+					zone_id = %d
+				}`, Zone.ID),
 				ExpectError: regexp.MustCompile("Unable to find PTR record"),
 			},
 		},

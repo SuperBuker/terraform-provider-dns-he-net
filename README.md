@@ -1,9 +1,10 @@
 # Terraform Provider: Hurricane Electric DNS
 
 [![Actions Status](https://github.com/SuperBuker/terraform-provider-dns-he-net/actions/workflows/golang.yaml/badge.svg?branch=master)](https://github.com/SuperBuker/terraform-provider-dns-he-net/actions)
-[![GitHub release](https://img.shields.io/github/v/tag/Superbuker/terraform-provider-dns-he-net?label=release)](https://github.com/SuperBuker/terraform-provider-dns-he-net/releases)
-[![license](https://img.shields.io/github/license/SuperBuker/terraform-provider-dns-he-net.svg)]()
+[![codecov](https://codecov.io/gh/SuperBuker/terraform-provider-dns-he-net/graph/badge.svg?token=ODPKLRKW5Q)](https://codecov.io/gh/SuperBuker/terraform-provider-dns-he-net)
 [![Go Report Card](https://goreportcard.com/badge/github.com/SuperBuker/terraform-provider-dns-he-net)](https://goreportcard.com/report/github.com/SuperBuker/terraform-provider-dns-he-net)
+[![GitHub release](https://img.shields.io/github/v/tag/Superbuker/terraform-provider-dns-he-net?label=release)](https://github.com/SuperBuker/terraform-provider-dns-he-net/releases)
+[![License](https://img.shields.io/github/license/SuperBuker/terraform-provider-dns-he-net.svg)]()
 
 Terraform Provider for setting DNS records in Hurricane Electric.
 
@@ -64,6 +65,9 @@ $ go build -o terraform-provider-dns-he-net
 ```
 
 ### Testing
+
+> **Note:** This section is under construction, the testing procedure has been entirely reworked to make the test entironment reproducible.
+> A preview is currently available in the [testing](https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/testing) folder.
 
 In order to run the full suite of Acceptance tests, the following environment variables must be set:
 

@@ -11,7 +11,7 @@ import (
 func TestAccHINFORecord(t *testing.T) {
 	t.Parallel()
 
-	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -20,15 +20,16 @@ func TestAccHINFORecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_hinfo" "record-hinfo" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_hinfo" "record-hinfo" {
+					zone_id = %d
 					domain = %q
 					ttl = 300
 					data = "\"armv7 Linux\""
-				}`, domainInit),
+				}`, Zone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "data", `"armv7 Linux"`),
@@ -43,15 +44,16 @@ func TestAccHINFORecord(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_hinfo" "record-hinfo" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_hinfo" "record-hinfo" {
+					zone_id = %d
 					domain = %q
 					ttl = 600
 					data = "\"amd64 Linux\""
-			}`, domainUpdate),
+			}`, Zone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "data", `"amd64 Linux"`),

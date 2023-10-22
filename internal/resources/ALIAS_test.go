@@ -11,7 +11,7 @@ import (
 func TestAccALIASRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := generateSubDomains("example-%04d.dns-he-net.eu.org", 9999, 2)
+	domains := Zone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -20,18 +20,19 @@ func TestAccALIASRecord(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Create and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_alias" "record-alias" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_alias" "record-alias" {
+					zone_id = %d
 					domain = %q
 					ttl = 300
-					data = "dns-he-net.eu.org"
-				}`, domainInit),
+					data = %q
+				}`, Zone.ID, domainInit, Zone.Name),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "ttl", "300"),
-					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "data", "dns-he-net.eu.org"),
+					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "data", Zone.Name),
 				),
 			},
 			// ImportState testing
@@ -43,18 +44,19 @@ func TestAccALIASRecord(t *testing.T) {
 			},
 			// Update and Read testing
 			{
-				Config: test_utils.ProviderConfig + fmt.Sprintf(`resource "dns-he-net_alias" "record-alias" {
-					zone_id = 1091256
+				Config: ProviderConfig +
+					fmt.Sprintf(`resource "dns-he-net_alias" "record-alias" {
+					zone_id = %d
 					domain = %q
 					ttl = 600
-					data = "dns-he-net.eu.org"
-			}`, domainUpdate),
+					data = %q
+				}`, Zone.ID, domainUpdate, Zone.Name),
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "zone_id", "1091256"),
+					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "zone_id", toString(Zone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "ttl", "600"),
-					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "data", "dns-he-net.eu.org"),
+					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "data", Zone.Name),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

@@ -2,46 +2,22 @@ package resources_test
 
 import (
 	"fmt"
-	"math/rand"
+	"strconv"
 
+	"github.com/SuperBuker/terraform-provider-dns-he-net/test_cfg"
 	"github.com/hashicorp/terraform-plugin-testing/terraform"
 )
 
-type uniqueRand struct {
-	size      uint
-	generated map[int]struct{}
-}
+var (
+	// Capitalised variables are accessed by the entire the test package
+	_resources     = test_cfg.Config.Resources
+	ProviderConfig = _resources.Account.ProviderConfig("simple")
+	Account        = _resources.Account
+	Zone           = _resources.Zone
+)
 
-func (u *uniqueRand) Int() int {
-	for {
-		var i int
-		if u.size > 0 {
-			i = rand.Intn(int(u.size))
-		} else {
-			i = rand.Int()
-		}
-
-		if _, ok := u.generated[i]; !ok {
-			u.generated[i] = struct{}{}
-			return i
-		}
-	}
-}
-
-func newUniqueRand(size uint) *uniqueRand {
-	return &uniqueRand{size: size, generated: make(map[int]struct{})}
-}
-
-func generateSubDomains(template string, size int, len int) []string {
-	// TODO: Display alert if size is lower than len.
-
-	generator := newUniqueRand(uint(size))
-
-	domains := make([]string, len)
-	for j := 0; j < len; j++ {
-		domains[j] = fmt.Sprintf(template, generator.Int())
-	}
-	return domains
+func toString(i uint) string {
+	return strconv.FormatUint(uint64(i), 10)
 }
 
 func getID(rawState map[string]string) string {

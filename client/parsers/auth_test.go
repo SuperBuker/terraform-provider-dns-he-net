@@ -14,14 +14,21 @@ import (
 
 func TestAuth(t *testing.T) {
 	t.Run("login", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/html/login.html")
-		require.NoError(t, err)
+		files := []string{
+			"../testing_data/html/login.html",
+			"../testing_data/html/login_err.html",
+		}
 
-		doc, err := htmlquery.Parse(bytes.NewReader(data))
-		require.NoError(t, err)
+		for _, file := range files {
+			data, err := os.ReadFile(file)
+			require.NoError(t, err)
 
-		status := parsers.LoginStatus(doc)
-		assert.Equal(t, auth.NoAuth, status)
+			doc, err := htmlquery.Parse(bytes.NewReader(data))
+			require.NoError(t, err)
+
+			status := parsers.LoginStatus(doc)
+			assert.Equal(t, auth.NoAuth, status)
+		}
 	})
 
 	t.Run("login_otp", func(t *testing.T) {

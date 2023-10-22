@@ -1,10 +1,17 @@
 package status
 
 import (
-	"errors"
-
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 )
+
+// TODO: extend ErrOTPAuthFailed?
+var knownIssues = map[string]error{
+	"Incorrect":                         &ErrAuthFailed{"Incorrect"},                                                      // login error
+	"The token supplied is invalid.":    &ErrOTPAuthFailed{"The token supplied is invalid."},                              // invalid totp error
+	"This token has already been used.": &ErrOTPAuthFailed{"This token has already been used. You may not reuse tokens."}, // reused totp error
+	"You may not reuse tokens.":         nil,                                                                              // reused totp error, part 2
+
+}
 
 // fromAuthStatus returns an error asssociated to the auth status.
 func fromAuthStatus(status auth.Status) (err error) {
@@ -14,7 +21,7 @@ func fromAuthStatus(status auth.Status) (err error) {
 	case auth.Ok:
 		// pass
 	case auth.OTP:
-		err = &ErrOTPAuth{}
+		err = &ErrMissingOTPAuth{}
 	case auth.Unknown:
 		err = &ErrUnknownAuth{}
 	case auth.Other:
@@ -24,19 +31,30 @@ func fromAuthStatus(status auth.Status) (err error) {
 	return
 }
 
-// fromIssue parses the errors in the response and returns them as &ErrHeNet{}.
-func fromIssue(issues []string) (err error) {
-	if issues == nil {
-		//pass
-	} else if len(issues) == 1 {
-		err = &ErrHeNet{issues[0]}
-	} else {
-		errs := make([]error, len(issues))
-		for i, issue := range issues {
-			errs[i] = &ErrHeNet{issue}
+func filterIssues(issues []string) ([]string, []error) {
+	idx := 0
+	errs := make([]error, 0)
+	for _, issue := range issues {
+		if err, ok := knownIssues[issue]; ok {
+			if err != nil {
+				errs = append(errs, err)
+			}
+		} else {
+			issues[idx] = issue
+			idx++
 		}
+	}
 
-		err = errors.Join(errs...)
+	issues = issues[:idx]
+	return issues, errs
+}
+
+// fromIssue parses the errors in the response and returns them as &ErrHeNet{}.
+func fromIssue(issues []string) (errs []error) {
+	issues, errs = filterIssues(issues) // In-place filter + catalog
+
+	for _, issue := range issues {
+		errs = append(errs, &ErrHeNet{issue})
 	}
 
 	return
