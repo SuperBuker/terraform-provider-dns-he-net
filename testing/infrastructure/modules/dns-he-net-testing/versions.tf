@@ -4,7 +4,7 @@ terraform {
   required_providers {
     dns-he-net = {
       source  = "SuperBuker/dns-he-net"
-      version = "0.0.4"
+      version = "0.0.5"
     }
   }
 }
