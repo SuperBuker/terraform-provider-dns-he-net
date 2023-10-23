@@ -18,7 +18,7 @@ Examples can be found in the [examples](./examples) folder.
 
 ### Provider Configuration
     
-```hcl
+```terraform
 terraform {
   required_providers {
     dns-he-net = {
@@ -28,8 +28,10 @@ terraform {
 }
 
 provider "dns-he-net" {
-  username = "username"
-  password = "password"
+  username   = "username"
+  password   = "password"
+  otp_secret = "otp_secret" # optional, only if enabled
+  store_type = "encrypted"  # optional, default: "encrypted"
 }
 
 resource "dns-he-net_a" "example" {
@@ -49,7 +51,7 @@ Then run `terraform init` to download and install the provider.
 - [Go](https://golang.org/) 1.20 (to build the provider plugin)
 - [Terraform](https://www.terraform.io/downloads.html) >= v1.0
 
-### Building The Provider
+### Building the Provider
 
 Clone the repository.
 
@@ -66,19 +68,9 @@ $ go build -o terraform-provider-dns-he-net
 
 ### Testing
 
-> **Note:** This section is under construction, the testing procedure has been entirely reworked to make the test entironment reproducible.
-> A preview is currently available in the [testing](https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/testing) folder.
+Everything related with testing is available in the [testing](./testing) folder.
 
-In order to run the full suite of Acceptance tests, the following environment variables must be set:
-
-- `DNSHENET_USER` (mandatory)
-- `DNSHENET_PASSWD` (mandatory)
-- `DNSHENET_OTP` (optional, only required if the OTP auth is enabled)
-- `DNSHENET_ACCOUNT_ID` (mandatory, used for validating the testing results)
-
-```sh
-$ TF_ACC=1 go test -v ./...
-```
+[Bug reports](https://github.com/SuperBuker/terraform-provider-dns-he-net/issues/new/choose) are welcome. :wink:
 
 ### Installing the Provider
 
