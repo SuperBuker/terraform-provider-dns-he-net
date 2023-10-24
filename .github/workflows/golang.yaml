@@ -10,13 +10,17 @@ on:
   workflow_dispatch:
     inputs: 
       debug_mode:
-        description: 'Makes the CI/CD succeed even if the golang tests fail, outputing the test results'
+        description: 'Silent failure, output tests results'
         type: boolean
         required: false
         default: false
 
 permissions:
   contents: read
+
+concurrency:
+  group: 'default' # Static value, to prevent concurrent runs
+  cancel-in-progress: false # Cancel previous runs if a new one is started
 
 jobs:
   build:
@@ -85,9 +89,6 @@ jobs:
         go test -v ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json || "${DEBUG_MODE}"
         go tool cover -func coverage.out
       timeout-minutes: 10
-
-    #- name: Build
-    #  run: go build -v ./...
     
     - name: Upload Go test results
       uses: actions/upload-artifact@v3.1.3
