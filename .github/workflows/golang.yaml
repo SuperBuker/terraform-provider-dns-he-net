@@ -71,7 +71,7 @@ jobs:
     - name: Run go vet
       run: go vet ./...
 
-    - name: Unit tests, with terraform coverage
+    - name: Unit tests, with terraform coverage and retries
       env:
         DNSHENET_USER: ${{ secrets.DNSHENET_USER }}
         DNSHENET_PASSWD: ${{ secrets.DNSHENET_PASSWD }}
@@ -80,15 +80,23 @@ jobs:
         DNSHENET_TEST_CONFIG_PATH: ${{ vars.DNSHENET_TEST_CONFIG_PATH }}
         TEST_CONFIG: ${{ secrets.TEST_CONFIG }}
         TF_ACC: "1"
-      run: |
-        DNSHENET_TEST_CONFIG_PATH="${PWD}/${DNSHENET_TEST_CONFIG_PATH}" # Set the absolute path
-        DEBUG_MODE=${{ github.event.inputs.debug_mode }}
-        DEBUG_MODE=${DEBUG_MODE:-"false"} # Use user input or fall back to "false"
-        "${DEBUG_MODE}" && echo "Debug mode enabled"
-        echo "${TEST_CONFIG}" > "${DNSHENET_TEST_CONFIG_PATH}"
-        go test -v ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json || "${DEBUG_MODE}"
-        go tool cover -func coverage.out
-      timeout-minutes: 10
+      # Use the retry action
+      uses: nick-fields/retry@v2.9.0
+      with:
+        command: |
+          DNSHENET_TEST_CONFIG_PATH="${PWD}/${DNSHENET_TEST_CONFIG_PATH}" # Set the absolute path
+          DEBUG_MODE=${{ github.event.inputs.debug_mode }}
+          DEBUG_MODE=${DEBUG_MODE:-"false"} # Use user input or fall back to "false"
+          "${DEBUG_MODE}" && echo "Debug mode enabled"
+          echo "${TEST_CONFIG}" > "${DNSHENET_TEST_CONFIG_PATH}"
+          go test -v ./... -covermode count -coverprofile coverage.out -json > TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json || "${DEBUG_MODE}"
+          go tool cover -func coverage.out
+        # continue_on_error: false
+        max_attempts: 3
+        on_retry_command: echo "Retrying..." # TODO: Add script to clean up testing environment
+        retry_on: error
+        shell: bash
+        timeout_minutes: 10
     
     - name: Upload Go test results
       uses: actions/upload-artifact@v3.1.3
