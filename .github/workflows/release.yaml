@@ -1,4 +1,4 @@
-name: Goreleaser
+name: Release
 
 on:
   push:
@@ -13,6 +13,7 @@ permissions:
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
+    #timeout-minutes: TBD
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.0
@@ -42,6 +43,10 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
 
+  goreportcard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
       - name: Update Go Report Card
         env:
           GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}

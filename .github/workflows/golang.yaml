@@ -23,7 +23,7 @@ concurrency:
   cancel-in-progress: false # Cancel previous runs if a new one is started
 
 jobs:
-  build:
+  testing:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     strategy:
