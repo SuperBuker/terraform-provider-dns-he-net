@@ -15,13 +15,11 @@ parsers:
 
 ignore:
   - "\\.*Readme\\.md$" # Documentation
-  - "\\.+_test\\.go$"  # Go test files
-  - "test_cfg/"        # Golang testing config
-  - "docs/"            # Provider documentation
-  - "examples/"        # Provider examples
-  - "testing/"         # Testing documentation
+  - "\\.+_test\\.go$" # Go test files
+  - "test_cfg/" # Golang testing config
+  - "docs/" # Provider documentation
+  - "examples/" # Provider examples
+  - "testing/" # Testing documentation
 
 github_checks:
   annotations: true
-
-
