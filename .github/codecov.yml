@@ -1,0 +1,25 @@
+codecov:
+  branch: master
+  strict_yaml_branch: master
+  max_report_age: 12
+  disable_default_path_fixes: false
+  require_ci_to_pass: true
+  notify:
+    wait_for_ci: true
+  archive:
+    uploads: true
+
+parsers:
+  go:
+    partials_as_hits: true
+
+ignore:
+  - "\\.*Readme\\.md$" # Documentation
+  - "\\.+_test\\.go$" # Go test files
+  - "test_cfg/" # Golang testing config
+  - "docs/" # Provider documentation
+  - "examples/" # Provider examples
+  - "testing/" # Testing documentation
+
+github_checks:
+  annotations: true

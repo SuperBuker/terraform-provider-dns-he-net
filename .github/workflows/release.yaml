@@ -1,4 +1,4 @@
-name: Goreleaser
+name: Release
 
 on:
   push:
@@ -9,10 +9,11 @@ permissions:
   contents: write
   # packages: write
   # issues: write
-  
+
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
+    #timeout-minutes: TBD
     steps:
       - name: Checkout
         uses: actions/checkout@v4.1.0
@@ -41,3 +42,18 @@ jobs:
           # GitHub sets the GITHUB_TOKEN secret automatically.
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GPG_FINGERPRINT: ${{ steps.import_gpg.outputs.fingerprint }}
+
+  goreportcard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Update Go Report Card
+        env:
+          GITHUB_REPOSITORY: ${{ env.GITHUB_REPOSITORY }}
+          GITHUB_SERVER_URL: ${{ env.GITHUB_SERVER_URL }}
+        run: |
+          GITHUB_DOMAIN="${GITHUB_SERVER_URL#*/}"
+          curl 'https://goreportcard.com/checks' \
+          -H 'Content-Type: application/x-www-form-urlencoded; charset=UTF-8' \
+          --data-urlencode "repo=${GITHUB_DOMAIN}/${GITHUB_REPOSITORY}" \
+          --compressed
