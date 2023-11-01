@@ -33,7 +33,7 @@ jobs:
         terraform-version: ["1.0.x", "1.1.x", "1.2.x", "1.3.x", "1.4.x"] # To extend
 
     steps:
-      - uses: actions/checkout@v4.1.0
+      - uses: actions/checkout@v4.1.1
 
       - name: Setup Go ${{ matrix.go-version }}
         uses: actions/setup-go@v4.1.0
