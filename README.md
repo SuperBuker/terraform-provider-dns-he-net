@@ -4,6 +4,7 @@
 [![codecov](https://codecov.io/gh/SuperBuker/terraform-provider-dns-he-net/graph/badge.svg?token=ODPKLRKW5Q)](https://codecov.io/gh/SuperBuker/terraform-provider-dns-he-net)
 [![Go Report Card](https://goreportcard.com/badge/github.com/SuperBuker/terraform-provider-dns-he-net)](https://goreportcard.com/report/github.com/SuperBuker/terraform-provider-dns-he-net)
 [![GitHub release](https://img.shields.io/github/v/tag/Superbuker/terraform-provider-dns-he-net?label=release)](https://github.com/SuperBuker/terraform-provider-dns-he-net/releases)
+![Terraform registry downloads](https://img.shields.io/badge/dynamic/json?url=https%3A%2F%2Fregistry.terraform.io%2Fv2%2Fproviders%2F4236%2Fdownloads%2Fsummary&query=%24.data.attributes.total&logo=terraform&label=downloads%20&color=%237B42BC&link=https%3A%2F%2Fregistry.terraform.io%2Fproviders%2FSuperBuker%2Fdns-he-net%2Flatest)
 [![License](https://img.shields.io/github/license/SuperBuker/terraform-provider-dns-he-net.svg)]()
 
 Terraform Provider for setting DNS records in Hurricane Electric.
