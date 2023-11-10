@@ -81,6 +81,11 @@ After the build is complete, copy the binary into the `~/.terraform.d/plugins` d
 $ cp ./terraform-provider-dns-he-net ~/.terraform.d/plugins/terraform-provider-dns-he-net
 ```
 
+## Contribute
+
+If you'd like to thank the developers behind this project leave a [GitHub Star](https://github.com/SuperBuker/terraform-provider-dns-he-net/stargazers) and spread the word.  
+This is just a humble hobby project, we are not looking for donations.
+
 ## License
 
 [GPLv3](./LICENSE)
