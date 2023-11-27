@@ -22,7 +22,7 @@ require (
 	github.com/pquerna/otp v1.4.0
 	github.com/rs/zerolog v1.31.0
 	github.com/stretchr/testify v1.8.4
-	golang.org/x/net v0.17.0
+	golang.org/x/net v0.19.0
 )
 
 require (
