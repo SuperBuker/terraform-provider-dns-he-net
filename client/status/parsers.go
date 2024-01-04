@@ -34,13 +34,15 @@ func fromAuthStatus(status auth.Status) (err error) {
 func filterIssues(issues []string) ([]string, []error) {
 	idx := 0
 	errs := make([]error, 0)
-	for _, issue := range issues {
+	for i, issue := range issues {
 		if err, ok := knownIssues[issue]; ok {
 			if err != nil {
 				errs = append(errs, err)
 			}
 		} else {
-			issues[idx] = issue
+			if i != idx {
+				issues[idx] = issue
+			}
 			idx++
 		}
 	}
