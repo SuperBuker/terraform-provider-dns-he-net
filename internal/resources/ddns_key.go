@@ -181,7 +181,7 @@ func (dk ddnsKey) Read(ctx context.Context, req resource.ReadRequest, resp *reso
 		)
 		return
 	} else if !ok {
-		state.Key = types.StringUnknown()
+		state.Key = types.StringNull()
 	}
 
 	// Set state
