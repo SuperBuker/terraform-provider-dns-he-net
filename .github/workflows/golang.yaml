@@ -53,7 +53,7 @@ jobs:
         run: terraform version
 
       - name: Terraform provider cache
-        uses: actions/cache@v3.3.2
+        uses: actions/cache@v3.3.3
         with:
           key: terraform-provider-dns-he-net
           path: ~/.config/terraform-provider-dns-he-net/
