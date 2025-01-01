@@ -1,5 +1,6 @@
 # Visit https://goreleaser.com for documentation on how to customize this
 # behavior.
+version: 2
 before:
   hooks:
     # this is just an example and not a requirement for provider building/publishing
@@ -58,4 +59,4 @@ release:
     - glob: 'terraform-registry-manifest.json'
       name_template: '{{ .ProjectName }}_{{ .Version }}_manifest.json'
 changelog:
-  skip: true
+  disable: true
