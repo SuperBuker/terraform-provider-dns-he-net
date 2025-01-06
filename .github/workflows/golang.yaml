@@ -101,7 +101,7 @@ jobs:
           timeout_minutes: 10
 
       - name: Upload Go test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Go-results-${{ matrix.go-version }}-${{ matrix.terraform-version }}
           path: TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json
