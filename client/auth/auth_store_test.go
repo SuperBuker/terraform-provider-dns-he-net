@@ -26,6 +26,7 @@ func TestAuthStore(t *testing.T) {
 	// Remove testing file when the test is complete.
 	t.Cleanup(
 		func() {
+			//nolint:errcheck
 			os.Remove(configFilePath(&auth, Simple))
 		},
 	)

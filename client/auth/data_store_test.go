@@ -36,6 +36,7 @@ func TestSimpleStore(t *testing.T) {
 	// Remove testing file
 	t.Cleanup(
 		func() {
+			//nolint:errcheck
 			os.Remove(configFilePath(&auth, Simple))
 		},
 	)
@@ -67,6 +68,7 @@ func TestEncryptedStore(t *testing.T) {
 	// Remove testing file
 	t.Cleanup(
 		func() {
+			//nolint:errcheck
 			os.Remove(configFilePath(&auth, Encrypted))
 		},
 	)

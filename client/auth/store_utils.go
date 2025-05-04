@@ -54,7 +54,7 @@ func buildSecret(a *Auth) []byte {
 	output := make([]string, len(input))
 
 	for i, str := range input {
-		output[i] = strings.Replace(str, ":", "\\:", -1)
+		output[i] = strings.ReplaceAll(str, ":", "\\:")
 	}
 
 	// Generetates a checksum from the input
