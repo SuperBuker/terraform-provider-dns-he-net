@@ -1,6 +1,8 @@
 module github.com/SuperBuker/terraform-provider-dns-he-net
 
-go 1.23.4
+go 1.24.2
+
+tool github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
 
 replace (
 	github.com/golang/protobuf => github.com/golang/protobuf v1.5.3
@@ -11,7 +13,6 @@ require (
 	github.com/antchfx/htmlquery v1.3.4
 	github.com/go-resty/resty/v2 v2.16.5
 	github.com/google/go-cmp v0.7.0
-	github.com/hashicorp/terraform-plugin-docs v0.21.0
 	github.com/hashicorp/terraform-plugin-framework v1.14.1
 	github.com/hashicorp/terraform-plugin-framework-validators v0.17.0
 	github.com/hashicorp/terraform-plugin-go v0.26.0
@@ -32,6 +33,7 @@ require (
 	github.com/bmatcuk/doublestar/v4 v4.8.1 // indirect
 	github.com/hashicorp/cli v1.1.7 // indirect
 	github.com/hashicorp/go-retryablehttp v0.7.7 // indirect
+	github.com/hashicorp/terraform-plugin-docs v0.21.0 // indirect
 	github.com/mattn/go-runewidth v0.0.16 // indirect
 	github.com/rivo/uniseg v0.4.7 // indirect
 	github.com/yuin/goldmark v1.7.11 // indirect
