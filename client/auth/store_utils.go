@@ -102,7 +102,7 @@ func decrypt(a *Auth, cipherData []byte) ([]byte, error) {
 	iv := cipherData[:aes.BlockSize]
 	data := make([]byte, len(cipherData)-aes.BlockSize)
 
-	stream := cipher.NewCFBDecrypter(block, iv)
+	stream := cipher.NewCTR(block, iv)
 	stream.XORKeyStream(data, cipherData[aes.BlockSize:])
 
 	return data, nil
@@ -125,7 +125,7 @@ func encrypt(a *Auth, data []byte) ([]byte, error) {
 		return nil, &ErrFileEncryption{err}
 	}
 
-	stream := cipher.NewCFBEncrypter(block, iv)
+	stream := cipher.NewCTR(block, iv)
 	stream.XORKeyStream(cipherData[aes.BlockSize:], data)
 
 	return cipherData, nil
