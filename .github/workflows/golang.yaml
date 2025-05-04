@@ -64,11 +64,11 @@ jobs:
         run: go mod download
 
       - name: Run linter
-        uses: golangci/golangci-lint-action@v6
+        uses: golangci/golangci-lint-action@v7
         with:
           args: --timeout=10m
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v1.60.3
+          version: v2.1.5
 
       - name: Run go vet
         run: go vet ./...
@@ -101,7 +101,7 @@ jobs:
           timeout_minutes: 10
 
       - name: Upload Go test results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: Go-results-${{ matrix.go-version }}-${{ matrix.terraform-version }}
           path: TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json
