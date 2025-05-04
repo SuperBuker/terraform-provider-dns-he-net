@@ -29,8 +29,8 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        go-version: ["1.23.x"] # To extend
-        terraform-version: ["1.0.x", "1.1.x", "1.2.x", "1.3.x", "1.4.x"] # To extend
+        go-version: ["1.24.2"] # To extend
+        terraform-version: ["1.0.x", "1.5.x", "1.9.x", "1.10.x", "1.11.x"] # To extend
 
     steps:
       - name: Checkout
