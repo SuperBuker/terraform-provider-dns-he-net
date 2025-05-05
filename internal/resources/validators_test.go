@@ -49,6 +49,8 @@ func TestDomainRegexp(t *testing.T) {
 		" example.com":             false,
 		"example. com":             false,
 		"example-1620.example.com": true,
+		"_example.com":             false,
+		"_sub.example.com":         true,
 		"-example.com.":            false,
 		".com":                     false,
 		"123456789012345678901234567890123456789012345678901234567890123.com":   true,
@@ -58,6 +60,6 @@ func TestDomainRegexp(t *testing.T) {
 	}
 
 	for domain, expected := range matrix {
-		assert.Equal(t, expected, domainRegexp.MatchString(domain))
+		assert.Equal(t, expected, domainRegexp.MatchString(domain), "domain: %s", domain)
 	}
 }
