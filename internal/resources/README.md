@@ -402,7 +402,7 @@ var caaValidator = stringvalidator.RegexMatches(caaRegexp, "value must be a vali
 ```
 
 ```go
-var domainRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$`)
+var domainRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9\_](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-Z0-9\_])?\.)*[a-zA-Z0-9](?:[a-zA-Z0-9\-]{0,61}[a-zA-Z0-9])?\.[a-zA-Z]{2,}$`)
 ```
 
 ```go

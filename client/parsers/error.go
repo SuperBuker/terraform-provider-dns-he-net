@@ -17,7 +17,7 @@ func ParseError(doc *html.Node) (issues []string) {
 		for i, issue := range issues {
 			// Issues clean up
 			issue = strings.TrimSpace(issue)
-			issue = strings.Replace(issue, "\n", " ", -1)
+			issue = strings.ReplaceAll(issue, "\n", " ")
 			issues[i] = issue
 		}
 	}
