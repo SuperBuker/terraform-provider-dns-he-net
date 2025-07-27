@@ -310,7 +310,10 @@ func (a) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest,
 	}
 
 	// Validate configuration
-	if !config.Data.IsUnknown() && !config.Data.IsNull() {
+	if config.Data.IsUnknown() {
+		// Field is required, if it's unknown, the value is likely coming from a dynamic block and
+		// ValidateConfig will be called again later with the actual value.
+	} else if !config.Data.IsNull() {
 		// pass
 	} else if recordA.Dynamic {
 		resp.Diagnostics.AddAttributeWarning(
@@ -323,7 +326,6 @@ func (a) ValidateConfig(ctx context.Context, req resource.ValidateConfigRequest,
 			"Invalid A record configuration",
 			"Static A records must have Data configured.",
 		)
-		return
 	}
 }
 
