@@ -29,8 +29,8 @@ jobs:
     strategy:
       max-parallel: 1
       matrix:
-        go-version: ["1.24.2"] # To extend
-        terraform-version: ["1.0.x", "1.5.x", "1.9.x", "1.10.x", "1.11.x"] # To extend
+        go-version: ["1.24.3"] # To extend
+        terraform-version: ["1.0.x", "1.5.x", "1.10.x", "1.12.x"] # To extend
 
     steps:
       - name: Checkout
@@ -68,7 +68,7 @@ jobs:
         with:
           args: --timeout=10m
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v2.1.5
+          version: v2.1.6
 
       - name: Run go vet
         run: go vet ./...

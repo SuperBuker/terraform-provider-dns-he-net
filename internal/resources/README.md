@@ -685,7 +685,7 @@ func (r a) Delete(ctx context.Context, req resource.DeleteRequest, resp *resourc
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(a\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L330>)
+### func \(a\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L332>)
 
 ```go
 func (a) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -763,7 +763,7 @@ func (r aaaa) Delete(ctx context.Context, req resource.DeleteRequest, resp *reso
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(aaaa\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L330>)
+### func \(aaaa\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/AAAA.go#L333>)
 
 ```go
 func (aaaa) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
@@ -1940,7 +1940,7 @@ func (r txt) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 
 Delete deletes the resource and removes the Terraform state on success.
 
-### func \(txt\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L330>)
+### func \(txt\) [ImportState](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/TXT.go#L333>)
 
 ```go
 func (txt) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)
