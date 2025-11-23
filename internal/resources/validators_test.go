@@ -33,6 +33,8 @@ func TestValidators(t *testing.T) {
 
 	assert.True(t, srvRegexp.MatchString("_sip._tcp.example.com"))
 
+	assert.True(t, srvRegexp.MatchString("_xmpp-server._tcp.example.com"))
+
 	assert.True(t, sshfpRegexp.MatchString("1 1 123456789abcdef67890123456789abcdef67890"))
 
 	assert.True(t, txtRegexp.MatchString(`"hello world"`))

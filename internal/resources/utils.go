@@ -39,7 +39,7 @@ var rpRegexp = regexp.MustCompile(`^(?:[a-zA-Z0-9](?:[a-zA-Z0-9\-\_]{0,61}[a-zA-
 var rpValidator = stringvalidator.RegexMatches(rpRegexp, "value must be a valid RP record")
 var spfRegexp = regexp.MustCompile(`^"v=spf1 .+"$`)
 var spfValidator = stringvalidator.RegexMatches(spfRegexp, "value must be a valid SPF record")
-var srvRegexp = regexp.MustCompile(`^_[a-zA-Z0-9]+\._(?:tcp|udp)\.(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)
+var srvRegexp = regexp.MustCompile(`^_[a-zA-Z0-9](?:[a-zA-Z0-9\-]*[a-zA-Z0-9])?\._(?:tcp|udp)\.(?:[a-zA-Z0-9][a-zA-Z0-9\-]{0,61}[a-zA-Z0-9]\.)+[a-zA-Z]{2,}$`)
 var srvDomainValidator = stringvalidator.RegexMatches(srvRegexp, "value must be a valid SRV domain name")
 var sshfpRegexp = regexp.MustCompile(`^[12346] [12] [a-fA-F0-9]+$`) // Case insensitive ¯\_(ツ)_/¯
 var sshfpValidator = stringvalidator.RegexMatches(sshfpRegexp, "value must be a valid SSHFP record")
