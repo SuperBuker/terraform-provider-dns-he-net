@@ -47,6 +47,10 @@ var knownIssues = map[string]error{
     "The token supplied is invalid.":    &ErrOTPAuthFailed{"The token supplied is invalid."},
     "This token has already been used.": &ErrOTPAuthFailed{"This token has already been used. You may not reuse tokens."},
     "You may not reuse tokens.":         nil,
+
+    "This zone does not appear to be properly delegated to our nameservers.":                                                                                               nil,
+    "If you have corrected this issue, please click the 'Check Delegation' tab below to have the zone rechecked.":                                                          nil,
+    "Keep in mind that once the change has been made to reflect our nameservers in your whois record, it may take up to 24 hours for the actual delegation to take place.": nil,
 }
 ```
 
@@ -70,21 +74,21 @@ func errorMerging(errs []error) error
 func errorScore(err error) int
 ```
 
-## func [filterIssues](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L34>)
+## func [filterIssues](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L38>)
 
 ```go
 func filterIssues(issues []string) ([]string, []error)
 ```
 
-## func [fromAuthStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L17>)
+## func [fromAuthStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L21>)
 
 ```go
 func fromAuthStatus(status auth.Status) (err error)
 ```
 
-fromAuthStatus returns an error asssociated to the auth status.
+fromAuthStatus returns an error associated to the auth status.
 
-## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L55>)
+## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L59>)
 
 ```go
 func fromIssue(issues []string) (errs []error)

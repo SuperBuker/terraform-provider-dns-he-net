@@ -11,9 +11,13 @@ var knownIssues = map[string]error{
 	"This token has already been used.": &ErrOTPAuthFailed{"This token has already been used. You may not reuse tokens."}, // reused totp error
 	"You may not reuse tokens.":         nil,                                                                              // reused totp error, part 2
 
+	// Delegation issues out of provider's control
+	"This zone does not appear to be properly delegated to our nameservers.":                                                                                               nil,
+	"If you have corrected this issue, please click the 'Check Delegation' tab below to have the zone rechecked.":                                                          nil,
+	"Keep in mind that once the change has been made to reflect our nameservers in your whois record, it may take up to 24 hours for the actual delegation to take place.": nil,
 }
 
-// fromAuthStatus returns an error asssociated to the auth status.
+// fromAuthStatus returns an error associated to the auth status.
 func fromAuthStatus(status auth.Status) (err error) {
 	switch status {
 	case auth.NoAuth:
