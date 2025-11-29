@@ -48,7 +48,7 @@ var txtValidator = stringvalidator.RegexMatches(txtRegexp, "value must be a vali
 
 // Common functions //
 
-func configure(ctx context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) (*client.Client, bool) {
+func configure(_ context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) (*client.Client, bool) {
 	if req.ProviderData == nil {
 		return nil, false
 	}
