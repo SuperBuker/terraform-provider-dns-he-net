@@ -44,31 +44,31 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/test_cfg"
 var arpaRegexp = regexp.MustCompile(`^(?:(?:[0-9a-f]\.){4}){1,8}ip6\.arpa$`)
 ```
 
-## func [ReverseString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L62>)
+## func [ReverseString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L63>)
 
 ```go
 func ReverseString(s string) string
 ```
 
-## func [ValidateArpaDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L55>)
+## func [ValidateArpaDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L56>)
 
 ```go
 func ValidateArpaDomain(arpaDomain string) error
 ```
 
-## func [extractArpaSegments](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L70>)
+## func [extractArpaSegments](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L71>)
 
 ```go
 func extractArpaSegments(arpaDomain string) ([]string, error)
 ```
 
-## func [generateArpaSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L82>)
+## func [generateArpaSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L83>)
 
 ```go
 func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string
 ```
 
-## func [generateSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L41>)
+## func [generateSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L42>)
 
 ```go
 func generateSubDomains(template string, bound int, count int) []string
@@ -243,7 +243,7 @@ func (c ZoneCfg) RandSubs(prefix string, bound int, count int) []string
 func (c ZoneCfg) Sub(subdomain string) string
 ```
 
-## type [uniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L12-L15>)
+## type [uniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L13-L16>)
 
 ```go
 type uniqueRand struct {
@@ -252,19 +252,19 @@ type uniqueRand struct {
 }
 ```
 
-### func [newUniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L37>)
+### func [newUniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L38>)
 
 ```go
 func newUniqueRand(bound uint) *uniqueRand
 ```
 
-### func \(\*uniqueRand\) [Hex](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L33>)
+### func \(\*uniqueRand\) [Hex](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L34>)
 
 ```go
 func (u *uniqueRand) Hex() string
 ```
 
-### func \(\*uniqueRand\) [Int](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L17>)
+### func \(\*uniqueRand\) [Int](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L18>)
 
 ```go
 func (u *uniqueRand) Int() int

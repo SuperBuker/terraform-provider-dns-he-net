@@ -10,6 +10,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/resources"
 
 - [Constants](<#constants>)
 - [Variables](<#variables>)
+- [func GenerateRandomString(n int) string](<#func-generaterandomstring>)
 - [func NewA() resource.Resource](<#func-newa>)
 - [func NewAAAA() resource.Resource](<#func-newaaaa>)
 - [func NewAFSDB() resource.Resource](<#func-newafsdb>)
@@ -28,7 +29,6 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/resources"
 - [func NewSRV() resource.Resource](<#func-newsrv>)
 - [func NewSSHFP() resource.Resource](<#func-newsshfp>)
 - [func NewTXT() resource.Resource](<#func-newtxt>)
-- [func RandStringBytesMaskImprSrcSB(n int) string](<#func-randstringbytesmaskimprsrcsb>)
 - [func configure(_ context.Context, req resource.ConfigureRequest, resp *resource.ConfigureResponse) (*client.Client, bool)](<#func-configure>)
 - [func importRecordState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse)](<#func-importrecordstate>)
 - [func readRecord(ctx context.Context, cli *client.Client, ID types.Int64, zoneID types.Int64, typ string, resp *resource.ReadResponse) (models.RecordX, bool)](<#func-readrecord>)
@@ -204,15 +204,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/resources"
 ## Constants
 
 ```go
-const (
-    letterIdxBits = 6                    // 6 bits to represent a letter index
-    letterIdxMask = 1<<letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
-    letterIdxMax  = 63 / letterIdxBits   // # of letter indices fitting in 63 bits
-)
-```
-
-```go
-const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01256789"
+const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01256789"
 ```
 
 ## Variables
@@ -482,10 +474,6 @@ var spfValidator = stringvalidator.RegexMatches(spfRegexp, "value must be a vali
 ```
 
 ```go
-var src = rand.NewSource(time.Now().UnixNano())
-```
-
-```go
 var srvDomainValidator = stringvalidator.RegexMatches(srvRegexp, "value must be a valid SRV domain name")
 ```
 
@@ -508,6 +496,14 @@ var txtRegexp = regexp.MustCompile(`^"[ -~]*"$`)
 ```go
 var txtValidator = stringvalidator.RegexMatches(txtRegexp, "value must be a valid TXT record")
 ```
+
+## func [GenerateRandomString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/random_string_utils.go#L16>)
+
+```go
+func GenerateRandomString(n int) string
+```
+
+GenerateRandomString generates a random string of the specified length using the defined character set.
 
 ## func [NewA](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/A.go#L31>)
 
@@ -652,12 +648,6 @@ func NewTXT() resource.Resource
 ```
 
 NewTXT initialises the A Resource.
-
-## func [RandStringBytesMaskImprSrcSB](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/random_string_utils.go#L23>)
-
-```go
-func RandStringBytesMaskImprSrcSB(n int) string
-```
 
 ## func [configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/resources/blob/master/internal/resources/utils.go#L51>)
 

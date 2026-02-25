@@ -1,6 +1,7 @@
 package test_cfg
 
 import (
+	"errors"
 	"fmt"
 	"math/rand"
 	"regexp"
@@ -54,7 +55,7 @@ func generateSubDomains(template string, bound int, count int) []string {
 
 func ValidateArpaDomain(arpaDomain string) error {
 	if !arpaRegexp.MatchString(arpaDomain) {
-		return fmt.Errorf("value must be a valid ARPA domain")
+		return errors.New("value must be a valid ARPA domain")
 	}
 	return nil
 }
@@ -86,8 +87,8 @@ func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string {
 		panic(err)
 	}
 
-	// Each byte is two segments
-	if bytes < 0 || bytes > arpaPosition/2 {
+	// Ensure that the number of bytes to generate does not exceed the available segments for randomization
+	if bytes < 0 || bytes > arpaPosition {
 		panic("invalid bytes length")
 	}
 

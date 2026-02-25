@@ -1,40 +1,27 @@
 package resources
 
 import (
-	"math/rand"
-	"strings"
-	"time"
+	"crypto/rand"
+	"fmt"
+	"math/big"
 )
 
 /*
-This code has been copied from https://stackoverflow.com/a/22892986
+This code has been copied from https://gist.github.com/dopey/c69559607800d2f2f90b1b1ed4e550fb
 */
 
-const letterBytes = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01256789"
+const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01256789"
 
-const (
-	letterIdxBits = 6                    // 6 bits to represent a letter index
-	letterIdxMask = 1<<letterIdxBits - 1 // All 1-bits, as many as letterIdxBits
-	letterIdxMax  = 63 / letterIdxBits   // # of letter indices fitting in 63 bits
-)
-
-var src = rand.NewSource(time.Now().UnixNano())
-
-func RandStringBytesMaskImprSrcSB(n int) string {
-	sb := strings.Builder{}
-	sb.Grow(n)
-	// A src.Int63() generates 63 random bits, enough for letterIdxMax characters!
-	for i, cache, remain := n-1, src.Int63(), letterIdxMax; i >= 0; {
-		if remain == 0 {
-			cache, remain = src.Int63(), letterIdxMax
+// GenerateRandomString generates a random string of the specified length using the defined character set.
+func GenerateRandomString(n int) string {
+	ret := make([]byte, n)
+	for i := 0; i < n; i++ {
+		num, err := rand.Int(rand.Reader, big.NewInt(int64(len(letters))))
+		if err != nil {
+			panic(fmt.Errorf("failed to generate random number: %w", err))
 		}
-		if idx := int(cache & letterIdxMask); idx < len(letterBytes) {
-			sb.WriteByte(letterBytes[idx])
-			i--
-		}
-		cache >>= letterIdxBits
-		remain--
+		ret[i] = letters[num.Int64()]
 	}
 
-	return sb.String()
+	return string(ret)
 }

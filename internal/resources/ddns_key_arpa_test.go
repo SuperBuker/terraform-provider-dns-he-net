@@ -24,7 +24,7 @@ func TestAccArpaDDNSKey(t *testing.T) {
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
-	password := resources.RandStringBytesMaskImprSrcSB(16)
+	password := resources.GenerateRandomString(16)
 
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
@@ -59,7 +59,7 @@ func TestAccArpaDDNSKey(t *testing.T) {
 					assert.Equal(t, Account.ID, cli.GetAccount())
 
 					// Makes auth fail when validating the expected key, triggering an update
-					anotherPassword := resources.RandStringBytesMaskImprSrcSB(16)
+					anotherPassword := resources.GenerateRandomString(16)
 
 					ddnsKey := models.DDNSKey{
 						Domain: domainInit,

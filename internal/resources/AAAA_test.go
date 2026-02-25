@@ -24,7 +24,7 @@ func TestAccAAAARecord(t *testing.T) {
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
-	password := resources.RandStringBytesMaskImprSrcSB(16)
+	password := resources.GenerateRandomString(16)
 
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,

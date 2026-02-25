@@ -237,7 +237,7 @@ func (dk ddnsKey) Delete(ctx context.Context, req resource.DeleteRequest, resp *
 	}
 
 	ddnsKey := state.get()
-	ddnsKey.Key = RandStringBytesMaskImprSrcSB(32) // The API doesn't support deletion, so we just set a random key
+	ddnsKey.Key = GenerateRandomString(32) // The API doesn't support deletion, so we just set a random key
 
 	// Terraform log
 	ctxLog := tflog.SetField(ctx, "account_id", dk.client.GetAccount())

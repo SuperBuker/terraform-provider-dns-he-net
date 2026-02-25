@@ -24,10 +24,10 @@ func TestAccTXTRecord(t *testing.T) {
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
-	data := `"` + resources.RandStringBytesMaskImprSrcSB(600) + `"`
-	data2 := `"` + resources.RandStringBytesMaskImprSrcSB(100) + `"` // The API doesn't support large TXT records
+	data := `"` + resources.GenerateRandomString(600) + `"`
+	data2 := `"` + resources.GenerateRandomString(100) + `"` // The API doesn't support large TXT records
 
-	password := resources.RandStringBytesMaskImprSrcSB(16)
+	password := resources.GenerateRandomString(16)
 
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
