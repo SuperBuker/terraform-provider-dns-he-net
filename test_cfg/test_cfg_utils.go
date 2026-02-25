@@ -87,7 +87,7 @@ func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string {
 	}
 
 	// Each byte is two segments
-	if bytes < 0 && bytes > arpaPosition/2 {
+	if bytes < 0 || bytes > arpaPosition/2 {
 		panic("invalid bytes length")
 	}
 
