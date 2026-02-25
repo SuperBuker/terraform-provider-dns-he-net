@@ -12,7 +12,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/test_cfg"
 - [func ReverseString(s string) string](<#func-reversestring>)
 - [func ValidateArpaDomain(arpaDomain string) error](<#func-validatearpadomain>)
 - [func extractArpaSegments(arpaDomain string) ([]string, error)](<#func-extractarpasegments>)
-- [func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string](<#func-generatearpasubdomains>)
+- [func generateArpaSubDomains(arpaDomain string, randomSegments int, count int) []string](<#func-generatearpasubdomains>)
 - [func generateSubDomains(template string, bound int, count int) []string](<#func-generatesubdomains>)
 - [func init()](<#func-init>)
 - [type AccountCfg](<#type-accountcfg>)
@@ -65,7 +65,7 @@ func extractArpaSegments(arpaDomain string) ([]string, error)
 ## func [generateArpaSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L83>)
 
 ```go
-func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string
+func generateArpaSubDomains(arpaDomain string, randomSegments int, count int) []string
 ```
 
 ## func [generateSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L42>)

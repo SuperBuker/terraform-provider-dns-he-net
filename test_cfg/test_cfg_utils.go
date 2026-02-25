@@ -80,7 +80,7 @@ func extractArpaSegments(arpaDomain string) ([]string, error) {
 	return segments, nil
 }
 
-func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string {
+func generateArpaSubDomains(arpaDomain string, randomSegments int, count int) []string {
 	arpaSegments, err := extractArpaSegments(arpaDomain)
 	arpaPosition := 32 - len(arpaSegments)
 	if err != nil {
@@ -88,11 +88,12 @@ func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string {
 	}
 
 	// Ensure that the number of bytes to generate does not exceed the available segments for randomization
-	if bytes < 0 || bytes > arpaPosition {
-		panic("invalid bytes length")
+	if randomSegments < 0 || randomSegments > arpaPosition {
+		panic("invalid randomSegments length")
 	}
 
-	generator := newUniqueRand(uint(1 << (bytes * 4))) // Each byte corresponds to 2 hex characters
+	// Each hex digit has 16 possible values, so we need 16^randomSegments possibilities
+	generator := newUniqueRand(uint(1 << (randomSegments * 4)))
 
 	domains := make([]string, count)
 	for j := 0; j < count; j++ {

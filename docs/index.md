@@ -128,4 +128,4 @@ resource "dns-he-net_a" "record-a" {
 
 Contributions to this project are very welcome.  
 Please open an issue or a pull request in the [GitHub repository](https://github.com/SuperBuker/dns-he-net) if you want to contribute.  
-Github stars are also very appreciated. :)
+GitHub stars are also very appreciated. :)
