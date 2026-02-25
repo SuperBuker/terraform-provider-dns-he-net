@@ -9,7 +9,7 @@ import (
 func GetAccount(doc *html.Node) (string, error) {
 	node := htmlquery.FindOne(doc, accountQ)
 
-	if table := htmlquery.FindOne(doc, accountQ); table == nil {
+	if node == nil {
 		return "", &ErrNotFound{accountQ}
 	}
 

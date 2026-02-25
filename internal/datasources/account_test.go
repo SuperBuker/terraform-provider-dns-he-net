@@ -22,7 +22,7 @@ func TestAccAccount(t *testing.T) {
 			{
 				Config: ProviderConfig + `data "dns-he-net_account" "test" {}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
+					// Verify record attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_account.test", "id", Account.ID),
 				),
 			},

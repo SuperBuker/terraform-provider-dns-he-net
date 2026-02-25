@@ -13,16 +13,20 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 - [func initResult(_ *resty.Client, resp *resty.Response) (err error)](<#func-initresult>)
 - [func retryCondition(resp *resty.Response, err error) (retry bool)](<#func-retrycondition>)
 - [func unwrapResult(_ *resty.Client, resp *resty.Response) (err error)](<#func-unwrapresult>)
+- [type ArpaZone](<#type-arpazone>)
 - [type Client](<#type-client>)
   - [func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options ...Option) (*Client, error)](<#func-newclient>)
   - [func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, options Options) *Client](<#func-newclient>)
-  - [func (c *Client) CreateZone(ctx context.Context, name string) (models.Zone, error)](<#func-client-createzone>)
+  - [func (c *Client) CreateDomainZone(ctx context.Context, name string) (models.Zone, error)](<#func-client-createdomainzone>)
   - [func (c *Client) DDNS() ddns.Client](<#func-client-ddns>)
+  - [func (c *Client) DeleteDomainZone(ctx context.Context, domain models.Zone) error](<#func-client-deletedomainzone>)
   - [func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error](<#func-client-deleterecord>)
-  - [func (c *Client) DeleteZone(ctx context.Context, zone models.Zone) error](<#func-client-deletezone>)
   - [func (c *Client) GetAccount() string](<#func-client-getaccount>)
+  - [func (c *Client) GetAllZones(ctx context.Context) ([]models.Zone, error)](<#func-client-getallzones>)
+  - [func (c *Client) GetArpaZones(ctx context.Context) ([]models.Zone, error)](<#func-client-getarpazones>)
+  - [func (c *Client) GetDomainZones(ctx context.Context) ([]models.Zone, error)](<#func-client-getdomainzones>)
+  - [func (c *Client) GetNetworkPrefixes(ctx context.Context) ([]models.NetworkPrefix, error)](<#func-client-getnetworkprefixes>)
   - [func (c *Client) GetRecords(ctx context.Context, zoneID uint) ([]models.Record, error)](<#func-client-getrecords>)
-  - [func (c *Client) GetZones(ctx context.Context) ([]models.Zone, error)](<#func-client-getzones>)
   - [func (c *Client) SetDDNSKey(ctx context.Context, dk models.DDNSKey) (string, error)](<#func-client-setddnskey>)
   - [func (c *Client) SetRecord(ctx context.Context, record models.RecordX) (models.RecordX, error)](<#func-client-setrecord>)
   - [func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.Cookie, error)](<#func-client-authbasic>)
@@ -32,9 +36,11 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
   - [func (c *Client) setAccount(resp *resty.Response)](<#func-client-setaccount>)
   - [func (c *Client) statusCheck(_ *resty.Client, resp *resty.Response) (err error)](<#func-client-statuscheck>)
   - [func (c *Client) statusCheckLog(resp *resty.Response) error](<#func-client-statuschecklog>)
+- [type DomainZone](<#type-domainzone>)
 - [type ErrItemNotFound](<#type-erritemnotfound>)
   - [func (e *ErrItemNotFound) Error() string](<#func-erritemnotfound-error>)
   - [func (e *ErrItemNotFound) Unwrap() []error](<#func-erritemnotfound-unwrap>)
+- [type GenericZone](<#type-genericzone>)
 - [type Option](<#type-option>)
   - [func WithDebug() Option](<#func-withdebug>)
   - [func WithProxy(proxy string) Option](<#func-withproxy>)
@@ -92,6 +98,12 @@ func unwrapResult(_ *resty.Client, resp *resty.Response) (err error)
 
 unwrapResult unwraps the ResultX, parses the body if known type and sets the resp.Result
 
+## type [ArpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/responses.go#L9>)
+
+```go
+type ArpaZone models.Zone // Used to retrieve only ARPA zones from the HTML body response
+```
+
 ## type [Client](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L14-L24>)
 
 Client is a client for the dns.he.net API.
@@ -126,19 +138,27 @@ func newClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, opti
 
 newClient returns a new client, handles the go\-resty client configuration.
 
-### func \(\*Client\) [CreateZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/zones.go#L33>)
+### func \(\*Client\) [CreateDomainZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domain_zones.go#L33>)
 
 ```go
-func (c *Client) CreateZone(ctx context.Context, name string) (models.Zone, error)
+func (c *Client) CreateDomainZone(ctx context.Context, name string) (models.Zone, error)
 ```
 
-CreateZone creates a new zone, then returns it, or an error.
+CreateDomainZone creates a new domain zone, then returns it, or an error.
 
 ### func \(\*Client\) [DDNS](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L89>)
 
 ```go
 func (c *Client) DDNS() ddns.Client
 ```
+
+### func \(\*Client\) [DeleteDomainZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domain_zones.go#L63>)
+
+```go
+func (c *Client) DeleteDomainZone(ctx context.Context, domain models.Zone) error
+```
+
+DeleteDomainZone deletes a domain zone, returns an error.
 
 ### func \(\*Client\) [DeleteRecord](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L86>)
 
@@ -148,14 +168,6 @@ func (c *Client) DeleteRecord(ctx context.Context, record models.RecordX) error
 
 DeleteRecord deletes a record, returns an error.
 
-### func \(\*Client\) [DeleteZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/zones.go#L63>)
-
-```go
-func (c *Client) DeleteZone(ctx context.Context, zone models.Zone) error
-```
-
-DeleteZone deletes a zone, returns an error.
-
 ### func \(\*Client\) [GetAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client.go#L85>)
 
 ```go
@@ -164,6 +176,38 @@ func (c *Client) GetAccount() string
 
 GetAccount returns the account ID.
 
+### func \(\*Client\) [GetAllZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/zones.go#L11>)
+
+```go
+func (c *Client) GetAllZones(ctx context.Context) ([]models.Zone, error)
+```
+
+GetAllZones retrieves all Domain and ARPA zones from the API and returns them in a slice
+
+### func \(\*Client\) [GetArpaZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/arpa_zones.go#L11>)
+
+```go
+func (c *Client) GetArpaZones(ctx context.Context) ([]models.Zone, error)
+```
+
+GetArpaZones retrieves all ARPA zones from the API and returns them in a slice
+
+### func \(\*Client\) [GetDomainZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/domain_zones.go#L14>)
+
+```go
+func (c *Client) GetDomainZones(ctx context.Context) ([]models.Zone, error)
+```
+
+GetDomainZones retrieves all domain zones from the API and returns them in a slice
+
+### func \(\*Client\) [GetNetworkPrefixes](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/network_prefixes.go#L11>)
+
+```go
+func (c *Client) GetNetworkPrefixes(ctx context.Context) ([]models.NetworkPrefix, error)
+```
+
+GetNetworkPrefixes retrieves all prefixes from the API and returns them in a slice
+
 ### func \(\*Client\) [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/records.go#L24>)
 
 ```go
@@ -171,14 +215,6 @@ func (c *Client) GetRecords(ctx context.Context, zoneID uint) ([]models.Record, 
 ```
 
 GetRecords retrieves all records from the API and returns them in a slice.
-
-### func \(\*Client\) [GetZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/zones.go#L14>)
-
-```go
-func (c *Client) GetZones(ctx context.Context) ([]models.Zone, error)
-```
-
-GetZones retrieves all zones from the API and returns them in a slice
 
 ### func \(\*Client\) [SetDDNSKey](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/ddns_key.go#L12>)
 
@@ -240,6 +276,12 @@ func (c *Client) statusCheck(_ *resty.Client, resp *resty.Response) (err error)
 func (c *Client) statusCheckLog(resp *resty.Response) error
 ```
 
+## type [DomainZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/responses.go#L8>)
+
+```go
+type DomainZone models.Zone // Used to retrieve only domain zones from the HTML body response
+```
+
 ## type [ErrItemNotFound](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/errors.go#L6-L8>)
 
 ErrItemNotFound is an error that indicates a resource was not found.
@@ -260,6 +302,12 @@ func (e *ErrItemNotFound) Error() string
 
 ```go
 func (e *ErrItemNotFound) Unwrap() []error
+```
+
+## type [GenericZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/responses.go#L7>)
+
+```go
+type GenericZone models.Zone // Used to retrieve all zones in a single request
 ```
 
 ## type [Option](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_options.go#L8-L13>)

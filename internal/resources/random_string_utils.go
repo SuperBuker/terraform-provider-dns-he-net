@@ -1,4 +1,4 @@
-package resources_test
+package resources
 
 import (
 	"math/rand"
@@ -20,7 +20,7 @@ const (
 
 var src = rand.NewSource(time.Now().UnixNano())
 
-func randStringBytesMaskImprSrcSB(n int) string {
+func RandStringBytesMaskImprSrcSB(n int) string {
 	sb := strings.Builder{}
 	sb.Grow(n)
 	// A src.Int63() generates 63 random bits, enough for letterIdxMax characters!

@@ -50,15 +50,19 @@ func (c AccountCfg) Auth(store_type auth.AuthStore) (auth.Auth, error) {
 }
 
 type RecordCfg struct {
-	ID     uint   `json:"id"`
-	Domain string `json:"domain"`
-	Data   string `json:"data"`
-	TTL    uint   `json:"ttl"`
+	ID        uint              `json:"id"`
+	Domain    string            `json:"domain"`
+	Data      string            `json:"data"`
+	TTL       uint              `json:"ttl"`
+	Dynamic   bool              `json:"dynamic"`
+	ExtraArgs map[string]string `json:"extra_args,omitempty"`
 }
 
 type ZoneCfg struct {
-	ID   uint   `json:"id"`
-	Name string `json:"name"`
+	ID          uint                 `json:"id"`
+	Name        string               `json:"name"`
+	Records     map[string]RecordCfg `json:"records"`
+	RecordCount uint                 `json:"record_count"`
 }
 
 func (c ZoneCfg) Sub(subdomain string) string {
@@ -69,21 +73,50 @@ func (c ZoneCfg) RandSubs(prefix string, bound int, count int) []string {
 	return generateSubDomains(fmt.Sprintf("%s.%s", prefix, c.Name), bound, count)
 }
 
-type DataSoucesTestCfg struct {
-	Account    AccountCfg           `json:"account"`
-	Zone       ZoneCfg              `json:"zone"`
-	ZonesCount uint                 `json:"zones_count"`
-	Records    map[string]RecordCfg `json:"records"`
+func (c ZoneCfg) RandArpaSubs(bytes int, count int) []string {
+	return generateArpaSubDomains(c.Name, bytes, count)
+}
+
+type DataSourcesDomainZoneCfg struct {
+	Ok                ZoneCfg `json:"ok"`
+	PendingDelegation ZoneCfg `json:"pending_delegation"`
+}
+
+type DataSourcesArpaZoneCfg struct {
+	Ok ZoneCfg `json:"ok"`
+	//PendingDelegation ZoneCfg `json:"pending_delegation"`
+}
+
+type NetworkPrefixCfg struct {
+	ID      uint   `json:"id"`
+	Value   string `json:"value"`
+	Enabled bool   `json:"enabled"`
+}
+
+type DataSourcesNetworkPrefixCfg struct {
+	Ok NetworkPrefixCfg `json:"ok"`
+	//TODO: PendingActivation NetworkPrefixCfg `json:"pending_activation"`
+}
+
+type DataSourcesTestCfg struct {
+	Account              AccountCfg                  `json:"account"`
+	DomainZones          DataSourcesDomainZoneCfg    `json:"domain_zones"`
+	DomainZonesCount     uint                        `json:"domain_zones_count"`
+	NetworkPrefixes      DataSourcesNetworkPrefixCfg `json:"network_prefixes"`
+	NetworkPrefixesCount uint                        `json:"network_prefixes_count"`
+	ArpaZones            DataSourcesArpaZoneCfg      `json:"arpa_zones"`
+	ArpaZonesCount       uint                        `json:"arpa_zones_count"`
 }
 
 type ResourceTestCfg struct {
-	Account AccountCfg `json:"account"`
-	Zone    ZoneCfg    `json:"zone"`
+	Account    AccountCfg `json:"account"`
+	DomainZone ZoneCfg    `json:"domain_zone"`
+	ArpaZone   ZoneCfg    `json:"arpa_zone"`
 }
 
 type TestCfg struct {
-	DataSouces DataSoucesTestCfg `json:"datasources"`
-	Resources  ResourceTestCfg   `json:"resources"`
+	DataSources DataSourcesTestCfg `json:"datasources"`
+	Resources   ResourceTestCfg    `json:"resources"`
 }
 
 // Load loads the test configuration from the JSON file.
@@ -100,7 +133,7 @@ func (c *TestCfg) Load(path string) error {
 
 	// Load the test configuration from the environment variables
 	for _, v := range []*AccountCfg{
-		&c.DataSouces.Account,
+		&c.DataSources.Account,
 		&c.Resources.Account,
 	} {
 		err = v.loadENV()

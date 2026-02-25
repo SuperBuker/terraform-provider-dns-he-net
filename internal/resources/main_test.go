@@ -34,7 +34,7 @@ func TestMain(m *testing.M) {
 	}
 
 	// Ensure authentication works
-	if _, err = client.GetZones(context.Background()); err != nil {
+	if _, err = client.GetDomainZones(context.Background()); err != nil {
 		log.Printf("Authentication failed : %s", err.Error())
 		os.Exit(1)
 		return

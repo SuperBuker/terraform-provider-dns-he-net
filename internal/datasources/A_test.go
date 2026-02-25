@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccARecord(t *testing.T) {
-	record, ok := Records["A"]
+	record, ok := DomainZoneRecords["A"]
 	if !ok {
 		t.Skip("A record missing in config")
 	}
@@ -27,17 +27,17 @@ func TestAccARecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_a" "record-a" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "domain", Zone.Sub("example-a")),
-					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "data", "0.0.0.0"),
-					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "dynamic", "true"),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "data", record.Data),
+					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "dynamic", fmt.Sprint(record.Dynamic)),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_a.record-a", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -45,7 +45,7 @@ func TestAccARecord(t *testing.T) {
 }
 
 func TestAccAMissingZone(t *testing.T) {
-	record, ok := Records["A"]
+	record, ok := DomainZoneRecords["A"]
 	if !ok {
 		t.Skip("A record missing in config")
 	}
@@ -80,7 +80,7 @@ func TestAccAMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_a" "record-a" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find A record"),
 			},
 		},

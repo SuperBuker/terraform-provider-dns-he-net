@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccNAPTR(t *testing.T) {
-	record, ok := Records["NAPTR"]
+	record, ok := DomainZoneRecords["NAPTR"]
 	if !ok {
 		t.Skip("NAPTR record missing in config")
 	}
@@ -23,19 +23,20 @@ func TestAccNAPTR(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: ProviderConfig + `data "dns-he-net_naptr" "record-naptr" {
-					id = 5195590349
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_naptr" "record-naptr" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "domain", Zone.Name),
-					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "ttl", "86400"),
-					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "data", fmt.Sprintf(`100 10 "S" "SIP+D2U" "!^.*$!sip:bofher@%s!" _sip._udp.%s.`, Zone.Name, Zone.Name)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_naptr.record-naptr", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -43,7 +44,7 @@ func TestAccNAPTR(t *testing.T) {
 }
 
 func TestAccNAPTRMissingZone(t *testing.T) {
-	record, ok := Records["NAPTR"]
+	record, ok := DomainZoneRecords["NAPTR"]
 	if !ok {
 		t.Skip("NAPTR record missing in config")
 	}
@@ -78,7 +79,7 @@ func TestAccNAPTRMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_naptr" "record-naptr" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find NAPTR record"),
 			},
 		},

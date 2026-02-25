@@ -377,9 +377,19 @@
                                     <td class="delegated">2001:470:1::/48</td>
                                     <td style="cursor: pointer;">
                                         <img class="Tips" title="This will remove the reverse zone only." alt="delete"
-                                            onclick="delete_dom(this);" name="" value="123458"
+                                            onclick="delete_dom(this);" name="" value="1234568"
                                             src="/include/images/delete.png" />
                                     </td>
+                                </tr>
+                                <tr class="broken_zone">
+                                    <td style="cursor: pointer;"><img class="Tips"
+                                            title="Edit Zone::Use this option to edit the zonefile.  You would use this if you wanted to add or remove subdomains, etc"
+                                            alt="edit" src="/include/images/pencil.png" menu="edit_reverse"
+                                            action="editzone" pid="48_1008234" onclick="clickandgo(this)" />
+                                    </td>
+                                    <td style="color: red;" class="delegated" colspan="2">2001:470:2::/48
+                                        (Incomplete)<img src="/include/images/help.png" style="cursor: help;" alt="help"
+                                            onclick="$('#dialog_incomplete').dialog('open')" /></td>
                                 </tr>
                             </table>
                             <!-- Start slave table -->
@@ -443,50 +453,50 @@
                                 <tr>
                                     <td style="cursor: pointer;">
                                         <img class="Tips"
-                                            title="ARPA Zones::1.b.2.c.3.4.5.6.7.8.9.0.ip6.arpa can not be viewed in a browser."
+                                            title="ARPA Zones::1.0.0.0.3.1.f.1.0.7.4.0.1.0.0.2.ip6.arpa can not be viewed in a browser."
                                             alt="no link" src="/include/images/link_error.png" />
                                     </td>
                                     <td style="cursor: pointer;">
                                         <img class="Tips"
                                             title="Edit Zone::Use this option to edit the zonefile.  You would use this if you wanted to add or remove subdomains, etc"
                                             alt="edit" src="/include/images/pencil.png"
-                                            name="1.b.2.c.3.4.5.6.7.8.9.0.ip6.arpa"
+                                            name="1.0.0.0.3.1.f.1.0.7.4.0.1.0.0.2.ip6.arpa"
                                             onclick="javascript:document.location.href='?hosted_dns_zoneid=1234567&menu=edit_zone&hosted_dns_editzone'" />
                                     </td>
                                     <td width="100%" class="clickable" style="padding-left: 3px;"
                                         onclick="javascript:document.location.href='?hosted_dns_zoneid=1234567&menu=edit_zone&hosted_dns_editzone'">
-                                        <span>1.b.2.c.3.4.5.6.7.8.9.0.ip6.arpa</span>
+                                        <span>1.0.0.0.3.1.f.1.0.7.4.0.1.0.0.2.ip6.arpa</span>
                                     </td>
                                     <td style="cursor: pointer;">
                                         <img class="Tips"
                                             title="Using this option will PERMANENTLY remove the zone from your account."
                                             alt="delete" onclick="delete_dom(this);"
-                                            name="1.b.2.c.3.4.5.6.7.8.9.0.ip6.arpa" value="1234567"
+                                            name="1.0.0.0.3.1.f.1.0.7.4.0.1.0.0.2.ip6.arpa" value="1234567"
                                             src="/include/images/delete.png" />
                                     </td>
                                 </tr>
                                 <tr>
                                     <td style="cursor: pointer;">
                                         <img class="Tips"
-                                            title="ARPA Zones::1.2.3.4.5.6.f.7.8.9.0.1.2.3.4.5.ip6.arpa can not be viewed in a browser."
+                                            title="ARPA Zones::1.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa can not be viewed in a browser."
                                             alt="no link" src="/include/images/link_error.png" />
                                     </td>
                                     <td style="cursor: pointer;">
                                         <img class="Tips"
                                             title="Edit Zone::Use this option to edit the zonefile.  You would use this if you wanted to add or remove subdomains, etc"
                                             alt="edit" src="/include/images/pencil.png"
-                                            name="1.2.3.4.5.6.f.7.8.9.0.1.2.3.4.5.ip6.arpa"
+                                            name="1.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa"
                                             onclick="javascript:document.location.href='?hosted_dns_zoneid=1234568&menu=edit_zone&hosted_dns_editzone'" />
                                     </td>
                                     <td width="100%" class="clickable" style="padding-left: 3px;"
                                         onclick="javascript:document.location.href='?hosted_dns_zoneid=1234568&menu=edit_zone&hosted_dns_editzone'">
-                                        <span>1.2.3.4.5.6.f.7.8.9.0.1.2.3.4.5.ip6.arpa</span>
+                                        <span>1.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa</span>
                                     </td>
                                     <td style="cursor: pointer;">
                                         <img class="Tips"
                                             title="Using this option will PERMANENTLY remove the zone from your account."
                                             alt="delete" onclick="delete_dom(this);"
-                                            name="1.2.3.4.5.6.f.7.8.9.0.1.2.3.4.5.ip6.arpa" value="1234568"
+                                            name="1.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa" value="1234568"
                                             src="/include/images/delete.png" />
                                     </td>
                                 </tr>

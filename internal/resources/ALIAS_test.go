@@ -11,7 +11,7 @@ import (
 func TestAccALIASRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -26,13 +26,13 @@ func TestAccALIASRecord(t *testing.T) {
 					domain = %q
 					ttl = 300
 					data = %q
-				}`, Zone.ID, domainInit, Zone.Name),
+				}`, DomainZone.ID, domainInit, DomainZone.Name),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "ttl", "300"),
-					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "data", Zone.Name),
+					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "data", DomainZone.Name),
 				),
 			},
 			// ImportState testing
@@ -50,13 +50,13 @@ func TestAccALIASRecord(t *testing.T) {
 					domain = %q
 					ttl = 600
 					data = %q
-				}`, Zone.ID, domainUpdate, Zone.Name),
+				}`, DomainZone.ID, domainUpdate, DomainZone.Name),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "ttl", "600"),
-					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "data", Zone.Name),
+					resource.TestCheckResourceAttr("dns-he-net_alias.record-alias", "data", DomainZone.Name),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

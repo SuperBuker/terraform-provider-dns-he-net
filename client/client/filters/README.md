@@ -11,6 +11,8 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filter
 - [func LatestRecord(records []models.Record) (r models.Record, ok bool)](<#func-latestrecord>)
 - [func LatestZone(zones []models.Zone) (d models.Zone, ok bool)](<#func-latestzone>)
 - [func MatchRecord(records []models.Record, rx models.RecordX) (r models.Record, ok bool)](<#func-matchrecord>)
+- [func NetworkPrefixById(prefixes []models.NetworkPrefix, id uint) (models.NetworkPrefix, bool)](<#func-networkprefixbyid>)
+- [func NetworkPrefixByValue(prefixes []models.NetworkPrefix, value string) (models.NetworkPrefix, bool)](<#func-networkprefixbyvalue>)
 - [func Record(records []models.Record, domain *string, typ *string) []models.Record](<#func-record>)
 - [func RecordById(records []models.Record, id uint) (models.Record, bool)](<#func-recordbyid>)
 - [func ZoneById(zones []models.Zone, id uint) (models.Zone, bool)](<#func-zonebyid>)
@@ -40,6 +42,22 @@ func MatchRecord(records []models.Record, rx models.RecordX) (r models.Record, o
 ```
 
 MatchRecord returns the record matching the input in a slice of records. If the slice doesn't contain any matching record, it returns an empty record and false.
+
+## func [NetworkPrefixById](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/network_prefixes.go#L9>)
+
+```go
+func NetworkPrefixById(prefixes []models.NetworkPrefix, id uint) (models.NetworkPrefix, bool)
+```
+
+NetworkPrefixById returns a network prefix by its ID. If the network prefix is not found, it returns an empty string and false.
+
+## func [NetworkPrefixByValue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/network_prefixes.go#L21>)
+
+```go
+func NetworkPrefixByValue(prefixes []models.NetworkPrefix, value string) (models.NetworkPrefix, bool)
+```
+
+NetworkPrefixByValue returns a network prefix by its value. If the network prefix is not found, it returns an empty string and false.
 
 ## func [Record](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/filters/blob/master/client/client/filters/records.go#L57>)
 

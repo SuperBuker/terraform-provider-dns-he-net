@@ -5,4 +5,3 @@ resource "dns-he-net_afsdb" "example" {
   ttl     = 86400
   data    = "2 green.example.com"
 }
-

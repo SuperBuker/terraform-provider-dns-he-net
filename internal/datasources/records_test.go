@@ -9,7 +9,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 )
 
-func TestAccRecords(t *testing.T) {
+func TestAccDomainZoneRecords(t *testing.T) {
 	t.Parallel()
 
 	resource.Test(t, resource.TestCase{
@@ -20,13 +20,37 @@ func TestAccRecords(t *testing.T) {
 				Config: ProviderConfig +
 					fmt.Sprintf(`data "dns-he-net_records" "test" {
 					id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					//resource.TestCheckResourceAttr("data.dns-he-net_records.test", "records.#", "104"), // TODO: enable
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_records.test", "records.#", fmt.Sprint(DomainZone.RecordCount)),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_records.test", "id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_records.test", "id", fmt.Sprint(DomainZone.ID)),
+				),
+			},
+		},
+	})
+}
+
+func TestAccArpaZoneRecords(t *testing.T) {
+	t.Parallel()
+
+	resource.Test(t, resource.TestCase{
+		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
+		Steps: []resource.TestStep{
+			// Read testing
+			{
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_records" "test" {
+					id = %d
+				}`, ArpaZone.ID),
+				Check: resource.ComposeAggregateTestCheckFunc(
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_records.test", "records.#", fmt.Sprint(ArpaZone.RecordCount)),
+
+					// Verify placeholder attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_records.test", "id", fmt.Sprint(ArpaZone.ID)),
 				),
 			},
 		},

@@ -107,9 +107,18 @@ func unwrapResult(_ *resty.Client, resp *resty.Response) (err error) {
 		//pass
 	} else if res := result.Result(resp); !utils.IsNil(res) {
 		switch res.(type) {
-		case *[]models.Zone:
+		case *[]GenericZone:
 			body := result.Body(resp)
-			resp.Request.Result, err = parsers.GetZones(body)
+			resp.Request.Result, err = parsers.GetAllZones(body)
+		case *[]DomainZone:
+			body := result.Body(resp)
+			resp.Request.Result, err = parsers.GetDomainZones(body)
+		case *[]ArpaZone:
+			body := result.Body(resp)
+			resp.Request.Result, err = parsers.GetArpaZones(body)
+		case *[]models.NetworkPrefix:
+			body := result.Body(resp)
+			resp.Request.Result, err = parsers.GetNetworkPrefixes(body)
 		case *[]models.Record:
 			body := result.Body(resp)
 			resp.Request.Result, err = parsers.GetRecords(body)

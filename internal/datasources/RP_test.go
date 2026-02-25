@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccRP(t *testing.T) {
-	record, ok := Records["RP"]
+	record, ok := DomainZoneRecords["RP"]
 	if !ok {
 		t.Skip("RP record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccRP(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_rp" "record-rp" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "domain", Zone.Name),
-					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "ttl", "86400"),
-					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "data", fmt.Sprintf("bofher.%s bofher.%s", Zone.Name, Zone.Name)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_rp.record-rp", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccRP(t *testing.T) {
 }
 
 func TestAccRPMissingZone(t *testing.T) {
-	record, ok := Records["RP"]
+	record, ok := DomainZoneRecords["RP"]
 	if !ok {
 		t.Skip("RP record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccRPMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_rp" "record-rp" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find RP record"),
 			},
 		},

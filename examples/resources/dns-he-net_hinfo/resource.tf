@@ -5,4 +5,3 @@ resource "dns-he-net_hinfo" "example" {
   ttl     = 86400
   data    = "\"armv7 Linux\""
 }
-

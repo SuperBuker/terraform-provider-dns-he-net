@@ -3,7 +3,11 @@ package test_cfg
 import (
 	"fmt"
 	"math/rand"
+	"regexp"
+	"strings"
 )
+
+var arpaRegexp = regexp.MustCompile(`^(?:(?:[0-9a-f]\.){4}){1,8}ip6\.arpa$`)
 
 type uniqueRand struct {
 	bound     uint
@@ -26,6 +30,10 @@ func (u *uniqueRand) Int() int {
 	}
 }
 
+func (u *uniqueRand) Hex() string {
+	return fmt.Sprintf("%x", u.Int())
+}
+
 func newUniqueRand(bound uint) *uniqueRand {
 	return &uniqueRand{bound: bound, generated: make(map[int]struct{})}
 }
@@ -40,6 +48,69 @@ func generateSubDomains(template string, bound int, count int) []string {
 	domains := make([]string, count)
 	for j := 0; j < count; j++ {
 		domains[j] = fmt.Sprintf(template, generator.Int())
+	}
+	return domains
+}
+
+func ValidateArpaDomain(arpaDomain string) error {
+	if !arpaRegexp.MatchString(arpaDomain) {
+		return fmt.Errorf("value must be a valid ARPA domain")
+	}
+	return nil
+}
+
+func ReverseString(s string) string {
+	runes := []rune(s)
+	for i, j := 0, len(runes)-1; i < j; i, j = i+1, j-1 {
+		runes[i], runes[j] = runes[j], runes[i]
+	}
+	return string(runes)
+}
+
+func extractArpaSegments(arpaDomain string) ([]string, error) {
+	if err := ValidateArpaDomain(arpaDomain); err != nil {
+		return nil, err
+	}
+
+	// Remove the trailing ".ip6.arpa"
+	trimmed := arpaDomain[:len(arpaDomain)-len(".ip6.arpa")]
+	// Split the remaining string into segments
+	segments := strings.Split(trimmed, ".")
+	return segments, nil
+}
+
+func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string {
+	arpaSegments, err := extractArpaSegments(arpaDomain)
+	arpaPosition := 32 - len(arpaSegments)
+	if err != nil {
+		panic(err)
+	}
+
+	// Each byte is two segments
+	if bytes < 0 && bytes > arpaPosition/2 {
+		panic("invalid bytes length")
+	}
+
+	generator := newUniqueRand(uint(1 << (bytes * 4))) // Each byte corresponds to 2 hex characters
+
+	domains := make([]string, count)
+	for j := 0; j < count; j++ {
+		// Create a slice to hold the segments of the new domain
+		domainSegments := make([]string, 32)
+		// Overwrite the last segments with the arpa segments
+		copy(domainSegments[arpaPosition:], arpaSegments)
+		// Fill the first segments with random hex values
+		hex := generator.Hex()
+		for pos, char := range ReverseString(hex) {
+			domainSegments[pos] = string(char)
+		}
+		// Fill remaining segments with "0"
+		length := []rune(hex)
+		for i := len(length); i < arpaPosition; i++ {
+			domainSegments[i] = "0"
+		}
+		// Join the segments to form the full domain
+		domains[j] = strings.Join(domainSegments, ".") + ".ip6.arpa"
 	}
 	return domains
 }

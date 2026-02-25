@@ -8,4 +8,3 @@ resource "dns-he-net_srv" "example" {
   port     = 22
   target   = "example.com"
 }
-

@@ -44,6 +44,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r ALIAS) Refs() map[string]string](<#func-alias-refs>)
   - [func (r ALIAS) Serialise() map[string]string](<#func-alias-serialise>)
   - [func (r ALIAS) Type() string](<#func-alias-type>)
+- [type ArpaResp](<#type-arparesp>)
 - [type CAA](<#type-caa>)
   - [func ToCAA(r Record) CAA](<#func-tocaa>)
   - [func (r CAA) Equals(rx RecordX) bool](<#func-caa-equals>)
@@ -65,6 +66,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (dk DDNSKey) GetZoneID() uint](<#func-ddnskey-getzoneid>)
   - [func (dk DDNSKey) Refs() map[string]string](<#func-ddnskey-refs>)
   - [func (dk DDNSKey) Serialise() map[string]string](<#func-ddnskey-serialise>)
+- [type DomainsResp](<#type-domainsresp>)
 - [type ErrFormat](<#type-errformat>)
   - [func (e *ErrFormat) Error() string](<#func-errformat-error>)
 - [type HINFO](<#type-hinfo>)
@@ -107,6 +109,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
   - [func (r NS) Refs() map[string]string](<#func-ns-refs>)
   - [func (r NS) Serialise() map[string]string](<#func-ns-serialise>)
   - [func (r NS) Type() string](<#func-ns-type>)
+- [type NetworkPrefix](<#type-networkprefix>)
 - [type PTR](<#type-ptr>)
   - [func ToPTR(r Record) PTR](<#func-toptr>)
   - [func (r PTR) Equals(rx RecordX) bool](<#func-ptr-equals>)
@@ -432,6 +435,12 @@ func (r ALIAS) Serialise() map[string]string
 func (r ALIAS) Type() string
 ```
 
+## type [ArpaResp](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/zone.go#L9>)
+
+```go
+type ArpaResp []Zone
+```
+
 ## type [CAA](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_CAA.go#L5-L11>)
 
 ```go
@@ -572,6 +581,12 @@ func (dk DDNSKey) Refs() map[string]string
 
 ```go
 func (dk DDNSKey) Serialise() map[string]string
+```
+
+## type [DomainsResp](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/zone.go#L8>)
+
+```go
+type DomainsResp []Zone
 ```
 
 ## type [ErrFormat](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/errors.go#L7-L10>)
@@ -858,6 +873,16 @@ func (r NS) Serialise() map[string]string
 
 ```go
 func (r NS) Type() string
+```
+
+## type [NetworkPrefix](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/network_prefix.go#L3-L7>)
+
+```go
+type NetworkPrefix struct {
+    ID      uint
+    Value   string
+    Enabled bool
+}
 ```
 
 ## type [PTR](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/models/blob/master/client/models/record_PTR.go#L5-L11>)

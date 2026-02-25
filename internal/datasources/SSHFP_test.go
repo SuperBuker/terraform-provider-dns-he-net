@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccSSHFP(t *testing.T) {
-	record, ok := Records["SSHFP"]
+	record, ok := DomainZoneRecords["SSHFP"]
 	if !ok {
 		t.Skip("SSHFP record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccSSHFP(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_sshfp" "record-sshfp" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "domain", Zone.Sub("example-sshfp")),
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "ttl", "86400"),
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "data", "4 2 123456789abcdef67890123456789abcdef67890123456789abcdef123456789"),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_sshfp.record-sshfp", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccSSHFP(t *testing.T) {
 }
 
 func TestAccSSHFPMissingZone(t *testing.T) {
-	record, ok := Records["SSHFP"]
+	record, ok := DomainZoneRecords["SSHFP"]
 	if !ok {
 		t.Skip("SSHFP record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccSSHFPMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_sshfp" "record-sshfp" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find SSHFP record"),
 			},
 		},

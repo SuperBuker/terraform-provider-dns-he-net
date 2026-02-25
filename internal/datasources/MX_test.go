@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccMX(t *testing.T) {
-	record, ok := Records["MX"]
+	record, ok := DomainZoneRecords["MX"]
 	if !ok {
 		t.Skip("MX record missing in config")
 	}
@@ -27,17 +27,17 @@ func TestAccMX(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_mx" "record-mx" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "domain", Zone.Name),
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "ttl", "3600"),
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "priority", "1"),
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "data", "mx.example.com"),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "priority", record.ExtraArgs["priority"]),
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_mx.record-mx", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -45,7 +45,7 @@ func TestAccMX(t *testing.T) {
 }
 
 func TestAccMXMissingZone(t *testing.T) {
-	record, ok := Records["MX"]
+	record, ok := DomainZoneRecords["MX"]
 	if !ok {
 		t.Skip("MX record missing in config")
 	}
@@ -80,7 +80,7 @@ func TestAccMXMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_mx" "record-mx" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find MX record"),
 			},
 		},

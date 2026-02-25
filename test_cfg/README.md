@@ -8,32 +8,73 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/test_cfg"
 
 ## Index
 
+- [Variables](<#variables>)
+- [func ReverseString(s string) string](<#func-reversestring>)
+- [func ValidateArpaDomain(arpaDomain string) error](<#func-validatearpadomain>)
+- [func extractArpaSegments(arpaDomain string) ([]string, error)](<#func-extractarpasegments>)
+- [func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string](<#func-generatearpasubdomains>)
 - [func generateSubDomains(template string, bound int, count int) []string](<#func-generatesubdomains>)
 - [func init()](<#func-init>)
 - [type AccountCfg](<#type-accountcfg>)
   - [func (c AccountCfg) Auth(store_type auth.AuthStore) (auth.Auth, error)](<#func-accountcfg-auth>)
   - [func (c AccountCfg) ProviderConfig(store_type string) string](<#func-accountcfg-providerconfig>)
   - [func (c *AccountCfg) loadENV() error](<#func-accountcfg-loadenv>)
-- [type DataSoucesTestCfg](<#type-datasoucestestcfg>)
+- [type DataSourcesArpaZoneCfg](<#type-datasourcesarpazonecfg>)
+- [type DataSourcesDomainZoneCfg](<#type-datasourcesdomainzonecfg>)
+- [type DataSourcesNetworkPrefixCfg](<#type-datasourcesnetworkprefixcfg>)
+- [type DataSourcesTestCfg](<#type-datasourcestestcfg>)
+- [type NetworkPrefixCfg](<#type-networkprefixcfg>)
 - [type RecordCfg](<#type-recordcfg>)
 - [type ResourceTestCfg](<#type-resourcetestcfg>)
 - [type TestCfg](<#type-testcfg>)
   - [func (c *TestCfg) Load(path string) error](<#func-testcfg-load>)
 - [type ZoneCfg](<#type-zonecfg>)
+  - [func (c ZoneCfg) RandArpaSubs(bytes int, count int) []string](<#func-zonecfg-randarpasubs>)
   - [func (c ZoneCfg) RandSubs(prefix string, bound int, count int) []string](<#func-zonecfg-randsubs>)
   - [func (c ZoneCfg) Sub(subdomain string) string](<#func-zonecfg-sub>)
 - [type uniqueRand](<#type-uniquerand>)
   - [func newUniqueRand(bound uint) *uniqueRand](<#func-newuniquerand>)
+  - [func (u *uniqueRand) Hex() string](<#func-uniquerand-hex>)
   - [func (u *uniqueRand) Int() int](<#func-uniquerand-int>)
 
 
-## func [generateSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L33>)
+## Variables
+
+```go
+var arpaRegexp = regexp.MustCompile(`^(?:(?:[0-9a-f]\.){4}){1,8}ip6\.arpa$`)
+```
+
+## func [ReverseString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L62>)
+
+```go
+func ReverseString(s string) string
+```
+
+## func [ValidateArpaDomain](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L55>)
+
+```go
+func ValidateArpaDomain(arpaDomain string) error
+```
+
+## func [extractArpaSegments](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L70>)
+
+```go
+func extractArpaSegments(arpaDomain string) ([]string, error)
+```
+
+## func [generateArpaSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L82>)
+
+```go
+func generateArpaSubDomains(arpaDomain string, bytes int, count int) []string
+```
+
+## func [generateSubDomains](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L41>)
 
 ```go
 func generateSubDomains(template string, bound int, count int) []string
 ```
 
-## func [init](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L115>)
+## func [init](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L148>)
 
 ```go
 func init()
@@ -76,43 +117,84 @@ func (c *AccountCfg) loadENV() error
 
 loadENV loads the account configuration from the environment variables.
 
-## type [DataSoucesTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L72-L77>)
+## type [DataSourcesArpaZoneCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L85-L88>)
 
 ```go
-type DataSoucesTestCfg struct {
-    Account    AccountCfg           `json:"account"`
-    Zone       ZoneCfg              `json:"zone"`
-    ZonesCount uint                 `json:"zones_count"`
-    Records    map[string]RecordCfg `json:"records"`
+type DataSourcesArpaZoneCfg struct {
+    Ok ZoneCfg `json:"ok"`
 }
 ```
 
-## type [RecordCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L52-L57>)
+## type [DataSourcesDomainZoneCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L80-L83>)
+
+```go
+type DataSourcesDomainZoneCfg struct {
+    Ok                ZoneCfg `json:"ok"`
+    PendingDelegation ZoneCfg `json:"pending_delegation"`
+}
+```
+
+## type [DataSourcesNetworkPrefixCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L96-L99>)
+
+```go
+type DataSourcesNetworkPrefixCfg struct {
+    Ok NetworkPrefixCfg `json:"ok"`
+}
+```
+
+## type [DataSourcesTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L101-L109>)
+
+```go
+type DataSourcesTestCfg struct {
+    Account              AccountCfg                  `json:"account"`
+    DomainZones          DataSourcesDomainZoneCfg    `json:"domain_zones"`
+    DomainZonesCount     uint                        `json:"domain_zones_count"`
+    NetworkPrefixes      DataSourcesNetworkPrefixCfg `json:"network_prefixes"`
+    NetworkPrefixesCount uint                        `json:"network_prefixes_count"`
+    ArpaZones            DataSourcesArpaZoneCfg      `json:"arpa_zones"`
+    ArpaZonesCount       uint                        `json:"arpa_zones_count"`
+}
+```
+
+## type [NetworkPrefixCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L90-L94>)
+
+```go
+type NetworkPrefixCfg struct {
+    ID      uint   `json:"id"`
+    Value   string `json:"value"`
+    Enabled bool   `json:"enabled"`
+}
+```
+
+## type [RecordCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L52-L59>)
 
 ```go
 type RecordCfg struct {
-    ID     uint   `json:"id"`
-    Domain string `json:"domain"`
-    Data   string `json:"data"`
-    TTL    uint   `json:"ttl"`
+    ID        uint              `json:"id"`
+    Domain    string            `json:"domain"`
+    Data      string            `json:"data"`
+    TTL       uint              `json:"ttl"`
+    Dynamic   bool              `json:"dynamic"`
+    ExtraArgs map[string]string `json:"extra_args,omitempty"`
 }
 ```
 
-## type [ResourceTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L79-L82>)
+## type [ResourceTestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L111-L115>)
 
 ```go
 type ResourceTestCfg struct {
-    Account AccountCfg `json:"account"`
-    Zone    ZoneCfg    `json:"zone"`
+    Account    AccountCfg `json:"account"`
+    DomainZone ZoneCfg    `json:"domain_zone"`
+    ArpaZone   ZoneCfg    `json:"arpa_zone"`
 }
 ```
 
-## type [TestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L84-L87>)
+## type [TestCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L117-L120>)
 
 ```go
 type TestCfg struct {
-    DataSouces DataSoucesTestCfg `json:"datasources"`
-    Resources  ResourceTestCfg   `json:"resources"`
+    DataSources DataSourcesTestCfg `json:"datasources"`
+    Resources   ResourceTestCfg    `json:"resources"`
 }
 ```
 
@@ -124,7 +206,7 @@ var (
 )
 ```
 
-### func \(\*TestCfg\) [Load](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L90>)
+### func \(\*TestCfg\) [Load](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L123>)
 
 ```go
 func (c *TestCfg) Load(path string) error
@@ -132,28 +214,36 @@ func (c *TestCfg) Load(path string) error
 
 Load loads the test configuration from the JSON file.
 
-## type [ZoneCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L59-L62>)
+## type [ZoneCfg](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L61-L66>)
 
 ```go
 type ZoneCfg struct {
-    ID   uint   `json:"id"`
-    Name string `json:"name"`
+    ID          uint                 `json:"id"`
+    Name        string               `json:"name"`
+    Records     map[string]RecordCfg `json:"records"`
+    RecordCount uint                 `json:"record_count"`
 }
 ```
 
-### func \(ZoneCfg\) [RandSubs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L68>)
+### func \(ZoneCfg\) [RandArpaSubs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L76>)
+
+```go
+func (c ZoneCfg) RandArpaSubs(bytes int, count int) []string
+```
+
+### func \(ZoneCfg\) [RandSubs](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L72>)
 
 ```go
 func (c ZoneCfg) RandSubs(prefix string, bound int, count int) []string
 ```
 
-### func \(ZoneCfg\) [Sub](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L64>)
+### func \(ZoneCfg\) [Sub](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg.go#L68>)
 
 ```go
 func (c ZoneCfg) Sub(subdomain string) string
 ```
 
-## type [uniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L8-L11>)
+## type [uniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L12-L15>)
 
 ```go
 type uniqueRand struct {
@@ -162,13 +252,19 @@ type uniqueRand struct {
 }
 ```
 
-### func [newUniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L29>)
+### func [newUniqueRand](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L37>)
 
 ```go
 func newUniqueRand(bound uint) *uniqueRand
 ```
 
-### func \(\*uniqueRand\) [Int](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L13>)
+### func \(\*uniqueRand\) [Hex](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L33>)
+
+```go
+func (u *uniqueRand) Hex() string
+```
+
+### func \(\*uniqueRand\) [Int](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L17>)
 
 ```go
 func (u *uniqueRand) Int() int

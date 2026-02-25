@@ -1,6 +1,7 @@
 package datasources_test
 
 import (
+	"fmt"
 	"regexp"
 	"testing"
 
@@ -17,15 +18,16 @@ func TestAccZone(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: ProviderConfig + `data "dns-he-net_zone" "example" {
-					id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_zone" "example" {
+					id = %d
+				}`, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_zone.example", "name", Zone.Name),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_zone.example", "name", DomainZone.Name),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_zone.example", "id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_zone.example", "id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},

@@ -12,15 +12,22 @@ Parsers contains functions to parse the response from the server.
 
 - [Constants](<#constants>)
 - [func GetAccount(doc *html.Node) (string, error)](<#func-getaccount>)
+- [func GetAllZones(doc *html.Node) ([]models.Zone, error)](<#func-getallzones>)
+- [func GetArpaZones(doc *html.Node) ([]models.Zone, error)](<#func-getarpazones>)
+- [func GetDomainZones(doc *html.Node) ([]models.Zone, error)](<#func-getdomainzones>)
+- [func GetNetworkPrefixes(doc *html.Node) ([]models.NetworkPrefix, error)](<#func-getnetworkprefixes>)
 - [func GetRecords(doc *html.Node) ([]models.Record, error)](<#func-getrecords>)
 - [func GetStatusMessage(doc *html.Node) (models.StatusMessage, error)](<#func-getstatusmessage>)
-- [func GetZones(doc *html.Node) ([]models.Zone, error)](<#func-getzones>)
 - [func LoginStatus(doc *html.Node) auth.Status](<#func-loginstatus>)
+- [func NetworkPrefixToArpaZone(prefix models.NetworkPrefix) (models.Zone, error)](<#func-networkprefixtoarpazone>)
 - [func ParseError(doc *html.Node) (issues []string)](<#func-parseerror>)
 - [func ParseStatus(doc *html.Node) string](<#func-parsestatus>)
 - [func errParsingNode(path, field string, err error) error](<#func-errparsingnode>)
+- [func parseArpaZoneNode(node *html.Node) (models.Zone, error)](<#func-parsearpazonenode>)
+- [func parseDomainZoneNode(node *html.Node) (models.Zone, error)](<#func-parsedomainzonenode>)
+- [func parseNetworkPrefixNode(node *html.Node) (models.NetworkPrefix, error)](<#func-parsenetworkprefixnode>)
 - [func parseRecordNode(node *html.Node) (record models.Record, err error)](<#func-parserecordnode>)
-- [func parseZoneNode(node *html.Node) (models.Zone, error)](<#func-parsezonenode>)
+- [func subnetToArpaZone(subnet string) (string, error)](<#func-subnettoarpazone>)
 - [type ErrNotFound](<#type-errnotfound>)
   - [func (e *ErrNotFound) Error() string](<#func-errnotfound-error>)
   - [func (e *ErrNotFound) Unwrap() []error](<#func-errnotfound-unwrap>)
@@ -47,14 +54,41 @@ const (
     // loginNoAuthQ is the XPath query for the login form.
     loginNoAuthQ = "//form[@name='login']"
 
-    // zonesTableQ is the XPath query for the zones table.
-    zonesTableQ = "//table[@id='domains_table']"
+    // tabsStandardQ is the XPath query for the standard tabs div.
+    tabsStandardQ = "//div[@id='tabs-standard']"
 
-    // zoneQ is the XPath query for the zone rows.
-    zoneQ = zonesTableQ + "/tbody/tr"
+    // domainZonesTableQ is the XPath query for the domains table.
+    domainZonesTableQ = tabsStandardQ + "//table[@id='domains_table' and contains(@class, 'generic_table')]"
 
-    // zoneIDQ is the XPath query for the zone ID within the zone row.
-    zoneIDQ = "//td[@style]/img[@name][@value]"
+    // domainZoneQ is the XPath query for the domain rows.
+    domainZoneQ = domainZonesTableQ + "/tbody/tr"
+
+    // domainZoneIDQ is the XPath query for the domain ID within the domain row.
+    domainZoneIDQ = "//td[@style]/img[@name][@value]"
+
+    // prefixesTableQ is the XPath query for the delegated prefixes table.
+    prefixesTableQ = tabsStandardQ + "//table[not(@id) and @class='generic_table']"
+
+    // prefixQ is the XPath query for the record rows.
+    prefixQ = prefixesTableQ + "/tbody/tr"
+
+    // prefixIDQ is the XPath query for the prefix ID within the prefix row.
+    prefixIDQ = "//td[@style]/img[@value]"
+
+    // prefixNameQ is the XPath query for the prefix ID within the prefix row.
+    prefixNameQ = "//td[@class='delegated']"
+
+    // tabsAdvancedQ is the XPath query for the standard tabs div.
+    tabsAdvancedQ = "//div[@id='tabs-advanced']"
+
+    // arpaZoneTableQ is the XPath query for the delegated ARPA zones table.
+    arpaZoneTableQ = tabsAdvancedQ + "//table[not(@id) and @class='generic_table']"
+
+    // arpaZoneQ is the XPath query for the record rows.
+    arpaZoneQ = arpaZoneTableQ + "/tbody/tr"
+
+    // arpaZoneIDQ is the XPath query for the ARPA zone ID within the ARPA zone row.
+    arpaZoneIDQ = "//td[@style]/img[@name][@value]"
 
     // recordsTableQ is the XPath query for the records table.
     recordsTableQ = "//div[@id='dns_main_content']/table[@class='generictable']"
@@ -78,6 +112,38 @@ func GetAccount(doc *html.Node) (string, error)
 
 GetAccount returns the account name from the HTML body.
 
+## func [GetAllZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/all_zones.go#L10>)
+
+```go
+func GetAllZones(doc *html.Node) ([]models.Zone, error)
+```
+
+GetAllZones returns the Domain and ARPA zones from the HTML body.
+
+## func [GetArpaZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/arpa_zones.go#L32>)
+
+```go
+func GetArpaZones(doc *html.Node) ([]models.Zone, error)
+```
+
+GetArpaZones returns the ARPA zones from the HTML body.
+
+## func [GetDomainZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/domain_zones.go#L32>)
+
+```go
+func GetDomainZones(doc *html.Node) ([]models.Zone, error)
+```
+
+GetDomainZones returns the zones from the HTML body.
+
+## func [GetNetworkPrefixes](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/network_prefix.go#L51>)
+
+```go
+func GetNetworkPrefixes(doc *html.Node) ([]models.NetworkPrefix, error)
+```
+
+GetNetworkPrefixes returns the network prefixes from the HTML body.
+
 ## func [GetRecords](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L166>)
 
 ```go
@@ -94,14 +160,6 @@ func GetStatusMessage(doc *html.Node) (models.StatusMessage, error)
 
 GetStatusMessage returns the status message from the HTML body.
 
-## func [GetZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/zones.go#L28>)
-
-```go
-func GetZones(doc *html.Node) ([]models.Zone, error)
-```
-
-GetZones returns the zones from the HTML body.
-
 ## func [LoginStatus](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/auth.go#L26>)
 
 ```go
@@ -109,6 +167,14 @@ func LoginStatus(doc *html.Node) auth.Status
 ```
 
 LoginStatus returns the login status from the HTML body.
+
+## func [NetworkPrefixToArpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L63>)
+
+```go
+func NetworkPrefixToArpaZone(prefix models.NetworkPrefix) (models.Zone, error)
+```
+
+NetworkPrefixToArpaZone converts a delegated prefix to its corresponding ARPA zone.
 
 ## func [ParseError](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/error.go#L11>)
 
@@ -126,13 +192,37 @@ func ParseStatus(doc *html.Node) string
 
 ParseStatus returns the dns status from the HTML body.
 
-## func [errParsingNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L6>)
+## func [errParsingNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L13>)
 
 ```go
 func errParsingNode(path, field string, err error) error
 ```
 
 errParsingNode returns a tailored ErrParsing error.
+
+## func [parseArpaZoneNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/arpa_zones.go#L13>)
+
+```go
+func parseArpaZoneNode(node *html.Node) (models.Zone, error)
+```
+
+parseArpaZoneNode parses a delegated prefix node.
+
+## func [parseDomainZoneNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/domain_zones.go#L13>)
+
+```go
+func parseDomainZoneNode(node *html.Node) (models.Zone, error)
+```
+
+parseDomainZoneNode parses a zone node.
+
+## func [parseNetworkPrefixNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/network_prefix.go#L14>)
+
+```go
+func parseNetworkPrefixNode(node *html.Node) (models.NetworkPrefix, error)
+```
+
+parseNetworkPrefixNode parses a delegated prefix node.
 
 ## func [parseRecordNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/records.go#L16>)
 
@@ -142,13 +232,13 @@ func parseRecordNode(node *html.Node) (record models.Record, err error)
 
 parseRecordNode parses a record node.
 
-## func [parseZoneNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/zones.go#L13>)
+## func [subnetToArpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L21>)
 
 ```go
-func parseZoneNode(node *html.Node) (models.Zone, error)
+func subnetToArpaZone(subnet string) (string, error)
 ```
 
-parseZoneNode parses a zone node.
+subnetToArpaZone converts a subnet string to its corresponding ARPA zone name.
 
 ## type [ErrNotFound](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/errors.go#L9-L11>)
 

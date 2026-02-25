@@ -6,4 +6,3 @@ resource "dns-he-net_mx" "example" {
   priority = 1
   data     = "mx.example.com"
 }
-

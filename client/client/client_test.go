@@ -16,9 +16,13 @@ import (
 )
 
 func TestClientAuth(t *testing.T) {
-	_datasources := test_cfg.Config.DataSouces
+	_datasources := test_cfg.Config.DataSources
 	account := _datasources.Account
-	zoneID := _datasources.Zone.ID
+	arpaZonesCount := _datasources.ArpaZonesCount
+	//ArpaZoneOk := _datasources.ArpaZones.Ok
+	domainZoneCount := _datasources.DomainZonesCount
+	domainOk := _datasources.DomainZones.Ok
+	domainPendingDelegation := _datasources.DomainZones.PendingDelegation
 
 	t.Run("Client auth.Simple", func(t *testing.T) {
 		authObj, err := auth.NewAuth(account.User, account.Password, account.OTP, auth.Simple)
@@ -37,24 +41,35 @@ func TestClientAuth(t *testing.T) {
 		}
 
 		// Force auth failure and re-authentication before retrial
-		zones, err := cli.GetZones(context.Background())
+		assert.Equal(t, account.ID, cli.GetAccount())
+
+		domainZones, err := cli.GetDomainZones(context.Background())
 		require.NoError(t, err)
 
-		assert.Equal(t, 3, len(zones))
+		assert.Equal(t, int(domainZoneCount), len(domainZones))
 
-		assert.Equal(t, account.ID, cli.GetAccount())
+		ArpaZones, err := cli.GetArpaZones(context.Background())
+		require.NoError(t, err)
+
+		assert.Equal(t, int(arpaZonesCount), len(ArpaZones))
+
+		allZones, err := cli.GetAllZones(context.Background())
+		require.NoError(t, err)
+
+		assert.Equal(t, int(domainZoneCount+arpaZonesCount), len(allZones))
 
 		// Not onboarded record
 		records, err := cli.GetRecords(context.Background(), 0)
 		require.Error(t, err)
 		assert.Nil(t, records)
 
-		records, err = cli.GetRecords(context.Background(), zoneID)
+		records, err = cli.GetRecords(context.Background(), domainOk.ID)
 		require.NoError(t, err)
-		assert.Equal(t, 24, len(records))
+		assert.Equal(t, int(domainOk.RecordCount), len(records))
 	})
 
 	t.Run("Client auth.Dummy", func(t *testing.T) {
+		// Using Dummy store to force auth failure and re-authentication before retrial
 		authObj, err := auth.NewAuth(account.User, account.Password, account.OTP, auth.Dummy)
 		require.NoError(t, err)
 
@@ -67,14 +82,17 @@ func TestClientAuth(t *testing.T) {
 
 		assert.Equal(t, account.ID, cli.GetAccount())
 
-		zones, err := cli.GetZones(context.Background())
+		domains, err := cli.GetDomainZones(context.Background())
 		require.NoError(t, err)
 
-		assert.Equal(t, 3, len(zones))
+		assert.Equal(t, int(domainZoneCount), len(domains))
 
-		records, err := cli.GetRecords(context.Background(), 1096291)
-		require.Error(t, err)
-		assert.Nil(t, records)
+		// Retrieving records from a ZoneID not yet delegated to the provider.
+		// Historically, the client returned an error, but now this error is ignored
+		// so devs can setup the records prior to NS delegation.
+		records, err := cli.GetRecords(context.Background(), domainPendingDelegation.ID)
+		require.NoError(t, err)
+		assert.Equal(t, int(domainPendingDelegation.RecordCount), len(records))
 	})
 
 	t.Run("Client auth.Dummy failed", func(t *testing.T) {
@@ -83,7 +101,7 @@ func TestClientAuth(t *testing.T) {
 
 		// Forces regular authentication with totp retrials
 		_, err = NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithDebug())
-		require.ErrorIs(t, err, &status.ErrNoAuth{}) // Current status is not autheticated
+		require.ErrorIs(t, err, &status.ErrNoAuth{}) // Current status is not authenticated
 	})
 
 	t.Run("Client auth.Dummy otp failed", func(t *testing.T) {

@@ -2,7 +2,6 @@ package resources_test
 
 import (
 	"fmt"
-	"strconv"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/test_cfg"
 	"github.com/hashicorp/terraform-plugin-testing/terraform"
@@ -13,12 +12,9 @@ var (
 	_resources     = test_cfg.Config.Resources
 	ProviderConfig = _resources.Account.ProviderConfig("simple")
 	Account        = _resources.Account
-	Zone           = _resources.Zone
+	ArpaZone       = _resources.ArpaZone
+	DomainZone     = _resources.DomainZone
 )
-
-func toString(i uint) string {
-	return strconv.FormatUint(uint64(i), 10)
-}
 
 func getID(rawState map[string]string) string {
 	return fmt.Sprintf("%s-%s", rawState["zone_id"], rawState["id"])

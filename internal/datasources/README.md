@@ -14,13 +14,19 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources
 - [func NewAFSDB() datasource.DataSource](<#func-newafsdb>)
 - [func NewALIAS() datasource.DataSource](<#func-newalias>)
 - [func NewAccount() datasource.DataSource](<#func-newaccount>)
+- [func NewArpaZone() datasource.DataSource](<#func-newarpazone>)
+- [func NewArpaZoneIndex() datasource.DataSource](<#func-newarpazoneindex>)
 - [func NewCAA() datasource.DataSource](<#func-newcaa>)
 - [func NewCNAME() datasource.DataSource](<#func-newcname>)
+- [func NewDomainZone() datasource.DataSource](<#func-newdomainzone>)
+- [func NewDomainZoneIndex() datasource.DataSource](<#func-newdomainzoneindex>)
 - [func NewHINFO() datasource.DataSource](<#func-newhinfo>)
 - [func NewLOC() datasource.DataSource](<#func-newloc>)
 - [func NewMX() datasource.DataSource](<#func-newmx>)
 - [func NewNAPTR() datasource.DataSource](<#func-newnaptr>)
 - [func NewNS() datasource.DataSource](<#func-newns>)
+- [func NewNetworkPrefix() datasource.DataSource](<#func-newnetworkprefix>)
+- [func NewNetworkPrefixIndex() datasource.DataSource](<#func-newnetworkprefixindex>)
 - [func NewPTR() datasource.DataSource](<#func-newptr>)
 - [func NewRP() datasource.DataSource](<#func-newrp>)
 - [func NewRecordIndex() datasource.DataSource](<#func-newrecordindex>)
@@ -59,6 +65,19 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources
   - [func (alias) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-alias-metadata>)
   - [func (d alias) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-alias-read>)
   - [func (alias) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-alias-schema>)
+- [type arpaZone](<#type-arpazone>)
+  - [func (a *arpaZone) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-arpazone-configure>)
+  - [func (arpaZone) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-arpazone-metadata>)
+  - [func (a arpaZone) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-arpazone-read>)
+  - [func (arpaZone) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-arpazone-schema>)
+- [type arpaZoneModel](<#type-arpazonemodel>)
+  - [func (a *arpaZoneModel) setZone(zone models.Zone) error](<#func-arpazonemodel-setzone>)
+- [type arpaZones](<#type-arpazones>)
+  - [func (d *arpaZones) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-arpazones-configure>)
+  - [func (arpaZones) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-arpazones-metadata>)
+  - [func (d arpaZones) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-arpazones-read>)
+  - [func (arpaZones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-arpazones-schema>)
+- [type arpasModel](<#type-arpasmodel>)
 - [type caa](<#type-caa>)
   - [func (d *caa) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-caa-configure>)
   - [func (caa) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-caa-metadata>)
@@ -69,6 +88,19 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources
   - [func (cname) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-cname-metadata>)
   - [func (d cname) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-cname-read>)
   - [func (cname) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-cname-schema>)
+- [type domainZone](<#type-domainzone>)
+  - [func (d *domainZone) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-domainzone-configure>)
+  - [func (domainZone) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-domainzone-metadata>)
+  - [func (d domainZone) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-domainzone-read>)
+  - [func (domainZone) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-domainzone-schema>)
+- [type domainZoneModel](<#type-domainzonemodel>)
+  - [func (d *domainZoneModel) setZone(zone models.Zone) error](<#func-domainzonemodel-setzone>)
+- [type domainZones](<#type-domainzones>)
+  - [func (d *domainZones) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-domainzones-configure>)
+  - [func (domainZones) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-domainzones-metadata>)
+  - [func (d domainZones) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-domainzones-read>)
+  - [func (domainZones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-domainzones-schema>)
+- [type domainsModel](<#type-domainsmodel>)
 - [type hinfo](<#type-hinfo>)
   - [func (d *hinfo) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-hinfo-configure>)
   - [func (hinfo) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-hinfo-metadata>)
@@ -89,6 +121,19 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/datasources
   - [func (naptr) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-naptr-metadata>)
   - [func (d naptr) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-naptr-read>)
   - [func (naptr) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-naptr-schema>)
+- [type networkPrefix](<#type-networkprefix>)
+  - [func (d *networkPrefix) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-networkprefix-configure>)
+  - [func (networkPrefix) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-networkprefix-metadata>)
+  - [func (d networkPrefix) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-networkprefix-read>)
+  - [func (networkPrefix) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-networkprefix-schema>)
+- [type networkPrefixModel](<#type-networkprefixmodel>)
+  - [func (np *networkPrefixModel) setNetworkPrefix(prefix models.NetworkPrefix) error](<#func-networkprefixmodel-setnetworkprefix>)
+- [type networkPrefixes](<#type-networkprefixes>)
+  - [func (d *networkPrefixes) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-networkprefixes-configure>)
+  - [func (networkPrefixes) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-networkprefixes-metadata>)
+  - [func (d networkPrefixes) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)](<#func-networkprefixes-read>)
+  - [func (networkPrefixes) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)](<#func-networkprefixes-schema>)
+- [type networkPrefixesModel](<#type-networkprefixesmodel>)
 - [type ns](<#type-ns>)
   - [func (d *ns) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)](<#func-ns-configure>)
   - [func (ns) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)](<#func-ns-metadata>)
@@ -329,6 +374,60 @@ Ensure the implementation satisfies the expected interfaces.
 
 ```go
 var (
+    _   datasource.DataSource              = &arpaZone{}
+    _   datasource.DataSourceWithConfigure = &arpaZone{}
+)
+```
+
+Ensure the implementation satisfies the expected interfaces.
+
+```go
+var (
+    _   datasource.DataSource              = &arpaZones{}
+    _   datasource.DataSourceWithConfigure = &arpaZones{}
+)
+```
+
+Ensure the implementation satisfies the expected interfaces.
+
+```go
+var (
+    _   datasource.DataSource              = &domainZone{}
+    _   datasource.DataSourceWithConfigure = &domainZone{}
+)
+```
+
+Ensure the implementation satisfies the expected interfaces.
+
+```go
+var (
+    _   datasource.DataSource              = &domainZones{}
+    _   datasource.DataSourceWithConfigure = &domainZones{}
+)
+```
+
+Ensure the implementation satisfies the expected interfaces.
+
+```go
+var (
+    _   datasource.DataSource              = &networkPrefix{}
+    _   datasource.DataSourceWithConfigure = &networkPrefix{}
+)
+```
+
+Ensure the implementation satisfies the expected interfaces.
+
+```go
+var (
+    _   datasource.DataSource              = &networkPrefixes{}
+    _   datasource.DataSourceWithConfigure = &networkPrefixes{}
+)
+```
+
+Ensure the implementation satisfies the expected interfaces.
+
+```go
+var (
     _   datasource.DataSource              = &records{}
     _   datasource.DataSourceWithConfigure = &records{}
 )
@@ -392,6 +491,22 @@ func NewAccount() datasource.DataSource
 
 NewAccount initialises the Account DataSource.
 
+## func [NewArpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zone.go#L24>)
+
+```go
+func NewArpaZone() datasource.DataSource
+```
+
+NewArpaZone initialises the arpa DataSource.
+
+## func [NewArpaZoneIndex](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zones.go#L21>)
+
+```go
+func NewArpaZoneIndex() datasource.DataSource
+```
+
+NewArpaZoneIndex initialises the ArpaIndex DataSource.
+
 ## func [NewCAA](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CAA.go#L22>)
 
 ```go
@@ -407,6 +522,22 @@ func NewCNAME() datasource.DataSource
 ```
 
 NewCNAME initialises the CNAME DataSource.
+
+## func [NewDomainZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zone.go#L24>)
+
+```go
+func NewDomainZone() datasource.DataSource
+```
+
+NewDomainZone initialises the Domain DataSource.
+
+## func [NewDomainZoneIndex](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zones.go#L21>)
+
+```go
+func NewDomainZoneIndex() datasource.DataSource
+```
+
+NewDomainZoneIndex initialises the DomainIndex DataSource.
 
 ## func [NewHINFO](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/HINFO.go#L22>)
 
@@ -447,6 +578,22 @@ func NewNS() datasource.DataSource
 ```
 
 NewNS initialises the NS DataSource.
+
+## func [NewNetworkPrefix](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefix.go#L24>)
+
+```go
+func NewNetworkPrefix() datasource.DataSource
+```
+
+NewNetworkPrefix initialises the NetworkPrefix DataSource.
+
+## func [NewNetworkPrefixIndex](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefixes.go#L21>)
+
+```go
+func NewNetworkPrefixIndex() datasource.DataSource
+```
+
+NewNetworkPrefixIndex initialises the NetworkPrefixIndex DataSource.
 
 ## func [NewPTR](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/PTR.go#L22>)
 
@@ -760,6 +907,118 @@ func (alias) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 
 Schema defines the schema for the data source.
 
+## type [arpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zone.go#L29-L31>)
+
+arpaZone is the data source implementation.
+
+```go
+type arpaZone struct {
+    client *client.Client
+}
+```
+
+### func \(\*arpaZone\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zone.go#L79>)
+
+```go
+func (a *arpaZone) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
+```
+
+Configure adds the provider configured client to the data source.
+
+### func \(arpaZone\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zone.go#L54>)
+
+```go
+func (arpaZone) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)
+```
+
+Metadata returns the data source type name.
+
+### func \(arpaZone\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zone.go#L86>)
+
+```go
+func (a arpaZone) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
+```
+
+Read refreshes the Terraform state with the latest data.
+
+### func \(arpaZone\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zone.go#L59>)
+
+```go
+func (arpaZone) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)
+```
+
+Schema defines the schema for the data source.
+
+## type [arpaZoneModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zone.go#L34-L37>)
+
+arpaZoneModel maps the data source schema data.
+
+```go
+type arpaZoneModel struct {
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Name   types.String `tfsdk:"name"`
+}
+```
+
+### func \(\*arpaZoneModel\) [setZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zone.go#L39>)
+
+```go
+func (a *arpaZoneModel) setZone(zone models.Zone) error
+```
+
+## type [arpaZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zones.go#L26-L28>)
+
+arpaZones is the data source implementation.
+
+```go
+type arpaZones struct {
+    client *client.Client
+}
+```
+
+### func \(\*arpaZones\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zones.go#L76>)
+
+```go
+func (d *arpaZones) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
+```
+
+Configure adds the provider configured client to the data source.
+
+### func \(arpaZones\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zones.go#L37>)
+
+```go
+func (arpaZones) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)
+```
+
+Metadata returns the data source type name.
+
+### func \(arpaZones\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zones.go#L83>)
+
+```go
+func (d arpaZones) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
+```
+
+Read refreshes the Terraform state with the latest data.
+
+### func \(arpaZones\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zones.go#L42>)
+
+```go
+func (arpaZones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)
+```
+
+Schema defines the schema for the data source.
+
+## type [arpasModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/arpa_zones.go#L31-L34>)
+
+arpasModel maps the data source schema data.
+
+```go
+type arpasModel struct {
+    ID        types.String    `tfsdk:"id"`
+    ArpaZones []arpaZoneModel `tfsdk:"arpa_zones"`
+}
+```
+
 ## type [caa](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/CAA.go#L27-L29>)
 
 caa is the data source implementation.
@@ -843,6 +1102,118 @@ func (cname) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 ```
 
 Schema defines the schema for the data source.
+
+## type [domainZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zone.go#L29-L31>)
+
+domainZone is the data source implementation.
+
+```go
+type domainZone struct {
+    client *client.Client
+}
+```
+
+### func \(\*domainZone\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zone.go#L79>)
+
+```go
+func (d *domainZone) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
+```
+
+Configure adds the provider configured client to the data source.
+
+### func \(domainZone\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zone.go#L54>)
+
+```go
+func (domainZone) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)
+```
+
+Metadata returns the data source type name.
+
+### func \(domainZone\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zone.go#L86>)
+
+```go
+func (d domainZone) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
+```
+
+Read refreshes the Terraform state with the latest data.
+
+### func \(domainZone\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zone.go#L59>)
+
+```go
+func (domainZone) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)
+```
+
+Schema defines the schema for the data source.
+
+## type [domainZoneModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zone.go#L34-L37>)
+
+domainZoneModel maps the data source schema data.
+
+```go
+type domainZoneModel struct {
+    ZoneID types.Int64  `tfsdk:"zone_id"`
+    Name   types.String `tfsdk:"name"`
+}
+```
+
+### func \(\*domainZoneModel\) [setZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zone.go#L39>)
+
+```go
+func (d *domainZoneModel) setZone(zone models.Zone) error
+```
+
+## type [domainZones](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zones.go#L26-L28>)
+
+domainZones is the data source implementation.
+
+```go
+type domainZones struct {
+    client *client.Client
+}
+```
+
+### func \(\*domainZones\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zones.go#L76>)
+
+```go
+func (d *domainZones) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
+```
+
+Configure adds the provider configured client to the data source.
+
+### func \(domainZones\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zones.go#L37>)
+
+```go
+func (domainZones) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)
+```
+
+Metadata returns the data source type name.
+
+### func \(domainZones\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zones.go#L83>)
+
+```go
+func (d domainZones) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
+```
+
+Read refreshes the Terraform state with the latest data.
+
+### func \(domainZones\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zones.go#L42>)
+
+```go
+func (domainZones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)
+```
+
+Schema defines the schema for the data source.
+
+## type [domainsModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/domain_zones.go#L31-L34>)
+
+domainsModel maps the data source schema data.
+
+```go
+type domainsModel struct {
+    ID          types.String      `tfsdk:"id"`
+    DomainZones []domainZoneModel `tfsdk:"domain_zones"`
+}
+```
 
 ## type [hinfo](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/HINFO.go#L27-L29>)
 
@@ -1011,6 +1382,119 @@ func (naptr) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasou
 ```
 
 Schema defines the schema for the data source.
+
+## type [networkPrefix](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefix.go#L29-L31>)
+
+networkPrefix is the data source implementation.
+
+```go
+type networkPrefix struct {
+    client *client.Client
+}
+```
+
+### func \(\*networkPrefix\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefix.go#L87>)
+
+```go
+func (d *networkPrefix) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
+```
+
+Configure adds the provider configured client to the data source.
+
+### func \(networkPrefix\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefix.go#L57>)
+
+```go
+func (networkPrefix) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)
+```
+
+Metadata returns the data source type name.
+
+### func \(networkPrefix\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefix.go#L94>)
+
+```go
+func (d networkPrefix) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
+```
+
+Read refreshes the Terraform state with the latest data.
+
+### func \(networkPrefix\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefix.go#L62>)
+
+```go
+func (networkPrefix) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)
+```
+
+Schema defines the schema for the data source.
+
+## type [networkPrefixModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefix.go#L34-L38>)
+
+networkPrefixModel maps the data source schema data.
+
+```go
+type networkPrefixModel struct {
+    ID      types.Int64  `tfsdk:"id"`
+    Value   types.String `tfsdk:"value"`
+    Enabled types.Bool   `tfsdk:"enabled"`
+}
+```
+
+### func \(\*networkPrefixModel\) [setNetworkPrefix](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefix.go#L40>)
+
+```go
+func (np *networkPrefixModel) setNetworkPrefix(prefix models.NetworkPrefix) error
+```
+
+## type [networkPrefixes](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefixes.go#L26-L28>)
+
+networkPrefixes is the data source implementation.
+
+```go
+type networkPrefixes struct {
+    client *client.Client
+}
+```
+
+### func \(\*networkPrefixes\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefixes.go#L81>)
+
+```go
+func (d *networkPrefixes) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
+```
+
+Configure adds the provider configured client to the data source.
+
+### func \(networkPrefixes\) [Metadata](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefixes.go#L37>)
+
+```go
+func (networkPrefixes) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse)
+```
+
+Metadata returns the data source type name.
+
+### func \(networkPrefixes\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefixes.go#L88>)
+
+```go
+func (d networkPrefixes) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
+```
+
+Read refreshes the Terraform state with the latest data.
+
+### func \(networkPrefixes\) [Schema](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefixes.go#L42>)
+
+```go
+func (networkPrefixes) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse)
+```
+
+Schema defines the schema for the data source.
+
+## type [networkPrefixesModel](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/network_prefixes.go#L31-L34>)
+
+networkPrefixesModel maps the data source schema data.
+
+```go
+type networkPrefixesModel struct {
+    ID              types.String         `tfsdk:"id"`
+    NetworkPrefixes []networkPrefixModel `tfsdk:"network_prefixes"`
+}
+```
 
 ## type [ns](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/NS.go#L27-L29>)
 
@@ -1433,7 +1917,7 @@ type zone struct {
 }
 ```
 
-### func \(\*zone\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L79>)
+### func \(\*zone\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L80>)
 
 ```go
 func (d *zone) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1449,7 +1933,7 @@ func (zone) Metadata(_ context.Context, req datasource.MetadataRequest, resp *da
 
 Metadata returns the data source type name.
 
-### func \(zone\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L86>)
+### func \(zone\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zone.go#L87>)
 
 ```go
 func (d zone) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)
@@ -1492,7 +1976,7 @@ type zones struct {
 }
 ```
 
-### func \(\*zones\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zones.go#L76>)
+### func \(\*zones\) [Configure](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zones.go#L77>)
 
 ```go
 func (d *zones) Configure(ctx context.Context, req datasource.ConfigureRequest, resp *datasource.ConfigureResponse)
@@ -1508,7 +1992,7 @@ func (zones) Metadata(_ context.Context, req datasource.MetadataRequest, resp *d
 
 Metadata returns the data source type name.
 
-### func \(zones\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zones.go#L83>)
+### func \(zones\) [Read](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/datasources/blob/master/internal/datasources/zones.go#L84>)
 
 ```go
 func (d zones) Read(ctx context.Context, req datasource.ReadRequest, resp *datasource.ReadResponse)

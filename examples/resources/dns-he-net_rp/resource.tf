@@ -5,4 +5,3 @@ resource "dns-he-net_rp" "example" {
   ttl     = 86400
   data    = "bofher.example.com bofher.example.com"
 }
-

@@ -11,7 +11,7 @@ import (
 func TestAccSPFRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -26,10 +26,10 @@ func TestAccSPFRecord(t *testing.T) {
 					domain = %q
 					ttl = 300
 					data = "\"v=spf1 -all\""
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "data", `"v=spf1 -all"`),
@@ -50,10 +50,10 @@ func TestAccSPFRecord(t *testing.T) {
 					domain = %q
 					ttl = 600
 					data = "\"v=spf1 a:example.com ~all\""
-			}`, Zone.ID, domainUpdate),
+			}`, DomainZone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_spf.record-spf", "data", `"v=spf1 a:example.com ~all"`),

@@ -11,7 +11,7 @@ import (
 func TestAccAFSDBRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -27,13 +27,13 @@ func TestAccAFSDBRecord(t *testing.T) {
 					domain = %q
 					ttl = 300
 					data = "1 %s"
-				}`, Zone.ID, domainInit, Zone.Sub("green")),
+				}`, DomainZone.ID, domainInit, DomainZone.Sub("green")),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "ttl", "300"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", fmt.Sprintf("1 green.%s", Zone.Name)),
+					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", fmt.Sprintf("1 green.%s", DomainZone.Name)),
 				),
 			},
 			// ImportState testing
@@ -53,13 +53,13 @@ func TestAccAFSDBRecord(t *testing.T) {
 					domain = %q
 					ttl = 600
 					data = "2 %s"
-				}`, Zone.ID, domainUpdate, Zone.Sub("blue")),
+				}`, DomainZone.ID, domainUpdate, DomainZone.Sub("blue")),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "ttl", "600"),
-					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", fmt.Sprintf("2 blue.%s", Zone.Name)),
+					resource.TestCheckResourceAttr("dns-he-net_afsdb.record-afsdb", "data", fmt.Sprintf("2 blue.%s", DomainZone.Name)),
 				),
 			},
 			// Delete testing automatically occurs in TestCase

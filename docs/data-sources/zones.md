@@ -4,11 +4,14 @@ page_title: "dns-he-net_zones Data Source - dns-he-net"
 subcategory: ""
 description: |-
   DNS zones in account
+  Deprecation Notice: This data source is deprecated and will be removed in v0.2.0. Please use dns-he-net_domain_zones or dns-he-net_arpa_zones instead.
 ---
 
 # dns-he-net_zones (Data Source)
 
 DNS zones in account
+
+**Deprecation Notice:** This data source is deprecated and will be removed in v0.2.0. Please use `dns-he-net_domain_zones` or `dns-he-net_arpa_zones` instead.
 
 ## Example Usage
 

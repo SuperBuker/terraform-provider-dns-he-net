@@ -9,6 +9,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/resources"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/test_utils"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/rs/zerolog"
@@ -19,14 +20,14 @@ import (
 func TestAccTXTRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
-	data := `"` + randStringBytesMaskImprSrcSB(600) + `"`
-	data2 := `"` + randStringBytesMaskImprSrcSB(100) + `"` // The API doesn't support large TXT records
+	data := `"` + resources.RandStringBytesMaskImprSrcSB(600) + `"`
+	data2 := `"` + resources.RandStringBytesMaskImprSrcSB(100) + `"` // The API doesn't support large TXT records
 
-	password := randStringBytesMaskImprSrcSB(16)
+	password := resources.RandStringBytesMaskImprSrcSB(16)
 
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
@@ -39,7 +40,7 @@ func TestAccTXTRecord(t *testing.T) {
 					zone_id = %d
 					domain = %q
 					ttl = 300
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				ExpectError: regexp.MustCompile("Invalid TXT record configuration"),
 			},
 			// Create and Read testing
@@ -51,10 +52,10 @@ func TestAccTXTRecord(t *testing.T) {
 					domain = %q
 					ttl = 300
 					dynamic = true
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "data", `""`),
@@ -78,10 +79,10 @@ func TestAccTXTRecord(t *testing.T) {
 					domain = %q
 					ttl = 600
 					data = %q
-				}`, Zone.ID, domainUpdate, data),
+				}`, DomainZone.ID, domainUpdate, data),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "data", data),
@@ -103,10 +104,10 @@ func TestAccTXTRecord(t *testing.T) {
 					zone_id = %d
 					domain = %q
 					key = %q
-				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
+				}`, DomainZone.ID, domainUpdate, DomainZone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "data", data),
@@ -142,10 +143,10 @@ func TestAccTXTRecord(t *testing.T) {
 					zone_id = %d
 					domain = %q
 					key = %q
-				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
+				}`, DomainZone.ID, domainUpdate, DomainZone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "data", data2),
@@ -168,10 +169,10 @@ func TestAccTXTRecord(t *testing.T) {
 					zone_id = %d
 					domain = %q
 					key = %q
-				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
+				}`, DomainZone.ID, domainUpdate, DomainZone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_txt.record-txt", "data", `"some data"`),

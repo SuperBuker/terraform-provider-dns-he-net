@@ -14,7 +14,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/status"
 - [func errorScore(err error) int](<#func-errorscore>)
 - [func filterIssues(issues []string) ([]string, []error)](<#func-filterissues>)
 - [func fromAuthStatus(status auth.Status) (err error)](<#func-fromauthstatus>)
-- [func fromIssue(issues []string) (errs []error)](<#func-fromissue>)
+- [func fromIssues(issues []string) (errs []error)](<#func-fromissues>)
 - [type ErrAuthFailed](<#type-errauthfailed>)
   - [func (e *ErrAuthFailed) Error() string](<#func-errauthfailed-error>)
   - [func (e *ErrAuthFailed) Unwrap() []error](<#func-errauthfailed-unwrap>)
@@ -88,13 +88,13 @@ func fromAuthStatus(status auth.Status) (err error)
 
 fromAuthStatus returns an error associated to the auth status.
 
-## func [fromIssue](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L59>)
+## func [fromIssues](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/parsers.go#L59>)
 
 ```go
-func fromIssue(issues []string) (errs []error)
+func fromIssues(issues []string) (errs []error)
 ```
 
-fromIssue parses the errors in the response and returns them as &ErrHeNet\{\}.
+fromIssues parses the errors in the response and returns them as \*ErrHeNet\{\}.
 
 ## type [ErrAuthFailed](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/status/blob/master/client/status/errors.go#L35-L37>)
 

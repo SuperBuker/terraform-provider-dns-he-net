@@ -23,7 +23,7 @@ func Check(doc *html.Node) (string, []string, error) {
 
 	// Parse to error
 	err := fromAuthStatus(authStatus)
-	errs := fromIssue(issues)
+	errs := fromIssues(issues)
 
 	// Append to error slice
 	if err != nil {

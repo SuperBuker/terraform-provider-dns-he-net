@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCNAME(t *testing.T) {
-	record, ok := Records["CNAME"]
+	record, ok := DomainZoneRecords["CNAME"]
 	if !ok {
 		t.Skip("CNAME record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccCNAME(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_cname" "record-cname" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "domain", Zone.Sub("example-cname")),
-					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "data", "example.com"),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_cname.record-cname", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccCNAME(t *testing.T) {
 }
 
 func TestAccCNAMEMissingZone(t *testing.T) {
-	record, ok := Records["CNAME"]
+	record, ok := DomainZoneRecords["CNAME"]
 	if !ok {
 		t.Skip("CNAME record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccCNAMEMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_cname" "record-cname" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find CNAME record"),
 			},
 		},

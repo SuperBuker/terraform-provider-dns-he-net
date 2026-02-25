@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccTXT(t *testing.T) {
-	record, ok := Records["TXT"]
+	record, ok := DomainZoneRecords["TXT"]
 	if !ok {
 		t.Skip("TXT record missing in config")
 	}
@@ -23,20 +23,21 @@ func TestAccTXT(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: ProviderConfig + `data "dns-he-net_txt" "record-txt" {
-					id = 5195711991
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_txt" "record-txt" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "domain", Zone.Sub("bofher")),
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "data", `"Just for the record"`),
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "dynamic", "true"),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "data", record.Data),
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "dynamic", fmt.Sprint(record.Dynamic)),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_txt.record-txt", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +45,7 @@ func TestAccTXT(t *testing.T) {
 }
 
 func TestAccTXTMissingZone(t *testing.T) {
-	record, ok := Records["TXT"]
+	record, ok := DomainZoneRecords["TXT"]
 	if !ok {
 		t.Skip("TXT record missing in config")
 	}
@@ -79,7 +80,7 @@ func TestAccTXTMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_txt" "record-txt" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find TXT record"),
 			},
 		},

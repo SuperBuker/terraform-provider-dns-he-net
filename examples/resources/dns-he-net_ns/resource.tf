@@ -5,4 +5,3 @@ resource "dns-he-net_ns" "example" {
   ttl     = 172800
   data    = "ns2.he.net"
 }
-

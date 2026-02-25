@@ -11,7 +11,7 @@ import (
 func TestAccMXRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -27,10 +27,10 @@ func TestAccMXRecord(t *testing.T) {
 					ttl = 300
 					priority = 10
 					data = "mx.example.com"
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "data", "mx.example.com"),
@@ -52,10 +52,10 @@ func TestAccMXRecord(t *testing.T) {
 					ttl = 600
 					priority = 20
 					data = "mx.example.io"
-			}`, Zone.ID, domainUpdate),
+			}`, DomainZone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_mx.record-mx", "data", "mx.example.io"),

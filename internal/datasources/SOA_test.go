@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccSOA(t *testing.T) {
-	record, ok := Records["SOA"]
+	record, ok := DomainZoneRecords["SOA"]
 	if !ok {
 		t.Skip("SOA record missing in config")
 	}
@@ -27,21 +27,21 @@ func TestAccSOA(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_soa" "record-soa" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "domain", Zone.Name),
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "ttl", "172800"),
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "mname", "ns1.he.net."),
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "rname", "hostmaster.he.net."),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "mname", record.ExtraArgs["mname"]),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "rname", record.ExtraArgs["rname"]),
 					//resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "serial", ""), # Updated constantly
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "refresh", "86400"),
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "retry", "7200"),
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "expire", "3600000"),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "refresh", record.ExtraArgs["refresh"]),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "retry", record.ExtraArgs["retry"]),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "expire", record.ExtraArgs["expire"]),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_soa.record-soa", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -49,7 +49,7 @@ func TestAccSOA(t *testing.T) {
 }
 
 func TestAccSOAMissingZone(t *testing.T) {
-	record, ok := Records["SOA"]
+	record, ok := DomainZoneRecords["SOA"]
 	if !ok {
 		t.Skip("SOA record missing in config")
 	}
@@ -84,7 +84,7 @@ func TestAccSOAMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_soa" "record-soa" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find SOA record"),
 			},
 		},

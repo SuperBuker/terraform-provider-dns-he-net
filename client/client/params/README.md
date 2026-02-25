@@ -9,6 +9,8 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client/params
 ## Index
 
 - [func DDNSKeySet(m map[string]string) map[string]string](<#func-ddnskeyset>)
+- [func DomainCreate(m map[string]string) map[string]string](<#func-domaincreate>)
+- [func DomainDelete(m map[string]string) map[string]string](<#func-domaindelete>)
 - [func RecordCreate(m map[string]string) map[string]string](<#func-recordcreate>)
 - [func RecordDelete(m map[string]string) map[string]string](<#func-recorddelete>)
 - [func RecordUpdate(m map[string]string) map[string]string](<#func-recordupdate>)
@@ -24,6 +26,22 @@ func DDNSKeySet(m map[string]string) map[string]string
 ```
 
 DDNSKeySet returnes the parameters necessary to set the ddns key.
+
+## func [DomainCreate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/domain.go#L4>)
+
+```go
+func DomainCreate(m map[string]string) map[string]string
+```
+
+DomainCreate returns the parameters necessary to create a domain.
+
+## func [DomainDelete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/domain.go#L13>)
+
+```go
+func DomainDelete(m map[string]string) map[string]string
+```
+
+DomainDelete returns the parameters necessary to delete a domain.
 
 ## func [RecordCreate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/records.go#L12>)
 
@@ -55,7 +73,7 @@ RecordUpdate returnes the parameters necessary to update a record.
 func ZoneCreate(m map[string]string) map[string]string
 ```
 
-ZoneCreate returnes the parameters necessary to create a zone.
+ZoneCreate returns the parameters necessary to create a zone.
 
 ## func [ZoneDelete](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/zones.go#L13>)
 
@@ -63,7 +81,7 @@ ZoneCreate returnes the parameters necessary to create a zone.
 func ZoneDelete(m map[string]string) map[string]string
 ```
 
-ZoneDelete returnes the parameters necessary to delete a zone.
+ZoneDelete returns the parameters necessary to delete a zone.
 
 ## func [recordGeneric](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/params/blob/master/client/client/params/records.go#L4>)
 

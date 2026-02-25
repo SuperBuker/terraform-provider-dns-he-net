@@ -11,7 +11,7 @@ import (
 func TestAccLOCRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -26,10 +26,10 @@ func TestAccLOCRecord(t *testing.T) {
 					domain = %q
 					ttl = 300
 					data = "40 27 53.86104 N 3 39 2.59092 W 712.8m 0.00m 0.00m 0.00m"
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "data", "40 27 53.86104 N 3 39 2.59092 W 712.8m 0.00m 0.00m 0.00m"),
@@ -50,10 +50,10 @@ func TestAccLOCRecord(t *testing.T) {
 					domain = %q
 					ttl = 600
 					data = "40 27 53.86104 N 3 39 2.59092 W 712.8m 0.00m 0.00m 0.00m"
-			}`, Zone.ID, domainUpdate),
+			}`, DomainZone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_loc.record-loc", "data", "40 27 53.86104 N 3 39 2.59092 W 712.8m 0.00m 0.00m 0.00m"),

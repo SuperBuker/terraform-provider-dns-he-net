@@ -55,8 +55,8 @@ func filterIssues(issues []string) ([]string, []error) {
 	return issues, errs
 }
 
-// fromIssue parses the errors in the response and returns them as &ErrHeNet{}.
-func fromIssue(issues []string) (errs []error) {
+// fromIssues parses the errors in the response and returns them as *ErrHeNet{}.
+func fromIssues(issues []string) (errs []error) {
 	issues, errs = filterIssues(issues) // In-place filter + catalog
 
 	for _, issue := range issues {
