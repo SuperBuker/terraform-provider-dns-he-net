@@ -16,7 +16,7 @@ var domainZones = []models.Zone{
 	{ID: 1234567, Name: "example.com"},
 }
 
-func TestDomainZZones(t *testing.T) {
+func TestDomainZones(t *testing.T) {
 	t.Run("ok", func(t *testing.T) {
 		data, err := os.ReadFile("../testing_data/html/main.html")
 		require.NoError(t, err)
