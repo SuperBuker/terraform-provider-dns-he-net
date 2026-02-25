@@ -28,9 +28,6 @@ func TestAccArpaZone(t *testing.T) {
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_arpa_zone.example", "zone_id", fmt.Sprint(ArpaZone.ID)),
-
-					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_arpa_zone.example", "zone_id", fmt.Sprint(ArpaZone.ID)),
 				),
 			},
 		},
