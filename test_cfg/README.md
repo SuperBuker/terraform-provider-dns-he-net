@@ -41,7 +41,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/test_cfg"
 ## Variables
 
 ```go
-var arpaRegexp = regexp.MustCompile(`^(?:(?:[0-9a-f]\.){4}){1,8}ip6\.arpa$`)
+var arpaRegexp = regexp.MustCompile(`^(?:[0-9a-f]\.){1,32}ip6\.arpa$`)
 ```
 
 ## func [ReverseString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/test_utils/blob/master/test_cfg/test_cfg_utils.go#L63>)

@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-var arpaRegexp = regexp.MustCompile(`^(?:(?:[0-9a-f]\.){4}){1,8}ip6\.arpa$`)
+var arpaRegexp = regexp.MustCompile(`^(?:[0-9a-f]\.){1,32}ip6\.arpa$`)
 
 type uniqueRand struct {
 	bound     uint

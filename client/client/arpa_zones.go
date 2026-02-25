@@ -18,10 +18,10 @@ func (c *Client) GetArpaZones(ctx context.Context) ([]models.Zone, error) {
 		return nil, err
 	}
 
-	arpa_zones, ok := resp.Result().([]models.Zone)
+	arpaZones, ok := resp.Result().([]models.Zone)
 	if !ok {
 		return nil, utils.NewErrCasting([]models.Zone{}, resp.Result())
 	}
 
-	return arpa_zones, nil
+	return arpaZones, nil
 }
