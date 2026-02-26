@@ -1,7 +1,6 @@
 package resources_test
 
 import (
-	"context"
 	"fmt"
 	"testing"
 
@@ -53,7 +52,7 @@ func TestAccDDNSKey(t *testing.T) {
 					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 
-					cli, err := client.NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+					cli, err := client.NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
 					assert.Equal(t, Account.ID, cli.GetAccount())
@@ -67,7 +66,7 @@ func TestAccDDNSKey(t *testing.T) {
 						Key:    anotherPassword,
 					}
 
-					_, err = cli.SetDDNSKey(context.Background(), ddnsKey)
+					_, err = cli.SetDDNSKey(t.Context(), ddnsKey)
 					require.NoError(t, err)
 				},
 				Config: ProviderConfig +

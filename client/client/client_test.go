@@ -1,7 +1,6 @@
 package client
 
 import (
-	"context"
 	"fmt"
 	"strings"
 	"testing"
@@ -28,7 +27,7 @@ func TestClientAuth(t *testing.T) {
 		authObj, err := auth.NewAuth(account.User, account.Password, account.OTP, auth.Simple)
 		require.NoError(t, err)
 
-		cli, err := NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+		cli, err := NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 		require.NoError(t, err)
 
 		assert.Equal(t, account.ID, cli.GetAccount())
@@ -43,27 +42,27 @@ func TestClientAuth(t *testing.T) {
 		// Force auth failure and re-authentication before retrial
 		assert.Equal(t, account.ID, cli.GetAccount())
 
-		domainZones, err := cli.GetDomainZones(context.Background())
+		domainZones, err := cli.GetDomainZones(t.Context())
 		require.NoError(t, err)
 
 		assert.Equal(t, int(domainZoneCount), len(domainZones))
 
-		ArpaZones, err := cli.GetArpaZones(context.Background())
+		ArpaZones, err := cli.GetArpaZones(t.Context())
 		require.NoError(t, err)
 
 		assert.Equal(t, int(arpaZonesCount), len(ArpaZones))
 
-		allZones, err := cli.GetAllZones(context.Background())
+		allZones, err := cli.GetAllZones(t.Context())
 		require.NoError(t, err)
 
 		assert.Equal(t, int(domainZoneCount+arpaZonesCount), len(allZones))
 
 		// Not onboarded record
-		records, err := cli.GetRecords(context.Background(), 0)
+		records, err := cli.GetRecords(t.Context(), 0)
 		require.Error(t, err)
 		assert.Nil(t, records)
 
-		records, err = cli.GetRecords(context.Background(), domainOk.ID)
+		records, err = cli.GetRecords(t.Context(), domainZoneOk.ID)
 		require.NoError(t, err)
 		assert.Equal(t, int(domainOk.RecordCount), len(records))
 	})
@@ -74,7 +73,7 @@ func TestClientAuth(t *testing.T) {
 		require.NoError(t, err)
 
 		// Forces regular authentication with totp retrials
-		cli, err := NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithUserAgent("user-agent test"))
+		cli, err := NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithUserAgent("user-agent test"))
 		require.NoError(t, err)
 		fmt.Println(err)
 
@@ -82,7 +81,7 @@ func TestClientAuth(t *testing.T) {
 
 		assert.Equal(t, account.ID, cli.GetAccount())
 
-		domains, err := cli.GetDomainZones(context.Background())
+		allZones, err := cli.GetAllZones(t.Context())
 		require.NoError(t, err)
 
 		assert.Equal(t, int(domainZoneCount), len(domains))
@@ -90,7 +89,7 @@ func TestClientAuth(t *testing.T) {
 		// Retrieving records from a ZoneID not yet delegated to the provider.
 		// Historically, the client returned an error, but now this error is ignored
 		// so devs can setup the records prior to NS delegation.
-		records, err := cli.GetRecords(context.Background(), domainPendingDelegation.ID)
+		records, err := cli.GetRecords(t.Context(), domainZonePendingDelegation.ID)
 		require.NoError(t, err)
 		assert.Equal(t, int(domainPendingDelegation.RecordCount), len(records))
 	})
@@ -100,7 +99,7 @@ func TestClientAuth(t *testing.T) {
 		require.NoError(t, err)
 
 		// Forces regular authentication with totp retrials
-		_, err = NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithDebug())
+		_, err = NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), WithDebug())
 		require.ErrorIs(t, err, &status.ErrNoAuth{}) // Current status is not authenticated
 	})
 
@@ -109,7 +108,7 @@ func TestClientAuth(t *testing.T) {
 		require.NoError(t, err)
 
 		// Forces regular authentication with totp retrials
-		_, err = NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+		_, err = NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 		require.ErrorIs(t, err, &status.ErrMissingOTPAuth{})
 	})
 }

@@ -1,7 +1,6 @@
 package planmodifiers_test
 
 import (
-	"context"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/planmodifiers"
@@ -89,7 +88,7 @@ func TestUseStateForUnknownModifierPlanModifyString(t *testing.T) {
 			}
 
 			planmodifiers.UseStateOrDftForUnknown(defaultValue).
-				PlanModifyString(context.Background(), testCase.request, resp)
+				PlanModifyString(t.Context(), testCase.request, resp)
 
 			if diff := cmp.Diff(testCase.expected, resp); diff != "" {
 				t.Errorf("unexpected difference: %s", diff)

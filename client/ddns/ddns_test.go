@@ -1,7 +1,6 @@
 package ddns
 
 import (
-	"context"
 	"fmt"
 	"testing"
 
@@ -13,21 +12,21 @@ func TestDDNS(t *testing.T) {
 	domains := generateSubDomains("hostname-%04d.example.com", 10000, 3)
 
 	t.Run("CheckAuth", func(t *testing.T) {
-		ok, err := CheckAuth(context.Background(), domains[0], "password")
+		ok, err := CheckAuth(t.Context(), domains[0], "password")
 
 		require.NoError(t, err)
 		assert.False(t, ok)
 	})
 
 	t.Run("UpdateIP", func(t *testing.T) {
-		ok, err := UpdateIP(context.Background(), domains[1], "password", "0.0.0.0")
+		ok, err := UpdateIP(t.Context(), domains[1], "password", "0.0.0.0")
 
 		require.ErrorIs(t, err, &ErrAuthFailed{})
 		assert.False(t, ok)
 	})
 
 	t.Run("UpdateTXT", func(t *testing.T) {
-		ok, err := UpdateTXT(context.Background(), domains[2], "password", "some text")
+		ok, err := UpdateTXT(t.Context(), domains[2], "password", "some text")
 
 		require.ErrorIs(t, err, &ErrAuthFailed{})
 		assert.False(t, ok)

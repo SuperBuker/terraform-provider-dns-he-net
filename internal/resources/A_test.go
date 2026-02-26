@@ -1,7 +1,6 @@
 package resources_test
 
 import (
-	"context"
 	"fmt"
 	"regexp"
 	"testing"
@@ -119,12 +118,12 @@ func TestAccARecord(t *testing.T) {
 					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 
-					cli, err := client.NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+					cli, err := client.NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
 					assert.Equal(t, Account.ID, cli.GetAccount())
 
-					ok, err := cli.DDNS().UpdateIP(context.Background(), domainUpdate, password, "10.2.3.4")
+					ok, err := cli.DDNS().UpdateIP(t.Context(), domainUpdate, password, "10.2.3.4")
 					require.NoError(t, err)
 					assert.True(t, ok)
 				},
