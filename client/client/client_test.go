@@ -18,10 +18,11 @@ func TestClientAuth(t *testing.T) {
 	_datasources := test_cfg.Config.DataSources
 	account := _datasources.Account
 	arpaZonesCount := _datasources.ArpaZonesCount
-	//ArpaZoneOk := _datasources.ArpaZones.Ok
+	//arpaZoneOk := _datasources.ArpaZones.Ok
 	domainZoneCount := _datasources.DomainZonesCount
-	domainOk := _datasources.DomainZones.Ok
-	domainPendingDelegation := _datasources.DomainZones.PendingDelegation
+	domainZoneOk := _datasources.DomainZones.Ok
+	domainZonePendingDelegation := _datasources.DomainZones.PendingDelegation
+	networkPrefixesCount := _datasources.NetworkPrefixesCount
 
 	t.Run("Client auth.Simple", func(t *testing.T) {
 		authObj, err := auth.NewAuth(account.User, account.Password, account.OTP, auth.Simple)
@@ -57,6 +58,11 @@ func TestClientAuth(t *testing.T) {
 
 		assert.Equal(t, int(domainZoneCount+arpaZonesCount), len(allZones))
 
+		networkPrefixes, err := cli.GetNetworkPrefixes(t.Context())
+		require.NoError(t, err)
+
+		assert.Equal(t, int(networkPrefixesCount), len(networkPrefixes))
+
 		// Not onboarded record
 		records, err := cli.GetRecords(t.Context(), 0)
 		require.Error(t, err)
@@ -64,7 +70,7 @@ func TestClientAuth(t *testing.T) {
 
 		records, err = cli.GetRecords(t.Context(), domainZoneOk.ID)
 		require.NoError(t, err)
-		assert.Equal(t, int(domainOk.RecordCount), len(records))
+		assert.Equal(t, int(domainZoneOk.RecordCount), len(records))
 	})
 
 	t.Run("Client auth.Dummy", func(t *testing.T) {
@@ -84,14 +90,14 @@ func TestClientAuth(t *testing.T) {
 		allZones, err := cli.GetAllZones(t.Context())
 		require.NoError(t, err)
 
-		assert.Equal(t, int(domainZoneCount), len(domains))
+		assert.Equal(t, int(domainZoneCount+arpaZonesCount), len(allZones))
 
 		// Retrieving records from a ZoneID not yet delegated to the provider.
 		// Historically, the client returned an error, but now this error is ignored
 		// so devs can setup the records prior to NS delegation.
 		records, err := cli.GetRecords(t.Context(), domainZonePendingDelegation.ID)
 		require.NoError(t, err)
-		assert.Equal(t, int(domainPendingDelegation.RecordCount), len(records))
+		assert.Equal(t, int(domainZonePendingDelegation.RecordCount), len(records))
 	})
 
 	t.Run("Client auth.Dummy failed", func(t *testing.T) {
