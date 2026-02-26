@@ -7,6 +7,8 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
+var UseStateOrDftForUnknownDescription = "Once set, the value of this attribute in state will not change."
+
 // UseStateOrDftForUnknown returns a plan modifier that copies a known prior state
 // value into the planned value, or a default value if not known prior state exists.
 // Use this when it is known that an unconfigured value will remain the same after
@@ -29,12 +31,12 @@ type useStateOrDftForUnknownModifier struct {
 
 // Description returns a human-readable description of the plan modifier.
 func (useStateOrDftForUnknownModifier) Description(context.Context) string {
-	return "Once set, the value of this attribute in state will not change."
+	return UseStateOrDftForUnknownDescription
 }
 
 // MarkdownDescription returns a markdown description of the plan modifier.
 func (useStateOrDftForUnknownModifier) MarkdownDescription(context.Context) string {
-	return "Once set, the value of this attribute in state will not change."
+	return UseStateOrDftForUnknownDescription
 }
 
 // PlanModifyString implements the plan modification logic.
