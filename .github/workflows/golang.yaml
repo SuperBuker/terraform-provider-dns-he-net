@@ -101,10 +101,14 @@ jobs:
           timeout_minutes: 10
 
       - name: Upload Go test results
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: Go-results-${{ matrix.go-version }}-${{ matrix.terraform-version }}
           path: TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json
 
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: true
+          token: ${{ secrets.CODECOV_TOKEN }}
+          verbose: true
