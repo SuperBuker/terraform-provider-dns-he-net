@@ -28,7 +28,10 @@ func TestClientOptions(t *testing.T) {
 	)
 
 	// Here we just want to test that the options don't break the client creation
-	cli, err := client.NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), options...)
+	svcCli, err := client.NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false), options...)
 	require.NoError(t, err)
-	assert.NotNil(t, cli)
+	assert.NotNil(t, svcCli)
+
+	// Force generate derivate DDNS client
+	svcCli.DDNS()
 }

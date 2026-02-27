@@ -78,34 +78,45 @@ func getUint16(i uint16) *uint16 {
 
 func TestRecord(t *testing.T) {
 	for i, record_in := range records_in {
-		record_out, err := record_in.ToX()
-		require.NoError(t, err, record_in.RecordType)
-		assert.Equal(t, records_out[i], record_out, record_in.RecordType)
+		// Validate Record
+		t.Run(fmt.Sprintf("Validate Record %s", record_in.RecordType), func(t *testing.T) {
+			id, ok := record_in.GetID()
+			assert.False(t, ok, record_in.RecordType)
+			assert.Equal(t, uint(0), id, record_in.RecordType)
 
-		id, ok := record_out.GetID()
-		assert.False(t, ok, record_in.RecordType)
-		assert.Equal(t, uint(0), id, record_in.RecordType)
+			assert.Equal(t, record_in.ZoneID, record_in.GetZoneID(), record_in.RecordType)
+			assert.Equal(t, record_in.RecordType, record_in.Type(), record_in.RecordType)
+		})
 
-		assert.Equal(t, record_in.ZoneID, record_out.GetZoneID(), record_in.RecordType)
+		t.Run(fmt.Sprintf("Validate RecordX %s", record_in.RecordType), func(t *testing.T) {
+			// Validate Recordx interface
+			record_out, err := record_in.ToX()
+			require.NoError(t, err, record_in.RecordType)
+			assert.Equal(t, records_out[i], record_out, record_in.RecordType)
 
-		assert.Equal(t, record_in.RecordType, record_out.Type(), record_in.RecordType)
+			id, ok := record_out.GetID()
+			assert.False(t, ok, record_in.RecordType)
+			assert.Equal(t, uint(0), id, record_in.RecordType)
 
-		assert.Equal(t, map[string]string{
-			"hosted_dns_zoneid":   fmt.Sprint(record_in.ZoneID),
-			"hosted_dns_recordid": "",
-		}, record_out.Refs(), record_in.RecordType)
+			assert.Equal(t, record_in.ZoneID, record_out.GetZoneID(), record_in.RecordType)
 
-		assert.Equal(t, record_out.Refs(), record_in.Refs(), record_in.RecordType)
+			assert.Equal(t, record_in.RecordType, record_out.Type(), record_in.RecordType)
 
-		assert.Equal(t, records_serial[record_in.RecordType], len(record_out.Serialise()), record_in.RecordType)
+			assert.Equal(t, map[string]string{
+				"hosted_dns_zoneid":   fmt.Sprint(record_in.ZoneID),
+				"hosted_dns_recordid": "",
+			}, record_out.Refs(), record_in.RecordType)
 
-		assert.Equal(t, record_out.Serialise(), record_in.Serialise(), record_in.RecordType)
+			assert.Equal(t, record_out.Refs(), record_in.Refs(), record_in.RecordType)
 
+			assert.Equal(t, records_serial[record_in.RecordType], len(record_out.Serialise()), record_in.RecordType)
+
+			assert.Equal(t, record_out.Serialise(), record_in.Serialise(), record_in.RecordType)
+		})
 	}
 }
 
 func TestEqual(t *testing.T) {
-
 	for i, record_in := range records_in {
 		assert.False(t, record_in.Equals(nil), record_in.RecordType+"-nil")
 
