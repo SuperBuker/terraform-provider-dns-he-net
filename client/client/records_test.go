@@ -1,7 +1,6 @@
 package client_test
 
 import (
-	"context"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client"
@@ -28,7 +27,7 @@ func TestRecords(t *testing.T) {
 	require.NoError(t, err)
 
 	deleteRecord := func(t *testing.T, record models.RecordX) {
-		err := client.DeleteRecord(context.Background(), record)
+		err := client.DeleteRecord(t.Context(), record)
 		assert.NoError(t, err)
 	}
 
@@ -44,7 +43,7 @@ func TestRecords(t *testing.T) {
 		_, err = client.GetRecords(t.Context(), _domainZone.ID)
 		require.NoError(t, err)
 
-		domains := domainZone.RandSubs("client-example-%04d", 10000, 1)
+		domains := domainZone.RandSubs("client-example-%04d", 10000, 3)
 
 		for _, domain := range domains {
 			recordX, err := client.SetRecord(t.Context(), models.TXT{
@@ -75,7 +74,7 @@ func TestRecords(t *testing.T) {
 		_, err = client.GetRecords(t.Context(), _arpaZone.ID)
 		require.NoError(t, err)
 
-		arpas := arpaZone.RandArpaSubs(16, 1)
+		arpas := arpaZone.RandArpaSubs(16, 3)
 
 		for _, arpa := range arpas {
 			recordX, err := client.SetRecord(t.Context(), models.TXT{
