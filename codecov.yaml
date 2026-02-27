@@ -1,0 +1,24 @@
+comment:
+  layout: "header, diff, flags, components"
+  
+component_management:
+  default_rules:
+    statuses:
+      - type: project
+        target: auto
+        branches:
+          - "!main"
+  individual_components:
+    - component_id: module_client
+      name: client
+      paths:
+        - client/**
+    - component_id: module_terraform_provider
+      name: terraform_provider
+      paths:
+        - internal/**
+        - main.go
+    - component_id: module_test_config
+      name: test_config
+      paths:
+        - test_cfg/**
