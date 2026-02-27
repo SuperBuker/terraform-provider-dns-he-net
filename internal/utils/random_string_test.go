@@ -1,9 +1,9 @@
-package resources_test
+package utils_test
 
 import (
 	"testing"
 
-	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/resources"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/utils"
 )
 
 func TestGenerateRandomString(t *testing.T) {
@@ -35,7 +35,7 @@ func TestGenerateRandomString(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			result := resources.GenerateRandomString(tt.length)
+			result := utils.GenerateRandomString(tt.length)
 
 			// Check length
 			if len(result) != tt.length {
@@ -66,7 +66,7 @@ func TestGenerateRandomString(t *testing.T) {
 		seen := make(map[string]bool)
 
 		for i := 0; i < iterations; i++ {
-			result := resources.GenerateRandomString(length)
+			result := utils.GenerateRandomString(length)
 			if seen[result] {
 				t.Logf("Warning: duplicate string generated after %d iterations", i)
 			}

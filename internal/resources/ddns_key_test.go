@@ -8,8 +8,8 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
-	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/resources"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/test_utils"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/utils"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
@@ -23,7 +23,7 @@ func TestAccDDNSKey(t *testing.T) {
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
-	password := resources.GenerateRandomString(16)
+	password := utils.GenerateRandomString(16)
 
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
@@ -58,7 +58,7 @@ func TestAccDDNSKey(t *testing.T) {
 					assert.Equal(t, Account.ID, cli.GetAccount())
 
 					// Makes auth fail when validating the expected key, triggering an update
-					anotherPassword := resources.GenerateRandomString(16)
+					anotherPassword := utils.GenerateRandomString(16)
 
 					ddnsKey := models.DDNSKey{
 						Domain: domainInit,

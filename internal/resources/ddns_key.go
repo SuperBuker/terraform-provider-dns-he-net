@@ -7,6 +7,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filters"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/utils"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -237,7 +238,7 @@ func (dk ddnsKey) Delete(ctx context.Context, req resource.DeleteRequest, resp *
 	}
 
 	ddnsKey := state.get()
-	ddnsKey.Key = GenerateRandomString(32) // The API doesn't support deletion, so we just set a random key
+	ddnsKey.Key = utils.GenerateRandomString(32) // The API doesn't support deletion, so we just set a random key
 
 	// Terraform log
 	ctxLog := tflog.SetField(ctx, "account_id", dk.client.GetAccount())
