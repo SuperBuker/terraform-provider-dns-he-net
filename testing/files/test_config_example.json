@@ -6,36 +6,67 @@
             "otp": "",
             "id": ""
         },
-        "records": {
-            "TYPE_0": {
-                "data": "0.0.0.0",
-                "domain": "sub.example.com",
-                "id": 23456,
-                "ttl": 300
+        "domain_zones": {
+            "ok": {
+                "id": 123456,
+                "name": "example.com",
+                "records": {
+                    "A": {
+                        "data": "0.0.0.0",
+                        "domain": "sub.example.com",
+                        "id": 23456,
+                        "ttl": 300
+                    },
+                    "AAAA": {
+                        "data": "::",
+                        "domain": "sub.example.com",
+                        "id": 23457,
+                        "ttl": 300
+                    }
+                },
+                "record_count": 2
             },
-            "TYPE_1": {
-                "data": "::",
-                "domain": "sub.example.com",
-                "id": 23457,
-                "ttl": 300
+            "pending_delegation": {
+                "id": 123457,
+                "name": "example.fail",
+                "record_count": 0
             }
         },
-        "zone": {
-            "id": 123456,
-            "name": "example.com"
+        "domain_zones_count": 1,
+        "network_prefixes": {
+            "ok": {
+                "id": 123458,
+                "value": "123:4567:89ab:cdef::/64",
+                "enabled": true
+            }
         },
-        "zones_count": 2
+        "network_prefixes_count": 1,
+        "arpa_zones": {
+            "ok": {
+                "id": 123458,
+                "name": "f.e.d.c.b.a.9.8.7.6.5.4.3.2.1.0.ip6.arpa",
+                "records": {
+                    "PTR": {
+                        "data": "example-aaaa.dns-he-net.ovh",
+                        "domain": "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.f.e.d.c.b.a.9.8.7.6.5.4.3.2.1.0.ip6.arpa",
+                        "id": 8170277507,
+                        "ttl": 172800
+                    }
+                },
+                "record_count": 1
+            }
+        },
+        "arpa_zones_count": 1
     },
     "resources": {
-        "account": {
-            "user": "",
-            "password": "",
-            "otp": "",
-            "id": ""
-        },
-        "zone": {
-            "id": 123458,
+        "account": null,
+        "domain_zone": {
+            "id": 123459,
             "name": "example.io"
+        },
+        "arpa_zone": {
+            "id": 123460,
+            "name": "c.a.9.8.7.6.5.4.3.2.1.0.ip6.arpa"
         }
     }
 }
