@@ -78,7 +78,7 @@ func (txt) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 				Description:         "Time-To-Live of the DNS record",
 				MarkdownDescription: "Time-To-Live of the DNS record",
 				Validators: []validator.Int64{
-					int64validator.Between(300, 86400),
+					int64validator.Between(300, 172800),
 				},
 			},
 			"data": schema.StringAttribute{
