@@ -45,7 +45,7 @@ func TestAccMissingArpaZone(t *testing.T) {
 				Config: ProviderConfig + `data "dns-he-net_arpa_zone" "test" {
 					zone_id = 0
 				}`,
-				ExpectError: regexp.MustCompile("Unable to find arpa zone"),
+				ExpectError: regexp.MustCompile("Unable to find ARPA zone"),
 			},
 		},
 	})

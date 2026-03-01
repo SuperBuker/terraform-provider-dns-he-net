@@ -15,7 +15,7 @@ var prefixToArpaZoneTests = []struct {
 	{"2001:470:1f13:1::/64", "1.0.0.0.3.1.f.1.0.7.4.0.1.0.0.2.ip6.arpa", true},
 	{"2001:470:1::/48", "1.0.0.0.0.7.4.0.1.0.0.2.ip6.arpa", true},
 	{"::/0", "0.ip6.arpa", true},
-	{"::", "0.ip6.arpa", true}, // Works on IPs, without mask
+	{"::", "0.ip6.arpa", false},
 	{"invalid value", "", false},
 	// TODO: These functions still accept invalid IPv6 entires like "2001:470:1::/129" or "127.0.0.1"
 }
