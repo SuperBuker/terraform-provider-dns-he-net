@@ -25,7 +25,7 @@ func TestAccArpaZones(t *testing.T) {
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_arpa_zones.example", "arpa_zones.#", fmt.Sprint(arpaZonesCount)),
+					resource.TestCheckResourceAttr("data.dns-he-net_arpa_zones.example", "zones.#", fmt.Sprint(arpaZonesCount)),
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_arpa_zones.example", "id", Account.ID),

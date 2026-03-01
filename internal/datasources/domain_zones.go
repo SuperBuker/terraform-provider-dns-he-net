@@ -30,7 +30,7 @@ type domainZones struct {
 // domainsModel maps the data source schema data.
 type domainsModel struct {
 	ID          types.String      `tfsdk:"id"`
-	DomainZones []domainZoneModel `tfsdk:"domain_zones"`
+	Zones []domainZoneModel `tfsdk:"zones"`
 }
 
 // Metadata returns the data source type name.
@@ -49,7 +49,7 @@ func (domainZones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *d
 				MarkdownDescription: "dns.he.net account id",
 				Computed:            true,
 			},
-			"domain_zones": schema.ListNestedAttribute{
+			"zones": schema.ListNestedAttribute{
 				Description:         "Domain zones list",
 				MarkdownDescription: "Domain zones list",
 				Computed:            true,
@@ -119,7 +119,7 @@ func (d domainZones) Read(ctx context.Context, req datasource.ReadRequest, resp 
 			return
 		}
 
-		state.DomainZones = append(state.DomainZones, domainState)
+		state.Zones = append(state.Zones, domainState)
 	}
 
 	state.ID = types.StringValue(d.client.GetAccount())

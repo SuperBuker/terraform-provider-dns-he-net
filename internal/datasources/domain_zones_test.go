@@ -25,7 +25,7 @@ func TestAccDomainZones(t *testing.T) {
 				}`,
 				Check: resource.ComposeAggregateTestCheckFunc(
 					// Verify record attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_domain_zones.example", "domain_zones.#", fmt.Sprint(domainZonesCount)),
+					resource.TestCheckResourceAttr("data.dns-he-net_domain_zones.example", "zones.#", fmt.Sprint(domainZonesCount)),
 
 					// Verify placeholder attributes
 					resource.TestCheckResourceAttr("data.dns-he-net_domain_zones.example", "id", Account.ID),

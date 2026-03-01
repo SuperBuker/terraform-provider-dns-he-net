@@ -30,7 +30,7 @@ type soa struct {
 
 // Metadata returns the data source type name.
 func (soa) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_soa" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_soa"
 }
 
 // Schema defines the schema for the data source.

@@ -35,7 +35,7 @@ type cname struct {
 
 // Metadata returns the resource type name.
 func (cname) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_cname" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_cname"
 }
 
 // Schema defines the schema for the resource.

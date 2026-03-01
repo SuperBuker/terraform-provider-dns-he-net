@@ -29,8 +29,8 @@ type arpaZones struct {
 
 // arpasModel maps the data source schema data.
 type arpasModel struct {
-	ID        types.String    `tfsdk:"id"`
-	ArpaZones []arpaZoneModel `tfsdk:"arpa_zones"`
+	ID    types.String    `tfsdk:"id"`
+	Zones []arpaZoneModel `tfsdk:"zones"`
 }
 
 // Metadata returns the data source type name.
@@ -41,28 +41,28 @@ func (arpaZones) Metadata(_ context.Context, req datasource.MetadataRequest, res
 // Schema defines the schema for the data source.
 func (arpaZones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description:         "DNS arpa zones in account",
-		MarkdownDescription: "DNS arpa zones in account",
+		Description:         "DNS ARPA zones in account",
+		MarkdownDescription: "DNS ARPA zones in account",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Description:         "dns.he.net account id",
 				MarkdownDescription: "dns.he.net account id",
 				Computed:            true,
 			},
-			"arpa_zones": schema.ListNestedAttribute{
-				Description:         "Arpa zones list",
-				MarkdownDescription: "Arpa zones list",
+			"zones": schema.ListNestedAttribute{
+				Description:         "ARPA zones list",
+				MarkdownDescription: "ARPA zones list",
 				Computed:            true,
 				NestedObject: schema.NestedAttributeObject{
 					Attributes: map[string]schema.Attribute{
 						"zone_id": schema.Int64Attribute{
-							Description:         "dns.he.net arpa zone id",
-							MarkdownDescription: "dns.he.net arpa zone id",
+							Description:         "dns.he.net ARPA zone id",
+							MarkdownDescription: "dns.he.net ARPA zone id",
 							Required:            true,
 						},
 						"name": schema.StringAttribute{
-							Description:         "arpa zone name",
-							MarkdownDescription: "arpa zone name",
+							Description:         "ARPA zone name",
+							MarkdownDescription: "ARPA zone name",
 							Computed:            true,
 						},
 					},
@@ -92,12 +92,12 @@ func (d arpaZones) Read(ctx context.Context, req datasource.ReadRequest, resp *d
 
 	// Terraform log
 	ctxLog := tflog.SetField(ctx, "account_id", d.client.GetAccount())
-	tflog.Debug(ctxLog, "Retrieving arpa zones")
+	tflog.Debug(ctxLog, "Retrieving ARPA zones")
 
 	arpas, err := d.client.GetArpaZones(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch arpa zones",
+			"Unable to fetch ARPA zones",
 			err.Error(),
 		)
 		return
@@ -105,7 +105,7 @@ func (d arpaZones) Read(ctx context.Context, req datasource.ReadRequest, resp *d
 
 	// Terraform log
 	ctxLog = tflog.SetField(ctx, "arpa_zones_count", len(arpas))
-	tflog.Debug(ctxLog, "Retrieved arpa zones")
+	tflog.Debug(ctxLog, "Retrieved ARPA zones")
 
 	// Map response body to model
 	for _, arpa := range arpas {
@@ -113,13 +113,13 @@ func (d arpaZones) Read(ctx context.Context, req datasource.ReadRequest, resp *d
 
 		if err := arpaState.setZone(arpa); err != nil {
 			resp.Diagnostics.AddError(
-				"Unable to set arpa zone",
+				"Unable to set ARPA zone",
 				err.Error(),
 			)
 			return
 		}
 
-		state.ArpaZones = append(state.ArpaZones, arpaState)
+		state.Zones = append(state.Zones, arpaState)
 	}
 
 	state.ID = types.StringValue(d.client.GetAccount())

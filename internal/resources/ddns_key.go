@@ -59,7 +59,7 @@ func (dk ddnsKeyModel) get() models.DDNSKey {
 
 // Metadata returns the resource type name.
 func (ddnsKey) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_ddnskey" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_ddnskey"
 }
 
 // Schema defines the schema for the resource.

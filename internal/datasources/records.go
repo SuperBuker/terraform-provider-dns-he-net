@@ -77,7 +77,7 @@ func (a *recordModel) setRecord(record models.Record) error {
 
 // Metadata returns the data source type name.
 func (records) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_records" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_records"
 }
 
 // Schema defines the schema for the data source.

@@ -35,7 +35,7 @@ type mx struct {
 
 // Metadata returns the resource type name.
 func (mx) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_mx" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_mx"
 }
 
 // Schema defines the schema for the resource.

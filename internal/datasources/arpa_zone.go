@@ -59,16 +59,16 @@ func (arpaZone) Metadata(_ context.Context, req datasource.MetadataRequest, resp
 func (arpaZone) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Description:         "DNS arpa zone",
-		MarkdownDescription: "DNS arpa zone",
+		MarkdownDescription: "DNS ARPA zone",
 		Attributes: map[string]schema.Attribute{
 			"zone_id": schema.Int64Attribute{
-				Description:         "dns.he.net arpa zone id",
-				MarkdownDescription: "dns.he.net arpa zone id",
+				Description:         "dns.he.net ARPA zone id",
+				MarkdownDescription: "dns.he.net ARPA zone id",
 				Required:            true,
 			},
 			"name": schema.StringAttribute{
-				Description:         "arpa zone name",
-				MarkdownDescription: "arpa zone name",
+				Description:         "ARPA zone name",
+				MarkdownDescription: "ARPA zone name",
 				Computed:            true,
 			},
 		},
@@ -95,12 +95,12 @@ func (a arpaZone) Read(ctx context.Context, req datasource.ReadRequest, resp *da
 
 	// Terraform log
 	ctxLog := tflog.SetField(ctx, "account_id", a.client.GetAccount())
-	tflog.Debug(ctxLog, "Retrieving arpa zones")
+	tflog.Debug(ctxLog, "Retrieving ARPA zones")
 
 	arpas, err := a.client.GetArpaZones(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to fetch arpa zones",
+			"Unable to fetch ARPA zones",
 			err.Error(),
 		)
 		return
@@ -108,20 +108,20 @@ func (a arpaZone) Read(ctx context.Context, req datasource.ReadRequest, resp *da
 
 	// Terraform log
 	ctxLog = tflog.SetField(ctx, "arpa_zones_count", len(arpas))
-	tflog.Debug(ctxLog, "Retrieved arpa zones")
+	tflog.Debug(ctxLog, "Retrieved ARPA zones")
 
 	arpa, ok := filters.ZoneById(arpas, uint(state.ZoneID.ValueInt64()))
 	if !ok {
 		resp.Diagnostics.AddError(
-			"Unable to find arpa zone",
-			fmt.Sprintf("arpa zone ID:%q doesn't exist", state.ZoneID.String()),
+			"Unable to find ARPA zone",
+			fmt.Sprintf("ARPA zone ID:%q doesn't exist", state.ZoneID.String()),
 		)
 		return
 	}
 
 	if err := state.setZone(arpa); err != nil {
 		resp.Diagnostics.AddError(
-			"Unable to set arpa zone",
+			"Unable to set ARPA zone",
 			err.Error(),
 		)
 		return

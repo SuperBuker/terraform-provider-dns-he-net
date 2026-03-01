@@ -35,7 +35,7 @@ type loc struct {
 
 // Metadata returns the resource type name.
 func (loc) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_loc" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_loc"
 }
 
 // Schema defines the schema for the resource.

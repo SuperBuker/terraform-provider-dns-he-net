@@ -30,7 +30,7 @@ type alias struct {
 
 // Metadata returns the data source type name.
 func (alias) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_alias" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_alias"
 }
 
 // Schema defines the schema for the data source.

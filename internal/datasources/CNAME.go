@@ -30,7 +30,7 @@ type cname struct {
 
 // Metadata returns the data source type name.
 func (cname) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_cname" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_cname"
 }
 
 // Schema defines the schema for the data source.

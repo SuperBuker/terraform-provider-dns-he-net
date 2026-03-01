@@ -35,7 +35,7 @@ type spf struct {
 
 // Metadata returns the resource type name.
 func (spf) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_spf" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_spf"
 }
 
 // Schema defines the schema for the resource.

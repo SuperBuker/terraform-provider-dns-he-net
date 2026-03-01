@@ -35,7 +35,7 @@ type hinfo struct {
 
 // Metadata returns the resource type name.
 func (hinfo) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_hinfo" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_hinfo"
 }
 
 // Schema defines the schema for the resource.
