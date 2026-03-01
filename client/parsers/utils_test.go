@@ -20,17 +20,6 @@ var prefixToArpaZoneTests = []struct {
 	// TODO: These functions still accept invalid IPv6 entires like "2001:470:1::/129" or "127.0.0.1"
 }
 
-func TestSubnetToArpaZone(t *testing.T) {
-	for _, test := range prefixToArpaZoneTests {
-		arpaZone, err := subnetToArpaZone(test.subnet)
-		if test.valid {
-			assert.Equal(t, test.expected, arpaZone, "subnetToArpaZone(%q) = %q; want %q", test.subnet, arpaZone, test.expected)
-		} else {
-			assert.Error(t, err, "subnetToArpaZone(%q) expected error", test.subnet)
-		}
-	}
-}
-
 func TestPrefixToArpaZone(t *testing.T) {
 	for i, test := range prefixToArpaZoneTests {
 		prefix := models.NetworkPrefix{ID: uint(i), Value: test.subnet}

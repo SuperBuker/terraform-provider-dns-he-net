@@ -27,7 +27,6 @@ Parsers contains functions to parse the response from the server.
 - [func parseDomainZoneNode(node *html.Node) (models.Zone, error)](<#func-parsedomainzonenode>)
 - [func parseNetworkPrefixNode(node *html.Node) (models.NetworkPrefix, error)](<#func-parsenetworkprefixnode>)
 - [func parseRecordNode(node *html.Node) (record models.Record, err error)](<#func-parserecordnode>)
-- [func subnetToArpaZone(subnet string) (string, error)](<#func-subnettoarpazone>)
 - [type ErrNotFound](<#type-errnotfound>)
   - [func (e *ErrNotFound) Error() string](<#func-errnotfound-error>)
   - [func (e *ErrNotFound) Unwrap() []error](<#func-errnotfound-unwrap>)
@@ -168,7 +167,7 @@ func LoginStatus(doc *html.Node) auth.Status
 
 LoginStatus returns the login status from the HTML body.
 
-## func [NetworkPrefixToArpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L63>)
+## func [NetworkPrefixToArpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L19>)
 
 ```go
 func NetworkPrefixToArpaZone(prefix models.NetworkPrefix) (models.Zone, error)
@@ -192,7 +191,7 @@ func ParseStatus(doc *html.Node) string
 
 ParseStatus returns the dns status from the HTML body.
 
-## func [errParsingNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L13>)
+## func [errParsingNode](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L11>)
 
 ```go
 func errParsingNode(path, field string, err error) error
@@ -231,14 +230,6 @@ func parseRecordNode(node *html.Node) (record models.Record, err error)
 ```
 
 parseRecordNode parses a record node.
-
-## func [subnetToArpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/utils.go#L21>)
-
-```go
-func subnetToArpaZone(subnet string) (string, error)
-```
-
-subnetToArpaZone converts a subnet string to its corresponding ARPA zone name.
 
 ## type [ErrNotFound](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/parsers/blob/master/client/parsers/errors.go#L9-L11>)
 
