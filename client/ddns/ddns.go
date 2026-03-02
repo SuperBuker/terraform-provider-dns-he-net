@@ -10,6 +10,7 @@ import (
 
 const (
 	endpoint = "https://dyn.dns.he.net/nic/update"
+	retries  = 3 // We are retrying multiple times because this endpoint is slightly unreliable.
 )
 
 type Client struct {
@@ -23,16 +24,21 @@ func New(cli *resty.Client) Client {
 }
 
 func (c Client) update(ctx context.Context, form map[string]string) (string, error) {
-	resp, err := c.client.R().
-		SetFormData(form).
-		SetContext(ctx).
-		Post(endpoint)
+	var resp *resty.Response
+	var err error
 
-	if err != nil {
-		return "", &ErrAPI{err}
+	for i := 0; i < retries; i++ {
+		resp, err = c.client.R().
+			SetFormData(form).
+			SetContext(ctx).
+			Post(endpoint)
+
+		if err == nil {
+			return strings.TrimSpace(resp.String()), nil
+		}
 	}
 
-	return strings.TrimSpace(resp.String()), nil
+	return "", err
 }
 
 func (c Client) UpdateIP(ctx context.Context, hostname, password, myip string) (bool, error) {

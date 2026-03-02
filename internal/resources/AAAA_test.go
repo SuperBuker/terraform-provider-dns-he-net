@@ -1,7 +1,6 @@
 package resources_test
 
 import (
-	"context"
 	"fmt"
 	"regexp"
 	"testing"
@@ -10,6 +9,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/auth"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/logging"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/test_utils"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/utils"
 	"github.com/hashicorp/terraform-plugin-testing/helper/resource"
 	"github.com/rs/zerolog"
 	"github.com/stretchr/testify/assert"
@@ -19,11 +19,11 @@ import (
 func TestAccAAAARecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
-	password := randStringBytesMaskImprSrcSB(16)
+	password := utils.GenerateRandomString(16)
 
 	resource.Test(t, resource.TestCase{
 		ProtoV6ProviderFactories: test_utils.TestAccProtoV6ProviderFactories,
@@ -36,7 +36,7 @@ func TestAccAAAARecord(t *testing.T) {
 					zone_id = %d
 					domain = %q
 					ttl = 300
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				ExpectError: regexp.MustCompile("Invalid AAAA record configuration"),
 			},
 			// Create and Read testing
@@ -48,10 +48,10 @@ func TestAccAAAARecord(t *testing.T) {
 					domain = %q
 					ttl = 300
 					dynamic = true
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "data", "::"),
@@ -78,10 +78,10 @@ func TestAccAAAARecord(t *testing.T) {
 					domain = %q
 					ttl = 600
 					data = "::1"
-				}`, Zone.ID, domainUpdate),
+				}`, DomainZone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "data", "::1"),
@@ -103,10 +103,10 @@ func TestAccAAAARecord(t *testing.T) {
 					zone_id = %d
 					domain = %q
 					key = %q
-				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
+				}`, DomainZone.ID, domainUpdate, DomainZone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "data", "::1"),
@@ -121,12 +121,12 @@ func TestAccAAAARecord(t *testing.T) {
 					authObj, err := Account.Auth(auth.Simple)
 					require.NoError(t, err)
 
-					cli, err := client.NewClient(context.Background(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
+					cli, err := client.NewClient(t.Context(), authObj, logging.NewZerolog(zerolog.DebugLevel, false))
 					require.NoError(t, err)
 
 					assert.Equal(t, Account.ID, cli.GetAccount())
 
-					ok, err := cli.DDNS().UpdateIP(context.Background(), domainUpdate, password, "::2")
+					ok, err := cli.DDNS().UpdateIP(t.Context(), domainUpdate, password, "::2")
 					require.NoError(t, err)
 					assert.True(t, ok)
 				},
@@ -142,10 +142,10 @@ func TestAccAAAARecord(t *testing.T) {
 					zone_id = %d
 					domain = %q
 					key = %q
-				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
+				}`, DomainZone.ID, domainUpdate, DomainZone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "data", "::2"),
@@ -168,10 +168,10 @@ func TestAccAAAARecord(t *testing.T) {
 					zone_id = %d
 					domain = %q
 					key = %q
-				}`, Zone.ID, domainUpdate, Zone.ID, domainUpdate, password),
+				}`, DomainZone.ID, domainUpdate, DomainZone.ID, domainUpdate, password),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_aaaa.record-aaaa", "data", "::"),

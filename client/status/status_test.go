@@ -66,7 +66,7 @@ func TestError(t *testing.T) {
 	})
 
 	t.Run("ignores delegation errors", func(t *testing.T) {
-		data, err := os.ReadFile("../testing_data/html/records_pre_delegation.html")
+		data, err := os.ReadFile("../testing_data/html/records_pending_delegation_error.html")
 		require.NoError(t, err)
 
 		doc, err := htmlquery.Parse(bytes.NewReader(data))

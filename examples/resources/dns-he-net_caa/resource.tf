@@ -5,4 +5,3 @@ resource "dns-he-net_caa" "example" {
   ttl     = 86400
   data    = "0 iodef \"bofher@example.com\""
 }
-

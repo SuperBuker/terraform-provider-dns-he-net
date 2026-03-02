@@ -49,7 +49,7 @@ Then run `terraform init` to download and install the provider.
 
 ### Requirements
 
-- [Go](https://golang.org/) 1.20 (to build the provider plugin)
+- [Go](https://golang.org/) 1.26 (to build the provider plugin)
 - [Terraform](https://www.terraform.io/downloads.html) >= v1.0
 
 ### Building the Provider

@@ -11,7 +11,7 @@ import (
 func TestAccHINFORecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -26,10 +26,10 @@ func TestAccHINFORecord(t *testing.T) {
 					domain = %q
 					ttl = 300
 					data = "\"armv7 Linux\""
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "data", `"armv7 Linux"`),
@@ -50,10 +50,10 @@ func TestAccHINFORecord(t *testing.T) {
 					domain = %q
 					ttl = 600
 					data = "\"amd64 Linux\""
-			}`, Zone.ID, domainUpdate),
+			}`, DomainZone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_hinfo.record-hinfo", "data", `"amd64 Linux"`),

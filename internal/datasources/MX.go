@@ -30,7 +30,7 @@ type mx struct {
 
 // Metadata returns the data source type name.
 func (mx) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_mx" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_mx"
 }
 
 // Schema defines the schema for the data source.

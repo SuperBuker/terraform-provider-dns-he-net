@@ -11,23 +11,56 @@ This provider provides data sources and resources to manage [dns.he.net](https:/
 ## Maturity
 
 > _The code in this repository should be considered experimental. Documentation is only
-available alongside the code. It comes with no support, but we are keen to receive
-feedback on the product and suggestions on how to improve it, though we cannot commit
-to resolution of any particular issue. No SLAs are available. It is not meant to be used
-in production environments, and the risks are unknown/high._
+> available alongside the code. It comes with no support, but we are keen to receive
+> feedback on the product and suggestions on how to improve it, though we cannot commit
+> to resolution of any particular issue. No SLAs are available. It is not meant to be used
+> in production environments, and the risks are unknown/high._
 
-## Example usage
+## Important updates
+
+### Release v0.1.1
+
+**Changelog summary:**
+
+- Added `dns-he-net_domain_zone` & `dns-he-net_domain_zones` data sources to retrieve domain zones in the account
+- Added `dns-he-net_arpa_zone` & `dns-he-net_arpa_zones` data sources to retrieve ARPA zones in the account
+- Added `dns-he-net_network_prefix` & `dns-he-net_network_prefixes` data sources to retrieve the delegated network prefixes in the account
+- Deprecated `dns-he-net_zone` & `dns-he-net_zones` data sources in favor of `dns-he-net_domain_zone`
+
+#### Deprecation of `dns-he-net_zone` & `dns-he-net_zones` data sources
+
+The `dns-he-net_zone` and `dns-he-net_zones` data sources are being deprecated in favor of:
+- `dns-he-net_domain_zone`: This data source retrieves a single domain zone in the account, identified by its `zone_id`
+- `dns-he-net_domain_zones`: This data source retrieves all domain zones in the account
+
+This change is being made to have a more consistent naming convention across the provider,
+as the term "zone" can be ambiguous and may refer to both domain zones and ARPA zones.  
+**Expect these data sources to be fully removed in v0.2.0.**
+
+#### Addition of `dns-he-net_arpa_zone` & `dns-he-net_arpa_zones` data sources
+
+New data sources are being added to retrieve ARPA zones in the account:
+- `dns-he-net_arpa_zone`: This data source retrieves a single ARPA zone in the account, identified by its `zone_id`
+- `dns-he-net_arpa_zones`: This data source retrieves all ARPA zones in the account
+
+#### Addition of `dns-he-net_network_prefix` & `dns-he-net_network_prefixes` data sources
+
+New data sources are being added to retrieve the delegated network prefixes in the account:
+- `dns-he-net_network_prefix`: This data source retrieves a single delegated network prefix in the account, identified by its `id`
+- `dns-he-net_network_prefixes`: This data source retrieves all delegated network prefixes in the account
+
+## Usage example
 
 Configure the [Hurricane Electric DNS Terraform Provider](https://registry.terraform.io/providers/SuperBuker/dns-he-net/latest)
-to access your account. The 2FA seed can be obtained by exporting th current one or
-regreating the seed.
+to access your account. The 2FA seed can be obtained by exporting the current one or
+regenerating the seed.
 
 2FA authentication can only be performed once every 30 seconds, so this provider stores
-in disk the lastest retrieved authentication cookie. It's highly recommended to use an
+in disk the latest retrieved authentication cookie. It's highly recommended to use an
 `store_type="encrypted"` to avoid storing the cookie in plain text.
 
 If no 2FA is being used, using `store_type="dummy"` is recommended.
-Anyway, we always encurage using 2FA if it's available.
+Anyway, we always encourage using 2FA if it's available.
 
 Using only username and password:
 
@@ -41,12 +74,12 @@ provider "dns-he-net" {
 
 
 # Retrieve zones
-data "dns-he-net_zones" "zones" {
+data "dns-he-net_domain_zones" "zones" {
 }
 
 # Create a DNS A record set
 resource "dns-he-net_a" "record-a" {
-  zone_id = data.dns-he-net_zones.zones.zones[0].id
+  zone_id = data.dns-he-net_domain_zones.zones.zones[0].id
   domain  = "example.com"
   ttl     = 86400
   data    = "1.2.3.4"
@@ -66,12 +99,12 @@ provider "dns-he-net" {
 
 
 # Retrieve zones
-data "dns-he-net_zones" "zones" {
+data "dns-he-net_domain_zones" "zones" {
 }
 
 # Create a DNS A record set
 resource "dns-he-net_a" "record-a" {
-  zone_id = data.dns-he-net_zones.zones.zones[0].id
+  zone_id = data.dns-he-net_domain_zones.zones.zones[0].id
   domain  = "example.com"
   ttl     = 86400
   data    = "1.2.3.4"
@@ -90,3 +123,9 @@ resource "dns-he-net_a" "record-a" {
 
 - `otp_secret` (String, Sensitive) dns.he.net OTP secret (optional)
 - `store_type` (String) dns.he.net cache store type (optional)
+
+## Contributing
+
+Contributions to this project are very welcome.  
+Please open an issue or a pull request in the [GitHub repository](https://github.com/SuperBuker/dns-he-net) if you want to contribute.  
+GitHub stars are also very appreciated. :)

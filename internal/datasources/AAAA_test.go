@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccAAAARecord(t *testing.T) {
-	record, ok := Records["AAAA"]
+	record, ok := DomainZoneRecords["AAAA"]
 	if !ok {
 		t.Skip("AAAA record missing in config")
 	}
@@ -27,17 +27,17 @@ func TestAccAAAARecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_aaaa" "record-aaaa" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "domain", Zone.Sub("example-aaaa")),
-					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "data", "::"),
-					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "dynamic", "true"),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "data", record.Data),
+					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "dynamic", fmt.Sprint(record.Dynamic)),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_aaaa.record-aaaa", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -45,7 +45,7 @@ func TestAccAAAARecord(t *testing.T) {
 }
 
 func TestAccAAAAMissingZone(t *testing.T) {
-	record, ok := Records["AAAA"]
+	record, ok := DomainZoneRecords["AAAA"]
 	if !ok {
 		t.Skip("AAAA record missing in config")
 	}
@@ -80,7 +80,7 @@ func TestAccAAAAMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_aaaa" "record-aaaa" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find AAAA record"),
 			},
 		},

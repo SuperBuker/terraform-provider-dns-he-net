@@ -36,7 +36,7 @@ type afsdb struct {
 
 // Metadata returns the resource type name.
 func (afsdb) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_afsdb" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_afsdb"
 }
 
 // Schema defines the schema for the resource.
@@ -75,7 +75,7 @@ func (afsdb) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.
 				Description:         "Time-To-Live of the DNS record",
 				MarkdownDescription: "Time-To-Live of the DNS record",
 				Validators: []validator.Int64{
-					int64validator.Between(300, 86400),
+					int64validator.Between(300, 172800),
 				},
 			},
 			"data": schema.StringAttribute{

@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccHINFO(t *testing.T) {
-	record, ok := Records["HINFO"]
+	record, ok := DomainZoneRecords["HINFO"]
 	if !ok {
 		t.Skip("HINFO record missing in config")
 	}
@@ -23,19 +23,20 @@ func TestAccHINFO(t *testing.T) {
 		Steps: []resource.TestStep{
 			// Read testing
 			{
-				Config: ProviderConfig + `data "dns-he-net_hinfo" "record-hinfo" {
-					id = 5195561437
-					zone_id = 1093397
-				}`,
+				Config: ProviderConfig +
+					fmt.Sprintf(`data "dns-he-net_hinfo" "record-hinfo" {
+					id = %d
+					zone_id = %d
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "domain", Zone.Sub("example-hinfo")),
-					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "ttl", "86400"),
-					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "data", `"armv7 Linux"`),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_hinfo.record-hinfo", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -43,7 +44,7 @@ func TestAccHINFO(t *testing.T) {
 }
 
 func TestAccHINFOMissingZone(t *testing.T) {
-	record, ok := Records["HINFO"]
+	record, ok := DomainZoneRecords["HINFO"]
 	if !ok {
 		t.Skip("HINFO record missing in config")
 	}
@@ -78,7 +79,7 @@ func TestAccHINFOMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_hinfo" "record-hinfo" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find HINFO record"),
 			},
 		},

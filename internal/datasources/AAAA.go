@@ -30,7 +30,7 @@ type aaaa struct {
 
 // Metadata returns the data source type name.
 func (aaaa) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_aaaa" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_aaaa"
 }
 
 // Schema defines the schema for the data source.

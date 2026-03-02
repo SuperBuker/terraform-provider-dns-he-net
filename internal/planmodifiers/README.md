@@ -8,6 +8,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/planmodifie
 
 ## Index
 
+- [Variables](<#variables>)
 - [func UseStateOrDftForUnknown(dft string) planmodifier.String](<#func-usestateordftforunknown>)
 - [type useStateOrDftForUnknownModifier](<#type-usestateordftforunknownmodifier>)
   - [func (useStateOrDftForUnknownModifier) Description(context.Context) string](<#func-usestateordftforunknownmodifier-description>)
@@ -15,7 +16,13 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/planmodifie
   - [func (m useStateOrDftForUnknownModifier) PlanModifyString(_ context.Context, req planmodifier.StringRequest, resp *planmodifier.StringResponse)](<#func-usestateordftforunknownmodifier-planmodifystring>)
 
 
-## func [UseStateOrDftForUnknown](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L19>)
+## Variables
+
+```go
+var UseStateOrDftForUnknownDescription = "Once set, the value of this attribute in state will not change."
+```
+
+## func [UseStateOrDftForUnknown](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L21>)
 
 ```go
 func UseStateOrDftForUnknown(dft string) planmodifier.String
@@ -25,7 +32,7 @@ UseStateOrDftForUnknown returns a plan modifier that copies a known prior state 
 
 To prevent Terraform errors, the framework automatically sets unconfigured and Computed attributes to an unknown value "\(known after apply\)" on update. Using this plan modifier will instead display the prior state value in the plan, unless a prior plan modifier adjusts the value.
 
-## type [useStateOrDftForUnknownModifier](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L26-L28>)
+## type [useStateOrDftForUnknownModifier](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L28-L30>)
 
 useStateForUnknownModifier implements the plan modifier.
 
@@ -35,7 +42,7 @@ type useStateOrDftForUnknownModifier struct {
 }
 ```
 
-### func \(useStateOrDftForUnknownModifier\) [Description](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L31>)
+### func \(useStateOrDftForUnknownModifier\) [Description](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L33>)
 
 ```go
 func (useStateOrDftForUnknownModifier) Description(context.Context) string
@@ -43,7 +50,7 @@ func (useStateOrDftForUnknownModifier) Description(context.Context) string
 
 Description returns a human\-readable description of the plan modifier.
 
-### func \(useStateOrDftForUnknownModifier\) [MarkdownDescription](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L36>)
+### func \(useStateOrDftForUnknownModifier\) [MarkdownDescription](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L38>)
 
 ```go
 func (useStateOrDftForUnknownModifier) MarkdownDescription(context.Context) string
@@ -51,7 +58,7 @@ func (useStateOrDftForUnknownModifier) MarkdownDescription(context.Context) stri
 
 MarkdownDescription returns a markdown description of the plan modifier.
 
-### func \(useStateOrDftForUnknownModifier\) [PlanModifyString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L41>)
+### func \(useStateOrDftForUnknownModifier\) [PlanModifyString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/planmodifiers/blob/master/internal/planmodifiers/use_state_or_default_for_unknown.go#L43>)
 
 ```go
 func (m useStateOrDftForUnknownModifier) PlanModifyString(_ context.Context, req planmodifier.StringRequest, resp *planmodifier.StringResponse)

@@ -1,10 +1,10 @@
 package planmodifiers_test
 
 import (
-	"context"
 	"testing"
 
 	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/planmodifiers"
+	"github.com/stretchr/testify/assert"
 
 	"github.com/google/go-cmp/cmp"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -79,8 +79,6 @@ func TestUseStateForUnknownModifierPlanModifyString(t *testing.T) {
 	}
 
 	for name, testCase := range testCases {
-		name, testCase := name, testCase // To deprecate in Go v1.22
-
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
@@ -89,11 +87,19 @@ func TestUseStateForUnknownModifierPlanModifyString(t *testing.T) {
 			}
 
 			planmodifiers.UseStateOrDftForUnknown(defaultValue).
-				PlanModifyString(context.Background(), testCase.request, resp)
+				PlanModifyString(t.Context(), testCase.request, resp)
 
 			if diff := cmp.Diff(testCase.expected, resp); diff != "" {
 				t.Errorf("unexpected difference: %s", diff)
 			}
 		})
 	}
+
+	t.Run("descriptions", func(t *testing.T) {
+		t.Parallel()
+
+		modifier := planmodifiers.UseStateOrDftForUnknown(defaultValue)
+		assert.Equal(t, planmodifiers.UseStateOrDftForUnknownDescription, modifier.Description(t.Context()))
+		assert.Equal(t, planmodifiers.UseStateOrDftForUnknownDescription, modifier.MarkdownDescription(t.Context()))
+	})
 }

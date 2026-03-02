@@ -9,7 +9,11 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 ## Index
 
 - [func ApplyToSlice[T any](fn func(T) T, slice []T) []T](<#func-applytoslice>)
+- [func IPv4AddrToPTR(ip net.IP) string](<#func-ipv4addrtoptr>)
+- [func IPv6AddrToPTR(ip net.IP, zeroed bool) string](<#func-ipv6addrtoptr>)
+- [func IPv6SubnetToArpaZone(subnet string) (string, error)](<#func-ipv6subnettoarpazone>)
 - [func IsNil(i interface{}) bool](<#func-isnil>)
+- [func ParseIPNet(subnet string) (net.IPNet, error)](<#func-parseipnet>)
 - [func SplitByLen(data string, length int) (result []string)](<#func-splitbylen>)
 - [type ErrCasting](<#type-errcasting>)
   - [func NewErrCasting(expected, actual interface{}) *ErrCasting](<#func-newerrcasting>)
@@ -26,6 +30,26 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/utils"
 func ApplyToSlice[T any](fn func(T) T, slice []T) []T
 ```
 
+## func [IPv4AddrToPTR](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/ip4.go#L9>)
+
+```go
+func IPv4AddrToPTR(ip net.IP) string
+```
+
+## func [IPv6AddrToPTR](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/ip6.go#L10>)
+
+```go
+func IPv6AddrToPTR(ip net.IP, zeroed bool) string
+```
+
+## func [IPv6SubnetToArpaZone](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/ip6.go#L43>)
+
+```go
+func IPv6SubnetToArpaZone(subnet string) (string, error)
+```
+
+IPv6SubnetToArpaZone converts a subnet string to its corresponding ARPA zone name.
+
 ## func [IsNil](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/nil.go#L6>)
 
 ```go
@@ -33,6 +57,14 @@ func IsNil(i interface{}) bool
 ```
 
 IsNil returns true if the interface is nil or is a nil pointer, map, array, channel, or slice.
+
+## func [ParseIPNet](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/ip.go#L12>)
+
+```go
+func ParseIPNet(subnet string) (net.IPNet, error)
+```
+
+ParseIPNet parses a subnet string and returns a net.IPNet struct. Supports both IPv4 and IPv6 subnets.
 
 ## func [SplitByLen](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/strings.go#L3>)
 

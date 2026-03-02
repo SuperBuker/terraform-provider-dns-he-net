@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccSPF(t *testing.T) {
-	record, ok := Records["SPF"]
+	record, ok := DomainZoneRecords["SPF"]
 	if !ok {
 		t.Skip("SPF record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccSPF(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_spf" "record-spf" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "domain", Zone.Name),
-					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "ttl", "86400"),
-					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "data", `"v=spf1 include:_spf.example.com ~all"`),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_spf.record-spf", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccSPF(t *testing.T) {
 }
 
 func TestAccSPFMissingZone(t *testing.T) {
-	record, ok := Records["SPF"]
+	record, ok := DomainZoneRecords["SPF"]
 	if !ok {
 		t.Skip("SPF record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccSPFMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_spf" "record-spf" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find SPF record"),
 			},
 		},

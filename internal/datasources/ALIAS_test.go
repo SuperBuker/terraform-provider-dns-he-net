@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccALIAS(t *testing.T) {
-	record, ok := Records["ALIAS"]
+	record, ok := DomainZoneRecords["ALIAS"]
 	if !ok {
 		t.Skip("ALIAS record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccALIAS(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_alias" "record-alias" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "domain", Zone.Sub("example-alias")),
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "data", Zone.Name),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_alias.record-alias", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccALIAS(t *testing.T) {
 }
 
 func TestAccALIASMissingZone(t *testing.T) {
-	record, ok := Records["ALIAS"]
+	record, ok := DomainZoneRecords["ALIAS"]
 	if !ok {
 		t.Skip("ALIAS record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccALIASMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_alias" "record-alias" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find ALIAS record"),
 			},
 		},

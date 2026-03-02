@@ -275,8 +275,14 @@ func (p *dnsProvider) Configure(ctx context.Context, req provider.ConfigureReque
 func (p *dnsProvider) DataSources(_ context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{
 		datasources.NewAccount,
-		datasources.NewZoneIndex,
-		datasources.NewZone,
+		datasources.NewZoneIndex, // To deprecate
+		datasources.NewZone,      // To deprecate
+		datasources.NewDomainZoneIndex,
+		datasources.NewDomainZone,
+		datasources.NewNetworkPrefixIndex,
+		datasources.NewNetworkPrefix,
+		datasources.NewArpaZoneIndex,
+		datasources.NewArpaZone,
 		datasources.NewRecordIndex,
 		datasources.NewA,
 		datasources.NewAAAA,

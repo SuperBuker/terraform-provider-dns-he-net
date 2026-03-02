@@ -30,7 +30,7 @@ type loc struct {
 
 // Metadata returns the data source type name.
 func (loc) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_loc" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_loc"
 }
 
 // Schema defines the schema for the data source.

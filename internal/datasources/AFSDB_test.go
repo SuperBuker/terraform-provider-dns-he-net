@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccAFSDB(t *testing.T) {
-	record, ok := Records["AFSDB"]
+	record, ok := DomainZoneRecords["AFSDB"]
 	if !ok {
 		t.Skip("AFSDB record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccAFSDB(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_afsdb" "record-afsdb" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "domain", Zone.Name),
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "data", fmt.Sprintf("2 %s", Zone.Sub("green"))),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_afsdb.record-afsdb", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccAFSDB(t *testing.T) {
 }
 
 func TestAccAFSDBMissingZone(t *testing.T) {
-	record, ok := Records["AFSDB"]
+	record, ok := DomainZoneRecords["AFSDB"]
 	if !ok {
 		t.Skip("AFSDB record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccAFSDBMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_afsdb" "record-afsdb" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find AFSDB record"),
 			},
 		},

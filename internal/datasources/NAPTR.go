@@ -30,7 +30,7 @@ type naptr struct {
 
 // Metadata returns the data source type name.
 func (naptr) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_naptr" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_naptr"
 }
 
 // Schema defines the schema for the data source.

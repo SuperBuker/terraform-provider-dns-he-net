@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccPTR(t *testing.T) {
-	record, ok := Records["PTR"]
+	record, ok := DomainZoneRecords["PTR"]
 	if !ok {
 		t.Skip("PTR record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccPTR(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_ptr" "record-ptr" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "domain", Zone.Sub("example-ptr")),
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "ttl", "300"),
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "data", Zone.Name),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_ptr.record-ptr", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccPTR(t *testing.T) {
 }
 
 func TestAccPTRMissingZone(t *testing.T) {
-	record, ok := Records["PTR"]
+	record, ok := DomainZoneRecords["PTR"]
 	if !ok {
 		t.Skip("PTR record missing in config")
 	}
@@ -77,7 +77,7 @@ func TestAccPTRMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_ptr" "record-ptr" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find PTR record"),
 			},
 		},

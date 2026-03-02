@@ -35,14 +35,15 @@ type zonesModel struct {
 
 // Metadata returns the data source type name.
 func (zones) Metadata(_ context.Context, req datasource.MetadataRequest, resp *datasource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_zones" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_zones"
 }
 
 // Schema defines the schema for the data source.
 func (zones) Schema(_ context.Context, _ datasource.SchemaRequest, resp *datasource.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Description:         "DNS zones in account",
-		MarkdownDescription: "DNS zones in account",
+		MarkdownDescription: "DNS zones in account\n\n**Deprecation Notice:** This data source is deprecated and will be removed in v0.2.0. Please use `dns-he-net_domain_zones` or `dns-he-net_arpa_zones` instead.",
+		DeprecationMessage:  "Use `dns-he-net_domain_zones` or `dns-he-net_arpa_zones` instead. This data source will be removed in v0.2.0.",
 		Attributes: map[string]schema.Attribute{
 			"id": schema.StringAttribute{
 				Description:         "dns.he.net account id",
@@ -92,9 +93,13 @@ func (d zones) Read(ctx context.Context, req datasource.ReadRequest, resp *datas
 
 	// Terraform log
 	ctxLog := tflog.SetField(ctx, "account_id", d.client.GetAccount())
+
+	// Deprecation notice
+	tflog.Warn(ctxLog, "The `dns-he-net_zones` datasource is deprecated and will be removed in v0.2.0. Please use `dns-he-net_domain_zones` instead.")
+
 	tflog.Debug(ctxLog, "Retrieving zones")
 
-	zones, err := d.client.GetZones(ctx)
+	zones, err := d.client.GetDomainZones(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to fetch zones",

@@ -8,11 +8,27 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/internal/utils"
 
 ## Index
 
+- [Constants](<#constants>)
+- [func GenerateRandomString(n int) string](<#func-generaterandomstring>)
 - [func NativeUInt(i basetypes.Int64Value) *uint](<#func-nativeuint>)
 - [func NativeUInt16(i basetypes.Int64Value) *uint16](<#func-nativeuint16>)
 - [func TypeInt(i *uint) basetypes.Int64Value](<#func-typeint>)
 - [func TypeInt16(i *uint16) basetypes.Int64Value](<#func-typeint16>)
 
+
+## Constants
+
+```go
+const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01256789"
+```
+
+## func [GenerateRandomString](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/utils/blob/master/internal/utils/random_string.go#L16>)
+
+```go
+func GenerateRandomString(n int) string
+```
+
+GenerateRandomString generates a random string of the specified length using the defined character set.
 
 ## func [NativeUInt](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/utils/blob/master/internal/utils/native.go#L7>)
 

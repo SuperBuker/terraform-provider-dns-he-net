@@ -39,7 +39,7 @@ type txt struct {
 
 // Metadata returns the resource type name.
 func (txt) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_txt" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_txt"
 }
 
 // Schema defines the schema for the resource.
@@ -78,7 +78,7 @@ func (txt) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sc
 				Description:         "Time-To-Live of the DNS record",
 				MarkdownDescription: "Time-To-Live of the DNS record",
 				Validators: []validator.Int64{
-					int64validator.Between(300, 86400),
+					int64validator.Between(300, 172800),
 				},
 			},
 			"data": schema.StringAttribute{
@@ -122,7 +122,7 @@ func (r txt) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 		return
 	}
 
-	recordA, err := state.GetRecord()
+	recordTXT, err := state.GetRecord()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to build TXT record",
@@ -131,7 +131,7 @@ func (r txt) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 		return
 	}
 
-	recordX, err := r.client.SetRecord(ctx, recordA)
+	recordX, err := r.client.SetRecord(ctx, recordTXT)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to create TXT record",
@@ -140,7 +140,7 @@ func (r txt) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 		return
 	}
 
-	recordA, ok := recordX.(models.TXT)
+	recordTXT, ok := recordX.(models.TXT)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to cast TXT record",
@@ -149,7 +149,7 @@ func (r txt) Create(ctx context.Context, req resource.CreateRequest, resp *resou
 		return
 	}
 
-	if err = state.SetRecord(recordA); err != nil {
+	if err = state.SetRecord(recordTXT); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to set TXT record",
 			err.Error(),
@@ -182,7 +182,7 @@ func (r txt) Read(ctx context.Context, req resource.ReadRequest, resp *resource.
 		return
 	}
 
-	recordA, ok := recordX.(models.TXT)
+	recordTXT, ok := recordX.(models.TXT)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to cast TXT record",
@@ -191,7 +191,7 @@ func (r txt) Read(ctx context.Context, req resource.ReadRequest, resp *resource.
 		return
 	}
 
-	if err := state.SetRecord(recordA); err != nil {
+	if err := state.SetRecord(recordTXT); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to set TXT record",
 			err.Error(),
@@ -218,7 +218,7 @@ func (r txt) Update(ctx context.Context, req resource.UpdateRequest, resp *resou
 		return
 	}
 
-	recordA, err := state.GetRecord()
+	recordTXT, err := state.GetRecord()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to build TXT record",
@@ -227,7 +227,7 @@ func (r txt) Update(ctx context.Context, req resource.UpdateRequest, resp *resou
 		return
 	}
 
-	recordX, err := r.client.SetRecord(ctx, recordA)
+	recordX, err := r.client.SetRecord(ctx, recordTXT)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to update TXT record",
@@ -236,7 +236,7 @@ func (r txt) Update(ctx context.Context, req resource.UpdateRequest, resp *resou
 		return
 	}
 
-	recordA, ok := recordX.(models.TXT)
+	recordTXT, ok := recordX.(models.TXT)
 	if !ok {
 		resp.Diagnostics.AddError(
 			"Unable to cast TXT record",
@@ -245,7 +245,7 @@ func (r txt) Update(ctx context.Context, req resource.UpdateRequest, resp *resou
 		return
 	}
 
-	if err = state.SetRecord(recordA); err != nil {
+	if err = state.SetRecord(recordTXT); err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to set TXT record",
 			err.Error(),
@@ -272,7 +272,7 @@ func (r txt) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 		return
 	}
 
-	recordA, err := state.GetRecord()
+	recordTXT, err := state.GetRecord()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to build TXT record",
@@ -281,7 +281,7 @@ func (r txt) Delete(ctx context.Context, req resource.DeleteRequest, resp *resou
 		return
 	}
 
-	err = r.client.DeleteRecord(ctx, recordA)
+	err = r.client.DeleteRecord(ctx, recordTXT)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to delete TXT record",
@@ -300,7 +300,7 @@ func (txt) ValidateConfig(ctx context.Context, req resource.ValidateConfigReques
 		return
 	}
 
-	recordA, err := config.GetRecord()
+	recordTXT, err := config.GetRecord()
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to build TXT record",
@@ -315,7 +315,7 @@ func (txt) ValidateConfig(ctx context.Context, req resource.ValidateConfigReques
 		// ValidateConfig will be called again later with the actual value.
 	} else if !config.Data.IsNull() {
 		// pass
-	} else if recordA.Dynamic {
+	} else if recordTXT.Dynamic {
 		resp.Diagnostics.AddAttributeWarning(
 			path.Root("data"),
 			"Missing Attribute Configuration",

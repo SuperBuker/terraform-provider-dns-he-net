@@ -5,4 +5,3 @@ resource "dns-he-net_spf" "example" {
   ttl     = 86400
   data    = "\"v=spf1 include:_spf.email.com ~all\""
 }
-

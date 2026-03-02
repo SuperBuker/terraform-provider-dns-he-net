@@ -1,7 +1,6 @@
 package logging_test
 
 import (
-	"context"
 	"errors"
 	"testing"
 
@@ -31,11 +30,11 @@ func TestZeroLog(t *testing.T) {
 		"interface": nil,
 	}
 
-	logger.Debug(context.Background(), "debug", fields)
-	logger.Error(context.Background(), "error", fields)
-	logger.Info(context.Background(), "info", fields)
-	logger.Trace(context.Background(), "trace", fields)
-	logger.Warn(context.Background(), "warn", fields)
+	logger.Debug(t.Context(), "debug", fields)
+	logger.Error(t.Context(), "error", fields)
+	logger.Info(t.Context(), "info", fields)
+	logger.Trace(t.Context(), "trace", fields)
+	logger.Warn(t.Context(), "warn", fields)
 
-	logger.Debug(context.Background(), "", fields)
+	logger.Debug(t.Context(), "", fields)
 }

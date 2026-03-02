@@ -35,7 +35,7 @@ type rp struct {
 
 // Metadata returns the resource type name.
 func (rp) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_rp" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_rp"
 }
 
 // Schema defines the schema for the resource.
@@ -74,7 +74,7 @@ func (rp) Schema(_ context.Context, _ resource.SchemaRequest, resp *resource.Sch
 				Description:         "Time-To-Live of the DNS record",
 				MarkdownDescription: "Time-To-Live of the DNS record",
 				Validators: []validator.Int64{
-					int64validator.Between(300, 86400),
+					int64validator.Between(300, 172800),
 				},
 			},
 			"data": schema.StringAttribute{

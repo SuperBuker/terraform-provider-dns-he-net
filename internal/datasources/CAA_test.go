@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccCAA(t *testing.T) {
-	record, ok := Records["CAA"]
+	record, ok := DomainZoneRecords["CAA"]
 	if !ok {
 		t.Skip("CAA record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccCAA(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_caa" "record-caa" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "domain", Zone.Name),
-					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "ttl", "86400"),
-					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "data", `0 issuewild ";"`),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_caa.record-caa", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccCAA(t *testing.T) {
 }
 
 func TestAccCAAMissingZone(t *testing.T) {
-	record, ok := Records["CAA"]
+	record, ok := DomainZoneRecords["CAA"]
 	if !ok {
 		t.Skip("CAA record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccCAAMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_caa" "record-caa" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find CAA record"),
 			},
 		},

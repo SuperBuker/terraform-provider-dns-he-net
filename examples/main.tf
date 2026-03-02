@@ -5,17 +5,17 @@ provider "dns-he-net" {
   store_type = var.dhn_store_type
 }
 
-data "dns-he-net_zones" "zones" {}
+data "dns-he-net_domain_zones" "zones" {}
 
 resource "dns-he-net_a" "record-a" {
-  zone_id = data.dns-he-net_zones.zones.zones[0].id
+  zone_id = data.dns-he-net_domain_zones.zones.zones[0].id
   domain  = "server0.example.com"
   ttl     = 300
   dynamic = true
 }
 
 resource "dns-he-net_cname" "example" {
-  zone_id = data.dns-he-net_zones.zones.zones[0].id
+  zone_id = data.dns-he-net_domain_zones.zones.zones[0].id
   domain  = "example.com"
   ttl     = 86400
   data    = resource.dns-he-net_a.record-a.domain

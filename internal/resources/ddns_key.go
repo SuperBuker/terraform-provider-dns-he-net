@@ -7,6 +7,7 @@ import (
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/client/filters"
 	"github.com/SuperBuker/terraform-provider-dns-he-net/client/models"
+	"github.com/SuperBuker/terraform-provider-dns-he-net/internal/utils"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
@@ -14,6 +15,7 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"github.com/hashicorp/terraform-plugin-log/tflog"
 )
 
 // Ensure the implementation satisfies the expected interfaces.
@@ -57,7 +59,7 @@ func (dk ddnsKeyModel) get() models.DDNSKey {
 
 // Metadata returns the resource type name.
 func (ddnsKey) Metadata(_ context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
-	resp.TypeName = req.ProviderTypeName + "_ddnskey" // TODO: maybe rename
+	resp.TypeName = req.ProviderTypeName + "_ddnskey"
 }
 
 // Schema defines the schema for the resource.
@@ -149,7 +151,9 @@ func (dk ddnsKey) Read(ctx context.Context, req resource.ReadRequest, resp *reso
 		return
 	}
 
-	zones, err := dk.client.GetZones(ctx)
+	// This check is needed to prevent a silent failure, as the server side
+	// allows the creation of DDNS keys with invalid zone_id.
+	zones, err := dk.client.GetAllZones(ctx)
 	if err != nil {
 		resp.Diagnostics.AddError(
 			"Unable to fetch DNS records",
@@ -223,8 +227,38 @@ func (dk ddnsKey) Update(ctx context.Context, req resource.UpdateRequest, resp *
 }
 
 // Delete deletes the resource and removes the Terraform state on success.
-func (ddnsKey) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
-	// Maybe set a random key value
+func (dk ddnsKey) Delete(ctx context.Context, req resource.DeleteRequest, resp *resource.DeleteResponse) {
+	var state ddnsKeyModel
+
+	// Retrieve values from state
+	diags := req.State.Get(ctx, &state)
+	resp.Diagnostics.Append(diags...)
+	if resp.Diagnostics.HasError() {
+		return
+	}
+
+	ddnsKey := state.get()
+	ddnsKey.Key = utils.GenerateRandomString(32) // The API doesn't support deletion, so we just set a random key
+
+	// Terraform log
+	ctxLog := tflog.SetField(ctx, "account_id", dk.client.GetAccount())
+	ctxLog = tflog.SetField(ctxLog, "domain", state.Domain.ValueString())
+	ctxLog = tflog.SetField(ctxLog, "zone_id", state.ZoneID.ValueInt64())
+
+	// Impossible deletion notice
+	tflog.Warn(ctxLog, "This resource destruction updates the current DDNS key with "+
+		"a random value before deleting resource from the Terraform state.\n"+
+		"The provider doesn't currently offer a way to delete existing keys, please ensure "+
+		"the Record resource has the DDNS flag disabled to prevent unwanted updates.")
+
+	_, err := dk.client.SetDDNSKey(ctx, ddnsKey)
+	if err != nil {
+		resp.Diagnostics.AddError(
+			"Unable to set DDNS key",
+			err.Error(),
+		)
+		return
+	}
 }
 
 func (ddnsKey) ModifyPlan(ctx context.Context, req resource.ModifyPlanRequest, resp *resource.ModifyPlanResponse) {

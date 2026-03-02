@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccLOC(t *testing.T) {
-	record, ok := Records["LOC"]
+	record, ok := DomainZoneRecords["LOC"]
 	if !ok {
 		t.Skip("LOC record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccLOC(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_loc" "record-loc" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "domain", Zone.Sub("example-loc")),
-					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "ttl", "86400"),
-					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "data", "40 27 53.86104 N 3 39 2.59092 W 712.8m 0.00m 0.00m 0.00m"),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_loc.record-loc", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccLOC(t *testing.T) {
 }
 
 func TestAccLOCMissingZone(t *testing.T) {
-	record, ok := Records["LOC"]
+	record, ok := DomainZoneRecords["LOC"]
 	if !ok {
 		t.Skip("LOC record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccLOCMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_loc" "record-loc" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find LOC record"),
 			},
 		},

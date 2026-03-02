@@ -11,7 +11,7 @@ import (
 )
 
 func TestAccNS(t *testing.T) {
-	record, ok := Records["NS"]
+	record, ok := DomainZoneRecords["NS"]
 	if !ok {
 		t.Skip("NS record missing in config")
 	}
@@ -27,16 +27,16 @@ func TestAccNS(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_ns" "record-ns" {
 					id = %d
 					zone_id = %d
-				}`, record.ID, Zone.ID),
+				}`, record.ID, DomainZone.ID),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "domain", Zone.Name),
-					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "ttl", "172800"),
-					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "data", "ns1.he.net"),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "domain", record.Domain),
+					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "ttl", fmt.Sprint(record.TTL)),
+					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "data", record.Data),
 
 					// Verify placeholder attributes
-					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "id", toString(record.ID)),
-					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "zone_id", toString(Zone.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "id", fmt.Sprint(record.ID)),
+					resource.TestCheckResourceAttr("data.dns-he-net_ns.record-ns", "zone_id", fmt.Sprint(DomainZone.ID)),
 				),
 			},
 		},
@@ -44,7 +44,7 @@ func TestAccNS(t *testing.T) {
 }
 
 func TestAccNSMissingZone(t *testing.T) {
-	record, ok := Records["NS"]
+	record, ok := DomainZoneRecords["NS"]
 	if !ok {
 		t.Skip("NS record missing in config")
 	}
@@ -79,7 +79,7 @@ func TestAccNSMissingRecord(t *testing.T) {
 					fmt.Sprintf(`data "dns-he-net_ns" "record-ns" {
 					id = 0
 					zone_id = %d
-				}`, Zone.ID),
+				}`, DomainZone.ID),
 				ExpectError: regexp.MustCompile("Unable to find NS record"),
 			},
 		},

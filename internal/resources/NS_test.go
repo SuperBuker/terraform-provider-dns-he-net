@@ -11,7 +11,7 @@ import (
 func TestAccNSRecord(t *testing.T) {
 	t.Parallel()
 
-	domains := Zone.RandSubs("example-%04d", 10000, 2)
+	domains := DomainZone.RandSubs("example-%04d", 10000, 2)
 	domainInit := domains[0]
 	domainUpdate := domains[1]
 
@@ -26,10 +26,10 @@ func TestAccNSRecord(t *testing.T) {
 					domain = %q
 					ttl = 300
 					data = "ns0.he.net"
-				}`, Zone.ID, domainInit),
+				}`, DomainZone.ID, domainInit),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "domain", domainInit),
 					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "ttl", "300"),
 					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "data", "ns0.he.net"),
@@ -50,10 +50,10 @@ func TestAccNSRecord(t *testing.T) {
 					domain = %q
 					ttl = 600
 					data = "ns00.he.net"
-			}`, Zone.ID, domainUpdate),
+			}`, DomainZone.ID, domainUpdate),
 				Check: resource.ComposeAggregateTestCheckFunc(
-					// Verify record attibutes
-					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "zone_id", toString(Zone.ID)),
+					// Verify record attributes
+					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "zone_id", fmt.Sprint(DomainZone.ID)),
 					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "domain", domainUpdate),
 					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "ttl", "600"),
 					resource.TestCheckResourceAttr("dns-he-net_ns.record-ns", "data", "ns00.he.net"),

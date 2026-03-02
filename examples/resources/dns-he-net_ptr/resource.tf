@@ -5,4 +5,3 @@ resource "dns-he-net_ptr" "example" {
   ttl     = 86400
   data    = "example.com"
 }
-

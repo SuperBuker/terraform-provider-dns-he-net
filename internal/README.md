@@ -108,7 +108,7 @@ func (p *dnsProvider) Metadata(_ context.Context, _ provider.MetadataRequest, re
 
 Metadata returns the provider type name.
 
-### func \(\*dnsProvider\) [Resources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L303>)
+### func \(\*dnsProvider\) [Resources](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/internal/blob/master/internal/provider.go#L309>)
 
 ```go
 func (p *dnsProvider) Resources(_ context.Context) []func() resource.Resource
