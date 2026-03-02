@@ -11,14 +11,39 @@ variable "account" {
 }
 
 
-variable "datasources_zone" {
+variable "datasources_domain_zone" {
   type        = string
-  description = "Datasources zone name"
+  description = "Datasources domain zone name"
 }
 
-variable "resources_zone" {
+variable "datasources_domain_zone_pending_delegation" {
   type        = string
-  description = "Resource zone name"
+  description = "Datasources domain zone pending delegation name"
+}
+
+variable "datasources_arpa_zone" {
+  type        = string
+  description = "Datasources ARPA zone name"
+}
+
+variable "datasources_arpa_domain_example" {
+  type        = string
+  description = "Datasources ARPA example domain"
+}
+
+variable "datasources_network_prefix" {
+  type        = string
+  description = "Datasources network prefix name"
+}
+
+variable "resources_domain_zone" {
+  type        = string
+  description = "Resource domain zone name"
+}
+
+variable "resources_arpa_zone" {
+  type        = string
+  description = "Resource ARPA zone name"
 }
 
 variable "config_file" {
