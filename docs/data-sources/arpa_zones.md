@@ -3,12 +3,12 @@
 page_title: "dns-he-net_arpa_zones Data Source - dns-he-net"
 subcategory: ""
 description: |-
-  DNS arpa zones in account
+  DNS ARPA zones in account
 ---
 
 # dns-he-net_arpa_zones (Data Source)
 
-DNS arpa zones in account
+DNS ARPA zones in account
 
 ## Example Usage
 
@@ -22,16 +22,16 @@ data "dns-he-net_arpa_zones" "example" {}
 
 ### Read-Only
 
-- `arpa_zones` (Attributes List) Arpa zones list (see [below for nested schema](#nestedatt--arpa_zones))
 - `id` (String) dns.he.net account id
+- `zones` (Attributes List) ARPA zones list (see [below for nested schema](#nestedatt--zones))
 
-<a id="nestedatt--arpa_zones"></a>
-### Nested Schema for `arpa_zones`
+<a id="nestedatt--zones"></a>
+### Nested Schema for `zones`
 
 Required:
 
-- `zone_id` (Number) dns.he.net arpa zone id
+- `zone_id` (Number) dns.he.net ARPA zone id
 
 Read-Only:
 
-- `name` (String) arpa zone name
+- `name` (String) ARPA zone name

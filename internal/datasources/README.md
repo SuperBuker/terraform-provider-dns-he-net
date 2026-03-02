@@ -1014,8 +1014,8 @@ arpasModel maps the data source schema data.
 
 ```go
 type arpasModel struct {
-    ID        types.String    `tfsdk:"id"`
-    ArpaZones []arpaZoneModel `tfsdk:"arpa_zones"`
+    ID    types.String    `tfsdk:"id"`
+    Zones []arpaZoneModel `tfsdk:"zones"`
 }
 ```
 
@@ -1210,8 +1210,8 @@ domainsModel maps the data source schema data.
 
 ```go
 type domainsModel struct {
-    ID          types.String      `tfsdk:"id"`
-    DomainZones []domainZoneModel `tfsdk:"domain_zones"`
+    ID    types.String      `tfsdk:"id"`
+    Zones []domainZoneModel `tfsdk:"zones"`
 }
 ```
 

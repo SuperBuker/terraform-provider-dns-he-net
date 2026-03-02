@@ -22,11 +22,11 @@ data "dns-he-net_domain_zones" "example" {}
 
 ### Read-Only
 
-- `domain_zones` (Attributes List) Domain zones list (see [below for nested schema](#nestedatt--domain_zones))
 - `id` (String) dns.he.net account id
+- `zones` (Attributes List) Domain zones list (see [below for nested schema](#nestedatt--zones))
 
-<a id="nestedatt--domain_zones"></a>
-### Nested Schema for `domain_zones`
+<a id="nestedatt--zones"></a>
+### Nested Schema for `zones`
 
 Required:
 

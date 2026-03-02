@@ -3,12 +3,12 @@
 page_title: "dns-he-net_arpa_zone Data Source - dns-he-net"
 subcategory: ""
 description: |-
-  DNS arpa zone
+  DNS ARPA zone
 ---
 
 # dns-he-net_arpa_zone (Data Source)
 
-DNS arpa zone
+DNS ARPA zone
 
 ## Example Usage
 
@@ -24,8 +24,8 @@ data "dns-he-net_arpa_zone" "example" {
 
 ### Required
 
-- `zone_id` (Number) dns.he.net arpa zone id
+- `zone_id` (Number) dns.he.net ARPA zone id
 
 ### Read-Only
 
-- `name` (String) arpa zone name
+- `name` (String) ARPA zone name

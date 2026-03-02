@@ -17,7 +17,6 @@ var prefixToArpaZoneTests = []struct {
 	{"::/0", "0.ip6.arpa", true},
 	{"::", "0.ip6.arpa", false},
 	{"invalid value", "", false},
-	// TODO: These functions still accept invalid IPv6 entires like "2001:470:1::/129" or "127.0.0.1"
 }
 
 func TestPrefixToArpaZone(t *testing.T) {
