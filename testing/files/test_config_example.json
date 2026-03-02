@@ -47,9 +47,9 @@
                 "name": "f.e.d.c.b.a.9.8.7.6.5.4.3.2.1.0.ip6.arpa",
                 "records": {
                     "PTR": {
-                        "data": "example-aaaa.dns-he-net.ovh",
+                        "data": "example-aaaa.example.com",
                         "domain": "1.0.0.0.0.0.0.0.0.0.0.0.0.0.0.0.f.e.d.c.b.a.9.8.7.6.5.4.3.2.1.0.ip6.arpa",
-                        "id": 8170277507,
+                        "id": 23458,
                         "ttl": 172800
                     }
                 },
