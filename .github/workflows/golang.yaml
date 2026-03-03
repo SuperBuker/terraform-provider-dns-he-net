@@ -60,17 +60,20 @@ jobs:
           key: terraform-provider-dns-he-net
           path: ~/.config/terraform-provider-dns-he-net/
 
+      - name: Run Go linter formatter
+        run: test -z "$(gofmt -l .)"
+
       - name: Install dependencies
         run: go mod download
 
-      - name: Run linter
+      - name: Run Golangci-lint
         uses: golangci/golangci-lint-action@v9
         with:
           args: --timeout=10m
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
           version: v2.10.1
 
-      - name: Run go vet
+      - name: Run Go vet
         run: go vet ./...
 
       - name: Unit tests, with terraform coverage and retries
