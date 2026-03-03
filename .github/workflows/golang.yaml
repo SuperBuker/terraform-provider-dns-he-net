@@ -1,12 +1,13 @@
 name: Golang
 
 on:
-  pull_request:
-    paths-ignore:
-      - "README.md"
   push:
+    branches:
+      - "**"
     paths-ignore:
       - "README.md"
+    tags-ignore:
+      - "**"
   workflow_dispatch:
     inputs:
       debug_mode:
