@@ -29,7 +29,7 @@ type domainZones struct {
 
 // domainsModel maps the data source schema data.
 type domainsModel struct {
-	ID          types.String      `tfsdk:"id"`
+	ID    types.String      `tfsdk:"id"`
 	Zones []domainZoneModel `tfsdk:"zones"`
 }
 
