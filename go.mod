@@ -5,7 +5,7 @@ go 1.26.0
 tool github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
 
 require (
-	github.com/antchfx/htmlquery v1.3.5
+	github.com/antchfx/htmlquery v1.3.6
 	github.com/go-resty/resty/v2 v2.17.2
 	github.com/google/go-cmp v0.7.0
 	github.com/hashicorp/terraform-plugin-framework v1.18.0
