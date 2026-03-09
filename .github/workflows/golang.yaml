@@ -46,7 +46,7 @@ jobs:
         run: go version
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v3
+        uses: hashicorp/setup-terraform@v4
         with:
           terraform_version: ${{ matrix.terraform-version }}
           terraform_wrapper: false
