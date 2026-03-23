@@ -83,7 +83,7 @@ jobs:
           TEST_CONFIG: ${{ secrets.TEST_CONFIG }}
           TF_ACC: "1"
         # Use the retry action
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           command: |
             DNSHENET_TEST_CONFIG_PATH="${PWD}/${DNSHENET_TEST_CONFIG_PATH}" # Set the absolute path
