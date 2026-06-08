@@ -107,7 +107,7 @@ jobs:
           path: TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
