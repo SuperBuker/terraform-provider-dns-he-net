@@ -72,7 +72,7 @@ jobs:
         with:
           args: --timeout=10m
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v2.10.1
+          version: v2.13.1
 
       - name: Run Go vet
         run: go vet ./...
