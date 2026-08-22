@@ -14,7 +14,7 @@ import (
 	"golang.org/x/net/html"
 )
 
-func setup(t *testing.T) *resty.Client {
+func setup(_ *testing.T) *resty.Client {
 	client := resty.New()
 
 	// block all HTTP requests
@@ -23,7 +23,7 @@ func setup(t *testing.T) *resty.Client {
 	return client
 }
 
-func teardown(t *testing.T) {
+func teardown(_ *testing.T) {
 	httpmock.DeactivateAndReset()
 }
 
