@@ -1,12 +1,13 @@
 name: Golang
 
 on:
-  pull_request:
-    paths-ignore:
-      - "README.md"
   push:
+    branches:
+      - "**"
     paths-ignore:
       - "README.md"
+    tags-ignore:
+      - "**"
   workflow_dispatch:
     inputs:
       debug_mode:
@@ -60,17 +61,20 @@ jobs:
           key: terraform-provider-dns-he-net
           path: ~/.config/terraform-provider-dns-he-net/
 
+      - name: Run Go linter formatter
+        run: test -z "$(gofmt -l .)"
+
       - name: Install dependencies
         run: go mod download
 
-      - name: Run linter
+      - name: Run Golangci-lint
         uses: golangci/golangci-lint-action@v9
         with:
           args: --timeout=10m
           # Required: the version of golangci-lint is required and must be specified without patch version: we always use the latest patch version.
-          version: v2.10.1
+          version: v2.13
 
-      - name: Run go vet
+      - name: Run Go vet
         run: go vet ./...
 
       - name: Unit tests, with terraform coverage and retries
@@ -83,7 +87,7 @@ jobs:
           TEST_CONFIG: ${{ secrets.TEST_CONFIG }}
           TF_ACC: "1"
         # Use the retry action
-        uses: nick-fields/retry@v3
+        uses: nick-fields/retry@v4
         with:
           command: |
             DNSHENET_TEST_CONFIG_PATH="${PWD}/${DNSHENET_TEST_CONFIG_PATH}" # Set the absolute path
@@ -107,7 +111,7 @@ jobs:
           path: TestResults-${{ matrix.go-version }}-${{ matrix.terraform-version }}.json
 
       - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v7
         with:
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
