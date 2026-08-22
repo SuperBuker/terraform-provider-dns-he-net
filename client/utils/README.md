@@ -56,7 +56,7 @@ IPv6SubnetToArpaZone converts a subnet string to its corresponding ARPA zone nam
 func IsNil(i interface{}) bool
 ```
 
-IsNil returns true if the interface is nil or is a nil pointer, map, array, channel, or slice.
+IsNil returns true if the interface is nil or is a nil pointer, map, channel, or slice.
 
 ## func [ParseIPNet](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/utils/blob/master/client/utils/ip.go#L12>)
 
