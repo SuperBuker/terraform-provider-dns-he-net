@@ -1,6 +1,6 @@
 module github.com/SuperBuker/terraform-provider-dns-he-net
 
-go 1.26.0
+go 1.27.0
 
 tool github.com/hashicorp/terraform-plugin-docs/cmd/tfplugindocs
 
