@@ -22,7 +22,7 @@ func (c *Client) authValidation(rc *resty.Client, req *resty.Request) error {
 
 	for _, cookie := range rc.Cookies {
 		if cookie.Expires.Before(time.Now()) {
-			cookie.MaxAge = 0
+			cookie.MaxAge = -1 // Delete cookie
 		} else if !hasCookies {
 			hasCookies = true
 		}
