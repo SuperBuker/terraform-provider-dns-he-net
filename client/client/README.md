@@ -32,7 +32,7 @@ import "github.com/SuperBuker/terraform-provider-dns-he-net/client/client"
   - [func (c *Client) authBasic(ctx context.Context, client *resty.Client) ([]*http.Cookie, error)](<#func-client-authbasic>)
   - [func (c *Client) authOTP(ctx context.Context, client *resty.Client) error](<#func-client-authotp>)
   - [func (c *Client) authValidation(rc *resty.Client, req *resty.Request) error](<#func-client-authvalidation>)
-  - [func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error)](<#func-client-autheticate>)
+  - [func (c *Client) authenticate(ctx context.Context) ([]*http.Cookie, error)](<#func-client-authenticate>)
   - [func (c *Client) setAccount(resp *resty.Response)](<#func-client-setaccount>)
   - [func (c *Client) statusCheck(_ *resty.Client, resp *resty.Response) (err error)](<#func-client-statuscheck>)
   - [func (c *Client) statusCheckLog(resp *resty.Response) error](<#func-client-statuschecklog>)
@@ -250,13 +250,13 @@ func (c *Client) authOTP(ctx context.Context, client *resty.Client) error
 func (c *Client) authValidation(rc *resty.Client, req *resty.Request) error
 ```
 
-### func \(\*Client\) [autheticate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L21>)
+### func \(\*Client\) [authenticate](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L21>)
 
 ```go
-func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error)
+func (c *Client) authenticate(ctx context.Context) ([]*http.Cookie, error)
 ```
 
-autheticate authenticates the client against the API on a separated go\-resty client, then returns the cookies.
+authenticate authenticates the client against the API on a separated go\-resty client, then returns the cookies.
 
 ### func \(\*Client\) [setAccount](<https://github.com/SuperBuker/terraform-provider-dns-he-net/tree/master/common/client/client/blob/master/client/client/client_auth.go#L132>)
 

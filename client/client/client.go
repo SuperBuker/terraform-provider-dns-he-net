@@ -34,7 +34,7 @@ func NewClient(ctx context.Context, authAuth auth.Auth, log logging.Logger, opti
 		client.status = auth.Ok
 		client.account = account
 		return client, nil
-	} else if cookies, err = client.autheticate(ctx); err == nil {
+	} else if cookies, err = client.authenticate(ctx); err == nil {
 		// Manually trigger authentication
 		client.client.SetCookies(cookies)
 

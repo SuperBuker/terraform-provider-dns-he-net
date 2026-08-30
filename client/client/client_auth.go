@@ -16,9 +16,9 @@ import (
 	"github.com/go-resty/resty/v2"
 )
 
-// autheticate authenticates the client against the API on a separated go-resty
+// authenticate authenticates the client against the API on a separated go-resty
 // client, then returns the cookies.
-func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
+func (c *Client) authenticate(ctx context.Context) ([]*http.Cookie, error) {
 	// New client to not to mess with the regular one
 	client := resty.New()
 
@@ -35,7 +35,7 @@ func (c *Client) autheticate(ctx context.Context) ([]*http.Cookie, error) {
 		return
 	})
 
-	c.log.Info(ctx, "autheticating, please wait...")
+	c.log.Info(ctx, "authenticating, please wait...")
 
 	cookies, err := c.authBasic(ctx, client)
 

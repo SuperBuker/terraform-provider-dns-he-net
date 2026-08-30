@@ -30,7 +30,7 @@ func (c *Client) authValidation(rc *resty.Client, req *resty.Request) error {
 
 	if hasCookies && c.status == auth.Ok {
 		// pass
-	} else if cookies, err := c.autheticate(req.Context()); err == nil {
+	} else if cookies, err := c.authenticate(req.Context()); err == nil {
 		if len(rc.Cookies) != 0 {
 			rc.Cookies = make([]*http.Cookie, 0)
 			req.Header.Del("Cookie")
